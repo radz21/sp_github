@@ -3615,6 +3615,10 @@
         get_source_document.forEach(source => {
             $ssd.append(`<option value="${source.id}">${source.title}</option>`);
         })
+
+        councillors = get_all_active_councilor
+
+        render();
     }
 
 
@@ -3657,18 +3661,15 @@
             }
         });
 
-        // Collapse ALL open dropdown submenus
         document.querySelectorAll('.sub-nav.collapse').forEach(submenu => {
             submenu.classList.remove('show'); // Bootstrap collapse class
         });
 
-        // Remove active state from ALL dropdown toggles (parent items)
         document.querySelectorAll('.nav-link[data-bs-toggle="collapse"]').forEach(toggle => {
             toggle.classList.remove('active');
             toggle.setAttribute('aria-expanded', 'false');
         });
 
-        // Show selected content and set active link
         const content = document.getElementById(tab);
         const link = document.getElementById(active);
 
@@ -3676,7 +3677,6 @@
             content.style.display = "block";
             link.classList.add("active");
 
-            // If it's inside a dropdown, expand the dropdown and highlight the parent link
             const submenu = link.closest('.sub-nav');
             if (submenu) {
                 submenu.classList.add('show');
@@ -3915,135 +3915,110 @@
     }
 
 
-    // Sample councillors (names + generated avatars).
-    const councillors = [
-        { id: 'c1', name: 'Alex Mendoza', avatar: 'https://i.pravatar.cc/300?img=12' },
-        { id: 'c2', name: 'Beatriz Santos', avatar: 'https://i.pravatar.cc/300?img=32' },
-        { id: 'c3', name: 'Carlos Rivera', avatar: 'https://i.pravatar.cc/300?img=45' },
-        { id: 'c4', name: 'Diana Lopez', avatar: 'https://i.pravatar.cc/300?img=20' },
-        { id: 'c5', name: 'Ethan Cruz', avatar: 'https://i.pravatar.cc/300?img=8' },
-        { id: 'c6', name: 'Fatima Reyes', avatar: 'https://i.pravatar.cc/300?img=5' },
-        { id: 'c7', name: 'Gabriel Ong', avatar: 'https://i.pravatar.cc/300?img=15' },
-        { id: 'c8', name: 'Hannah dela Vega', avatar: 'https://i.pravatar.cc/300?img=3' },
-        { id: 'c9', name: 'Ismael Torres', avatar: 'https://i.pravatar.cc/300?img=25' }
-    ];
+    let councillors = []
 
-    // Load/save votes from localStorage
     const STORAGE_KEY = 'council_votes_v1';
 
     function loadVotes() {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        try {
-        return raw ? JSON.parse(raw) : {};
-        } catch (e) {
-        return {};
-        }
+      const raw = localStorage.getItem(STORAGE_KEY);
+      try { return raw ? JSON.parse(raw) : {}; } catch { return {}; }
     }
 
     function saveVotes(votes) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(votes));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(votes));
     }
 
     function render() {
-        const grid = document.getElementById('grid');
-        grid.innerHTML = '';
-        const votes = loadVotes();
+      const grid = document.getElementById('grid');
+      grid.innerHTML = '';
+      const votes = loadVotes();
 
-        councillors.forEach(c => {
-        const vote = votes[c.id] || null; // 'approve' | 'disapprove' | 'abstain' | null
+      councillors.forEach(c => {
+        const vote = votes[c.info_id] || null;
 
         const col = document.createElement('div');
-        col.className = 'col-12 col-sm-6 col-md-4';
+        col.className = 'col-12 col-sm-4 col-md-4';
 
         col.innerHTML = `
-            <div class="card h-100" id="card-${c.id}">
-            <img src="${c.avatar}" class="card-img-top" alt="${c.name}">
+          <div class="card h-100" id="card-${c.info_id}">
+            <img src="../static/uploads/${c.img}"  onerror="this.onerror=null; this.src='../static/images/councilor.png';" style="height: 350px;max-width: 400px" class="card-img-top" alt="${c.fullname}">
             <div class="card-body d-flex flex-column">
-                <h5 class="card-title mb-1">${c.name}</h5>
-                <p class="card-text text-muted mb-3 small">Councillor</p>
-
-                <div class="mt-auto d-flex gap-2">
-                <button class="btn btn-outline-success vote-btn" data-action="approve">✓ Approve <span class="badge bg-light text-dark ms-2" id="count-${c.id}-approve">0</span></button>
-                <button class="btn btn-outline-danger vote-btn" data-action="disapprove">✗ Disapprove <span class="badge bg-light text-dark ms-2" id="count-${c.id}-disapprove">0</span></button>
-                <button class="btn btn-outline-secondary vote-btn" data-action="abstain">— Abstain <span class="badge bg-light text-dark ms-2" id="count-${c.id}-abstain">0</span></button>
-                </div>
+              <h5 class="card-title mb-1">${c.fullname}</h5>
+              <p class="card-text text-muted mb-3 small">Councillor</p>
+              <div class="mt-auto d-flex flex-wrap gap-2">
+                <button class="btn btn-outline-success vote-btn" data-action="approve">✓ Approve <span class="badge bg-light text-dark ms-2" id="count-${c.info_id}-approve">0</span></button>
+                <button class="btn btn-outline-danger vote-btn" data-action="disapprove">✗ Disapprove <span class="badge bg-light text-dark ms-2" id="count-${c.info_id}-disapprove">0</span></button>
+                <button class="btn btn-outline-secondary vote-btn" data-action="abstain">— Abstain <span class="badge bg-light text-dark ms-2" id="count-${c.info_id}-abstain">0</span></button>
+              </div>
             </div>
-            </div>
+          </div>
         `;
 
         grid.appendChild(col);
 
-        // attach event listeners
         const card = col.querySelector('.card');
         const buttons = card.querySelectorAll('.vote-btn');
         buttons.forEach(btn => {
-            btn.addEventListener('click', () => handleVote(c.id, btn.getAttribute('data-action')));
+          btn.addEventListener('click', () => handleVote(c.info_id, btn.getAttribute('data-action')));
         });
 
-        // highlight selected
         if (vote) {
-            const selectedBtn = card.querySelector(`[data-action="${vote}"]`);
-            if (selectedBtn) selectedBtn.classList.add('selected');
+          const selectedBtn = card.querySelector(`[data-action="${vote}"]`);
+          if (selectedBtn) selectedBtn.classList.add('selected');
         }
-        });
+      });
 
-        // update counts and summary
-        updateCountsAndSummary();
+      updateCountsAndSummary();
     }
 
     function handleVote(councillorId, action) {
-        const votes = loadVotes();
-        // toggle: if same selection clicked again -> remove vote
-        if (votes[councillorId] === action) {
+      const votes = loadVotes();
+      if (votes[councillorId] === action) {
         delete votes[councillorId];
-        } else {
+      } else {
         votes[councillorId] = action;
-        }
-        saveVotes(votes);
-        // re-render to reflect changes
-        render();
+      }
+      saveVotes(votes);
+      render();
     }
 
     function updateCountsAndSummary() {
-        const votes = loadVotes();
-        const totals = { approve: 0, disapprove: 0, abstain: 0 };
+      const votes = loadVotes();
+      const totals = { approve: 0, disapprove: 0, abstain: 0 };
 
-        // per councillor counts (each councillor can have at most one vote from this user/browser)
-        councillors.forEach(c => {
-        const v = votes[c.id] || null;
+      councillors.forEach(c => {
+        const v = votes[c.info_id] || null;
         ['approve','disapprove','abstain'].forEach(kind => {
-            const el = document.getElementById(`count-${c.id}-${kind}`);
-            if (el) el.textContent = (v===kind) ? '1' : '0';
+          const el = document.getElementById(`count-${c.info_id}-${kind}`);
+          if (el) el.textContent = (v===kind) ? '1' : '0';
         });
         if (v) totals[v]++;
-        });
+      });
 
-        document.getElementById('totalApprove').textContent = totals.approve;
-        document.getElementById('totalDisapprove').textContent = totals.disapprove;
-        document.getElementById('totalAbstain').textContent = totals.abstain;
+      document.getElementById('totalApprove').textContent = totals.approve;
+      document.getElementById('totalDisapprove').textContent = totals.disapprove;
+      document.getElementById('totalAbstain').textContent = totals.abstain;
     }
 
     document.getElementById('resetAll').addEventListener('click', () => {
-        if (!confirm('Clear all saved votes in this browser?')) return;
-        localStorage.removeItem(STORAGE_KEY);
-        render();
+      if (!confirm('Clear all saved votes in this browser?')) return;
+      localStorage.removeItem(STORAGE_KEY);
+      render();
     });
 
     document.getElementById('exportJson').addEventListener('click', () => {
-        const votes = loadVotes();
-        const data = councillors.map(c => ({ id: c.id, name: c.name, vote: votes[c.id] || null }));
-        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'council_votes.json';
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        URL.revokeObjectURL(url);
+      const votes = loadVotes();
+      const data = councillors.map(c => ({ info_id: c.info_id, fullname: c.fullname, vote: votes[c.info_id] || null }));
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'council_votes.json';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
     });
 
-    // initial render
     render();
-
 </script>

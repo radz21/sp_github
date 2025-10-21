@@ -6227,7 +6227,8 @@ def get_all_active_councilor():
 	try:
 		sel = """SELECT
 			tpi.info_id,
-			concat( f_name, ' ', m_name, ' ', L_name ) fullname 
+			concat( f_name, ' ', m_name, ' ', L_name ) fullname ,
+			tpi.img
 		FROM
 			sp_councilor sc
 			LEFT JOIN tbl_personal_info tpi ON sc.councilor = tpi.info_id
@@ -6240,7 +6241,8 @@ def get_all_active_councilor():
 
 		SELECT
 			tpi.info_id,
-			concat( f_name, ' ', m_name, ' ', L_name ) fullname 
+			concat( f_name, ' ', m_name, ' ', L_name ) fullname ,
+			tpi.img
 		FROM
 			sp_member sp
 			LEFT JOIN tbl_personal_info tpi ON sp.sp_vice_mayor = tpi.info_id
