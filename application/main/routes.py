@@ -627,8 +627,6 @@ def background():
 
 
 
-
-
 @main.route('/gallery_albums', methods=['GET', 'POST'])
 @authorize
 def gallery_albums():

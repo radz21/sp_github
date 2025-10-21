@@ -2,6 +2,26 @@
    font-size: 8px !important;
 }
 
+
+body {
+      font-family: 'Times New Roman', serif;
+      background-color: #fff;
+      /* margin: 40px; */
+    }
+    h4, h5 {
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 0;
+    }
+    .order-list {
+      margin-left: 30px;
+    }
+    .section-title {
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-top: 20px;
+    }
+
 .btn-setting{
   top: 90%! important;
 }

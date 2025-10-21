@@ -1,4 +1,12 @@
-/uploads/*
-!/uploads/.gitkeep
+# Ignore all files inside these folders
+uploads/**
+session_video/**
+session_files/**
 
-/session_files/*
+# But keep the folders themselves and .gitkeep
+!uploads/**/
+!uploads/.gitkeep
+!session_video/**/
+!session_video/.gitkeep
+!session_files/**/
+!session_files/.gitkeep

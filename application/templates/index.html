@@ -83,620 +83,8 @@
             <div class="sidebar-list">
                 <!-- Sidebar Menu Start -->
                 <input type="text" hidden id="active_sp_id">
-                <ul class="navbar-nav iq-main-menu" id="sidebar-menu">
-                    <li class="nav-item static-item">
-                        <a class="nav-link static-item disabled" href="#" tabindex="-1">
-                            <span class="default-icon">Home</span>
-                            <span class="mini-icon">-</span>
-                        </a>
-                    </li>
-                    <li><hr class="hr-horizontal"></li>
 
-
-
-                    <li class="nav-item ">
-                        <a class="nav-link active" id="li_home" aria-current="page" onclick="clickNav('home_navigation','li_home')">
-                            <i class="icon">
-                                <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">                            <path d="M9.13478 20.7733V17.7156C9.13478 16.9351 9.77217 16.3023 10.5584 16.3023H13.4326C13.8102 16.3023 14.1723 16.4512 14.4393 16.7163C14.7063 16.9813 14.8563 17.3408 14.8563 17.7156V20.7733C14.8539 21.0978 14.9821 21.4099 15.2124 21.6402C15.4427 21.8705 15.7561 22 16.0829 22H18.0438C18.9596 22.0023 19.8388 21.6428 20.4872 21.0008C21.1356 20.3588 21.5 19.487 21.5 18.5778V9.86686C21.5 9.13246 21.1721 8.43584 20.6046 7.96467L13.934 2.67587C12.7737 1.74856 11.1111 1.7785 9.98539 2.74698L3.46701 7.96467C2.87274 8.42195 2.51755 9.12064 2.5 9.86686V18.5689C2.5 20.4639 4.04738 22 5.95617 22H7.87229C8.55123 22 9.103 21.4562 9.10792 20.7822L9.13478 20.7733Z" fill="currentColor"></path>                            </svg>                        
-                            </i>
-                            <span class="item-name">Home</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/landing" target="_blank">
-                            <i class="icon">
-                                <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path opacity="0.4" d="M16.0756 2H19.4616C20.8639 2 22.0001 3.14585 22.0001 4.55996V7.97452C22.0001 9.38864 20.8639 10.5345 19.4616 10.5345H16.0756C14.6734 10.5345 13.5371 9.38864 13.5371 7.97452V4.55996C13.5371 3.14585 14.6734 2 16.0756 2Z" fill="currentColor"></path>
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M4.53852 2H7.92449C9.32676 2 10.463 3.14585 10.463 4.55996V7.97452C10.463 9.38864 9.32676 10.5345 7.92449 10.5345H4.53852C3.13626 10.5345 2 9.38864 2 7.97452V4.55996C2 3.14585 3.13626 2 4.53852 2ZM4.53852 13.4655H7.92449C9.32676 13.4655 10.463 14.6114 10.463 16.0255V19.44C10.463 20.8532 9.32676 22 7.92449 22H4.53852C3.13626 22 2 20.8532 2 19.44V16.0255C2 14.6114 3.13626 13.4655 4.53852 13.4655ZM19.4615 13.4655H16.0755C14.6732 13.4655 13.537 14.6114 13.537 16.0255V19.44C13.537 20.8532 14.6732 22 16.0755 22H19.4615C20.8637 22 22 20.8532 22 19.44V16.0255C22 14.6114 20.8637 13.4655 19.4615 13.4655Z" fill="currentColor"></path>
-                                </svg>
-                            </i>
-                            <span class="item-name">Landing Pages</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="li_session" aria-current="page" onclick="clickNav('session_navigation','li_session')">
-                            <i class="icon">
-                                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15v4m6-6v6m6-4v4m6-6v6M3 11l6-5 6 5 5.5-5.5"/>
-                                </svg>
-                            </i>
-                            <span class="item-name">Sessions</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" id="li_document_tracking" aria-current="page" onclick="clickNav('document_tracking_navigation','li_document_tracking')">
-                            <i class="icon">
-                                <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M2 10.6699C2 5.88166 5.84034 2 10.5776 2C12.8526 2 15.0343 2.91344 16.6429 4.53936C18.2516 6.16529 19.1553 8.37052 19.1553 10.6699C19.1553 15.4582 15.3149 19.3399 10.5776 19.3399C5.84034 19.3399 2 15.4582 2 10.6699ZM19.0134 17.6543L21.568 19.7164H21.6124C22.1292 20.2388 22.1292 21.0858 21.6124 21.6082C21.0955 22.1306 20.2576 22.1306 19.7407 21.6082L17.6207 19.1785C17.4203 18.9766 17.3076 18.7024 17.3076 18.4164C17.3076 18.1304 17.4203 17.8562 17.6207 17.6543C18.0072 17.2704 18.6268 17.2704 19.0134 17.6543Z" fill="currentColor"></path>
-                                </svg>                                                                     
-                            </i>
-                            <span>Document Tracking</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" id="li_source_documents" aria-current="page" onclick="clickNav('source_document_navigation','li_source_documents')">
-                            <i class="icon">
-                                <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path opacity="0.4" d="M21.25 13.4764C20.429 13.4764 19.761 12.8145 19.761 12.001C19.761 11.1865 20.429 10.5246 21.25 10.5246C21.449 10.5246 21.64 10.4463 21.78 10.3076C21.921 10.1679 22 9.97864 22 9.78146L21.999 7.10415C21.999 4.84102 20.14 3 17.856 3H6.144C3.86 3 2.001 4.84102 2.001 7.10415L2 9.86766C2 10.0648 2.079 10.2541 2.22 10.3938C2.36 10.5325 2.551 10.6108 2.75 10.6108C3.599 10.6108 4.239 11.2083 4.239 12.001C4.239 12.8145 3.571 13.4764 2.75 13.4764C2.336 13.4764 2 13.8093 2 14.2195V16.8949C2 19.158 3.858 21 6.143 21H17.857C20.142 21 22 19.158 22 16.8949V14.2195C22 13.8093 21.664 13.4764 21.25 13.4764Z" fill="currentColor"></path>
-                                    <path d="M15.4303 11.5887L14.2513 12.7367L14.5303 14.3597C14.5783 14.6407 14.4653 14.9177 14.2343 15.0837C14.0053 15.2517 13.7063 15.2727 13.4543 15.1387L11.9993 14.3737L10.5413 15.1397C10.4333 15.1967 10.3153 15.2267 10.1983 15.2267C10.0453 15.2267 9.89434 15.1787 9.76434 15.0847C9.53434 14.9177 9.42134 14.6407 9.46934 14.3597L9.74734 12.7367L8.56834 11.5887C8.36434 11.3907 8.29334 11.0997 8.38134 10.8287C8.47034 10.5587 8.70034 10.3667 8.98134 10.3267L10.6073 10.0897L11.3363 8.61268C11.4633 8.35868 11.7173 8.20068 11.9993 8.20068H12.0013C12.2843 8.20168 12.5383 8.35968 12.6633 8.61368L13.3923 10.0897L15.0213 10.3277C15.2993 10.3667 15.5293 10.5587 15.6173 10.8287C15.7063 11.0997 15.6353 11.3907 15.4303 11.5887Z" fill="currentColor"></path>
-                                </svg>                                                              
-                            </i>
-                            <span>Source of Document</span>
-                        </a>
-                    </li>
-                    
-                    <li><hr class="hr-horizontal"></li>
-                    
-                    <li class="nav-item static-item">
-                        <a class="nav-link static-item disabled" href="#" tabindex="-1">
-                            <span class="default-icon">Documents</span>
-                            <span class="mini-icon">-</span>
-                        </a>
-                    </li>
-                    <li class="nav-item" >
-                        <a class="nav-link" id="li_ordinance" data-bs-toggle="collapse" href="#ordinance-menu" role="button" aria-expanded="false" aria-controls="ordinance-menu">
-                            <i class="icon">
-                                <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path opacity="0.4" d="M10.0833 15.958H3.50777C2.67555 15.958 2 16.6217 2 17.4393C2 18.2559 2.67555 18.9207 3.50777 18.9207H10.0833C10.9155 18.9207 11.5911 18.2559 11.5911 17.4393C11.5911 16.6217 10.9155 15.958 10.0833 15.958Z" fill="currentColor"></path>
-                                    <path opacity="0.4" d="M22.0001 6.37867C22.0001 5.56214 21.3246 4.89844 20.4934 4.89844H13.9179C13.0857 4.89844 12.4102 5.56214 12.4102 6.37867C12.4102 7.1963 13.0857 7.86 13.9179 7.86H20.4934C21.3246 7.86 22.0001 7.1963 22.0001 6.37867Z" fill="currentColor"></path>
-                                    <path d="M8.87774 6.37856C8.87774 8.24523 7.33886 9.75821 5.43887 9.75821C3.53999 9.75821 2 8.24523 2 6.37856C2 4.51298 3.53999 3 5.43887 3C7.33886 3 8.87774 4.51298 8.87774 6.37856Z" fill="currentColor"></path>
-                                    <path d="M21.9998 17.3992C21.9998 19.2648 20.4609 20.7777 18.5609 20.7777C16.6621 20.7777 15.1221 19.2648 15.1221 17.3992C15.1221 15.5325 16.6621 14.0195 18.5609 14.0195C20.4609 14.0195 21.9998 15.5325 21.9998 17.3992Z" fill="currentColor"></path>
-                                </svg>
-                            </i>
-                            <span class="item-name">Ordinance</span>
-                            <i class="right-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                </svg>
-                            </i>
-                        </a>
-                        <ul class="sub-nav collapse" id="ordinance-menu" data-bs-parent="#sidebar-menu">
-                            
-                            <li class="nav-item">
-                                <a class="nav-link " id="approval_ordinance" onclick="clickNav('approved_ord_navigation','approval_ordinance')">
-                                    <i class="icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                                            <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                            </g>
-                                        </svg>
-                                    </i>
-                                    <i class="sidenav-mini-icon"> B </i>
-                                    <span class="item-name">Approved Ordinance</span>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link " id="appriation_ordinance" onclick="clickNav('appropriation_navigation','appriation_ordinance')">
-                                    <i class="icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                                            <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                            </g>
-                                        </svg>
-                                    </i>
-                                    <i class="sidenav-mini-icon"> B </i>
-                                    <span class="item-name">Appropriation Ord</span>
-                                </a>
-                            </li>
-
-                           
-                        </ul>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" id="li_resolution" data-bs-toggle="collapse" href="#resolution-menu" role="button" aria-expanded="false" aria-controls="horizontal-menu">
-                            <i class="icon">
-                                <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path opacity="0.4" d="M16.191 2H7.81C4.77 2 3 3.78 3 6.83V17.16C3 20.26 4.77 22 7.81 22H16.191C19.28 22 21 20.26 21 17.16V6.83C21 3.78 19.28 2 16.191 2Z" fill="currentColor"></path>
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8.07996 6.6499V6.6599C7.64896 6.6599 7.29996 7.0099 7.29996 7.4399C7.29996 7.8699 7.64896 8.2199 8.07996 8.2199H11.069C11.5 8.2199 11.85 7.8699 11.85 7.4289C11.85 6.9999 11.5 6.6499 11.069 6.6499H8.07996ZM15.92 12.7399H8.07996C7.64896 12.7399 7.29996 12.3899 7.29996 11.9599C7.29996 11.5299 7.64896 11.1789 8.07996 11.1789H15.92C16.35 11.1789 16.7 11.5299 16.7 11.9599C16.7 12.3899 16.35 12.7399 15.92 12.7399ZM15.92 17.3099H8.07996C7.77996 17.3499 7.48996 17.1999 7.32996 16.9499C7.16996 16.6899 7.16996 16.3599 7.32996 16.1099C7.48996 15.8499 7.77996 15.7099 8.07996 15.7399H15.92C16.319 15.7799 16.62 16.1199 16.62 16.5299C16.62 16.9289 16.319 17.2699 15.92 17.3099Z" fill="currentColor"></path>
-                                </svg>
-                            </i>
-                            <span class="item-name">Resolution</span>
-                            <i class="right-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                </svg>
-                            </i>
-                        </a>
-                        <ul class="sub-nav collapse" id="resolution-menu" data-bs-parent="#sidebar-menu">
-                           
-                            <li class="nav-item">
-                                <a class="nav-link " id="li_approved_resolution" onclick="clickNav('resolution_navigation','li_approved_resolution')">
-                                    <i class="icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                                            <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                            </g>
-                                        </svg>
-                                    </i>
-                                    <i class="sidenav-mini-icon"> B </i>
-                                    <span class="item-name">Approved Resolution</span>
-                                </a>
-                            </li>
-                          
-                        </ul>
-                    </li>
-                    
-                   
-
-                    <li class="nav-item">
-                        <a class="nav-link" id="li_minutes" aria-current="page" onclick="clickNav('minutes_navigation','li_minutes')">
-                            <i class="icon">
-                                 <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M21.9964 8.37513H17.7618C15.7911 8.37859 14.1947 9.93514 14.1911 11.8566C14.1884 13.7823 15.7867 15.3458 17.7618 15.3484H22V15.6543C22 19.0136 19.9636 21 16.5173 21H7.48356C4.03644 21 2 19.0136 2 15.6543V8.33786C2 4.97862 4.03644 3 7.48356 3H16.5138C19.96 3 21.9964 4.97862 21.9964 8.33786V8.37513ZM6.73956 8.36733H12.3796H12.3831H12.3902C12.8124 8.36559 13.1538 8.03019 13.152 7.61765C13.1502 7.20598 12.8053 6.87318 12.3831 6.87491H6.73956C6.32 6.87664 5.97956 7.20858 5.97778 7.61852C5.976 8.03019 6.31733 8.36559 6.73956 8.36733Z" fill="currentColor"></path>
-                                    <path opacity="0.4" d="M16.0374 12.2966C16.2465 13.2478 17.0805 13.917 18.0326 13.8996H21.2825C21.6787 13.8996 22 13.5715 22 13.166V10.6344C21.9991 10.2297 21.6787 9.90077 21.2825 9.8999H17.9561C16.8731 9.90338 15.9983 10.8024 16 11.9102C16 12.0398 16.0128 12.1695 16.0374 12.2966Z" fill="currentColor"></path>
-                                    <circle cx="18" cy="11.8999" r="1" fill="currentColor"></circle>
-                                </svg>
-                                                         
-                            </i>
-                            <span>Minutes</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" id="li_reports" aria-current="page" onclick="clickNav('reports_navigation','li_reports')">
-                            <i class="icon">
-                                <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path opacity="0.4" d="M16.191 2H7.81C4.77 2 3 3.78 3 6.83V17.16C3 20.26 4.77 22 7.81 22H16.191C19.28 22 21 20.26 21 17.16V6.83C21 3.78 19.28 2 16.191 2Z" fill="currentColor"></path>
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8.07996 6.6499V6.6599C7.64896 6.6599 7.29996 7.0099 7.29996 7.4399C7.29996 7.8699 7.64896 8.2199 8.07996 8.2199H11.069C11.5 8.2199 11.85 7.8699 11.85 7.4289C11.85 6.9999 11.5 6.6499 11.069 6.6499H8.07996ZM15.92 12.7399H8.07996C7.64896 12.7399 7.29996 12.3899 7.29996 11.9599C7.29996 11.5299 7.64896 11.1789 8.07996 11.1789H15.92C16.35 11.1789 16.7 11.5299 16.7 11.9599C16.7 12.3899 16.35 12.7399 15.92 12.7399ZM15.92 17.3099H8.07996C7.77996 17.3499 7.48996 17.1999 7.32996 16.9499C7.16996 16.6899 7.16996 16.3599 7.32996 16.1099C7.48996 15.8499 7.77996 15.7099 8.07996 15.7399H15.92C16.319 15.7799 16.62 16.1199 16.62 16.5299C16.62 16.9289 16.319 17.2699 15.92 17.3099Z" fill="currentColor"></path>
-                                </svg>                                                                   
-                            </i>
-                            <span>REPORTS</span>
-                        </a>
-                    </li>
-
-                    <li><hr class="hr-horizontal"></li>
-                    <li class="nav-item static-item">
-                        <a class="nav-link static-item disabled" href="#" tabindex="-1">
-                            <span class="default-icon">Configuration</span>
-                            <span class="mini-icon">-</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#config-menu" role="button" aria-expanded="false" aria-controls="config-menu">
-                            <i class="icon">
-                                <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path opacity="0.4" d="M13.3051 5.88243V6.06547C12.8144 6.05584 12.3237 6.05584 11.8331 6.05584V5.89206C11.8331 5.22733 11.2737 4.68784 10.6064 4.68784H9.63482C8.52589 4.68784 7.62305 3.80152 7.62305 2.72254C7.62305 2.32755 7.95671 2 8.35906 2C8.77123 2 9.09508 2.32755 9.09508 2.72254C9.09508 3.01155 9.34042 3.24276 9.63482 3.24276H10.6064C12.0882 3.2524 13.2953 4.43736 13.3051 5.88243Z" fill="currentColor"></path>
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M15.164 6.08279C15.4791 6.08712 15.7949 6.09145 16.1119 6.09469C19.5172 6.09469 22 8.52241 22 11.875V16.1813C22 19.5339 19.5172 21.9616 16.1119 21.9616C14.7478 21.9905 13.3837 22.0001 12.0098 22.0001C10.6359 22.0001 9.25221 21.9905 7.88813 21.9616C4.48283 21.9616 2 19.5339 2 16.1813V11.875C2 8.52241 4.48283 6.09469 7.89794 6.09469C9.18351 6.07542 10.4985 6.05615 11.8332 6.05615C12.3238 6.05615 12.8145 6.05615 13.3052 6.06579C13.9238 6.06579 14.5425 6.07427 15.164 6.08279ZM10.8518 14.7459H9.82139V15.767C9.82139 16.162 9.48773 16.4896 9.08538 16.4896C8.67321 16.4896 8.34936 16.162 8.34936 15.767V14.7459H7.30913C6.90677 14.7459 6.57311 14.4279 6.57311 14.0233C6.57311 13.6283 6.90677 13.3008 7.30913 13.3008H8.34936V12.2892C8.34936 11.8942 8.67321 11.5667 9.08538 11.5667C9.48773 11.5667 9.82139 11.8942 9.82139 12.2892V13.3008H10.8518C11.2542 13.3008 11.5878 13.6283 11.5878 14.0233C11.5878 14.4279 11.2542 14.7459 10.8518 14.7459ZM15.0226 13.1177H15.1207C15.5231 13.1177 15.8567 12.7998 15.8567 12.3952C15.8567 12.0002 15.5231 11.6727 15.1207 11.6727H15.0226C14.6104 11.6727 14.2866 12.0002 14.2866 12.3952C14.2866 12.7998 14.6104 13.1177 15.0226 13.1177ZM16.7007 16.4318H16.7988C17.2012 16.4318 17.5348 16.1139 17.5348 15.7092C17.5348 15.3143 17.2012 14.9867 16.7988 14.9867H16.7007C16.2885 14.9867 15.9647 15.3143 15.9647 15.7092C15.9647 16.1139 16.2885 16.4318 16.7007 16.4318Z" fill="currentColor"></path>
-                                </svg>
-                            </i>
-                            <span class="item-name">System Config</span>
-                            <i class="right-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                </svg>
-                            </i>
-                        </a>
-                        <ul class="sub-nav collapse" id="config-menu" data-bs-parent="#sidebar-menu">
-                            <li class="nav-item">
-                                <a class="nav-link" id="sangunian" onclick="clickNav('sangunian_navigation','sangunian')">
-                                  <i class="icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                                            <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                            </g>
-                                        </svg>
-                                    </i>
-                                  <i class="sidenav-mini-icon"> S </i>
-                                  <span class="item-name" id="sp_sb_legislature">SP Legislature</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="li_assign" onclick="clickNav('assign_navigation','li_assign')">
-                                  <i class="icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                                            <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                            </g>
-                                        </svg>
-                                    </i>
-                                  <i class="sidenav-mini-icon"> S </i>
-                                  <span class="item-name" id="sp_sb_assign">Assign Councilor</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="li_announcement" onclick="clickNav('announcement_navigation','li_announcement')">
-                                    <i class="icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                                            <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                            </g>
-                                        </svg>
-                                    </i>
-                                    <i class="sidenav-mini-icon"> A </i>
-                                    <span class="item-name">Announcement</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="li_governance_classification" onclick="clickNav('governance_classification_navigation','li_governance_classification')">
-                                   <i class="icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                                            <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                            </g>
-                                        </svg>
-                                    </i>
-                                   <i class="sidenav-mini-icon"> G </i>
-                                   <span class="item-name">Governance</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="li_category" onclick="clickNav('category_navigation','li_category')">
-                                    <i class="icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                                            <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                            </g>
-                                        </svg>
-                                    </i>
-                                    <i class="sidenav-mini-icon"> C </i>
-                                    <span class="item-name">Category</span>
-                                </a>
-                            </li>
-                            
-                            <li class="nav-item">
-                                <a class="nav-link" id="li_gmail" onclick="clickNav('gmail_navigation','li_gmail')">
-                                    <i class="icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                                            <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                            </g>
-                                        </svg>
-                                    </i>
-                                    <i class="sidenav-mini-icon"> G </i>
-                                    <span class="item-name">Gmail Account</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="li_info" onclick="clickNav('info_navigation','li_info')">
-                                    <i class="icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                                            <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                            </g>
-                                        </svg>
-                                    </i>
-                                    <i class="sidenav-mini-icon"> I </i>
-                                    <span class="item-name">Info</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="li_barangay" onclick="clickNav('barangay_navigation','li_barangay')">
-                                    <i class="icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                                            <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                            </g>
-                                        </svg>
-                                    </i>
-                                    <i class="sidenav-mini-icon"> B </i>
-                                    <span class="item-name">Barangay</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#sidebar-user" role="button" aria-expanded="false" aria-controls="sidebar-user">
-                            <i class="icon">
-                                <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M11.9488 14.54C8.49884 14.54 5.58789 15.1038 5.58789 17.2795C5.58789 19.4562 8.51765 20.0001 11.9488 20.0001C15.3988 20.0001 18.3098 19.4364 18.3098 17.2606C18.3098 15.084 15.38 14.54 11.9488 14.54Z" fill="currentColor"></path>
-                                    <path opacity="0.4" d="M11.949 12.467C14.2851 12.467 16.1583 10.5831 16.1583 8.23351C16.1583 5.88306 14.2851 4 11.949 4C9.61293 4 7.73975 5.88306 7.73975 8.23351C7.73975 10.5831 9.61293 12.467 11.949 12.467Z" fill="currentColor"></path>
-                                    <path opacity="0.4" d="M21.0881 9.21923C21.6925 6.84176 19.9205 4.70654 17.664 4.70654C17.4187 4.70654 17.1841 4.73356 16.9549 4.77949C16.9244 4.78669 16.8904 4.802 16.8725 4.82902C16.8519 4.86324 16.8671 4.90917 16.8895 4.93889C17.5673 5.89528 17.9568 7.0597 17.9568 8.30967C17.9568 9.50741 17.5996 10.6241 16.9728 11.5508C16.9083 11.6462 16.9656 11.775 17.0793 11.7948C17.2369 11.8227 17.3981 11.8371 17.5629 11.8416C19.2059 11.8849 20.6807 10.8213 21.0881 9.21923Z" fill="currentColor"></path>
-                                    <path d="M22.8094 14.817C22.5086 14.1722 21.7824 13.73 20.6783 13.513C20.1572 13.3851 18.747 13.205 17.4352 13.2293C17.4155 13.232 17.4048 13.2455 17.403 13.2545C17.4003 13.2671 17.4057 13.2887 17.4316 13.3022C18.0378 13.6039 20.3811 14.916 20.0865 17.6834C20.074 17.8032 20.1698 17.9068 20.2888 17.8888C20.8655 17.8059 22.3492 17.4853 22.8094 16.4866C23.0637 15.9589 23.0637 15.3456 22.8094 14.817Z" fill="currentColor"></path>
-                                    <path opacity="0.4" d="M7.04459 4.77973C6.81626 4.7329 6.58077 4.70679 6.33543 4.70679C4.07901 4.70679 2.30701 6.84201 2.9123 9.21947C3.31882 10.8216 4.79355 11.8851 6.43661 11.8419C6.60136 11.8374 6.76343 11.8221 6.92013 11.7951C7.03384 11.7753 7.09115 11.6465 7.02668 11.551C6.3999 10.6234 6.04263 9.50765 6.04263 8.30991C6.04263 7.05904 6.43303 5.89462 7.11085 4.93913C7.13234 4.90941 7.14845 4.86348 7.12696 4.82926C7.10906 4.80135 7.07593 4.78694 7.04459 4.77973Z" fill="currentColor"></path>
-                                    <path d="M3.32156 13.5127C2.21752 13.7297 1.49225 14.1719 1.19139 14.8167C0.936203 15.3453 0.936203 15.9586 1.19139 16.4872C1.65163 17.4851 3.13531 17.8066 3.71195 17.8885C3.83104 17.9065 3.92595 17.8038 3.91342 17.6832C3.61883 14.9167 5.9621 13.6046 6.56918 13.3029C6.59425 13.2885 6.59962 13.2677 6.59694 13.2542C6.59515 13.2452 6.5853 13.2317 6.5656 13.2299C5.25294 13.2047 3.84358 13.3848 3.32156 13.5127Z" fill="currentColor"></path>
-                                </svg>
-                            </i>
-                            <span class="item-name">Users</span>
-                            <i class="right-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                </svg>
-                            </i>
-                        </a>
-                        <ul class="sub-nav collapse" id="sidebar-user" data-bs-parent="#sidebar-menu">
-
-                            <li class="nav-item">
-                                <a class="nav-link" id="li_user" onclick="clickNav('user_navigation','li_user')">
-                                    <i class="icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                                            <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                            </g>
-                                        </svg>
-                                    </i>
-                                    <i class="sidenav-mini-icon"> U </i>
-                                    <span class="item-name">User Credentials</span>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link " id="li_accounts" onclick="clickNav('accounts_navigation','li_accounts')">
-                                    <i class="icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                                            <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                            </g>
-                                        </svg>
-                                    </i>
-                                    <i class="sidenav-mini-icon"> P </i>
-                                    <span class="item-name">Profiles</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    
-                    <li><hr class="hr-horizontal"></li>
-                    <li class="nav-item static-item">
-                        <a class="nav-link static-item disabled" href="#" tabindex="-1">
-                            <span class="default-icon">Others</span>
-                            <span class="mini-icon">-</span>
-                        </a>
-                    </li>
-                    
-                    <li><hr class="hr-horizontal"></li>
-                    
-                    
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#sidebar-form" role="button" aria-expanded="false" aria-controls="sidebar-form">
-                            <i class="icon">
-                                <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path opacity="0.4" d="M16.191 2H7.81C4.77 2 3 3.78 3 6.83V17.16C3 20.26 4.77 22 7.81 22H16.191C19.28 22 21 20.26 21 17.16V6.83C21 3.78 19.28 2 16.191 2Z" fill="currentColor"></path>
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8.07996 6.6499V6.6599C7.64896 6.6599 7.29996 7.0099 7.29996 7.4399C7.29996 7.8699 7.64896 8.2199 8.07996 8.2199H11.069C11.5 8.2199 11.85 7.8699 11.85 7.4289C11.85 6.9999 11.5 6.6499 11.069 6.6499H8.07996ZM15.92 12.7399H8.07996C7.64896 12.7399 7.29996 12.3899 7.29996 11.9599C7.29996 11.5299 7.64896 11.1789 8.07996 11.1789H15.92C16.35 11.1789 16.7 11.5299 16.7 11.9599C16.7 12.3899 16.35 12.7399 15.92 12.7399ZM15.92 17.3099H8.07996C7.77996 17.3499 7.48996 17.1999 7.32996 16.9499C7.16996 16.6899 7.16996 16.3599 7.32996 16.1099C7.48996 15.8499 7.77996 15.7099 8.07996 15.7399H15.92C16.319 15.7799 16.62 16.1199 16.62 16.5299C16.62 16.9289 16.319 17.2699 15.92 17.3099Z" fill="currentColor"></path>
-                                </svg>
-                            </i>
-                            <span class="item-name">Other Document</span>
-                            <i class="right-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                </svg>
-                            </i>
-                        </a>
-                        <ul class="sub-nav collapse" id="sidebar-form" data-bs-parent="#sidebar-menu">
-                            <li class="nav-item">
-                                <a class="nav-link " id="li_executive_order" onclick="clickNav('executive_order_navigation','li_executive_order')">
-                                   <i class="icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                                            <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                            </g>
-                                        </svg>
-                                    </i>
-                                   <i class="sidenav-mini-icon"> E </i>
-                                   <span class="item-name">Executive Orders</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="li_memorandom" onclick="clickNav('memorandom_navigation','li_memorandom')">
-                                    <i class="icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                                            <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                            </g>
-                                        </svg>
-                                    </i>
-                                    <i class="sidenav-mini-icon"> M </i>
-                                    <span class="item-name">Memorandom</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link " id="li_documents_refferals" onclick="clickNav('documents_refferals_navigation','li_documents_refferals')">
-                                    <i class="icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                                            <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                            </g>
-                                        </svg>
-                                    </i>
-                                    <i class="sidenav-mini-icon"> C </i>
-                                    <span class="item-name">Code And Referrences</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="li_citezen_charter" onclick="clickNav('citezen_charter_navigation','li_citezen_charter')">
-                                    <i class="icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                                            <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                            </g>
-                                        </svg>
-                                    </i>
-                                    <i class="sidenav-mini-icon"> C </i>
-                                    <span class="item-name">Citezen's Charter</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="li_rules_and_procedure" onclick="clickNav('rules_and_procedure_navigation','li_rules_and_procedure')">
-                                    <i class="icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                                            <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                            </g>
-                                        </svg>
-                                    </i>
-                                    <i class="sidenav-mini-icon"> R </i>
-                                    <span class="item-name">Rules and Procedure</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    
-                    
-
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#sp-budget" role="button" aria-expanded="false" aria-controls="sp-budget">
-                            <i class="icon">
-                                <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">                            <path fill-rule="evenodd" clip-rule="evenodd" d="M21.7872 10.539C21.6518 10.6706 21.4681 10.7457 21.2747 10.7457C20.559 10.7457 19.9787 11.3095 19.9787 11.9953C19.9787 12.6858 20.5522 13.2467 21.2611 13.2543C21.6605 13.258 22 13.5286 22 13.9166V16.3265C22 18.3549 20.3075 20 18.2186 20H15.0658C14.7398 20 14.4758 19.7435 14.4758 19.4269V17.3975C14.4758 17.0029 14.1567 16.6929 13.7505 16.6929C13.354 16.6929 13.0251 17.0029 13.0251 17.3975V19.4269C13.0251 19.7435 12.7611 20 12.4362 20H5.78143C3.70213 20 2 18.3558 2 16.3265V13.9166C2 13.5286 2.33946 13.258 2.73888 13.2543C3.44874 13.2467 4.02128 12.6858 4.02128 11.9953C4.02128 11.3282 3.46035 10.8209 2.72534 10.8209C2.53191 10.8209 2.34816 10.7457 2.21277 10.6142C2.07737 10.4827 2 10.3042 2 10.1163V7.68291C2 5.65731 3.706 4 5.7911 4H12.4362C12.7611 4 13.0251 4.25649 13.0251 4.57311V6.97827C13.0251 7.36348 13.354 7.68291 13.7505 7.68291C14.1567 7.68291 14.4758 7.36348 14.4758 6.97827V4.57311C14.4758 4.25649 14.7398 4 15.0658 4H18.2186C20.3075 4 22 5.64416 22 7.67352V10.0411C22 10.229 21.9226 10.4075 21.7872 10.539ZM13.7505 14.8702C14.1567 14.8702 14.4758 14.5508 14.4758 14.1656V10.4075C14.4758 10.0223 14.1567 9.70288 13.7505 9.70288C13.354 9.70288 13.0251 10.0223 13.0251 10.4075V14.1656C13.0251 14.5508 13.354 14.8702 13.7505 14.8702Z" fill="currentColor"></path>                            </svg>                        
-                            </i>
-                            <span class="item-name" id="sangunian_budget1">Budget</span>
-                            <i class="right-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                </svg>
-                            </i>
-                        </a>
-                        <ul class="sub-nav collapse" id="sp-budget" data-bs-parent="#sp-budget">
-                            <li class="nav-item">
-                                <a class="nav-link" id="li_sp_budget" onclick="clickNav('sp_budget_navigation','li_sp_budget')">
-                                    <i class="icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                                            <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                            </g>
-                                        </svg>
-                                    </i>
-                                    <i class="sidenav-mini-icon"> B </i>
-                                    <span class="item-name" id="sangunian_budget2">Budget</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="li_capital_outlay" onclick="clickNav('capital_outlay_navigation','li_capital_outlay')">
-                                    <i class="icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                                            <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                            </g>
-                                        </svg>
-                                    </i>
-                                    <i class="sidenav-mini-icon"> C </i>
-                                    <span class="item-name" id="sangunian_budget3">Capital Outlay</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="li_sp_member_deduction" onclick="clickNav('sp_member_deduction_navigation','li_sp_member_deduction')">
-                                    <i class="icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                                            <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                            </g>
-                                        </svg>
-                                    </i>
-                                    <i class="sidenav-mini-icon"> M </i>
-                                    <span class="item-name" id="sangunian_budget4">Member Deduction</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li><hr class="hr-horizontal"></li>
-                    <li class="nav-item static-item">
-                        <a class="nav-link static-item disabled" href="#" tabindex="-1">
-                            <span class="default-icon">Images</span>
-                            <span class="mini-icon">-</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" id="li_background" onclick="clickNav('background_navigation','li_background')">
-                            <i class="icon">
-                                 <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">                                
-                               <path opacity="0.4" d="M2 11.0786C2.05 13.4166 2.19 17.4156 2.21 17.8566C2.281 18.7996 2.642 19.7526 3.204 20.4246C3.986 21.3676 4.949 21.7886 6.292 21.7886C8.148 21.7986 10.194 21.7986 12.181 21.7986C14.176 21.7986 16.112 21.7986 17.747 21.7886C19.071 21.7886 20.064 21.3566 20.836 20.4246C21.398 19.7526 21.759 18.7896 21.81 17.8566C21.83 17.4856 21.93 13.1446 21.99 11.0786H2Z" fill="currentColor"></path>                                <path d="M11.2451 15.3843V16.6783C11.2451 17.0923 11.5811 17.4283 11.9951 17.4283C12.4091 17.4283 12.7451 17.0923 12.7451 16.6783V15.3843C12.7451 14.9703 12.4091 14.6343 11.9951 14.6343C11.5811 14.6343 11.2451 14.9703 11.2451 15.3843Z" fill="currentColor"></path>                                <path fill-rule="evenodd" clip-rule="evenodd" d="M10.211 14.5565C10.111 14.9195 9.762 15.1515 9.384 15.1015C6.833 14.7455 4.395 13.8405 2.337 12.4815C2.126 12.3435 2 12.1075 2 11.8555V8.38949C2 6.28949 3.712 4.58149 5.817 4.58149H7.784C7.972 3.12949 9.202 2.00049 10.704 2.00049H13.286C14.787 2.00049 16.018 3.12949 16.206 4.58149H18.183C20.282 4.58149 21.99 6.28949 21.99 8.38949V11.8555C21.99 12.1075 21.863 12.3425 21.654 12.4815C19.592 13.8465 17.144 14.7555 14.576 15.1105C14.541 15.1155 14.507 15.1175 14.473 15.1175C14.134 15.1175 13.831 14.8885 13.746 14.5525C13.544 13.7565 12.821 13.1995 11.99 13.1995C11.148 13.1995 10.433 13.7445 10.211 14.5565ZM13.286 3.50049H10.704C10.031 3.50049 9.469 3.96049 9.301 4.58149H14.688C14.52 3.96049 13.958 3.50049 13.286 3.50049Z" fill="currentColor">
-                               </path></svg> 
-                            </i>
-                            <span class="item-name">Upload Image Slider</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" id="li_gallery_albums" onclick="clickNav('gallery_albums_navigation','li_gallery_albums')">
-                            <i class="icon">
-                                
-                            <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">                            <path fill-rule="evenodd" clip-rule="evenodd" d="M7.63751 3.39549C5.06051 3.39549 3.39551 5.16249 3.39551 7.88849V16.1025C3.39551 16.8675 3.53751 17.5505 3.78051 18.1415C3.791 18.129 4.01986 17.8501 4.3184 17.4863C4.90188 16.7752 5.75156 15.7398 5.75751 15.7345C6.44951 14.9445 7.74851 13.7665 9.45351 14.4795C9.82712 14.6344 10.1592 14.8466 10.4649 15.042C10.4947 15.061 10.5242 15.0799 10.5535 15.0985C11.1265 15.4815 11.4635 15.6615 11.8135 15.6315C11.9585 15.6115 12.0945 15.5685 12.2235 15.4885C12.7101 15.1885 13.9718 13.4009 14.3496 12.8656C14.405 12.7871 14.4414 12.7355 14.4535 12.7195C15.5435 11.2995 17.2235 10.9195 18.6235 11.7595C18.8115 11.8715 20.1585 12.8125 20.6045 13.1905V7.88849C20.6045 5.16249 18.9395 3.39549 16.3535 3.39549H7.63751ZM16.3535 2.00049C19.7305 2.00049 21.9995 4.36249 21.9995 7.88849V16.1025C21.9995 16.1912 21.9902 16.2743 21.9809 16.3574C21.9744 16.4159 21.9678 16.4742 21.9645 16.5345C21.9624 16.5709 21.9613 16.6073 21.9603 16.6438C21.9589 16.6923 21.9575 16.7409 21.9535 16.7895C21.9515 16.8085 21.9478 16.8267 21.944 16.845C21.9403 16.8632 21.9365 16.8815 21.9345 16.9005C21.9015 17.2145 21.8505 17.5145 21.7795 17.8055C21.7627 17.8782 21.7433 17.9483 21.7238 18.0191L21.7195 18.0345C21.6395 18.3165 21.5455 18.5855 21.4325 18.8425C21.4127 18.8857 21.3918 18.9278 21.3709 18.9699C21.357 18.998 21.3431 19.0261 21.3295 19.0545C21.2075 19.2995 21.0755 19.5345 20.9225 19.7525C20.8942 19.7928 20.8641 19.8307 20.8339 19.8685C20.814 19.8936 20.794 19.9186 20.7745 19.9445C20.6155 20.1505 20.4495 20.3475 20.2615 20.5265C20.224 20.5622 20.1834 20.5948 20.1428 20.6275C20.1175 20.6479 20.0921 20.6683 20.0675 20.6895C19.8745 20.8555 19.6775 21.0145 19.4605 21.1505C19.4132 21.1802 19.3628 21.2052 19.3127 21.2301C19.2803 21.2462 19.2479 21.2622 19.2165 21.2795C18.9955 21.4015 18.7725 21.5205 18.5295 21.6125C18.4711 21.6347 18.4088 21.6508 18.3465 21.6669C18.3021 21.6783 18.2577 21.6898 18.2145 21.7035C18.1929 21.7102 18.1713 21.7169 18.1497 21.7236C17.9326 21.7912 17.7162 21.8585 17.4825 21.8985C17.3471 21.9222 17.2034 21.9313 17.0596 21.9405C16.9974 21.9444 16.9351 21.9484 16.8735 21.9535C16.8073 21.9584 16.7423 21.9664 16.6773 21.9744C16.5716 21.9874 16.4656 22.0005 16.3535 22.0005H7.63751C7.26151 22.0005 6.90251 21.9625 6.55551 21.9055C6.54251 21.9035 6.53051 21.9015 6.51851 21.8995C5.16551 21.6665 4.04251 21.0135 3.25551 20.0285C3.25005 20.0285 3.2479 20.0248 3.24504 20.0199C3.24319 20.0167 3.24105 20.013 3.23751 20.0095C2.44651 19.0135 1.99951 17.6745 1.99951 16.1025V7.88849C1.99951 4.36249 4.27051 2.00049 7.63751 2.00049H16.3535ZM11.0001 8.51505C11.0001 9.87 9.86639 11.0001 8.50496 11.0001C7.30825 11.0001 6.2879 10.1257 6.05922 8.99372C6.02143 8.82387 6.00011 8.64919 6.00011 8.46872C6.00011 7.10412 7.10864 6.00009 8.47879 6.00009C9.17647 6.00009 9.80825 6.29347 10.2608 6.76152C10.7152 7.21317 11.0001 7.83564 11.0001 8.51505Z" fill="currentColor"></path>                            </svg> 
-                            </i>
-                            <span class="item-name">Gallery Albums</span>
-                        </a>
-                    </li>
-
-                    <li><hr class="hr-horizontal"></li>
-                    <li class="nav-item static-item">
-                        <a class="nav-link static-item disabled" href="#" tabindex="-1">
-                            <span class="default-icon">Print</span>
-                            <span class="mini-icon">-</span>
-                        </a>
-                    </li>
-                    <li><hr class="hr-horizontal"></li>
-
-
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#sidebar-auth" role="button" aria-expanded="false" aria-controls="sidebar-user">
-                            <i class="icon">
-                                <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path opacity="0.4" d="M12.0865 22C11.9627 22 11.8388 21.9716 11.7271 21.9137L8.12599 20.0496C7.10415 19.5201 6.30481 18.9259 5.68063 18.2336C4.31449 16.7195 3.5544 14.776 3.54232 12.7599L3.50004 6.12426C3.495 5.35842 3.98931 4.67103 4.72826 4.41215L11.3405 2.10679C11.7331 1.96656 12.1711 1.9646 12.5707 2.09992L19.2081 4.32684C19.9511 4.57493 20.4535 5.25742 20.4575 6.02228L20.4998 12.6628C20.5129 14.676 19.779 16.6274 18.434 18.1581C17.8168 18.8602 17.0245 19.4632 16.0128 20.0025L12.4439 21.9088C12.3331 21.9686 12.2103 21.999 12.0865 22Z" fill="currentColor"></path>
-                                    <path d="M11.3194 14.3209C11.1261 14.3219 10.9328 14.2523 10.7838 14.1091L8.86695 12.2656C8.57097 11.9793 8.56795 11.5145 8.86091 11.2262C9.15387 10.9369 9.63207 10.934 9.92906 11.2193L11.3083 12.5451L14.6758 9.22479C14.9698 8.93552 15.448 8.93258 15.744 9.21793C16.041 9.50426 16.044 9.97004 15.751 10.2574L11.8519 14.1022C11.7049 14.2474 11.5127 14.3199 11.3194 14.3209Z" fill="currentColor"></path>
-                                </svg>
-                            </i>
-                            <span class="item-name">Print Documents</span>
-                            <i class="right-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                </svg>
-                            </i>
-                        </a>
-                        <ul class="sub-nav collapse" id="sidebar-auth" data-bs-parent="#sidebar-menu">
-                            <li class="nav-item">
-                                <a class="nav-link" id="li_profiling_ordinance" onclick="clickNav('profiling_ordinance_navigation','li_profiling_ordinance')">
-                                    <i class="icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                                            <g>
-                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                            </g>
-                                        </svg>
-                                    </i>
-                                    <i class="sidenav-mini-icon"> P </i>
-                                    <span class="item-name">PROFILING ORD</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    
-
-                    <li><hr class="hr-horizontal"></li>
-                    <li class="nav-item static-item">
-                        <a class="nav-link static-item disabled" href="#" tabindex="-1">
-                            <span class="default-icon">Downloads</span>
-                            <span class="mini-icon">-</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="li_download_center" onclick="clickNav('download_center_navigation','li_download_center')">
-                            <i class="icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                                    <g>
-                                    <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                    </g>
-                                </svg>
-                            </i>
-                            <i class="sidenav-mini-icon"> D </i>
-                            <span class="item-name">Download Center</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <p>&nbsp;</p>
-                    </li>
-                </ul>
+                <ul class="navbar-nav iq-main-menu" id="sidebar-menu" style="margin-bottom: 50px;"></ul>
                 <!-- Sidebar Menu End -->        
             </div>
         </div>
@@ -768,7 +156,7 @@
                               <div>
                                   <h1><span id="system_city" style="overflow: hidden;text-transform: uppercase;"></span></h1>
                                   <h3 id="active_sp"></h3>
-                                  <p id="city_mission">Mission</p>
+                                  <p id="city_mission">&nbsp;</p>
                               </div>
                               <div>
                                   <a href="/announcement" class="btn btn-link btn-soft-light">
@@ -820,6 +208,10 @@
 
                 <div id="committee_navigation" style="display: none">
                     {% include 'config/comitee.html' %}
+                </div>
+
+                <div id="committee_reports_navigation" style="display: none">
+                    {% include 'committee_reports/view_committee_reports.html' %}
                 </div>
 
                 <div id="approved_ord_navigation" style="display: none">
@@ -2529,7 +1921,7 @@
                             </div>
                         </div>
 
-                        <p style="font-weight:bolder;">Select System Type</p>
+                        <p style="font-weight:bolder;">Toggle</p>
 
                         <div style="padding-left: 50px;padding-right: 100px;">
                             <div class="form-check form-switch">
@@ -2619,7 +2011,7 @@
                     </h5>
 
                     <!-- <button class="btn btn-primary" onclick="print_custom('print_oob_id')">Print</button> -->
-                    <button class="btn btn-primary" onclick="voting()">VOTING</button>
+                    <button class="btn btn-primary" id="btn_toogle_session" onclick="voting()">Voting</button>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
@@ -2720,7 +2112,7 @@
                                                 <p style="font-size: 20px" class="textStyle">
                                                     <span id="session_national_anthem">NONE</span>&nbsp;
                                                     <span>
-                                                        <a href="#" id="national_anthem" target="_blank">
+                                                        <a href="#" id="national_anthems" target="_blank">
                                                             <span class="show_doc">****play source</span>
                                                         </a>
                                                     </span>
@@ -3069,6 +2461,103 @@
                             </div>
                         </div>
                     </form>
+
+                    <div style="position: relative; min-height: 100vh; padding: 40px 100px 100px 100px!important; color: black; padding: 40px; font-family: 'Times New Roman', serif; overflow: hidden;">
+
+                        <!-- Blurred watermark background -->
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                            background-image: url('../static/images/BC_Logo.png');
+                            background-repeat: no-repeat;
+                            background-position: center;
+                            background-size: 700px;
+                            opacity: 0.08;       /* transparency level */
+                            filter: blur(2px);   /* subtle blur effect */
+                            width: 100%;
+                            height: 100%;
+                            z-index: 0;">
+                        </div>
+
+                        <!-- Actual content -->
+                        <div style="position: relative; z-index: 1;">
+
+                            <h5 style="text-align: center; margin: 0; color: black;">12ᵗʰ SANGGUNIANG BAYAN</h5>
+                            <h5 style="text-align: center; margin: 0; color: black;">CARRASCAL, SURIGAO DEL SUR</h5>
+                            <h5 style="text-align: center; margin-top: 20px; color: black;">ORDER OF BUSINESS</h5>
+                            <p style="text-align: center; font-weight: bold; color: black;">October 20, 2025</p>
+
+                            <ol style="color: black;">
+                            <li style="color: black; font-weight: bold;">CALL TO ORDER</li>
+                            <li style="color: black; font-weight: bold;">PAMBANSANG AWIT</li>
+                            <li style="color: black; font-weight: bold;">OPENING PRAYER</li>
+                            <li style="color: black; font-weight: bold;">ROLL CALL</li>
+                            <li style="color: black; font-weight: bold;">READING AND APPROVAL OF MINUTES</li>
+                            <li style="color: black; font-weight: bold;">PRIVILEGE HOUR</li>
+                            <li style="color: black; font-weight: bold;">
+                                QUESTION HOUR
+                                <ol type="a" style="color: black;">
+                                <li style="color: black; font-weight: normal;">
+                                    Appearance of Mr. Japhet C. Sugian, R. Agriculturist, Municipal Agriculturist, re: proposed Usufruct Agreement between the Municipality of Carrascal and the Heirs of the late Mr. Jose A. Burlat, for the Livestock Economic Enterprise Development Program (New Swine Breeding Center of Carrascal).
+                                </li>
+                                <li style="color: black; font-weight: normal;">
+                                    Appearance of PHILKONSTRAK Engineers, re: Drainage concerns on the ongoing canal project in Barangay Baybay, this Municipality.
+                                </li>
+                                </ol>
+                            </li>
+
+                            <li style="color: black; font-weight: bold;">
+                                REFERENCE OF BUSINESS AND REFERRALS OF MEASURES AND COMMUNICATIONS
+                                <ol type="a" style="color: black;">
+                                <li style="color: black; font-weight: normal;">Communications received by this level.</li>
+                                <li style="color: black; font-weight: normal;">Draft Resolutions/Ordinances submitted to the floor.</li>
+                                </ol>
+                            </li>
+
+                            <li style="color: black; font-weight: bold;">
+                                COMMITTEE REPORT
+                                <ol type="A" style="color: black;">
+                                <li style="color: black; font-weight: normal;">
+                                    <strong>Committee on Budget, Finance, and Appropriations</strong>, re:
+                                    <ul style="color: black;">
+                                    <li style="color: black; font-weight: normal;">Barangay Annual Investment Program (BAIP) P.Y. 2026 with 20% Development Fund Component of Barangay Babuyan; and</li>
+                                    <li style="color: black; font-weight: normal;">Annual Investment Program (AIP) P.Y. 2026 of the Municipality of Carrascal, through MDC Reso. No. 8, Series of 2025.</li>
+                                    </ul>
+                                </li>
+                                <li style="color: black; font-weight: normal;">
+                                    <strong>Committee on Cooperatives</strong>, re: Request for Accreditation as NGO by Maslog Carrascal Agriculture Cooperative (MACAG) of Brgy. Panikian, Carrascal, Surigao del Sur.
+                                </li>
+                                <li style="color: black; font-weight: normal;">
+                                    <strong>Committee on Disaster Management</strong>, re: Contract of Service with Engr. Danel R. Arreza, Structural Engineer, for the conduct of Damage Assessment and Needs Analysis (DANA) between earthquake and subsequent tremors.
+                                </li>
+                                </ol>
+                            </li>
+
+                            <li style="color: black; font-weight: bold;">
+                                CALENDAR OF BUSINESS
+                                <div style="margin-left: 20px; margin-top: 10px; color: black;">
+                                <strong>BUSINESS FOR THE DAY:</strong>
+                                <ol type="A" style="color: black;">
+                                    <li style="color: black; font-weight: normal;">
+                                    <strong>Committee on Housing and Land Use</strong>, re: proposed Usufruct Agreement between the Municipality of Carrascal and the Heirs of the late Mr. Jose A. Burlat, for the Livestock Economic Enterprise Development Program (New Swine Breeding Center of Carrascal).<br>
+                                    <em>c/o Committee Chairperson SBM Romen R. Intano</em>
+                                    </li>
+                                </ol>
+
+                                <strong>UNFINISHED BUSINESS:</strong>
+                                <ol type="A" style="color: black;">
+                                    <li style="color: black; font-weight: normal;">
+                                    <strong>DRAFT Ordinance post-Public Hearing</strong> entitled, “An Ordinance Amending Ordinance No. 01, Series of 2024 of this Municipality Entitled ‘Regulating the Selling, Serving and Drinking of Liquor in Places of Entertainment, Business Establishments and Public Places and Providing Penalties for Violation Thereof,’ By Adding Provisions Prohibiting the Sale of Tobacco Products to Minors and Incorporating Relevant Sections of Republic Act No. 9211 in the Municipality of Carrascal, Surigao del Sur.” <br>
+                                    <em>3rd reading, c/o Committee on Commerce, Trade and Industry Chairperson, SBM John Angelo T. Arreza, CEI</em>
+                                    </li>
+                                </ol>
+                                </div>
+                            </li>
+
+                            <li style="color: black; font-weight: bold;">OTHER MATTERS</li>
+                            <li style="color: black; font-weight: bold;">ADJOURNMENT</li>
+                            </ol>
+                        </div>
+                    </div>
+
                 </div>
 
                 <div id="voting_" class="modal-body" style="display: none;">
@@ -3106,7 +2595,7 @@
                                 <h5 class="card-title">Instructions</h5>
                                 <ol>
                                   <li>Click a vote button on a councillor card to cast or change your vote.</li>
-                                  <li>Votes persist in this browser with <code>localStorage</code>. Use <em>Reset all votes</em> to clear.</li>
+                                  <li>Use <em>Reset all votes</em> to clear.</li>
                                   <li>Use <em>Export JSON</em> to download results for sharing.</li>
                                 </ol>
                               </div>
@@ -3115,6 +2604,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -3480,6 +2970,445 @@
             $('#inp_committee_minutes').trigger("chosen:updated")
         })
     })
+
+    let menuItems = [
+      {
+        type: "link",
+        id: "li_home",
+        label: "Home",
+        icon: `<svg width="20" viewBox="0 0 24 24" fill="none"><path d="M9.13 20.77V17.71C9.13 16.93 9.77 16.3 10.56 16.3H13.43C13.81 16.3 14.17 16.45 14.44 16.72C14.71 16.98 14.86 17.34 14.86 17.71V20.77C14.85 21.1 14.98 21.41 15.21 21.64C15.44 21.87 15.76 22 16.08 22H18.04C18.96 22 19.84 21.64 20.49 21C21.14 20.36 21.5 19.49 21.5 18.58V9.87C21.5 9.13 21.17 8.44 20.6 7.96L13.93 2.68C12.77 1.75 11.11 1.78 9.99 2.75L3.47 7.96C2.87 8.42 2.52 9.12 2.5 9.87V18.57C2.5 20.46 4.05 22 5.96 22H7.87C8.55 22 9.1 21.46 9.1 20.78L9.13 20.77Z" fill="currentColor"/></svg>`,
+        onclick: "clickNav('home_navigation','li_home')",
+        routes: "/home"
+      },
+      {
+        type: "link",
+        label: "Landing Pages",
+        href: "/landing",
+        target: "_blank",
+        icon: `<svg width="20" viewBox="0 0 24 24" fill="none"><path opacity="0.4" d="M16.08 2H19.46C20.86 2 22 3.15 22 4.56V7.97C22 9.39 20.86 10.53 19.46 10.53H16.08C14.67 10.53 13.54 9.39 13.54 7.97V4.56C13.54 3.15 14.67 2 16.08 2Z" fill="currentColor"/></svg>`,
+        routes: "/landing"
+      },
+      {
+        type: "link",
+        id: "li_session",
+        label: "Sessions",
+        icon: `<svg width="20" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 15v4m6-6v6m6-4v4m6-6v6M3 11l6-5 6 5 5.5-5.5"/></svg>`,
+        onclick: "clickNav('session_navigation','li_session')",
+        routes: '/sessions'
+      },
+      {
+        type: "subnav",
+        id: "li_ordinance",
+        label: "Ordinance",
+        icon: `<svg width="20" viewBox="0 0 24 24" fill="none"><path opacity="0.4" d="M10.08 15.96H3.51C2.68 15.96 2 16.62 2 17.44C2 18.26 2.68 18.92 3.51 18.92H10.08C10.92 18.92 11.59 18.26 11.59 17.44C11.59 16.62 10.92 15.96 10.08 15.96Z" fill="currentColor"/></svg>`,
+        children: [
+          {
+            id: "approval_ordinance",
+            label: "Approved Ordinance",
+            onclick: "clickNav('approved_ord_navigation','approval_ordinance')",
+            routes: '/view_ordinance'
+          },
+          {
+            id: "appriation_ordinance",
+            label: "Appropriation Ord",
+            onclick: "clickNav('appropriation_navigation','appriation_ordinance')",
+            routes: '/view_ordinance'
+          }
+        ]
+      },
+
+      {
+        type: "subnav",
+        id: "li_resolution",
+        label: "Resolution",
+        icon: `<svg width="20" viewBox="0 0 24 24" fill="none"><path opacity="0.4" d="M16.191 2H7.81C4.77 2 3 3.78 3 6.83V17.16C3 20.26 4.77 22 7.81 22H16.191C19.28 22 21 20.26 21 17.16V6.83C21 3.78 19.28 2 16.191 2Z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M8.07996 6.6499V6.6599C7.64896 6.6599 7.29996 7.0099 7.29996 7.4399C7.29996 7.8699 7.64896 8.2199 8.07996 8.2199H11.069C11.5 8.2199 11.85 7.8699 11.85 7.4289C11.85 6.9999 11.5 6.6499 11.069 6.6499H8.07996ZM15.92 12.7399H8.07996C7.64896 12.7399 7.29996 12.3899 7.29996 11.9599C7.29996 11.5299 7.64896 11.1789 8.07996 11.1789H15.92C16.35 11.1789 16.7 11.5299 16.7 11.9599C16.7 12.3899 16.35 12.7399 15.92 12.7399ZM15.92 17.3099H8.07996C7.77996 17.3499 7.48996 17.1999 7.32996 16.9499C7.16996 16.6899 7.16996 16.3599 7.32996 16.1099C7.48996 15.8499 7.77996 15.7099 8.07996 15.7399H15.92C16.319 15.7799 16.62 16.1199 16.62 16.5299C16.62 16.9289 16.319 17.2699 15.92 17.3099Z" fill="currentColor"></path></svg>`,
+        children: [
+          {
+            id: "li_approved_resolution",
+            label: "Approved Resolution",
+            onclick: "clickNav('resolution_navigation','li_approved_resolution')",
+            routes: '/resolution'
+          }
+        ]
+      },
+
+      {
+        type: "link",
+        id: "li_document_tracking",
+        label: "Document Tracking",
+        onclick: "clickNav('document_tracking_navigation','li_document_tracking')",
+        icon: `
+          <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" 
+              d="M2 10.6699C2 5.88166 5.84034 2 10.5776 2C12.8526 2 15.0343 2.91344 16.6429 4.53936C18.2516 6.16529 19.1553 8.37052 19.1553 10.6699C19.1553 15.4582 15.3149 19.3399 10.5776 19.3399C5.84034 19.3399 2 15.4582 2 10.6699ZM19.0134 17.6543L21.568 19.7164H21.6124C22.1292 20.2388 22.1292 21.0858 21.6124 21.6082C21.0955 22.1306 20.2576 22.1306 19.7407 21.6082L17.6207 19.1785C17.4203 18.9766 17.3076 18.7024 17.3076 18.4164C17.3076 18.1304 17.4203 17.8562 17.6207 17.6543C18.0072 17.2704 18.6268 17.2704 19.0134 17.6543Z" 
+              fill="currentColor">
+            </path>
+          </svg>`,
+        routes : "/document_tracking"
+
+    },
+    {
+        type: "subnav",
+        id: "li_commitee_dropdown",
+        label: "Committee",
+        icon: `<svg width="20" viewBox="0 0 24 24" fill="none"><path opacity="0.4" d="M16.191 2H7.81C4.77 2 3 3.78 3 6.83V17.16C3 20.26 4.77 22 7.81 22H16.191C19.28 22 21 20.26 21 17.16V6.83C21 3.78 19.28 2 16.191 2Z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M8.07996 6.6499V6.6599C7.64896 6.6599 7.29996 7.0099 7.29996 7.4399C7.29996 7.8699 7.64896 8.2199 8.07996 8.2199H11.069C11.5 8.2199 11.85 7.8699 11.85 7.4289C11.85 6.9999 11.5 6.6499 11.069 6.6499H8.07996ZM15.92 12.7399H8.07996C7.64896 12.7399 7.29996 12.3899 7.29996 11.9599C7.29996 11.5299 7.64896 11.1789 8.07996 11.1789H15.92C16.35 11.1789 16.7 11.5299 16.7 11.9599C16.7 12.3899 16.35 12.7399 15.92 12.7399ZM15.92 17.3099H8.07996C7.77996 17.3499 7.48996 17.1999 7.32996 16.9499C7.16996 16.6899 7.16996 16.3599 7.32996 16.1099C7.48996 15.8499 7.77996 15.7099 8.07996 15.7399H15.92C16.319 15.7799 16.62 16.1199 16.62 16.5299C16.62 16.9289 16.319 17.2699 15.92 17.3099Z" fill="currentColor"></path></svg>`,
+        children: [
+          {
+            id: "li_committee",
+            label: "Committee",
+            onclick: "clickNav('committee_navigation','li_committee')",
+            routes: '/committee'
+          },
+          {
+            id: "li_committee_reports",
+            label: "Committee Reports",
+            onclick: "clickNav('committee_reports_navigation','li_committee_reports')",
+            routes: '/view_committee_reports'
+          }
+        ]
+      },
+
+      {
+        type: "link",
+        id: "li_minutes",
+        label: "Minutes",
+        icon: `
+          <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M21.9964 8.37513H17.7618C15.7911 8.37859 14.1947 9.93514 14.1911 11.8566C14.1884 13.7823 15.7867 15.3458 17.7618 15.3484H22V15.6543C22 19.0136 19.9636 21 16.5173 21H7.48356C4.03644 21 2 19.0136 2 15.6543V8.33786C2 4.97862 4.03644 3 7.48356 3H16.5138C19.96 3 21.9964 4.97862 21.9964 8.33786V8.37513ZM6.73956 8.36733H12.3796H12.3831H12.3902C12.8124 8.36559 13.1538 8.03019 13.152 7.61765C13.1502 7.20598 12.8053 6.87318 12.3831 6.87491H6.73956C6.32 6.87664 5.97956 7.20858 5.97778 7.61852C5.976 8.03019 6.31733 8.36559 6.73956 8.36733Z"
+              fill="currentColor"/>
+            <path opacity="0.4"
+              d="M16.0374 12.2966C16.2465 13.2478 17.0805 13.917 18.0326 13.8996H21.2825C21.6787 13.8996 22 13.5715 22 13.166V10.6344C21.9991 10.2297 21.6787 9.90077 21.2825 9.8999H17.9561C16.8731 9.90338 15.9983 10.8024 16 11.9102C16 12.0398 16.0128 12.1695 16.0374 12.2966Z"
+              fill="currentColor"/>
+            <circle cx="18" cy="11.8999" r="1" fill="currentColor"></circle>
+          </svg>`,
+        onclick: "clickNav('minutes_navigation','li_minutes')",
+        routes : "/minutes"
+      },
+
+      {
+        type: "static",
+        label: "Configuration",
+        addHrBefore: true,
+        addHrAfter: true
+      },
+
+      {
+        type: "subnav",
+        label: "System Config",
+        id: "config-menu",
+        icon: `<svg width="20" viewBox="0 0 24 24" fill="none"><path opacity="0.4" d="M13.3051 5.88243V6.06547C12.8144 6.05584 12.3237 6.05584 11.8331 6.05584V5.89206C11.8331 5.22733 11.2737 4.68784 10.6064 4.68784H9.63482C8.52589 4.68784 7.62305 3.80152 7.62305 2.72254C7.62305 2.32755 7.95671 2 8.35906 2C8.77123 2 9.09508 2.32755 9.09508 2.72254C9.09508 3.01155 9.34042 3.24276 9.63482 3.24276H10.6064C12.0882 3.2524 13.2953 4.43736 13.3051 5.88243Z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M15.164 6.08279C15.4791 6.08712 15.7949 6.09145 16.1119 6.09469C19.5172 6.09469 22 8.52241 22 11.875V16.1813C22 19.5339 19.5172 21.9616 16.1119 21.9616C14.7478 21.9905 13.3837 22.0001 12.0098 22.0001C10.6359 22.0001 9.25221 21.9905 7.88813 21.9616C4.48283 21.9616 2 19.5339 2 16.1813V11.875C2 8.52241 4.48283 6.09469 7.89794 6.09469C9.18351 6.07542 10.4985 6.05615 11.8332 6.05615C12.3238 6.05615 12.8145 6.05615 13.3052 6.06579C13.9238 6.06579 14.5425 6.07427 15.164 6.08279Z" fill="currentColor"></path></svg>`,
+        children: [
+          { id: "sangunian", label: "Legislature", onclick: "clickNav('sangunian_navigation','sangunian')" , routes: "/sangunian"},
+          { id: "li_assign", label: "Assign Councilor", onclick: "clickNav('assign_navigation','li_assign')" },
+          { id: "li_announcement", label: "Announcement", onclick: "clickNav('announcement_navigation','li_announcement')" , routes: "/announcement"},
+          { id: "li_governance_classification", label: "Governance", onclick: "clickNav('governance_classification_navigation','li_governance_classification')", routes: "/governance_classification" },
+          { id: "li_category", label: "Category", onclick: "clickNav('category_navigation','li_category')", routes: "/category" },
+          { id: "li_gmail", label: "Gmail Account", onclick: "clickNav('gmail_navigation','li_gmail')", routes : "/gmail_account"},
+          { id: "li_info", label: "Info", onclick: "clickNav('info_navigation','li_info')" },
+          { id: "li_barangay", label: "Barangay", onclick: "clickNav('barangay_navigation','li_barangay')", routes: "/barangay" }
+        ]
+      },
+
+      {
+          type: "subnav",
+          id: "li_users",
+          label: "Users",
+          icon: `<svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11.9488 14.54C8.49884 14.54 5.58789 15.1038 5.58789 17.2795C5.58789 19.4562 8.51765 20.0001 11.9488 20.0001C15.3988 20.0001 18.3098 19.4364 18.3098 17.2606C18.3098 15.084 15.38 14.54 11.9488 14.54Z" fill="currentColor"></path>
+            <path opacity="0.4" d="M11.949 12.467C14.2851 12.467 16.1583 10.5831 16.1583 8.23351C16.1583 5.88306 14.2851 4 11.949 4C9.61293 4 7.73975 5.88306 7.73975 8.23351C7.73975 10.5831 9.61293 12.467 11.949 12.467Z" fill="currentColor"></path>
+          </svg>`,
+          children: [
+            {
+              id: "li_user",
+              label: "User Credentials",
+              onclick: "clickNav('user_navigation','li_user')",
+              routes: "/accounts"
+            },
+            {
+              id: "li_accounts",
+              label: "Profiles",
+              onclick: "clickNav('accounts_navigation','li_accounts')",
+              routes: "/accounts"
+            }
+          ]
+        },
+
+        {
+            type: "static",
+            label: "Others",
+            addHrBefore: true,
+            addHrAfter: true
+          },
+          {
+            type: "subnav",
+            id: "sidebar-form",
+            label: "Other Document",
+            icon: `<svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                     <path opacity="0.4" d="M16.191 2H7.81C4.77 2 3 3.78 3 6.83V17.16C3 20.26 4.77 22 7.81 22H16.191C19.28 22 21 20.26 21 17.16V6.83C21 3.78 19.28 2 16.191 2Z" fill="currentColor"></path>
+                     <path fill-rule="evenodd" clip-rule="evenodd" d="M8.08 6.65v.01c-.43 0-.78.35-.78.77s.35.78.78.78h2.99c.43 0 .78-.35.78-.78s-.35-.77-.78-.77H8.08Zm7.84 6.09H8.08c-.43 0-.78-.35-.78-.78s.35-.78.78-.78h7.84c.43 0 .78.35.78.78s-.35.78-.78.78Zm0 4.57H8.08a.75.75 0 0 1 0-1.5h7.84a.75.75 0 0 1 0 1.5Z" fill="currentColor"></path>
+                   </svg>`,
+            children: [
+              { id: "li_executive_order", label: "Executive Orders", onclick: "clickNav('executive_order_navigation','li_executive_order')" , routes: "/executive_order"},
+              { id: "li_memorandom", label: "Memorandom", onclick: "clickNav('memorandom_navigation','li_memorandom')", routes: "/memorandom" },
+              { id: "li_documents_refferals", label: "Code And Referrences", onclick: "clickNav('documents_refferals_navigation','li_documents_refferals')", routes: "/documents_refferals" },
+              { id: "li_citezen_charter", label: "Citezen's Charter", onclick: "clickNav('citezen_charter_navigation','li_citezen_charter')" },
+              { id: "li_rules_and_procedure", label: "Rules and Procedure", onclick: "clickNav('rules_and_procedure_navigation','li_rules_and_procedure')", routes: "/rules_and_procedure" }
+            ]
+        },
+
+        {
+          type: "link",
+          id: "li_reports",
+          label: "Reports",
+          icon: `<svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path opacity="0.4" d="M16.191 2H7.81C4.77 2 3 3.78 3 6.83V17.16C3 20.26 4.77 22 7.81 22H16.191C19.28 22 21 20.26 21 17.16V6.83C21 3.78 19.28 2 16.191 2Z" fill="currentColor"></path>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M8.07996 6.6499V6.6599C7.64896 6.6599 7.29996 7.0099 7.29996 7.4399C7.29996 7.8699 7.64896 8.2199 8.07996 8.2199H11.069C11.5 8.2199 11.85 7.8699 11.85 7.4289C11.85 6.9999 11.5 6.6499 11.069 6.6499H8.07996ZM15.92 12.7399H8.07996C7.64896 12.7399 7.29996 12.3899 7.29996 11.9599C7.29996 11.5299 7.64896 11.1789 8.07996 11.1789H15.92C16.35 11.1789 16.7 11.5299 16.7 11.9599C16.7 12.3899 16.35 12.7399 15.92 12.7399ZM15.92 17.3099H8.07996C7.77996 17.3499 7.48996 17.1999 7.32996 16.9499C7.16996 16.6899 7.16996 16.3599 7.32996 16.1099C7.48996 15.8499 7.77996 15.7099 8.07996 15.7399H15.92C16.319 15.7799 16.62 16.1199 16.62 16.5299C16.62 16.9289 16.319 17.2699 15.92 17.3099Z" fill="currentColor"></path>
+            </svg>`,
+          onclick: "clickNav('reports_navigation','li_reports')",
+          routes: "/reports"
+        },
+        {
+            type: "subnav",
+            id: "sp-budget",
+            label: "Budget",
+            icon: `
+              <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">                            
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M21.7872 10.539C21.6518 10.6706 21.4681 10.7457 21.2747 10.7457C20.559 10.7457 19.9787 11.3095 19.9787 11.9953C19.9787 12.6858 20.5522 13.2467 21.2611 13.2543C21.6605 13.258 22 13.5286 22 13.9166V16.3265C22 18.3549 20.3075 20 18.2186 20H15.0658C14.7398 20 14.4758 19.7435 14.4758 19.4269V17.3975C14.4758 17.0029 14.1567 16.6929 13.7505 16.6929C13.354 16.6929 13.0251 17.0029 13.0251 17.3975V19.4269C13.0251 19.7435 12.7611 20 12.4362 20H5.78143C3.70213 20 2 18.3558 2 16.3265V13.9166C2 13.5286 2.33946 13.258 2.73888 13.2543C3.44874 13.2467 4.02128 12.6858 4.02128 11.9953C4.02128 11.3282 3.46035 10.8209 2.72534 10.8209C2.53191 10.8209 2.34816 10.7457 2.21277 10.6142C2.07737 10.4827 2 10.3042 2 10.1163V7.68291C2 5.65731 3.706 4 5.7911 4H12.4362C12.7611 4 13.0251 4.25649 13.0251 4.57311V6.97827C13.0251 7.36348 13.354 7.68291 13.7505 7.68291C14.1567 7.68291 14.4758 7.36348 14.4758 6.97827V4.57311C14.4758 4.25649 14.7398 4 15.0658 4H18.2186C20.3075 4 22 5.64416 22 7.67352V10.0411C22 10.229 21.9226 10.4075 21.7872 10.539ZM13.7505 14.8702C14.1567 14.8702 14.4758 14.5508 14.4758 14.1656V10.4075C14.4758 10.0223 14.1567 9.70288 13.7505 9.70288C13.354 9.70288 13.0251 10.0223 13.0251 10.4075V14.1656C13.0251 14.5508 13.354 14.8702 13.7505 14.8702Z" fill="currentColor"></path>
+              </svg>
+            `,
+            children: [
+              {
+                id: "li_sp_budget",
+                label: "Budget",
+                onclick: "clickNav('sp_budget_navigation','li_sp_budget')",
+                routes: "/sp_budget"
+              },
+              {
+                id: "li_capital_outlay",
+                label: "Capital Outlay",
+                onclick: "clickNav('capital_outlay_navigation','li_capital_outlay')",
+                routes: "/sp_budget"
+              },
+              {
+                id: "li_sp_member_deduction",
+                label: "Member Deduction",
+                onclick: "clickNav('sp_member_deduction_navigation','li_sp_member_deduction')",
+                routes: "/sp_budget"
+              },
+            ],
+            addHrAfter: true,
+      },
+      {
+        type: "static",
+        label: "Images",
+      },
+      {
+        type: "link",
+        id: "li_background",
+        label: "Upload Image Slider",
+        onclick: "clickNav('background_navigation','li_background')",
+        icon: `
+          <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">                                
+            <path opacity="0.4" d="M2 11.0786C2.05 13.4166 2.19 17.4156 2.21 17.8566C2.281 18.7996 2.642 19.7526 3.204 20.4246C3.986 21.3676 4.949 21.7886 6.292 21.7886C8.148 21.7986 10.194 21.7986 12.181 21.7986C14.176 21.7986 16.112 21.7986 17.747 21.7886C19.071 21.7886 20.064 21.3566 20.836 20.4246C21.398 19.7526 21.759 18.7896 21.81 17.8566C21.83 17.4856 21.93 13.1446 21.99 11.0786H2Z" fill="currentColor"></path>
+            <path d="M11.2451 15.3843V16.6783C11.2451 17.0923 11.5811 17.4283 11.9951 17.4283C12.4091 17.4283 12.7451 17.0923 12.7451 16.6783V15.3843C12.7451 14.9703 12.4091 14.6343 11.9951 14.6343C11.5811 14.6343 11.2451 14.9703 11.2451 15.3843Z" fill="currentColor"></path>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M10.211 14.5565C10.111 14.9195 9.762 15.1515 9.384 15.1015C6.833 14.7455 4.395 13.8405 2.337 12.4815C2.126 12.3435 2 12.1075 2 11.8555V8.38949C2 6.28949 3.712 4.58149 5.817 4.58149H7.784C7.972 3.12949 9.202 2.00049 10.704 2.00049H13.286C14.787 2.00049 16.018 3.12949 16.206 4.58149H18.183C20.282 4.58149 21.99 6.28949 21.99 8.38949V11.8555C21.99 12.1075 21.863 12.3425 21.654 12.4815C19.592 13.8465 17.144 14.7555 14.576 15.1105C14.541 15.1155 14.507 15.1175 14.473 15.1175C14.134 15.1175 13.831 14.8885 13.746 14.5525C13.544 13.7565 12.821 13.1995 11.99 13.1995C11.148 13.1995 10.433 13.7445 10.211 14.5565ZM13.286 3.50049H10.704C10.031 3.50049 9.469 3.96049 9.301 4.58149H14.688C14.52 3.96049 13.958 3.50049 13.286 3.50049Z" fill="currentColor"></path>
+          </svg>
+        `,
+        routes: "/gallery_albums"
+      },
+      {
+          type: "link",
+          id: "li_gallery_albums",
+          label: "Gallery Albums",
+          onclick: "clickNav('gallery_albums_navigation','li_gallery_albums')",
+          icon: `
+            <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M7.63751 3.39549C5.06051 3.39549 3.39551 5.16249 3.39551 7.88849V16.1025C3.39551 16.8675 3.53751 17.5505 3.78051 18.1415C3.791 18.129 4.01986 17.8501 4.3184 17.4863C4.90188 16.7752 5.75156 15.7398 5.75751 15.7345C6.44951 14.9445 7.74851 13.7665 9.45351 14.4795C9.82712 14.6344 10.1592 14.8466 10.4649 15.042C10.4947 15.061 10.5242 15.0799 10.5535 15.0985C11.1265 15.4815 11.4635 15.6615 11.8135 15.6315C11.9585 15.6115 12.0945 15.5685 12.2235 15.4885C12.7101 15.1885 13.9718 13.4009 14.3496 12.8656C14.405 12.7871 14.4414 12.7355 14.4535 12.7195C15.5435 11.2995 17.2235 10.9195 18.6235 11.7595C18.8115 11.8715 20.1585 12.8125 20.6045 13.1905V7.88849C20.6045 5.16249 18.9395 3.39549 16.3535 3.39549H7.63751ZM16.3535 2.00049C19.7305 2.00049 21.9995 4.36249 21.9995 7.88849V16.1025C21.9995 16.1912 21.9902 16.2743 21.9809 16.3574C21.9744 16.4159 21.9678 16.4742 21.9645 16.5345C21.9624 16.5709 21.9613 16.6073 21.9603 16.6438C21.9589 16.6923 21.9575 16.7409 21.9535 16.7895C21.9515 16.8085 21.9478 16.8267 21.944 16.845C21.9403 16.8632 21.9365 16.8815 21.9345 16.9005C21.9015 17.2145 21.8505 17.5145 21.7795 17.8055C21.7627 17.8782 21.7433 17.9483 21.7238 18.0191L21.7195 18.0345C21.6395 18.3165 21.5455 18.5855 21.4325 18.8425C21.4127 18.8857 21.3918 18.9278 21.3709 18.9699C21.357 18.998 21.3431 19.0261 21.3295 19.0545C21.2075 19.2995 21.0755 19.5345 20.9225 19.7525C20.8942 19.7928 20.8641 19.8307 20.8339 19.8685C20.814 19.8936 20.794 19.9186 20.7745 19.9445C20.6155 20.1505 20.4495 20.3475 20.2615 20.5265C20.224 20.5622 20.1834 20.5948 20.1428 20.6275C20.1175 20.6479 20.0921 20.6683 20.0675 20.6895C19.8745 20.8555 19.6775 21.0145 19.4605 21.1505C19.4132 21.1802 19.3628 21.2052 19.3127 21.2301C19.2803 21.2462 19.2479 21.2622 19.2165 21.2795C18.9955 21.4015 18.7725 21.5205 18.5295 21.6125C18.4711 21.6347 18.4088 21.6508 18.3465 21.6669C18.3021 21.6783 18.2577 21.6898 18.2145 21.7035C18.1929 21.7102 18.1713 21.7169 18.1497 21.7236C17.9326 21.7912 17.7162 21.8585 17.4825 21.8985C17.3471 21.9222 17.2034 21.9313 17.0596 21.9405C16.9974 21.9444 16.9351 21.9484 16.8735 21.9535C16.8073 21.9584 16.7423 21.9664 16.6773 21.9744C16.5716 21.9874 16.4656 22.0005 16.3535 22.0005H7.63751C7.26151 22.0005 6.90251 21.9625 6.55551 21.9055C6.54251 21.9035 6.53051 21.9015 6.51851 21.8995C5.16551 21.6665 4.04251 21.0135 3.25551 20.0285C3.25005 20.0285 3.2479 20.0248 3.24504 20.0199C3.24319 20.0167 3.24105 20.013 3.23751 20.0095C2.44651 19.0135 1.99951 17.6745 1.99951 16.1025V7.88849C1.99951 4.36249 4.27051 2.00049 7.63751 2.00049H16.3535ZM11.0001 8.51505C11.0001 9.87 9.86639 11.0001 8.50496 11.0001C7.30825 11.0001 6.2879 10.1257 6.05922 8.99372C6.02143 8.82387 6.00011 8.64919 6.00011 8.46872C6.00011 7.10412 7.10864 6.00009 8.47879 6.00009C9.17647 6.00009 9.80825 6.29347 10.2608 6.76152C10.7152 7.21317 11.0001 7.83564 11.0001 8.51505Z" fill="currentColor"></path>
+            </svg>
+          `,
+          addHrAfter: true,
+          routes: "/gallery_albums"
+        },
+        {
+          type: "hr"
+        },
+
+        { type: "static", label: "Print", addHrBefore: true, addHrAfter: true },
+          {
+            type: "subnav",
+            id: "sidebar-auth",
+            label: "Print Documents",
+            icon: `
+              <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path ... fill="currentColor"></path>
+              </svg>`,
+            children: [
+              {
+                id: "li_profiling_ordinance",
+                label: "PROFILING ORD",
+                onclick: "clickNav('profiling_ordinance_navigation','li_profiling_ordinance')"
+              }
+            ]
+          },
+          { type: "static", label: "Downloads", addHrBefore: true },
+          {
+            type: "link",
+            id: "li_download_center",
+            label: "Download Center",
+            onclick: "clickNav('download_center_navigation','li_download_center')",
+            icon: `
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                <circle cx="12" cy="12" r="8"></circle>
+              </svg>`,
+            routes: "/download_center"
+          },
+
+    ];
+
+    const sidebar_ = document.getElementById("sidebar-menu");
+
+    function renderSidebarWithAccess(allowedRoutes = []) {
+      const sidebar_ = document.getElementById("sidebar-menu");
+      sidebar_.innerHTML = "";
+
+      menuItems.forEach((item) => {
+        // --- Always show Home and Landing ---
+        if (item.routes === "/home" || item.routes === "/landing") {
+          appendMenuItem(item, sidebar_);
+          return;
+        }
+
+        // --- Skip items not allowed ---
+        if (allowedRoutes.length && item.type === "link") {
+          if (!allowedRoutes.includes(item.routes)) return;
+        }
+
+        // --- Filter subnav items ---
+        if (allowedRoutes.length && item.type === "subnav") {
+          item.children = item.children.filter(sub =>
+            allowedRoutes.includes(sub.routes)
+          );
+          if (item.children.length === 0) return;
+        }
+
+        // --- Append item ---
+        appendMenuItem(item, sidebar_);
+      });
+    }
+
+
+    function appendMenuItem(item, sidebar_) {
+  if (item.addHrBefore) {
+    const hrBefore = document.createElement("li");
+    hrBefore.innerHTML = `<hr class="hr-horizontal">`;
+    sidebar_.appendChild(hrBefore);
+  }
+
+  if (item.type === "static") {
+    const li = document.createElement("li");
+    li.className = "nav-item static-item";
+    li.innerHTML = `
+      <a class="nav-link static-item disabled" href="#" tabindex="-1">
+        <span class="default-icon">${item.label}</span>
+        <span class="mini-icon">-</span>
+      </a>
+    `;
+    sidebar_.appendChild(li);
+  } 
+  else if (item.type === "link") {
+    const li = document.createElement("li");
+    li.className = "nav-item";
+
+    // ✅ Check if it has an href (like landing)
+    if (item.href) {
+      li.innerHTML = `
+        <a class="nav-link" id="${item.id || ''}" href="${item.href}" ${item.target ? `target="${item.target}"` : ''}>
+          <i class="icon">${item.icon}</i>
+          <span class="item-name">${item.label}</span>
+        </a>`;
+    } else {
+      li.innerHTML = `
+        <a class="nav-link" id="${item.id}" onclick="${item.onclick}">
+          <i class="icon">${item.icon}</i>
+          <span class="item-name">${item.label}</span>
+        </a>`;
+    }
+
+    sidebar_.appendChild(li);
+  } 
+  else if (item.type === "subnav") {
+    const li = document.createElement("li");
+    li.className = "nav-item";
+    li.innerHTML = `
+      <a class="nav-link" id="${item.id}" data-bs-toggle="collapse"
+         data-bs-target="#${item.id}-menu" role="button" aria-expanded="false" aria-controls="${item.id}-menu">
+        <i class="icon">${item.icon}</i>
+        <span class="item-name">${item.label}</span>
+        <i class="right-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </i>
+      </a>
+      <ul class="sub-nav collapse" id="${item.id}-menu" data-bs-parent="#sidebar-menu"></ul>
+    `;
+    const subnav = li.querySelector(".sub-nav");
+    item.children.forEach((sub) => {
+      const subLi = document.createElement("li");
+      subLi.className = "nav-item";
+      subLi.innerHTML = `
+        <a class="nav-link" id="${sub.id}" onclick="${sub.onclick}">
+          <i class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+              <circle cx="12" cy="12" r="8"></circle>
+            </svg>
+          </i>
+          <span class="item-name">${sub.label}</span>
+        </a>`;
+      subnav.appendChild(subLi);
+    });
+    sidebar_.appendChild(li);
+  }
+
+  if (item.addHrAfter) {
+    const hrAfter = document.createElement("li");
+    hrAfter.innerHTML = `<hr class="hr-horizontal">`;
+    sidebar_.appendChild(hrAfter);
+  }
+}
+
+
+    if ("{{data.role}}" !== "2") {
+        sendDataWithCallback("/get_access_role", { login_id: {{data.login_id}} }, (res) => {
+            const allowedRoutes = Array.isArray(res)
+              ? res.map((item) => item.routes)
+              : (res.data ? res.data.map((item) => item.routes) : []);
+
+            // Add routes info to menuItems for filtering
+            menuItems.forEach((m) => {
+          if (m.type === "link") {
+            const click = m.onclick || "";
+            const match = click.match(/clickNav\('([^']+)_navigation'/);
+            m.onclickRoute = match ? `/${match[1]}` : "";
+          } else if (m.type === "subnav" && Array.isArray(m.children)) {
+            m.children.forEach((sub) => {
+              const subClick = sub.onclick || "";
+              const match = subClick.match(/clickNav\('([^']+)_navigation'/);
+              sub.onclickRoute = match ? `/${match[1]}` : "";
+            });
+          }
+        });
+        renderSidebarWithAccess(allowedRoutes);
+      })
+    } else {
+      // Admin role = show all
+      renderSidebarWithAccess();
+    }
+
+
+
+
     
     function add_people_attendance(){
         let fullname = $('#inpt_attendance option:selected').text()
@@ -3625,7 +3554,7 @@
     function clickNav(tab, active) {
         let navigations = [
             'home_navigation', 'session_navigation', 'document_tracking_navigation',
-            'sangunian_navigation', 'committee_navigation', 'approved_ord_navigation',
+            'sangunian_navigation', 'committee_navigation', 'committee_reports_navigation' ,'approved_ord_navigation',
             'appropriation_navigation', 'resolution_navigation', 'minutes_navigation', 'reports_navigation',
             'assign_navigation', 'announcement_navigation', 'governance_classification_navigation',
             'category_navigation', 'gmail_navigation', 'info_navigation', 'barangay_navigation', 'user_navigation',
@@ -3646,7 +3575,7 @@
 
         // Remove 'active' from all nav link IDs
         let links = [
-            'li_home', 'li_session', 'li_document_tracking', 'li_committee',
+            'li_home', 'li_session', 'li_document_tracking', 'li_committee', 'li_committee_reports',
             'sangunian', 'approval_ordinance', 'appriation_ordinance',
             'li_approved_resolution', 'li_minutes', 'li_reports', 'li_assign', 'li_announcement', 'li_governance_classification', 'li_category', 'li_gmail', 'li_info', 'li_barangay', 'li_user',
             'li_accounts', 'li_executive_order', 'li_memorandom', 'li_documents_refferals', 'li_citezen_charter',
@@ -3661,15 +3590,18 @@
             }
         });
 
+        // Collapse ALL open dropdown submenus
         document.querySelectorAll('.sub-nav.collapse').forEach(submenu => {
             submenu.classList.remove('show'); // Bootstrap collapse class
         });
 
+        // Remove active state from ALL dropdown toggles (parent items)
         document.querySelectorAll('.nav-link[data-bs-toggle="collapse"]').forEach(toggle => {
             toggle.classList.remove('active');
             toggle.setAttribute('aria-expanded', 'false');
         });
 
+        // Show selected content and set active link
         const content = document.getElementById(tab);
         const link = document.getElementById(active);
 
@@ -3677,6 +3609,7 @@
             content.style.display = "block";
             link.classList.add("active");
 
+            // If it's inside a dropdown, expand the dropdown and highlight the parent link
             const submenu = link.closest('.sub-nav');
             if (submenu) {
                 submenu.classList.add('show');
@@ -3814,11 +3747,11 @@
                     getbyId('panglungsod').checked=false
                     getbyId('citylogo_sp_sb').src="../static/images/sb.png"
                     type = 'SANGGUNIANG BAYAN NG'
-                    getbyId('sangunian_budget1').innerHTML="SB BUDGET"
-                    getbyId('sangunian_budget2').innerHTML="SB BUDGET"
-                    getbyId('sangunian_budget3').innerHTML="SB Capital Outlay"
-                    getbyId('sangunian_budget4').innerHTML="SB Member Deduction"
-                    getbyId('sp_sb_legislature').innerHTML="SB Legislature"
+                    // getbyId('sangunian_budget1').innerHTML="SB BUDGET"
+                    // getbyId('sangunian_budget2').innerHTML="SB BUDGET"
+                    // getbyId('sangunian_budget3').innerHTML="SB Capital Outlay"
+                    // getbyId('sangunian_budget4').innerHTML="SB Member Deduction"
+                    // getbyId('sp_sb_legislature').innerHTML="SB Legislature"
                     type2 = "Bayan"
                     
                 }else{
@@ -3826,11 +3759,11 @@
                     getbyId('bayan').checked=false
                     getbyId('panglungsod').checked=true
                     getbyId('citylogo_sp_sb').src="../static/images/sp.png"
-                    getbyId('sangunian_budget1').innerHTML="SP BUDGET"
-                    getbyId('sangunian_budget2').innerHTML="SP BUDGET"
-                    getbyId('sangunian_budget3').innerHTML="SP Capital Outlay"
-                    getbyId('sangunian_budget4').innerHTML="SP Member Deduction"
-                    getbyId('sp_sb_legislature').innerHTML="SP Legislature"
+                    // getbyId('sangunian_budget1').innerHTML="SP BUDGET"
+                    // getbyId('sangunian_budget2').innerHTML="SP BUDGET"
+                    // getbyId('sangunian_budget3').innerHTML="SP Capital Outlay"
+                    // getbyId('sangunian_budget4').innerHTML="SP Member Deduction"
+                    // getbyId('sp_sb_legislature').innerHTML="SP Legislature"
                     type2 = "Panlungsod"
                 }
 
@@ -3844,7 +3777,7 @@
                 
                 getbyId('system_type').innerHTML= res[0]['city_name']
                 getbyId('system_city').innerHTML= res[0]['city_name'] +""
-                getbyId('city_mission').innerHTML = res[0]['mission']
+                // getbyId('city_mission').innerHTML = res[0]['mission']
             }else{
                 alert("No Active Status in SP Legislature")
             }
@@ -3882,7 +3815,6 @@
         document.body.appendChild(iframe)
 
         setTimeout(()=>{
-            // document.body.style = "font-size: 10px !important;"
             iframe.contentWindow.document.body.innerHTML = $('#'+id).html();
             var script   = document.createElement("script");
             script.innerHTML  = "window.print()";
@@ -3897,25 +3829,28 @@
                 for (var i = 0; i < iframes.length; i++) {
                     iframes[i].parentNode.removeChild(iframes[i]);
                 }
-            },2000)
-        }, 2000)
+            },3000)
+        }, 1000)
     }
 
     function voting(){
         const l = document.getElementById('oob_')
         const l2 = document.getElementById('voting_')
-        
+        const bts = document.getElementById('btn_toogle_session')
         if (l.style.display === 'none') {
             l.style.display = 'block';
             l2.style.display = 'none';
+            bts.innerHTML = "Voting"
         } else {
             l.style.display = 'none';
             l2.style.display = 'block';
+            bts.innerHTML = "Session"
         }
     }
 
 
-    let councillors = []
+    // Sample councillors (names + generated avatars).
+    
 
     const STORAGE_KEY = 'council_votes_v1';
 
@@ -4021,4 +3956,5 @@
     });
 
     render();
+
 </script>

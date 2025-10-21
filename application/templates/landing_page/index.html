@@ -30,6 +30,9 @@
     <link rel="stylesheet" type="text/css" href="../../static/js/chosen/chosen.min.css">
     <script type="text/javascript" src="../../static/js/chosen/chosen.jquery.min.js"></script>
 
+
+    <script src="../../static/js/mammoth.browser.min.js"></script> 
+
 </head>
 
 <style type="text/css">
@@ -1195,7 +1198,7 @@
             </section>
         </div>
         <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-            © 2020 Copyright:
+            © 2025 Copyright:
             <a style="color: white !important" class="text-dark" href="https://mdbootstrap.com/"><span style="text-transform: uppercase;" id="lan_cityname"></span></a>
         </div>
     </footer>
@@ -1319,6 +1322,37 @@
             })
         })
     })
+
+    function openWordFile(fileUrl) {
+        fetch(fileUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("File not found or inaccessible.");
+                }
+                return response.arrayBuffer();
+            })
+            .then(arrayBuffer => {
+                return mammoth.convertToHtml({ arrayBuffer });
+            })
+            .then(result => {
+                const htmlContent = result.value;
+
+                const newWindow = window.open('', '_blank');
+                if (newWindow) {
+                    newWindow.document.write('<html><head><title>Converted Word Document</title><style>');
+                    newWindow.document.write('body { font-family: Arial, sans-serif; margin: 0; padding: 0; height: 100vh; display: flex; justify-content: center; background-color: #f4f4f4; }');
+                    newWindow.document.write('.content { width: 80%; max-width: 900px; padding: 40px 20px 20px 20px; background-color: white; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); overflow-y: auto; margin-top: 20px; }');
+                    newWindow.document.write('</style></head><body>');
+                    newWindow.document.write('<div class="content">');
+                    newWindow.document.write(htmlContent);
+                    newWindow.document.write('</div></body></html>');
+                    newWindow.document.close();
+                }
+            })
+            .catch(error => {
+                console.error("Error loading or converting the Word file:", error);
+            });
+    }
 
     function disapproved_proposed(){
         sendDataWithCallback('/disapproved_proposed', {track_gen_id:getbyId('doc_tracking_genid').value}, (res)=>{

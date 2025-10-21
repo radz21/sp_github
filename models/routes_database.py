@@ -59,8 +59,17 @@ def prnt_G(msg):
 
 host = "localhost"
 user = "root"
-password = "bislig"
-database1 = "sangs"
+
+password = "sp_bislig"
+database1 = "sangunian_db"
+
+
+host = "localhost"
+user = "root"
+password = "sp_bislig"
+
+# password = "bislig"
+# database1 = "sangs"
 
 #<-----------------------Connection database------------------------------->
 

@@ -1879,8 +1879,6 @@ def save_session_():
 
 				if "propose_ord" in p:
 					for x in p['propose_ord']:
-						print("5")
-						prnt_G(x)
 						insert_p_ref = """
 							insert into tbl_session_proposed_ordi set session_id='"""+str(ses_id)+"""', tracking_no='"""+str(x['tracking_no'])+"""'
 						"""
@@ -1894,8 +1892,6 @@ def save_session_():
 
 				if "propose_reso" in p:
 					for x in p['propose_reso']:
-						print("4")
-						prnt_G(x)
 						insert_p_ref = """
 							insert into tbl_session_proposed_reso set session_id='"""+str(ses_id)+"""', tracking_no='"""+str(x['tracking_no'])+"""'
 						"""
@@ -2132,74 +2128,80 @@ def save_session_():
 			
 			if len(p['attendance'])!=0:
 				for x in p['attendance']:
-					ins_rc = "insert into tbl_session_roll_call set info_id ='"+str(x['info_id'])+"', session_id = '"+str(p['session_id'])+"', status = '"+str(x['status'])+"'"
-					cud(ins_rc)
+					if x:
+						ins_rc = "insert into tbl_session_roll_call set info_id ='"+str(x['info_id'])+"', session_id = '"+str(p['session_id'])+"', status = '"+str(x['status'])+"'"
+						cud(ins_rc)
 
 		if "reading_consid_prev_min" in p:
 			del_q =	"delete from tbl_session_reading_minutes where session_id = '"+str(p['session_id'])+"' "
 			cud(del_q)
 
 			for x in p['reading_consid_prev_min']:
-				insert_reading_minutes = """
-					insert into tbl_session_reading_minutes set session_id='"""+str(p['session_id'])+"""', minutes_id='"""+str(x['minutes_id'])+"""'
-				"""
-				cud(insert_reading_minutes)
+				if x:
+					insert_reading_minutes = """
+						insert into tbl_session_reading_minutes set session_id='"""+str(p['session_id'])+"""', minutes_id='"""+str(x['minutes_id'])+"""'
+					"""
+					cud(insert_reading_minutes)
 
 		if "propose_ord" in p:
 			del_q =	"delete from tbl_session_proposed_ordi where session_id = '"+str(p['session_id'])+"' "
 			cud(del_q)
 			for x in p['propose_ord']:
-				insert_p_ref = """
-					insert into tbl_session_proposed_ordi set session_id='"""+str(p['session_id'])+"""', tracking_no='"""+str(x['tracking_no'])+"""'
-				"""
-				cud(insert_p_ref)
+				if x:
+					insert_p_ref = """
+						insert into tbl_session_proposed_ordi set session_id='"""+str(p['session_id'])+"""', tracking_no='"""+str(x['tracking_no'])+"""'
+					"""
+					cud(insert_p_ref)
 
 		if "propose_reso" in p:
 			del_q =	"delete from tbl_session_proposed_reso where session_id = '"+str(p['session_id'])+"' "
 			cud(del_q)
 			for x in p['propose_reso']:
-				insert_p_ref = """
-					insert into tbl_session_proposed_reso set session_id='"""+str(p['session_id'])+"""', tracking_no='"""+str(x['tracking_no'])+"""'
-				"""
-				cud(insert_p_ref)
+				if x:
+					insert_p_ref = """
+						insert into tbl_session_proposed_reso set session_id='"""+str(p['session_id'])+"""', tracking_no='"""+str(x['tracking_no'])+"""'
+					"""
+					cud(insert_p_ref)
 
 		if "petitions_for_refferals" in p:
 			del_q =	"delete from tbl_session_petition_for_refferal where session_id = '"+str(p['session_id'])+"' "
 			cud(del_q)
 			for x in p['petitions_for_refferals']:
-				insert_p_ref = """
-					insert into tbl_session_petition_for_refferal set session_id='"""+str(p['session_id'])+"""', type="""+str(x['type'])+""", tracking_no='"""+str(x['tracking_no'])+"""'
-				"""
-				cud(insert_p_ref)
-
-				del_q =	"delete from tbl_document_tracking_refferal where track_gen_id = '"+str(x['tracking_no'])+"' "
-				cud(del_q)
-
-				if 'committee_id' in x:
-					committees= ", ".join( repr(e) for e in x['committee_id']).replace("'","")
-					insert_committee = """
-						insert into tbl_document_tracking_refferal set committtee='"""+str(committees)+"""', track_gen_id='"""+str(x['tracking_no'])+"""'
+				if x:
+					insert_p_ref = """
+						insert into tbl_session_petition_for_refferal set session_id='"""+str(p['session_id'])+"""', type="""+str(x['type'])+""", tracking_no='"""+str(x['tracking_no'])+"""'
 					"""
-					cud(insert_committee)
+					cud(insert_p_ref)
+
+					del_q =	"delete from tbl_document_tracking_refferal where track_gen_id = '"+str(x['tracking_no'])+"' "
+					cud(del_q)
+
+					if 'committee_id' in x:
+						committees= ", ".join( repr(e) for e in x['committee_id']).replace("'","")
+						insert_committee = """
+							insert into tbl_document_tracking_refferal set committtee='"""+str(committees)+"""', track_gen_id='"""+str(x['tracking_no'])+"""'
+						"""
+						cud(insert_committee)
 
 		if "additional_refferals" in p:
 			del_q =	"delete from tbl_session_additional_refferal where session_id = '"+str(p['session_id'])+"' "
 			cud(del_q)
 			for x in p['additional_refferals']:
-				insert_p_ref = """
-					insert into tbl_session_additional_refferal set session_id='"""+str(p['session_id'])+"""', type="""+str(x['type'])+""", tracking_no='"""+str(x['tracking_no'])+"""'
-				"""
-				cud(insert_p_ref)
-
-				del_q =	"delete from tbl_document_tracking_refferal where track_gen_id = '"+str(x['tracking_no'])+"' "
-				cud(del_q)
-
-				if 'committee_id' in x:
-					committees= ", ".join( repr(e) for e in x['committee_id']).replace("'","")
-					insert_committee = """
-						insert into tbl_document_tracking_refferal set committtee='"""+str(committees)+"""', track_gen_id='"""+str(x['tracking_no'])+"""'
+				if x:
+					insert_p_ref = """
+						insert into tbl_session_additional_refferal set session_id='"""+str(p['session_id'])+"""', type="""+str(x['type'])+""", tracking_no='"""+str(x['tracking_no'])+"""'
 					"""
-					cud(insert_committee)
+					cud(insert_p_ref)
+
+					del_q =	"delete from tbl_document_tracking_refferal where track_gen_id = '"+str(x['tracking_no'])+"' "
+					cud(del_q)
+
+					if 'committee_id' in x:
+						committees= ", ".join( repr(e) for e in x['committee_id']).replace("'","")
+						insert_committee = """
+							insert into tbl_document_tracking_refferal set committtee='"""+str(committees)+"""', track_gen_id='"""+str(x['tracking_no'])+"""'
+						"""
+						cud(insert_committee)
 
 		if "veto_message" in p:
 			del_q =	"delete from tbl_session_veto_reading where session_id = '"+str(p['session_id'])+"' "
@@ -2214,183 +2216,194 @@ def save_session_():
 			del_q =	"delete from tbl_session_committee_report where session_id = '"+str(p['session_id'])+"' "
 			cud(del_q)
 			for x in p['committee_report']:
-				insert_p_ref = """
-					insert into tbl_session_committee_report set session_id='"""+str(p['session_id'])+"""', committee_report_no='"""+str(x['committee_report_no'])+"""', 
-					committee_id='"""+str(x['committee_id'])+"""'
-				"""
-				cud(insert_p_ref)
-
+				if x:
+					insert_p_ref = """
+						insert into tbl_session_committee_report set session_id='"""+str(p['session_id'])+"""', committee_report_no='"""+str(x['committee_report_no'])+"""', 
+						committee_id='"""+str(x['committee_id'])+"""'
+					"""
+					cud(insert_p_ref)
 		
 		if "committee_information" in p:
 			del_q =	"delete from tbl_session_committee_information where session_id = '"+str(p['session_id'])+"' "
 			cud(del_q)
 			for x in p['committee_information']:
-				insert_p_ref = """
-					insert into tbl_session_committee_information set session_id='"""+str(p['session_id'])+"""', committee_information_no='"""+str(x['committee_information_no'])+"""', 
-					
-				"""
-				# committee_id='"""+str(x['committee_id'])+"""'
-				cud(insert_p_ref)
+				if x:
+					insert_p_ref = """
+						insert into tbl_session_committee_information set session_id='"""+str(p['session_id'])+"""', committee_information_no='"""+str(x['committee_information_no'])+"""', 
+						
+					"""
+					# committee_id='"""+str(x['committee_id'])+"""'
+					cud(insert_p_ref)
 
 		if "unfinished_bussiness" in p:
 			del_q =	"delete from tbl_session_unfinished_bussiness where session_id = '"+str(p['session_id'])+"' "
 			cud(del_q)
 			for x in p['unfinished_bussiness']:
-				insert_p_ref = """
-					insert into tbl_session_unfinished_bussiness set session_id='"""+str(p['session_id'])+"""', tracking_no='"""+str(x['tracking_no'])+"""'
-				"""
-				cud(insert_p_ref)
+				if x:
+					insert_p_ref = """
+						insert into tbl_session_unfinished_bussiness set session_id='"""+str(p['session_id'])+"""', tracking_no='"""+str(x['tracking_no'])+"""'
+					"""
+					cud(insert_p_ref)
 
 		if "bussiness_of_the_day" in p:
 			del_q =	"delete from tbl_session_botd where session_id = '"+str(p['session_id'])+"' "
 			cud(del_q)
 			for x in p['bussiness_of_the_day']:
-				insert_p_ref = """
-					insert into tbl_session_botd set session_id='"""+str(p['session_id'])+"""', tracking_no='"""+str(x['tracking_no'])+"""'
-				"""
-				cud(insert_p_ref)
+				if x:
+					insert_p_ref = """
+						insert into tbl_session_botd set session_id='"""+str(p['session_id'])+"""', tracking_no='"""+str(x['tracking_no'])+"""'
+					"""
+					cud(insert_p_ref)
 
 		if "urgent" in p:
 			del_q =	"delete from tbl_session_urgent where session_id = '"+str(p['session_id'])+"' "
 			cud(del_q)
 			for x in p['urgent']:
-				insert_p_ref = """
-					insert into tbl_session_urgent set session_id='"""+str(p['session_id'])+"""', tracking_no='"""+str(x['tracking_no'])+"""'
-				"""
-				cud(insert_p_ref)
-
-				sel= """
-					select * from tbl_document_tracking_status where track_gen_id='"""+str(x['tracking_no'])+"""'
-				"""
-				rd = pyread(sel)
-
-				if len(rd)==0:
-					update_tracking = """
-						update tbl_document_tracking set action_taken=2 where track_gen_id='"""+str(x['tracking_no'])+"""'
+				if x:
+					insert_p_ref = """
+						insert into tbl_session_urgent set session_id='"""+str(p['session_id'])+"""', tracking_no='"""+str(x['tracking_no'])+"""'
 					"""
-					cud(update_tracking)
+					cud(insert_p_ref)
 
-					insert_tracking_status = """
-						insert into tbl_document_tracking_status set track_gen_id='"""+str(x['tracking_no'])+"""', status='Calendared', date=now(),
-						remarks = '"""+str(remarks)+"""'
+					sel= """
+						select * from tbl_document_tracking_status where track_gen_id='"""+str(x['tracking_no'])+"""'
 					"""
-					cud(insert_tracking_status)
+					rd = pyread(sel)
+
+					if len(rd)==0:
+						update_tracking = """
+							update tbl_document_tracking set action_taken=2 where track_gen_id='"""+str(x['tracking_no'])+"""'
+						"""
+						cud(update_tracking)
+
+						insert_tracking_status = """
+							insert into tbl_document_tracking_status set track_gen_id='"""+str(x['tracking_no'])+"""', status='Calendared', date=now(),
+							remarks = '"""+str(remarks)+"""'
+						"""
+						cud(insert_tracking_status)
 
 		if "just_inserted" in p:
 			del_q =	"delete from tbl_session_just_inserted where session_id = '"+str(p['session_id'])+"' "
 			cud(del_q)
 			for x in p['just_inserted']:
-				insert_p_ref = """
-					insert into tbl_session_just_inserted set session_id='"""+str(p['session_id'])+"""', tracking_no='"""+str(x['tracking_no'])+"""'
-				"""
-				cud(insert_p_ref)
-
-				sel= """
-					select * from tbl_document_tracking_status where track_gen_id='"""+str(x['tracking_no'])+"""'
-				"""
-				rd = pyread(sel)
-
-				if len(rd)==0:
-					update_tracking = """
-						update tbl_document_tracking set action_taken=2 where track_gen_id='"""+str(x['tracking_no'])+"""'
+				if x:
+					insert_p_ref = """
+						insert into tbl_session_just_inserted set session_id='"""+str(p['session_id'])+"""', tracking_no='"""+str(x['tracking_no'])+"""'
 					"""
-					cud(update_tracking)
+					cud(insert_p_ref)
 
-					insert_tracking_status = """
-						insert into tbl_document_tracking_status set track_gen_id='"""+str(x['tracking_no'])+"""', status='Calendared', date=now(),
-						remarks = '"""+str(remarks)+"""'
+					sel= """
+						select * from tbl_document_tracking_status where track_gen_id='"""+str(x['tracking_no'])+"""'
 					"""
-					cud(insert_tracking_status)
+					rd = pyread(sel)
+
+					if len(rd)==0:
+						update_tracking = """
+							update tbl_document_tracking set action_taken=2 where track_gen_id='"""+str(x['tracking_no'])+"""'
+						"""
+						cud(update_tracking)
+
+						insert_tracking_status = """
+							insert into tbl_document_tracking_status set track_gen_id='"""+str(x['tracking_no'])+"""', status='Calendared', date=now(),
+							remarks = '"""+str(remarks)+"""'
+						"""
+						cud(insert_tracking_status)
 
 		if "calendar_measure" in p:
 			del_q =	"delete from tbl_session_calendar_measure where session_id = '"+str(p['session_id'])+"' "
 			cud(del_q)
 			for x in p['calendar_measure']:
-				insert_p_ref = """
-					insert into tbl_session_calendar_measure set session_id='"""+str(p['session_id'])+"""', tracking_no='"""+str(x['tracking_no'])+"""'
-				"""
-				cud(insert_p_ref)
-
-				sel= """
-					select * from tbl_document_tracking_status where track_gen_id='"""+str(x['tracking_no'])+"""'
-				"""
-				rd = pyread(sel)
-
-				if len(rd)==0:
-					update_tracking = """
-						update tbl_document_tracking set action_taken=3 where track_gen_id='"""+str(x['tracking_no'])+"""'
+				if x:
+					insert_p_ref = """
+						insert into tbl_session_calendar_measure set session_id='"""+str(p['session_id'])+"""', tracking_no='"""+str(x['tracking_no'])+"""'
 					"""
-					cud(update_tracking)
+					cud(insert_p_ref)
 
-					insert_tracking_status = """
-						insert into tbl_document_tracking_status set track_gen_id='"""+str(x['tracking_no'])+"""', status='Calendared', date=now(),
-						remarks = '"""+str(remarks)+"""'
+					sel= """
+						select * from tbl_document_tracking_status where track_gen_id='"""+str(x['tracking_no'])+"""'
 					"""
-					cud(insert_tracking_status)
+					rd = pyread(sel)
+
+					if len(rd)==0:
+						update_tracking = """
+							update tbl_document_tracking set action_taken=3 where track_gen_id='"""+str(x['tracking_no'])+"""'
+						"""
+						cud(update_tracking)
+
+						insert_tracking_status = """
+							insert into tbl_document_tracking_status set track_gen_id='"""+str(x['tracking_no'])+"""', status='Calendared', date=now(),
+							remarks = '"""+str(remarks)+"""'
+						"""
+						cud(insert_tracking_status)
 
 		if "new_measure" in p:
 			del_q =	"delete from tbl_session_new_measure where session_id = '"+str(p['session_id'])+"' "
 			cud(del_q)
 			for x in p['new_measure']:
-				insert_p_ref = """
-					insert into tbl_session_new_measure set session_id='"""+str(p['session_id'])+"""', tracking_no='"""+str(x['tracking_no'])+"""'
-				"""
-				cud(insert_p_ref)
-
-				sel= """
-					select * from tbl_document_tracking_status where track_gen_id='"""+str(x['tracking_no'])+"""'
-				"""
-				rd = pyread(sel)
-
-				if len(rd)==0:
-					update_tracking = """
-						update tbl_document_tracking set action_taken=3 where track_gen_id='"""+str(x['tracking_no'])+"""'
+				if x:
+					insert_p_ref = """
+						insert into tbl_session_new_measure set session_id='"""+str(p['session_id'])+"""', tracking_no='"""+str(x['tracking_no'])+"""'
 					"""
-					cud(update_tracking)
+					cud(insert_p_ref)
 
-					insert_tracking_status = """
-						insert into tbl_document_tracking_status set track_gen_id='"""+str(x['tracking_no'])+"""', status='Calendared', date=now(),
-						remarks = '"""+str(remarks)+"""'
+					sel= """
+						select * from tbl_document_tracking_status where track_gen_id='"""+str(x['tracking_no'])+"""'
 					"""
-					cud(insert_tracking_status)
+					rd = pyread(sel)
+
+					if len(rd)==0:
+						update_tracking = """
+							update tbl_document_tracking set action_taken=3 where track_gen_id='"""+str(x['tracking_no'])+"""'
+						"""
+						cud(update_tracking)
+
+						insert_tracking_status = """
+							insert into tbl_document_tracking_status set track_gen_id='"""+str(x['tracking_no'])+"""', status='Calendared', date=now(),
+							remarks = '"""+str(remarks)+"""'
+						"""
+						cud(insert_tracking_status)
 
 		if "bussiness_third" in p:
 			del_q =	"delete from tbl_session_bussiness_third where session_id = '"+str(p['session_id'])+"' "
 			cud(del_q)
 			for x in p['bussiness_third']:
-				insert_p_ref = """
-					insert into tbl_session_bussiness_third set session_id='"""+str(p['session_id'])+"""', tracking_no='"""+str(x['tracking_no'])+"""'
-				"""
-				cud(insert_p_ref)
+				if x:
+					insert_p_ref = """
+						insert into tbl_session_bussiness_third set session_id='"""+str(p['session_id'])+"""', tracking_no='"""+str(x['tracking_no'])+"""'
+					"""
+					cud(insert_p_ref)
 
 		if "summary" in p:
 			del_q =	"delete from tbl_session_summary_correction where session_id = '"+str(p['session_id'])+"' "
 			cud(del_q)
 			for x in p['summary']:
-				insert_p_ref = """
-					insert into tbl_session_summary_correction set session_id='"""+str(p['session_id'])+"""', tracking_no='"""+str(x['tracking_no'])+"""',
-					new_title='"""+str(x['new_title'])+"""' , old_title = '"""+str(x['old_title'])+"""'
-				"""
-				cud(insert_p_ref)
+				if x:
+					insert_p_ref = """
+						insert into tbl_session_summary_correction set session_id='"""+str(p['session_id'])+"""', tracking_no='"""+str(x['tracking_no'])+"""',
+						new_title='"""+str(x['new_title'])+"""' , old_title = '"""+str(x['old_title'])+"""'
+					"""
+					cud(insert_p_ref)
 
 		if "question_hour" in p:
 			del_q =	"delete from tbl_session_question_hour where session_id = '"+str(p['session_id'])+"' "
 			cud(del_q)
 			for x in p['question_hour']:
-				insert_question = """
-					insert into tbl_session_question_hour set fullname='"""+str(x['fullname'])+"""', designation='"""+str(x['designation'])+"""', office='"""+str(x['office'])+"""',
-					subject='"""+str(x['subject'])+"""', session_id='"""+str(p['session_id'])+"""'
-				"""
-				cud(insert_question)
+				if x:
+					insert_question = """
+						insert into tbl_session_question_hour set fullname='"""+str(x['fullname'])+"""', designation='"""+str(x['designation'])+"""', office='"""+str(x['office'])+"""',
+						subject='"""+str(x['subject'])+"""', session_id='"""+str(p['session_id'])+"""'
+					"""
+					cud(insert_question)
 
 		if 'privilege_hour'in p:
 			del_q =	"delete from tbl_session_previlege_hour where session_id = '"+str(p['session_id'])+"' "
 			cud(del_q)
 			for x in p['privilege_hour']:
-				insert_privilege = """
-					insert into tbl_session_previlege_hour set councilor_info_id='"""+str(x['info_id'])+"""', session_id='"""+str(p['session_id'])+"""'
-				"""
-				cud(insert_privilege)
+				if x:
+					insert_privilege = """
+						insert into tbl_session_previlege_hour set councilor_info_id='"""+str(x['info_id'])+"""', session_id='"""+str(p['session_id'])+"""'
+					"""
+					cud(insert_privilege)
 
 		if 'announcement_'in p:
 			del_q =	"delete from tbl_session_announcement where session_id = '"+str(p['session_id'])+"' "
@@ -2603,17 +2616,17 @@ def get_session_petition_for_refferal():
 	rd= pyread(sel)
 	return jsonify(rd)
 
-@query.route('/get_session_additional_refferal', methods=['GET', 'POST'])
-@login_required
-def get_session_additional_refferal():
-	p=json.loads(request.data)
-	sel = """
-		select * from tbl_session_additional_refferal tsar
-		left join tbl_document_tracking_refferal tdtr on tdtr.track_gen_id=tsar.tracking_no 
-		where session_id='"""+str(p['session_id'])+"""'
-	"""
-	rd= pyread(sel)
-	return jsonify(rd)
+# @query.route('/get_session_additional_refferal', methods=['GET', 'POST'])
+# @login_required
+# def get_session_additional_refferal():
+# 	p=json.loads(request.data)
+# 	sel = """
+# 		select * from tbl_session_additional_refferal tsar
+# 		left join tbl_document_tracking_refferal tdtr on tdtr.track_gen_id=tsar.tracking_no 
+# 		where session_id='"""+str(p['session_id'])+"""'
+# 	"""
+# 	rd= pyread(sel)
+# 	return jsonify(rd)
 
 @query.route('/get_session_code_ref', methods=['GET', 'POST'])
 @login_required
@@ -4213,7 +4226,6 @@ def save_barangay_ordinance():
 				cud(insert2)
 		return jsonify("Succesfuly Saved")
 	else:
-		prnt_Y("update")
 		update="update tbl_barangay_ordinance set title='"+str(title)+"',  description='"+str(description)+"', brgy_id='"+str(p['brgy_id'])+"' where barangay_ordinance_id='"+str(p['barangay_ordinance_id'])+"'"
 		cud(update)
 		for filename_array in request.files:
@@ -4526,7 +4538,6 @@ def get_minutes_file_resolution():
 		select * from tbl_minutes_resolution_path tmrp where tmrp.minutes_id='"""+str(p['minutes_id'])+"""' 
 	"""
 	rd=pyread(sel)
-	prnt_B(rd)
 	return jsonify(rd)
 
 @query.route('/get_minutes_file', methods=['GET', 'POST'])
@@ -5296,7 +5307,6 @@ def delete_veto_resolution_file():
 
 
 @query.route('/get_session_video', methods = ['GET','POST'])
-@login_required
 def get_session_video():
 	p=json.loads(request.data)
 	sel= """
@@ -5306,7 +5316,6 @@ def get_session_video():
 	return jsonify(rd)
 
 @query.route('/get_session_data', methods = ['GET','POST'])
-@login_required
 def get_session_data():
 	try:
 		p = json.loads(request.data)
@@ -5355,7 +5364,6 @@ def delete_accounts():
 	return jsonify("Succesfuly Deleted")
 
 @query.route('/get_OOB', methods = ['GET','POST'])
-@login_required
 def get_OOB():
 	try:
 		p = json.loads(request.data)
@@ -6227,8 +6235,7 @@ def get_all_active_councilor():
 	try:
 		sel = """SELECT
 			tpi.info_id,
-			concat( f_name, ' ', m_name, ' ', L_name ) fullname ,
-			tpi.img
+			concat( f_name, ' ', m_name, ' ', L_name ) fullname 
 		FROM
 			sp_councilor sc
 			LEFT JOIN tbl_personal_info tpi ON sc.councilor = tpi.info_id
@@ -6241,8 +6248,7 @@ def get_all_active_councilor():
 
 		SELECT
 			tpi.info_id,
-			concat( f_name, ' ', m_name, ' ', L_name ) fullname ,
-			tpi.img
+			concat( f_name, ' ', m_name, ' ', L_name ) fullname 
 		FROM
 			sp_member sp
 			LEFT JOIN tbl_personal_info tpi ON sp.sp_vice_mayor = tpi.info_id
@@ -7227,8 +7233,8 @@ def get_master_list_sp_members():
     """
 
     # Execute queries
-    sp_info = pyread(sp_info_query, (sp_id,))
-    councilors = pyread(councilors_query, (sp_id,))
+    sp_info = rd_query(sp_info_query, (sp_id,))
+    councilors = rd_query(councilors_query, (sp_id,))
 
     return jsonify({
         "sp_info": sp_info[0] if sp_info else {},
@@ -9586,7 +9592,6 @@ def delete_session():
 
 
 @query.route('/save_propose', methods = ['POST','GET'])
-@login_required
 def save_propose():
 	p=json.loads(request.data)
 	select  = "select action_taken from tbl_document_tracking where track_gen_id="+str(p['track_gen_id'])+" "
@@ -9726,7 +9731,6 @@ def disapproved_proposed():
 
 
 @query.route('/get_document_tracking_where_trackgenId', methods = ['POST','GET'])
-@login_required
 def get_document_tracking_where_trackgenId():
 	p=json.loads(request.data)
 	sel = """
@@ -9788,7 +9792,6 @@ def update_proposed():
 
 
 @query.route('/approve_document', methods = ['POST','GET'])
-@login_required
 def approve_document():
 	p=json.loads(request.data)
 	if p['status']=="1":
@@ -9840,7 +9843,6 @@ def cancel_document():
 
 
 @query.route('/get_document_status_tracking', methods = ['POST','GET'])
-@login_required
 def get_document_status_tracking():
 	p=json.loads(request.data)
 	sel = """
@@ -10023,4 +10025,17 @@ def get_codification_ordinance():
 				where (repealed_no!='' or obsolet_ord!='')
 			"""
 	rd=pyread(sel)
+	return jsonify(rd)
+
+
+@query.route('/get_access_role', methods = ['POST','GET'])
+@login_required
+def get_access_role():
+	p=json.loads(request.data)
+	sel= """
+		select * from tbl_login_access where login_id=%s
+	"""
+	args=(str(p['login_id']),)
+	rd=rd_query(sel,args)
+	prnt_R(rd)
 	return jsonify(rd)

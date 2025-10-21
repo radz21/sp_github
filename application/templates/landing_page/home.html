@@ -242,7 +242,7 @@
 		    	"lengthChange": false,
 		    	"ordering": false,
 		    	"info": false,
-		    	"pageLength": 5
+		    	"pageLength": 100
 		    });
 
 		    $('#tbl_resolutions').DataTable({
@@ -757,15 +757,32 @@
 			    					p.innerHTML = `DATED : ${item.dated}`
 			    					div.appendChild(p)
 
+			    					// if(item.document_file){
+			    					// 	var a =document.createElement("a")
+				    				// 	a.style = "text-decoration:underline;"
+				    				// 	a.className = "textGenerated_lower"
+				    				// 	a.innerHTML = "***show document"
+				    				// 	a.href = `../static/uploads/${item.document_file}`
+				    				// 	div.appendChild(a)
+			    					// }
 			    					if(item.document_file){
-			    						console.log(item.document_file, "item.document_file")
-			    						var a =document.createElement("a")
-				    					a.style = "text-decoration:underline;"
-				    					a.className = "textGenerated_lower"
-				    					a.innerHTML = "***show document"
-				    					a.href = `../static/uploads/${item.document_file}`
-				    					div.appendChild(a)
-			    					}
+	                                    var a =document.createElement("a")
+	                                    a.style = "text-decoration:underline;"
+	                                    a.className = "textGenerated_lower"
+	                                    a.innerHTML = "***show document"
+	                                    a.target = "_blank"
+	                                    const fileIsDocx = `../static/uploads/${item.document_file}`.toLowerCase().endsWith('.docx');
+
+	                                    if (fileIsDocx) {
+	                                        a.onclick = function() {
+	                                            openWordFile(`../static/uploads/${item.document_file}`);
+	                                            return false;
+	                                        };
+	                                    } else {
+	                                        a.href = `../static/uploads/${item.document_file}`;
+	                                    }
+	                                    div.appendChild(a)
+	                                }
 			    					
 			    					parent.appendChild(div)
 			    				})
@@ -907,7 +924,18 @@
 			    							a.style = "text-decoration:underline;"
 					    					a.className = "textGenerated_lower"
 					    					a.innerHTML = "***show document"
-					    					a.href = `../static/uploads/${item.document_file}`
+
+					    					const fileIsDocx = `../static/uploads/${item.document_file}`.toLowerCase().endsWith('.docx');
+		                                    if (fileIsDocx) {
+		                                        a.onclick = function() {
+		                                            openWordFile(`../static/uploads/${item.document_file}`);
+		                                            return false;
+		                                        };
+		                                    } else {
+		                                        a.href = `../static/uploads/${item.document_file}`;
+		                                    }
+
+		                                    div.appendChild(a)
 			    						}else{
 			    							a.style = "text-decoration:underline;cursor:pointer"
 					    					a.className = "textGenerated_lower"
@@ -960,14 +988,32 @@
 				    					div.appendChild(p_ref)
 			    					}
 
+			    					// if(item.document_file){
+			    					// 	var a =document.createElement("a")
+				    				// 	a.style = "text-decoration:underline;"
+				    				// 	a.className = "textGenerated_lower"
+				    				// 	a.innerHTML = "***show document"
+				    				// 	a.href = `../static/uploads/${item.document_file}`
+				    				// 	div.appendChild(a)
+			    					// }
 			    					if(item.document_file){
-			    						var a =document.createElement("a")
-				    					a.style = "text-decoration:underline;"
-				    					a.className = "textGenerated_lower"
-				    					a.innerHTML = "***show document"
-				    					a.href = `../static/uploads/${item.document_file}`
-				    					div.appendChild(a)
-			    					}
+	                                    var a =document.createElement("a")
+	                                    a.style = "text-decoration:underline;"
+	                                    a.className = "textGenerated_lower"
+	                                    a.innerHTML = "***show document"
+	                                    a.target = "_blank"
+	                                    const fileIsDocx = `../static/uploads/${item.document_file}`.toLowerCase().endsWith('.docx');
+
+	                                    if (fileIsDocx) {
+	                                        a.onclick = function() {
+	                                            openWordFile(`../static/uploads/${item.document_file}`);
+	                                            return false;
+	                                        };
+	                                    } else {
+	                                        a.href = `../static/uploads/${item.document_file}`;
+	                                    }
+	                                    div.appendChild(a)
+	                                }
 
 			    					parent.appendChild(div)
 			    					
@@ -1007,14 +1053,33 @@
 
 	                                div.appendChild(p_type)
 	                                
+			    					// if(item.document_file){
+			    					// 	var a =document.createElement("a")
+				    				// 	a.style = "text-decoration:underline;"
+				    				// 	a.className = "textGenerated_lower"
+				    				// 	a.innerHTML = "***show document"
+				    				// 	a.href = `../static/uploads/${item.document_file}`
+				    				// 	div.appendChild(a)
+			    					// }
+
 			    					if(item.document_file){
-			    						var a =document.createElement("a")
-				    					a.style = "text-decoration:underline;"
-				    					a.className = "textGenerated_lower"
-				    					a.innerHTML = "***show document"
-				    					a.href = `../static/uploads/${item.document_file}`
-				    					div.appendChild(a)
-			    					}
+	                                    var a =document.createElement("a")
+	                                    a.style = "text-decoration:underline;"
+	                                    a.className = "textGenerated_lower"
+	                                    a.innerHTML = "***show document"
+	                                    a.target = "_blank"
+	                                    const fileIsDocx = `../static/uploads/${item.document_file}`.toLowerCase().endsWith('.docx');
+
+	                                    if (fileIsDocx) {
+	                                        a.onclick = function() {
+	                                            openWordFile(`../static/uploads/${item.document_file}`);
+	                                            return false;
+	                                        };
+	                                    } else {
+	                                        a.href = `../static/uploads/${item.document_file}`;
+	                                    }
+	                                    div.appendChild(a)
+	                                }
 
 	                                
 			    					parent.appendChild(div)
@@ -1046,14 +1111,32 @@
 				    					div.appendChild(p_ref)
 			    					}
 
+			    					// if(item.document_file){
+			    					// 	var a =document.createElement("a")
+				    				// 	a.style = "text-decoration:underline;"
+				    				// 	a.className = "textGenerated_lower"
+				    				// 	a.innerHTML = "***show document"
+				    				// 	a.href = `../static/uploads/${item.document_file}`
+				    				// 	div.appendChild(a)
+			    					// }
 			    					if(item.document_file){
-			    						var a =document.createElement("a")
-				    					a.style = "text-decoration:underline;"
-				    					a.className = "textGenerated_lower"
-				    					a.innerHTML = "***show document"
-				    					a.href = `../static/uploads/${item.document_file}`
-				    					div.appendChild(a)
-			    					}
+	                                    var a =document.createElement("a")
+	                                    a.style = "text-decoration:underline;"
+	                                    a.className = "textGenerated_lower"
+	                                    a.innerHTML = "***show document"
+	                                    a.target = "_blank"
+	                                    const fileIsDocx = `../static/uploads/${item.document_file}`.toLowerCase().endsWith('.docx');
+
+	                                    if (fileIsDocx) {
+	                                        a.onclick = function() {
+	                                            openWordFile(`../static/uploads/${item.document_file}`);
+	                                            return false;
+	                                        };
+	                                    } else {
+	                                        a.href = `../static/uploads/${item.document_file}`;
+	                                    }
+	                                    div.appendChild(a)
+	                                }
 
 			    					parent.appendChild(div)
 			    					
@@ -1086,14 +1169,32 @@
 				    					div.appendChild(p_ref)
 			    					}
 
+			    					// if(item.document_file){
+			    					// 	var a =document.createElement("a")
+				    				// 	a.style = "text-decoration:underline;"
+				    				// 	a.className = "textGenerated_lower"
+				    				// 	a.innerHTML = "***show document"
+				    				// 	a.href = `../static/uploads/${item.document_file}`
+				    				// 	div.appendChild(a)
+			    					// }
 			    					if(item.document_file){
-			    						var a =document.createElement("a")
-				    					a.style = "text-decoration:underline;"
-				    					a.className = "textGenerated_lower"
-				    					a.innerHTML = "***show document"
-				    					a.href = `../static/uploads/${item.document_file}`
-				    					div.appendChild(a)
-			    					}
+	                                    var a =document.createElement("a")
+	                                    a.style = "text-decoration:underline;"
+	                                    a.className = "textGenerated_lower"
+	                                    a.innerHTML = "***show document"
+	                                    a.target = "_blank"
+	                                    const fileIsDocx = `../static/uploads/${item.document_file}`.toLowerCase().endsWith('.docx');
+
+	                                    if (fileIsDocx) {
+	                                        a.onclick = function() {
+	                                            openWordFile(`../static/uploads/${item.document_file}`);
+	                                            return false;
+	                                        };
+	                                    } else {
+	                                        a.href = `../static/uploads/${item.document_file}`;
+	                                    }
+	                                    div.appendChild(a)
+	                                }
 
 			    					parent.appendChild(div)
 			    					
@@ -1225,14 +1326,25 @@
 					    					div.appendChild(p_ref)
 				    					}
 
+				    					
 				    					if(item.document_file){
-				    						var a =document.createElement("a")
-					    					a.style = "text-decoration:underline;"
-					    					a.className = "textGenerated_lower"
-					    					a.innerHTML = "***show document"
-					    					a.href = `../static/uploads/${item.document_file}`
-					    					div.appendChild(a)
-				    					}
+		                                    var a =document.createElement("a")
+		                                    a.style = "text-decoration:underline;"
+		                                    a.className = "textGenerated_lower"
+		                                    a.innerHTML = "***show document"
+		                                    a.target = "_blank"
+		                                    const fileIsDocx = `../static/uploads/${item.document_file}`.toLowerCase().endsWith('.docx');
+
+		                                    if (fileIsDocx) {
+		                                        a.onclick = function() {
+		                                            openWordFile(`../static/uploads/${item.document_file}`);
+		                                            return false;
+		                                        };
+		                                    } else {
+		                                        a.href = `../static/uploads/${item.document_file}`;
+		                                    }
+		                                    div.appendChild(a)
+		                                }
 
 				    					parent.appendChild(div)
 			    					}
@@ -1267,6 +1379,26 @@
 				    					div.appendChild(p_ref)
 			    					}
 
+			    					// if(item.document_file){
+			    					// 	var a =document.createElement("a")
+
+			    					// 	let file = item.document_file.split(",")
+			    					// 	if(file.length==1){
+			    					// 		a.style = "text-decoration:underline;"
+					    			// 		a.className = "textGenerated_lower"
+					    			// 		a.innerHTML = "***show document"
+					    			// 		a.href = `../static/uploads/${item.document_file}`
+			    					// 	}else{
+			    					// 		a.style = "text-decoration:underline;cursor:pointer"
+					    			// 		a.className = "textGenerated_lower"
+					    			// 		a.innerHTML = "***show document"
+					    			// 		a.onclick = function(){
+					    			// 			show_document_downloadable(file)
+					    			// 		}
+			    					// 	}
+				    					
+				    				// 	div.appendChild(a)
+			    					// }
 			    					if(item.document_file){
 			    						var a =document.createElement("a")
 
@@ -1275,7 +1407,18 @@
 			    							a.style = "text-decoration:underline;"
 					    					a.className = "textGenerated_lower"
 					    					a.innerHTML = "***show document"
-					    					a.href = `../static/uploads/${item.document_file}`
+
+					    					const fileIsDocx = `../static/uploads/${item.document_file}`.toLowerCase().endsWith('.docx');
+		                                    if (fileIsDocx) {
+		                                        a.onclick = function() {
+		                                            openWordFile(`../static/uploads/${item.document_file}`);
+		                                            return false;
+		                                        };
+		                                    } else {
+		                                        a.href = `../static/uploads/${item.document_file}`;
+		                                    }
+
+		                                    div.appendChild(a)
 			    						}else{
 			    							a.style = "text-decoration:underline;cursor:pointer"
 					    					a.className = "textGenerated_lower"
@@ -1284,8 +1427,6 @@
 					    						show_document_downloadable(file)
 					    					}
 			    						}
-				    					
-				    					div.appendChild(a)
 			    					}
 
 			    					parent.appendChild(div)
@@ -1327,6 +1468,26 @@
 				    					div.appendChild(p_ref)
 			    					}
 
+			    					// if(item.document_file){
+			    					// 	var a =document.createElement("a")
+
+			    					// 	let file = item.document_file.split(",")
+			    					// 	if(file.length==1){
+			    					// 		a.style = "text-decoration:underline;"
+					    			// 		a.className = "textGenerated_lower"
+					    			// 		a.innerHTML = "***show document"
+					    			// 		a.href = `../static/uploads/${item.document_file}`
+			    					// 	}else{
+			    					// 		a.style = "text-decoration:underline;cursor:pointer"
+					    			// 		a.className = "textGenerated_lower"
+					    			// 		a.innerHTML = "***show document"
+					    			// 		a.onclick = function(){
+					    			// 			show_document_downloadable(file)
+					    			// 		}
+			    					// 	}
+				    					
+				    				// 	div.appendChild(a)
+			    					// }
 			    					if(item.document_file){
 			    						var a =document.createElement("a")
 
@@ -1335,7 +1496,18 @@
 			    							a.style = "text-decoration:underline;"
 					    					a.className = "textGenerated_lower"
 					    					a.innerHTML = "***show document"
-					    					a.href = `../static/uploads/${item.document_file}`
+
+					    					const fileIsDocx = `../static/uploads/${item.document_file}`.toLowerCase().endsWith('.docx');
+		                                    if (fileIsDocx) {
+		                                        a.onclick = function() {
+		                                            openWordFile(`../static/uploads/${item.document_file}`);
+		                                            return false;
+		                                        };
+		                                    } else {
+		                                        a.href = `../static/uploads/${item.document_file}`;
+		                                    }
+
+		                                    div.appendChild(a)
 			    						}else{
 			    							a.style = "text-decoration:underline;cursor:pointer"
 					    					a.className = "textGenerated_lower"
@@ -1344,8 +1516,6 @@
 					    						show_document_downloadable(file)
 					    					}
 			    						}
-				    					
-				    					div.appendChild(a)
 			    					}
 
 			    					parent.appendChild(div)
@@ -1388,6 +1558,26 @@
 				    					div.appendChild(p_ref)
 			    					}
 
+			    					// if(item.document_file){
+			    					// 	var a =document.createElement("a")
+
+			    					// 	let file = item.document_file.split(",")
+			    					// 	if(file.length==1){
+			    					// 		a.style = "text-decoration:underline;"
+					    			// 		a.className = "textGenerated_lower"
+					    			// 		a.innerHTML = "***show document"
+					    			// 		a.href = `../static/uploads/${item.document_file}`
+			    					// 	}else{
+			    					// 		a.style = "text-decoration:underline;cursor:pointer"
+					    			// 		a.className = "textGenerated_lower"
+					    			// 		a.innerHTML = "***show document"
+					    			// 		a.onclick = function(){
+					    			// 			show_document_downloadable(file)
+					    			// 		}
+			    					// 	}
+				    					
+				    				// 	div.appendChild(a)
+			    					// }
 			    					if(item.document_file){
 			    						var a =document.createElement("a")
 
@@ -1396,7 +1586,18 @@
 			    							a.style = "text-decoration:underline;"
 					    					a.className = "textGenerated_lower"
 					    					a.innerHTML = "***show document"
-					    					a.href = `../static/uploads/${item.document_file}`
+
+					    					const fileIsDocx = `../static/uploads/${item.document_file}`.toLowerCase().endsWith('.docx');
+		                                    if (fileIsDocx) {
+		                                        a.onclick = function() {
+		                                            openWordFile(`../static/uploads/${item.document_file}`);
+		                                            return false;
+		                                        };
+		                                    } else {
+		                                        a.href = `../static/uploads/${item.document_file}`;
+		                                    }
+
+		                                    div.appendChild(a)
 			    						}else{
 			    							a.style = "text-decoration:underline;cursor:pointer"
 					    					a.className = "textGenerated_lower"
@@ -1405,8 +1606,6 @@
 					    						show_document_downloadable(file)
 					    					}
 			    						}
-				    					
-				    					div.appendChild(a)
 			    					}
 
 			    					parent.appendChild(div)
@@ -1441,14 +1640,45 @@
 				    					div.appendChild(p_ref)
 			    					}
 
+			    					// if(item.document_file){
+			    					// 	var a =document.createElement("a")
+			    					// 	let file = item.document_file.split(",")
+			    					// 	if(file.length==1){
+			    					// 		a.style = "text-decoration:underline;"
+					    			// 		a.className = "textGenerated_lower"
+					    			// 		a.innerHTML = "***show document"
+					    			// 		a.href = `../static/uploads/${item.document_file}`
+			    					// 	}else{
+			    					// 		a.style = "text-decoration:underline;cursor:pointer"
+					    			// 		a.className = "textGenerated_lower"
+					    			// 		a.innerHTML = "***show document"
+					    			// 		a.onclick = function(){
+					    			// 			show_document_downloadable(file)
+					    			// 		}
+			    					// 	}
+				    					
+				    				// 	div.appendChild(a)
+			    					// }
 			    					if(item.document_file){
 			    						var a =document.createElement("a")
+
 			    						let file = item.document_file.split(",")
 			    						if(file.length==1){
 			    							a.style = "text-decoration:underline;"
 					    					a.className = "textGenerated_lower"
 					    					a.innerHTML = "***show document"
-					    					a.href = `../static/uploads/${item.document_file}`
+
+					    					const fileIsDocx = `../static/uploads/${item.document_file}`.toLowerCase().endsWith('.docx');
+		                                    if (fileIsDocx) {
+		                                        a.onclick = function() {
+		                                            openWordFile(`../static/uploads/${item.document_file}`);
+		                                            return false;
+		                                        };
+		                                    } else {
+		                                        a.href = `../static/uploads/${item.document_file}`;
+		                                    }
+
+		                                    div.appendChild(a)
 			    						}else{
 			    							a.style = "text-decoration:underline;cursor:pointer"
 					    					a.className = "textGenerated_lower"
@@ -1457,8 +1687,6 @@
 					    						show_document_downloadable(file)
 					    					}
 			    						}
-				    					
-				    					div.appendChild(a)
 			    					}
 
 			    					parent.appendChild(div)
@@ -1492,14 +1720,45 @@
 				    					div.appendChild(p_ref)
 			    					}
 
+			    					// if(item.document_file){
+			    					// 	var a =document.createElement("a")
+			    					// 	let file = item.document_file.split(",")
+			    					// 	if(file.length==1){
+			    					// 		a.style = "text-decoration:underline;"
+					    			// 		a.className = "textGenerated_lower"
+					    			// 		a.innerHTML = "***show document"
+					    			// 		a.href = `../static/uploads/${item.document_file}`
+			    					// 	}else{
+			    					// 		a.style = "text-decoration:underline;cursor:pointer"
+					    			// 		a.className = "textGenerated_lower"
+					    			// 		a.innerHTML = "***show document"
+					    			// 		a.onclick = function(){
+					    			// 			show_document_downloadable(file)
+					    			// 		}
+			    					// 	}
+				    					
+				    				// 	div.appendChild(a)
+			    					// }
 			    					if(item.document_file){
 			    						var a =document.createElement("a")
+
 			    						let file = item.document_file.split(",")
 			    						if(file.length==1){
 			    							a.style = "text-decoration:underline;"
 					    					a.className = "textGenerated_lower"
 					    					a.innerHTML = "***show document"
-					    					a.href = `../static/uploads/${item.document_file}`
+
+					    					const fileIsDocx = `../static/uploads/${item.document_file}`.toLowerCase().endsWith('.docx');
+		                                    if (fileIsDocx) {
+		                                        a.onclick = function() {
+		                                            openWordFile(`../static/uploads/${item.document_file}`);
+		                                            return false;
+		                                        };
+		                                    } else {
+		                                        a.href = `../static/uploads/${item.document_file}`;
+		                                    }
+
+		                                    div.appendChild(a)
 			    						}else{
 			    							a.style = "text-decoration:underline;cursor:pointer"
 					    					a.className = "textGenerated_lower"
@@ -1508,8 +1767,6 @@
 					    						show_document_downloadable(file)
 					    					}
 			    						}
-				    					
-				    					div.appendChild(a)
 			    					}
 
 			    					parent.appendChild(div)
@@ -1544,14 +1801,32 @@
 				    					div.appendChild(p_ref)
 			    					}
 
+			    					// if(item.document_file){
+			    					// 	var a =document.createElement("a")
+				    				// 	a.style = "text-decoration:underline;"
+				    				// 	a.className = "textGenerated_lower"
+				    				// 	a.innerHTML = "***show document"
+				    				// 	a.href = `../static/uploads/${item.document_file}`
+				    				// 	div.appendChild(a)
+			    					// }
 			    					if(item.document_file){
-			    						var a =document.createElement("a")
-				    					a.style = "text-decoration:underline;"
-				    					a.className = "textGenerated_lower"
-				    					a.innerHTML = "***show document"
-				    					a.href = `../static/uploads/${item.document_file}`
-				    					div.appendChild(a)
-			    					}
+	                                    var a =document.createElement("a")
+	                                    a.style = "text-decoration:underline;"
+	                                    a.className = "textGenerated_lower"
+	                                    a.innerHTML = "***show document"
+	                                    a.target = "_blank"
+	                                    const fileIsDocx = `../static/uploads/${item.document_file}`.toLowerCase().endsWith('.docx');
+
+	                                    if (fileIsDocx) {
+	                                        a.onclick = function() {
+	                                            openWordFile(`../static/uploads/${item.document_file}`);
+	                                            return false;
+	                                        };
+	                                    } else {
+	                                        a.href = `../static/uploads/${item.document_file}`;
+	                                    }
+	                                    div.appendChild(a)
+	                                }
 
 			    					parent.appendChild(div)
 			    					

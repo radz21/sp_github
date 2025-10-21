@@ -98,7 +98,8 @@
 
                             if(res[0]['national_anthem_path']!='None'){
                                 getbyId('div_nat1').style.display = "inline-block"
-                                console.log('/static/' + res[0].national_anthem_path)
+                                console.log('/static/' + res[0].national_anthem_path, "??>>?")
+
                                 getbyId('national_anthems').href = '/static/' + res[0].national_anthem_path;
                             }else{
                                 getbyId('div_nat1').style.display = "none"
@@ -196,13 +197,31 @@
                                 p.innerHTML = `DATED : ${item.dated}`
                                 div.appendChild(p)
 
+                                // if(item.document_file){
+                                //     var a =document.createElement("a")
+                                //     a.style = "text-decoration:underline;"
+                                //     a.className = "textGenerated_lower"
+                                //     a.innerHTML = "***show document"
+                                //     a.target = "_blank"
+                                //     a.href = `../static/uploads/${item.document_file}`
+                                //     div.appendChild(a)
+                                // }
                                 if(item.document_file){
                                     var a =document.createElement("a")
                                     a.style = "text-decoration:underline;"
                                     a.className = "textGenerated_lower"
                                     a.innerHTML = "***show document"
                                     a.target = "_blank"
-                                    a.href = `../static/uploads/${item.document_file}`
+                                    const fileIsDocx = `../static/uploads/${item.document_file}`.toLowerCase().endsWith('.docx');
+
+                                    if (fileIsDocx) {
+                                        a.onclick = function() {
+                                            openWordFile(`../static/uploads/${item.document_file}`);
+                                            return false;
+                                        };
+                                    } else {
+                                        a.href = `../static/uploads/${item.document_file}`;
+                                    }
                                     div.appendChild(a)
                                 }
                                 
@@ -1231,33 +1250,34 @@
 
             // petition_for_refferal
             getbyId('div_petitions_for_refferals').innerHTML=  ""
-            sendDataWithCallback('/get_session_petition_for_refferal', {session_id:data.sess_data[0].session_id}, (res)=>{
-                res.forEach(function(item, index){
-                    add_petitions_for_refferals();
-                    $("#petitions_for_refferals_tracking_no" + index).val(item['tracking_no']).trigger("chosen:updated");
-                    var petitions_for_refferals = "petitions_for_refferals["+index+"][type]";
-                    form[petitions_for_refferals].value = item['type'];
-                    form[petitions_for_refferals].dispatchEvent(new Event('change'));
+            // sendDataWithCallback('/get_session_petition_for_refferal', {session_id:data.sess_data[0].session_id}, (res)=>{
+            //     res.forEach(function(item, index){
+            //         add_petitions_for_refferals();
+            //         $("#petitions_for_refferals_tracking_no" + index).val(item['tracking_no']).trigger("chosen:updated");
+            //         var petitions_for_refferals = "petitions_for_refferals["+index+"][type]";
+            //         form[petitions_for_refferals].value = item['type'];
+            //         form[petitions_for_refferals].dispatchEvent(new Event('change'));
                     
-                    var arr_ = item['committtee'].replaceAll(" ","").replaceAll("'","").split(",")
-                    setTimeout(()=>{$("#petitions_for_refferals_committee" + (index)).val(arr_).trigger("chosen:updated");},500)
-                })
-            })
+            //         var arr_ = item['committtee'].replaceAll(" ","").replaceAll("'","").split(",")
+            //         setTimeout(()=>{$("#petitions_for_refferals_committee" + (index)).val(arr_).trigger("chosen:updated");},500)
+            //     })
+            // })
 
             // additional_refferal
             getbyId('div_additional_refferals').innerHTML=  ""
-            sendDataWithCallback('/get_session_additional_refferal', {session_id:data.sess_data[0].session_id}, (res)=>{
-                res.forEach(function(item, index){
-                    add_additional_refferals();
-                    $("#additional_refferals_tracking_no" + index).val(item['tracking_no']).trigger("chosen:updated");
-                    var additional_refferals = "additional_refferals["+index+"][type]";
-                    form[additional_refferals].value = item['type'];
-                    form[additional_refferals].dispatchEvent(new Event('change'));
+            // sendDataWithCallback('/get_session_additional_refferal', {session_id:data.sess_data[0].session_id}, (res)=>{
+            //     res.forEach(function(item, index){
+            //         add_additional_refferals();
+            //         $("#additional_refferals_tracking_no" + index).val(item['tracking_no']).trigger("chosen:updated");
+            //         var additional_refferals = "additional_refferals["+index+"][type]";
+            //         form[additional_refferals].value = item['type'];
+            //         form[additional_refferals].dispatchEvent(new Event('change'));
                     
-                    var arr_ = item['committtee'].replaceAll(" ","").replaceAll("'","").split(",")
-                    setTimeout(()=>{$("#additional_refferals_committee" + (index)).val(arr_).trigger("chosen:updated");},500)
-                })
-            })
+            //         console.log(item['committtee'], "????")
+            //         // var arr_ = item['committtee'].replaceAll(" ","").replaceAll("'","").split(",")
+            //         // setTimeout(()=>{$("#additional_refferals_committee" + (index)).val(arr_).trigger("chosen:updated");},500)
+            //     })
+            // })
 
             // veto_reading
             sendDataWithCallback('/get_session_veto_reading', {session_id:data.sess_data[0].session_id}, (res)=>{
