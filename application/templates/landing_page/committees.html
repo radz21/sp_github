@@ -1,0 +1,62 @@
+{% extends 'landing_page/index.html'%}
+
+{% block body%}
+	<div class="container my-5">
+		<p class="lead" style="text-align:center; font-weight: bold;">STANDING COMMITTEES</p>
+		<hr>
+    
+        <div class="row">
+        {% if data %}
+            {% for item in data %}
+            <div class="col-md-4 d-flex justify-content-center">
+                <div class="card text-center " style="width: 300px">
+                    <div class="bg-image " data-mdb-ripple-color="light">
+                        <img src="https://mdbootstrap.com/img/new/standard/nature/111.webp" class="img-fluid" />
+                        <div class="mask" style="background-color: rgba(0, 0, 0, 0.6); z-index: 100; color: white;">
+                            <h3 style="margin-top: 30%; transform: translateY(-50%);" style="text-align: center;">{{ item.committee }}</h3>
+                        </div>
+                    </div>
+                    <div class="card-body">
+
+                        <h5 class="card-title">{{ item.chairman }}</h5>
+                        <p class="card-text">Chair Person</p>
+
+                        <h5 class="card-title">{{ item.co_chair }}</h5>
+                        <p class="card-text">Co Chair Person</p>
+
+                        <h5 style="text-align: center; margin-top: 20px;">COMMITTEE MEMBERS</h5>
+                        {% for x in item.members %}
+                            <p class="card-text">{{ x.fullname }}</p>
+                        {% endfor %}
+
+                        <p style="margin-top: 20px; padding: 0px; margin: 0; font-weight: bold;">Phone Number: {{ item.phone_no }}</p>
+                        <p style="padding: 0px; margin: 0; font-weight: bold;">Email: {{ item.email }}</p>
+
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+        </div>
+	</div>
+
+    <script type="text/javascript">
+        $('document').ready(function(){
+
+            document.getElementById('menu_committees').style.color = "black";
+            getDataWithCallback('/get_city_name', function(res){
+                if(res[0].type==null || res[0].type==""){
+                    var type = 'SANGUNIANG BAYAN';
+                    getbyId('act_members_sp_sb').innerHTML="SB MEMBERS";
+                    getbyId('footer_text').innerHTML = type
+                }else{
+                    var type = 'SANGUNIANG PANLUNGSOD';
+                    getbyId('act_members_sp_sb').innerHTML="SP MEMBERS";
+                    getbyId('footer_text').innerHTML = type
+                }
+
+                getbyId('lan_cityname').innerHTML=res[0]['city_name'];
+            })
+        })
+    </script>
+{% endblock%}

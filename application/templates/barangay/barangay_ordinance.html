@@ -1,0 +1,135 @@
+{% extends 'index.html' %}
+{% block body %}
+<div class="colfull">
+	<h3>BARANGAY ORDINANCE</h3>
+	<table id="tbl_barangay_ordinance" class="table table-bordered" width="100%">
+		<thead>
+			<th>Id</th>
+			<th>Title</th>
+			<th>Description</th>
+			<th>Date</th>
+			<th>Action</th>
+		</thead>
+	</table>
+</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$( "#barangay1" ).addClass( "selected_page_color" );
+		$('#tbl_barangay_ordinance').DataTable();
+
+		getDataWithCallback('/get_barangay', function(res){
+			$('#sel_barangay_ordinance_barangay').append(`<option value="" disabled selected> ${'--SELECT--'} </option>`); 
+			for(var x=0; x<res.length; x++){
+				$('#sel_barangay_ordinance_barangay').append(`<option value="${res[x]['brgy_id']}"> ${res[x]['barangay']} </option>`); 
+			}
+		})
+
+		load_barangay_ordinance()
+		loadfirstdatatable('tbl_barangay_ordinance_path')
+
+       
+	})
+
+	function load_barangay_ordinance_attach(data){
+		sendDataWithCallback('/get_barangay_ordinance_doc',data,function(res){
+ 			if(res){
+ 				res.forEach(function(file) {
+					var del_btn = "<button type='button' data-barangay_ordinance_path_id="+ file.barangay_ordinance_path_id+ " data-id=" + file.barangay_ordinance_id+ " onclick=delete_file_barangay_ordinance(this)> DELETE </button>"
+					var dl_btn = "<a data-path=" +file.path+ " href=" + '/static/uploads/'+file.path+ "><button type='button'> DOWNLOAD </button></a>"
+					file.action = dl_btn + del_btn ;
+				})
+
+ 				if ($.fn.DataTable.isDataTable('#tbl_barangay_ordinance_path')) {
+		        	$('#tbl_barangay_ordinance_path').DataTable().destroy();
+		       	}
+				
+				var table=$('#tbl_barangay_ordinance_path').DataTable({
+	                data:res,
+	                 columns: [
+	                 	{data:"filename"},
+	                 	{data: "action"}
+	                 ],
+	                responsive: true,
+	                searching: false, paging: false, info: false
+	            });
+ 			}
+ 		})
+	}
+
+	function open_barangay_ord(elem){
+		var tr = $(elem).closest('tr')
+		var dataArr = $('#tbl_barangay_ordinance').DataTable().row(tr).data();
+     	if(dataArr){
+     		getbyId('del_barangay_ordinance').style.display='inline-block'
+     		getbyId('h_barangay_ordinance').value=dataArr.barangay_ordinance_id
+     		getbyId('inp_barangay_ordinance_title').value=dataArr.title
+     		getbyId('barangay_ordinance_desc').value=dataArr.description
+     		getbyId('sel_barangay_ordinance_barangay').value=dataArr.brgy_id
+
+     		var data={
+     			barangay_ordinance_id:dataArr.barangay_ordinance_id
+     		}
+
+     		load_barangay_ordinance_attach(data)
+     		
+     		$("#div_barangay_ordinance_modal").modal('toggle');
+     	}
+	}
+
+	function load_barangay_ordinance(){
+  		if ($.fn.DataTable.isDataTable("#tbl_barangay_ordinance")) {
+            $("#tbl_barangay_ordinance").DataTable().destroy();
+        }
+
+        var table=$('#tbl_barangay_ordinance').DataTable({
+            responsive: true,
+            searching: true,
+            bStateSave: true,
+            "ajax": {
+                "type": "GET",
+                "url": '/get_barangay_ordinance',
+                contentType: 'application/JSON',
+                "dataSrc": function(data) {
+                    data.forEach(function(item){
+                        var open_doc = `<button type='button' class='btn btn-sm btn-primary' onclick='open_barangay_ord(this)'><i class='fa-solid fa-square-up-right'></i></button>`
+                        item.action =  open_doc;
+                    });
+                    return data;
+                }
+            },
+            dom: 'Bfrtip',
+            columns: [
+             	{data:"barangay_ordinance_id"},
+             	{data:"title"},
+             	{data:"description"},
+             	{data:"dates"},
+             	{data:"action"}
+            ],
+             buttons: [
+             	{
+	                text: "Add",
+	                action: function ( e, dt, node, config ) {
+	                	clear_ref()
+	                	getbyId('del_barangay_ordinance').style.display='none'
+	                	getbyId('form_barangay_ordinance').reset();
+	                	if ($.fn.DataTable.isDataTable('#tbl_barangay_ordinance_path')) {
+				        	$('#tbl_barangay_ordinance_path').DataTable().clear().draw();
+				       	}
+	                    $("#div_barangay_ordinance_modal").modal('toggle');
+	                },
+	                'className': 'btn btn-sm btn-primary'
+	            }, {
+			            extend: 'print',
+			            text: "Print",
+			            filename: 'file',
+			            title: 'Print',
+			            titleAttr: 'Print',
+			            'className': 'btn btn-sm btn-warning'
+                    } 
+            ],
+            "pagingType": "full_numbers",
+            "pageLength": 7
+        });
+	}
+</script>
+{% endblock %}

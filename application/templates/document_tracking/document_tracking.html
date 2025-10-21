@@ -1,0 +1,345 @@
+<div class="col-sm-12">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+           <div class="header-title">
+                <h4 class="card-title">DOCUMENT TRACKING</h4>
+           </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="tbl_document_tracking" class="table table-striped" style="table-layout:fixed" data-toggle="data-table" width="99.8%">
+                    <colgroup>
+                        <col style="width:4px">
+                        <col style="width:10px">
+                        <col style="width:5px">
+                        <col style="width:4px">
+                    </colgroup>
+                    <thead>
+                        <th>Tracking No.</th>
+                        <th>Title</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </thead>
+                </table>
+            </div>
+       </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $( "#li_document_tracking" ).addClass( "active" );
+        load_document_tracking()
+    })
+
+    function load_document_tracking(){
+        if ($.fn.DataTable.isDataTable("#tbl_document_tracking")) {
+            $("#tbl_document_tracking").DataTable().destroy();
+        }
+
+        var table=$('#tbl_document_tracking').DataTable({
+            responsive: true,
+            searching: true,
+            bStateSave: true,
+            "ajax": {
+                "type": "POST",
+                "url": '/get_document_tracking',
+                contentType: 'application/JSON',
+                "dataSrc": function(data) {
+                    data.forEach(function(item){
+                        var edit_doc = `<button type='button' class="btn btn-sm btn-icon text-primary flex-end" onclick=edit_document_tracking(this)>
+                        <span class="btn-inner">
+                            <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" >
+                                <path d="M11.4925 2.78906H7.75349C4.67849 2.78906 2.75049 4.96606 2.75049 8.04806V16.3621C2.75049 19.4441 4.66949 21.6211 7.75349 21.6211H16.5775C19.6625 21.6211 21.5815 19.4441 21.5815 16.3621V12.3341" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.82812 10.921L16.3011 3.44799C17.2321 2.51799 18.7411 2.51799 19.6721 3.44799L20.8891 4.66499C21.8201 5.59599 21.8201 7.10599 20.8891 8.03599L13.3801 15.545C12.9731 15.952 12.4211 16.181 11.8451 16.181H8.09912L8.19312 12.401C8.20712 11.845 8.43412 11.315 8.82812 10.921Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M15.1655 4.60254L19.7315 9.16854" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                        </span>
+                        </button>`
+
+                        var open_doc = `<button type='button' class="btn btn-sm btn-icon text-primary flex-end" onclick='open_tracker(this)'>
+                        <span class="btn-inner">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                        </span>
+                        </button>`
+
+                        var councilors = `
+                        <button type='button' class='btn btn-sm btn-icon text-default flex-end' title='Authors' onclick='open_doc_authors(this)'>
+                        <span class="btn-inner">
+                            <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor">
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M9.5 12.5537C12.2546 12.5537 14.4626 10.3171 14.4626 7.52684C14.4626 4.73663 12.2546 2.5 9.5 2.5C6.74543 2.5 4.53737 4.73663 4.53737 7.52684C4.53737 10.3171 6.74543 12.5537 9.5 12.5537ZM9.5 15.0152C5.45422 15.0152 2 15.6621 2 18.2464C2 20.8298 5.4332 21.5 9.5 21.5C13.5448 21.5 17 20.8531 17 18.2687C17 15.6844 13.5668 15.0152 9.5 15.0152ZM19.8979 9.58786H21.101C21.5962 9.58786 22 9.99731 22 10.4995C22 11.0016 21.5962 11.4111 21.101 11.4111H19.8979V12.5884C19.8979 13.0906 19.4952 13.5 18.999 13.5C18.5038 13.5 18.1 13.0906 18.1 12.5884V11.4111H16.899C16.4027 11.4111 16 11.0016 16 10.4995C16 9.99731 16.4027 9.58786 16.899 9.58786H18.1V8.41162C18.1 7.90945 18.5038 7.5 18.999 7.5C19.4952 7.5 19.8979 7.90945 19.8979 8.41162V9.58786Z" fill="currentColor">
+                                    </path>   
+                           </svg>
+                        </span>
+                        </button>
+                        `
+
+                        var del_doc = `<button type='button' class='btn btn-sm btn-icon text-danger flex-end' title='DELETE' onclick='delete_document_tracking(this)'>
+                        <span class="btn-inner">
+                            <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor">
+                              <path d="M19.3248 9.46826C19.3248 9.46826 18.7818 16.2033 18.4668 19.0403C18.3168 20.3953 17.4798 21.1893 16.1088 21.2143C13.4998 21.2613 10.8878 21.2643 8.27979 21.2093C6.96079 21.1823 6.13779 20.3783 5.99079 19.0473C5.67379 16.1853 5.13379 9.46826 5.13379 9.46826" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              <path d="M20.708 6.23975H3.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              <path d="M17.4406 6.23973C16.6556 6.23973 15.9796 5.68473 15.8256 4.91573L15.5826 3.69973C15.4326 3.13873 14.9246 2.75073 14.3456 2.75073H10.1126C9.53358 2.75073 9.02558 3.13873 8.87558 3.69973L8.63258 4.91573C8.47858 5.68473 7.80258 6.23973 7.01758 6.23973" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                           </svg>
+                        </span>
+                        </button>`
+                        item.action =  edit_doc + councilors + open_doc  + del_doc;
+                    });
+
+                    return data;
+                }
+            },
+            dom: 'Bfrtip',
+            columns: [
+                { data: "tracking_no" },
+                { data: "title" },
+                { data: "date" },
+                { data: "action" },
+            ],
+
+            buttons: [
+                {
+                    text: "Add",
+                    action: function ( e, dt, node, config ) {
+                        getbyId('form_add_document_tracking').reset()
+
+                        if ($.fn.DataTable.isDataTable('#tbl_document_tracking_add_path')) {
+                            $('#tbl_document_tracking_add_path').DataTable().clear().draw();
+                        }
+
+                        $("#document_tracking_committee_refferals").val('').trigger("chosen:updated");
+                        // getbyId('div_refferal_form').style.display = "none"
+
+                        $('#div_doc_tracking').modal('toggle')
+                    },
+                    'className': 'btn btn-sm btn-primary'
+                },
+
+                {
+                    extend: 'print',
+                    text: 'Print',
+                    filename: 'file',
+                    title: 'Print',
+                    titleAttr: 'Print'
+                    ,'className': 'btn btn-sm btn-warning'
+                }
+            ],
+
+            "pagingType": "full_numbers",
+            "pageLength": 7,
+            order: [0, 'desc'],
+        });
+    }
+
+    function edit_document_tracking(elem){
+        var tr = $(elem).closest('tr')
+        var dataArr = $('#tbl_document_tracking').DataTable().row(tr).data();
+
+        var form = getbyId('form_add_document_tracking')
+
+        form.h_document_tracking.value = dataArr['track_gen_id']
+        form.title.value = dataArr['title']
+        form.tracking_no.value = dataArr['tracking_no']
+        form.refferal_from.value = dataArr['refferals_from']
+
+        var data={
+            track_gen_id:dataArr.track_gen_id
+        }
+
+        load_document_tracking_attach(data)
+
+        $('#div_doc_tracking').modal('toggle')
+    }
+
+    function load_document_tracking_attach(data){
+        sendDataWithCallback('/get_document_tracking_file',data,function(res){
+            if(res){
+                res.forEach(function(file) {
+                    var del_btn = "<button type='button' data-documents_path_id="+ file.documents_path_id+ " data-id=" + file.track_gen_id+ " onclick=delete_file_document_tracking(this)> DELETE </button>"
+                    var dl_btn = "<a data-path=" +file.path+ " href=" + '/static/uploads/'+file.path+ "><button type='button'> DOWNLOAD </button></a>"
+                    file.action = dl_btn + del_btn ;
+                })
+
+                if ($.fn.DataTable.isDataTable('#tbl_document_tracking_add_path')) {
+                    $('#tbl_document_tracking_add_path').DataTable().destroy();
+                }
+                
+                var table=$('#tbl_document_tracking_add_path').DataTable({
+                    data:res,
+                     columns: [
+                        {data:"filename"},
+                        {data: "action"}
+                     ],
+                    responsive: true,
+                    searching: false, paging: false, info: false
+                });
+            }
+        })
+    }
+
+    function delete_file_document_tracking(elem){
+        var data={
+            documents_path_id:elem.getAttribute('data-documents_path_id'),
+            track_gen_id:elem.getAttribute('data-id')
+        }
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+            customClass: 'swal_css',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                  'Deleted!',
+                  'Your file has been deleted.',
+                  'success'
+                )
+                sendDataWithCallback('/del_document_tracking_file',data,function(res){
+                    if(res){
+                        if ($.fn.DataTable.isDataTable('#tbl_document_tracking_add_path')){
+                            $('#tbl_document_tracking_add_path').DataTable().clear().draw();
+                        }
+                        var data={
+                            track_gen_id:getbyId('h_document_tracking').value
+                        }
+                        
+                        load_document_tracking_attach(data)
+                    }
+                })
+            }
+        })
+    }
+
+    function open_doc_authors(elem){
+        var tr = $(elem).closest('tr')
+        var dataArr = $('#tbl_document_tracking').DataTable().row(tr).data();
+        getbyId('document_track_gen_id').value = dataArr['track_gen_id']
+
+        let data = {
+            track_gen_id: dataArr['track_gen_id']
+        }
+
+        count_doc_author=0
+        sendDataWithCallback('/get_document_tracking_authors',data,function(res){
+            getbyId('div_doc_author').innerHTML="";
+            res.forEach(function(i,index){
+                add_doc_author(function(sel) {
+                    sel.value = i['councilor']
+                    $(sel).trigger('chosen:updated');
+                });
+            })
+
+        })
+
+        count_doc_coauthor=0
+        sendDataWithCallback('/get_document_tracking_coauthors',data,function(res){
+            getbyId('div_doc_coauthor').innerHTML="";
+            res.forEach(function(i,index){
+                add_doc_coauthor(function(sel) {
+                    sel.value = i['councilor']
+                    $(sel).trigger('chosen:updated');
+                });
+            })
+
+        })
+
+        count_doc_sponsor=0
+        sendDataWithCallback('/get_document_tracking_sponsor',data,function(res){
+            getbyId('div_doc_sponsor').innerHTML="";
+            res.forEach(function(i,index){
+                add_doc_sponsor(function(sel) {
+                    sel.value = i['councilor']
+                    $(sel).trigger('chosen:updated');
+                });
+            })
+
+        })
+
+        count_doc_cosponsor=0
+        sendDataWithCallback('/get_document_tracking_cosponsor',data,function(res){
+            getbyId('div_doc_cosponsor').innerHTML="";
+            res.forEach(function(i,index){
+                add_doc_cosponsor(function(sel) {
+                    sel.value = i['councilor']
+                    $(sel).trigger('chosen:updated');
+                });
+            })
+
+        })
+
+        $('#doc_authors_modal').modal('toggle')
+    }
+
+
+    function open_tracker(elem){
+        var tr = $(elem).closest('tr')
+        var dataArr = $('#tbl_document_tracking').DataTable().row(tr).data();
+
+        if(dataArr){
+            $('#div_document_tracking_modal').modal('toggle')
+
+            getbyId('document_title_tracking').innerHTML=dataArr['title']
+
+            var route = ""
+            var data = ""
+
+            data={
+                track_gen_id:dataArr['track_gen_id']
+            }
+
+            sendDataWithCallback("/get_tracking_legislative",data,function(res){
+                if ($.fn.DataTable.isDataTable('#tbl_document_tracking_details')) {
+                    $('#tbl_document_tracking_details').DataTable().destroy();
+                }
+
+                var status=""
+                var table=$('#tbl_document_tracking_details').DataTable({
+                    data:res,
+                     columns: [
+                        {data: "status"},
+                        {data: "remarks"},
+                        {data: "date"},
+                     ],
+                    responsive: true,
+                    searching: false, paging: false, info: false, ordering: false
+                });
+            })
+        }
+    }
+
+    function delete_document_tracking(elem){
+        var tr = $(elem).closest('tr')
+        var dataArr = $('#tbl_document_tracking').DataTable().row(tr).data();
+
+        var data={
+            track_gen_id:dataArr['track_gen_id']
+        }
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+            customClass: 'swal_css',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                sendDataWithCallback('/delete_document_tracking',data,function(res){
+                    load_document_tracking()
+                    Swal.fire(
+                      'Deleted!',
+                      'Your file has been deleted.',
+                      'success'
+                    )
+                })
+                
+            }
+        })
+    }
+
+</script>

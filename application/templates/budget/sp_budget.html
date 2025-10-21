@@ -1,0 +1,254 @@
+<div class="col-sm-12">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+           <div class="header-title">
+                <h4 class="card-title">BUDGET</h4>
+
+           </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive" style="margin-top: 20px!important">
+                <table id="tbl_sp_budget" class="table table-striped" data-toggle="data-table" width="99.8%">
+                    <thead >
+                        <th>Id</th>
+                        <th>SANGUNIAN COUNCIL</th>
+                        <th>Budget Year</th>
+                        <th>Action</th>
+                    </thead>
+                </table>
+            </div>
+       </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        var form_id='#form_budget'
+         $(form_id).submit(function(e){
+            var form_save = $(form_id).serializeObject();
+            e.preventDefault();
+
+            swal.fire({
+                title: "Are you sure want to save?",
+                text: "Click ok to continue",
+                type: "info",
+                showCancelButton: true,
+                showLoaderOnConfirm: true,
+                preConfirm: () => {
+                    return fetch(console.log("log"))
+                    .then(
+                        sendDataWithCallback('/save_sp_budget',form_save,function(res){
+                            if (res) {
+                                saved(res)
+                                load_budget_req()
+                                // window.location.href='/sp_budget'
+                            }
+                        })
+                    )
+                    .catch(() => {
+                        Swal.fire({
+                          icon: 'error',
+                          title: 'Error occured'
+                        })
+                    })
+                }
+            })
+        })
+
+        load_budget_req()
+
+        getDataWithCallback('/get_sp',function(res){
+            $('#inp_sp_title').append(`<option value="" disabled selected> ${'--SELECT--'} </option>`);
+            $('#inp_sp_title').chosen({width:"100%"})
+            for(var i = 0; i < res.length; i++) {
+                $('#inp_sp_title').append(`<option data-year="${res[i].sp_year}" value="${res[i].sp_id}">${res[i].sp_title}</option>`);
+                $('#inp_sp_title').trigger("chosen:updated")
+            }
+        })
+
+    })
+
+    function delete_sp_budget(elem) {
+        var sp_id = elem.getAttribute('data-sp_id');            
+        swal.fire({
+                title: "Are you sure want to Delete?",
+                text: "Click ok to continue",
+                type: "info",
+                showCancelButton: true,
+                showLoaderOnConfirm: true,
+                preConfirm: () => {
+                    return fetch(console.log("log"))
+                    .then(
+                        sendDataWithCallback('/delete_budget',{budget_id:sp_id},function(res){
+                            if (res) {
+                                saved(res)
+                                load_budget_req()
+                                // window.location.href='/sp_budget'
+                            }
+                        })
+                    )
+                    .catch(() => {
+                        Swal.fire({
+                          icon: 'error',
+                          title: 'Error occured'
+                        })
+                    })
+                }
+            })
+    }
+
+    function load_budget_req(){
+        getDataWithCallback('/get_sp_budget',function(res){
+            if(res) {
+                if(res.length != 0) {
+                    res.forEach(function(item) {
+                        item.action = "<button type='button' data-sp_id ="+ item.sp_budget_id + " onclick='delete_sp_budget(this)' class='btn btn-danger btn-sm'>DELETE</button>"
+                    })
+                }
+            }
+            if ($.fn.DataTable.isDataTable('#tbl_sp_budget')) {
+                $('#tbl_sp_budget').DataTable().destroy();
+            }
+            var table=$('#tbl_sp_budget').DataTable({
+                data:res,
+                responsive: true,
+                dom: 'Bfrtip',
+                columns: [
+                    {data:"sp_budget_id"},
+                    {data:"sp_title"},
+                    {data:"budget_year"},
+                    {data: "action"}
+                ],
+                buttons: [
+                    {
+                        text: "Add",
+                        action: function ( e, dt, node, config ) {
+                            $("#div_add_budget_year").modal('toggle');
+                        },
+                        'className': 'btn btn-sm btn-primary'
+                    },
+                ],
+                "pagingType": "full_numbers",
+            });
+        })
+
+         $('#tbl_sp_budget tbody').on('dblclick', 'tr', function (){
+            getbyId('tbody_sp_budget').innerHTML=""
+            var dataArr = $('#tbl_sp_budget').DataTable().row( this ).data();
+            if(dataArr){
+                var data={
+                    sp_budget_id:dataArr.sp_budget_id
+                }
+                getbyId('inp_sp_budget_id').value=dataArr.sp_budget_id
+                getbyId('budget_year').value=dataArr.budget_year
+                get_data_mem(data)
+
+                $('#div_budget_dblclick_budget').modal('toggle');    
+            }
+
+        });
+    }
+
+    function get_data_mem(data){
+        getbyId('tbody_sp_budget').innerHTML=""
+        sendDataWithCallback('/get_sp_data',data,function(res){
+            getbyId('p_sangunian_title').value=res[0].sp_title
+            var tbody=getbyId('tbody_sp_budget')
+
+            // Mayor
+            var tr1=document.createElement('tr')
+
+            var td_0=document.createElement('td')
+            var td_1=document.createElement('td')
+            var td_2=document.createElement('td')
+            var td_3=document.createElement('td')
+
+            td_0.innerHTML=res[0].mayor_balance_id;
+            td_1.innerHTML="City Mayor";
+            td_2.innerHTML=res[0].mayor_fullname;
+            td_3.innerHTML=res[0].mayor_allocation;
+
+            tr1.appendChild(td_0)
+            tr1.appendChild(td_1)
+            tr1.appendChild(td_2)
+            tr1.appendChild(td_3)
+            tbody.appendChild(tr1)
+
+            // Vice Mayor
+
+            var tr2=document.createElement('tr')
+
+            var td2_0=document.createElement('td')
+            var td2_1=document.createElement('td')
+            var td2_2=document.createElement('td')
+            var td2_3=document.createElement('td')
+
+            td2_0.innerHTML=res[0].vmayor_balance_id
+            td2_1.innerHTML="Vice Mayor"
+            td2_2.innerHTML=res[0].vmayor_fullname
+            td2_3.innerHTML=res[0].vmayor_allocation
+
+            tr2.appendChild(td2_0)
+            tr2.appendChild(td2_1)
+            tr2.appendChild(td2_2)
+            tr2.appendChild(td2_3)
+            tbody.appendChild(tr2)
+
+            // Secretary
+
+            var tr3=document.createElement('tr')
+
+            var td3_0=document.createElement('td')
+            var td3_1=document.createElement('td')
+            var td3_2=document.createElement('td')
+            var td3_3=document.createElement('td')
+
+            td3_0.innerHTML=res[0].sec_balance_id
+            td3_1.innerHTML="Secretary"
+            td3_2.innerHTML=res[0].sec_fullname
+            td3_3.innerHTML=res[0].sec_allocation
+
+            tr3.appendChild(td3_0)
+            tr3.appendChild(td3_1)
+            tr3.appendChild(td3_2)
+            tr3.appendChild(td3_3)
+            tbody.appendChild(tr3)
+
+            for(var x=0; x<res.length; x++){
+                var tr=document.createElement('tr')
+
+                var td0=document.createElement('td')
+                var td1=document.createElement('td')
+                var td2=document.createElement('td')
+                var td3=document.createElement('td')
+
+                td0.innerHTML=res[x].counc_balance_id
+                td1.innerHTML="Councilor"
+                td2.innerHTML=res[x].councilors
+                td3.innerHTML=res[x].councilor_allocation
+
+                tr.appendChild(td0)
+                tr.appendChild(td1)
+                tr.appendChild(td2)
+                tr.appendChild(td3)
+
+                
+                tbody.appendChild(tr)
+            }
+
+            $('#tbl_sp_budget_allocation td').dblclick(function () {
+                var tr = $(this).closest("tr");
+                var td = tr.find("td");
+
+                getbyId('h_member_budget_id').value=td[0].innerHTML
+                getbyId('allocation_position').value=td[1].innerHTML
+                getbyId('allocation_fullname').value=td[2].innerHTML
+                getbyId('in_allocation').value=td[3].innerHTML
+
+                $('#div_budget_member_allocated').modal('toggle');
+            });
+            
+        })
+    }
+</script>

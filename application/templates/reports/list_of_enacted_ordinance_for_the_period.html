@@ -1,0 +1,163 @@
+<div class="container">
+	<div class="colfull" style="padding: 30px;" id="print_list_of_enacted_ordinance_for_period">
+		<div class="colfull fl">
+			<div class="col20">
+				<div>
+					<img onerror="this.src='../static/icon/photo_blank.png'" id="img_report_list_enacted_ord_city_logo" src="static/icon/your_logo.png" style="height: 100px;width: 100px;">
+				</div>
+			</div>
+
+			<div class="col60" style="position: relative;top: -100px">
+				<div style="width: 60%;margin: 0 auto;" align="center">
+					<p style="text-align: center;">Republic of the Philippines</p>
+					<p>Province of <span id="list_enacted_ord_province"></span></p>
+					<p><span id="list_enacted_state_location"></span> of <span id="list_enacted_ord_city_name" style="text-transform:capitalize;"></span></p>
+				</div>
+			</div>
+		</div>
+
+		<div style="margin-top: -80px">
+			<div class="colfull fl" align="center">
+				<p style="font-size:18px;font-weight: bolder;">
+					List of Enacted Ordinance
+				</p>
+
+				<p><span style="font-weight:700;" id="reports_total_ordinance"></span>&nbsp;Total Ordinances</p>
+			</div>
+			<div class="colfull fl">
+				<div class="center_div50">
+					<div class="col40">
+						<p id="enacted_type_option_print">For the period of <span id="enacted_type_option_print_input"></span></p>
+					</div>
+					<div class="col60">
+						<p><span id="inp_print_ord_filter"></span></p>
+					</div>
+				</div>
+			</div>
+			<div class="colfull" style="margin-top: 50px;">
+				<table id="tbl_list_enacted_ordinance" class="colfull table_report table" border="1">
+					<colgroup>
+						<col style="width:4px">
+						<col style="width:8px">
+						<col style="width:6px">
+						<col style="width:3px">
+					</colgroup>
+					<thead>
+						<th>Ordinance No.</th>
+						<th>Title of Ordinance</th>
+						<th>Author/Co-Author/Sponsor</th>
+						<th>Date Enacted</th>
+					</thead>
+				</table>
+			</div>
+			<div class="colfull" style="margin-top: 30px;">
+				<div class="col50">
+					<div class="col30">
+						<p style="font-size: 15px;">Prepared by:</p>
+					</div>
+					<div class="col20">
+						<p style="border-bottom: 1px solid black;width: 250px!important" contenteditable="true"></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		
+		var form_id='#form_list_enacted_ord'
+		 $(form_id).submit(function(e){
+		 	var form_save = $(form_id).serializeObject();
+	        e.preventDefault();
+
+	        sendDataWithCallback('/get_enacted_ordinance_by_period',form_save,function(res){
+	        	if(res){
+	        		if(res.length>0){
+	        			const fromDate = formatReadableDate(getbyId('adopted_ord_from').value);
+						const toDate = formatReadableDate(getbyId('adopted_ord_to').value);
+
+						getbyId('enacted_type_option_print_input').innerHTML = `${fromDate} - ${toDate}`;
+
+
+						var categoryText = $('#category_enacted_ord_report option:selected').text();
+						var categoryValue = $('#author_enacted_ord_report').val();
+
+						var authorText = $('#author_enacted_ord_report option:selected').text();
+						var authorValue = $('#author_enacted_ord_report').val();
+
+						let filterParts = [];
+
+						if (isValidSelection(categoryText, categoryValue)) {
+						    filterParts.push(categoryText);
+						}
+						if (isValidSelection(authorText, authorValue)) {
+						    filterParts.push(authorText);
+						}
+
+						if (filterParts.length > 0) {
+						    getbyId('enacted_type_option_print_input').innerHTML = `Filter by ${filterParts.join(' and ')}`;
+						} else {
+						    getbyId('enacted_type_option_print_input').innerHTML = ""; // or "No filters selected"
+						}
+
+	        			getbyId('reports_total_ordinance').innerHTML = numberWithCommas_no_decimal(res.length)
+	        		}else{
+	        			topRightAlert(`No data result`)
+	        		}
+        		
+	                if ($.fn.DataTable.isDataTable('#tbl_list_enacted_ordinance')) {
+	                    $('#tbl_list_enacted_ordinance').DataTable().destroy();
+	                }
+
+	                var table=$('#tbl_list_enacted_ordinance').DataTable({
+	                    data:res,
+	                     columns: [
+	                        {data:"ordinance_number", "render": function (data, type, row)
+	                        	{
+	                        		if(row.path){
+	                        			return `<a href='/static/uploads/${row.path}' target='_blank'>
+	                        			${row.ordinance_number}</a>`
+	                        		}else{
+	                        			return row.ordinance_number
+	                        		}
+	                        		
+	                        	}
+	                        },
+	                        {data:"title"},
+	                        {data:"people"},
+	                        {data:"date_enacted"}
+	                    ],
+	                    responsive: true,
+	                    dom: 'ftipr',
+	                    paging:false,
+	                    searching:false,
+	                    "bInfo": false,
+	                    order: [[3, 'asc']],
+	                    "showNEntries" : false
+	                }); 
+	            }
+			})
+	    })	
+
+
+		getDataWithCallback('/get_info',function(res){
+			$('#author_enacted_ord_report').append(`<option value="" disabled selected> ${'--SELECT--'} </option>`); 
+            for(var x=0; x<res.length; x++){
+                $('#author_enacted_ord_report').append(`<option value="${res[x]['info_id']}"> ${res[x]['fullname']} </option>`); 
+            }
+
+            $('#author_enacted_ord_report').trigger("chosen:updated")
+		})
+
+		getDataWithCallback('/get_category',function(res){
+			$('#category_enacted_ord_report').append(`<option value="" disabled selected> ${'--SELECT--'} </option>`); 
+            for(var x=0; x<res.length; x++){
+                $('#category_enacted_ord_report').append(`<option value="${res[x]['category_id']}"> ${res[x]['title']} </option>`); 
+            }
+            
+            $('#category_enacted_ord_report').trigger("chosen:updated")
+		})
+	})
+</script>

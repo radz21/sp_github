@@ -1,0 +1,59 @@
+<div class="colfull">
+	<form id="form_member_allocation">
+		<input type="hidden" name="balance_id" id="h_member_budget_id">
+		<div class="colfull">
+			<p>Position</p>
+			<input type="text" class="form-control" name="" id="allocation_position">
+			<p>Fullname</p>
+			<input type="text" class="form-control" name="" id="allocation_fullname">	
+			<p>Allocation</p>
+			<input type="text" class="form-control" name="allocation" id="in_allocation" pattern="[0-9]+([,\.][0-9]+)?" required=""
+			title="The number input must start with a number and use either comma or a dot as a decimal character.">
+		</div>
+		<div class="colfull" align="center">
+			<button type="submit" class="btn btn-success">SAVE</button>
+		</div>
+	</form>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function(res){
+		var form_id='#form_member_allocation'
+		 $(form_id).submit(function(e){
+		 	var form_save = $(form_id).serializeObject();
+	        e.preventDefault();
+
+	        swal.fire({
+				title: "Are you sure want to save?",
+				text: "Click ok to continue",
+				type: "info",
+				showCancelButton: true,
+				showLoaderOnConfirm: true,
+				preConfirm: () => {
+					return fetch(console.log("log"))
+					.then(
+						sendDataWithCallback('/save_member_allocation',form_save,function(res){
+					        if (res) {
+								saved(res)
+								getbyId('form_member_allocation').reset()
+								$('#div_budget_member_allocated').modal('toggle');
+								var data={
+				                    sp_budget_id:getbyId('inp_sp_budget_id').value
+				                }
+				                getbyId('tbody_sp_budget').innerHTML=""
+								get_data_mem(data)
+					        }
+					    })
+					)
+					.catch(() => {
+					    Swal.fire({
+					      icon: 'error',
+					      title: 'Error occured'
+					    })
+					})
+				}
+			})
+	        
+	    })
+	})
+</script>

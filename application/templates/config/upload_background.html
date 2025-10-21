@@ -1,0 +1,198 @@
+<div id="div_viewer" style="width: 60%;margin: 0 auto;display: none">
+    <img src="" id="div_sample_background" style="width: 100%;height: 100%">
+</div>
+
+<div class="col-sm-12">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+           <div class="header-title">
+                <h4 class="card-title">UPLOADED SLIDER</h4>
+                <form id="form_upload_back_ground">
+                    <input type="file" id="fileInput" name="fileInput" accept="image/png, image/gif, image/jpeg" required>
+                    <button class="btn btn-success">Save</button>
+                </form>
+           </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="tbl_gallery_carousel" class="table table-striped" data-toggle="data-table" width="99.8%">
+                    <thead>
+                        <th>Path</th>
+                        <th>Action</th>
+                    </thead>
+                </table>
+            </div>
+       </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        var form_id='#form_upload_back_ground'
+        $(form_id).submit(function(e){
+            e.preventDefault();
+
+            var mydata = new FormData();
+
+            jQuery.each($("#fileInput")[0].files, function(i, file) {
+                mydata.append("fileInput["+i+"]", file)
+            })
+
+            swal.fire({
+                title: "Are you sure want to save?",
+                text: "Click ok to continue",
+                type: "info",
+                showCancelButton: true,
+                showLoaderOnConfirm: true,
+                preConfirm: () => {
+                    return fetch(console.log("log"))
+                    .then(
+                        $.ajax({
+                            type: 'POST',
+                            url: "/save_background",
+                            contentType:false,
+                            processData:false,
+                            cache: false,
+                            data:mydata,
+                            beforeSend: function() {
+                               console.log(mydata)
+                            },
+                            success: function(res) {
+                                getbyId('form_upload_back_ground').reset()
+                                load_gallery_carousel()
+                                saved(res)
+                            },
+                            error: function() {
+                                error_in_saving("error occured");
+                            }
+                        })
+                    )
+                    .catch(() => {
+                        Swal.fire({
+                          icon: 'error',
+                          title: 'Error occured'
+                        })
+                    })
+                }
+            })
+        })
+
+        load_gallery_carousel()
+    })
+
+    function load_gallery_carousel(){
+        if ($.fn.DataTable.isDataTable("#tbl_gallery_carousel")) {
+            $("#tbl_gallery_carousel").DataTable().destroy();
+        }
+
+        var table=$('#tbl_gallery_carousel').DataTable( {
+            responsive: true,
+            "processing": true,
+            'bStateSave':true,
+            dom: 'Bfrtip',
+            "ajax": {
+                "type": "POST",
+                "url": '/get_gallery_carousel',
+                contentType: 'application/JSON',
+                "dataSrc": function(data) {
+                    data.forEach(function(item){
+                        var download =`
+                        <a href='/static/`+item.path+`' target='_blank' class="btn btn-sm btn-icon btn-warning" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" href="#">
+                            <span class="btn-inner">
+                               <svg width="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M2 16.08V7.91C2 4.38 4.271 2 7.66 2H16.33C19.72 2 22 4.38 22 7.91V16.08C22 19.62 19.72 22 16.33 22H7.66C4.271 22 2 19.62 2 16.08ZM12.75 14.27V7.92C12.75 7.5 12.41 7.17 12 7.17C11.58 7.17 11.25 7.5 11.25 7.92V14.27L8.78 11.79C8.64 11.65 8.44 11.57 8.25 11.57C8.061 11.57 7.87 11.65 7.72 11.79C7.43 12.08 7.43 12.56 7.72 12.85L11.47 16.62C11.75 16.9 12.25 16.9 12.53 16.62L16.28 12.85C16.57 12.56 16.57 12.08 16.28 11.79C15.98 11.5 15.51 11.5 15.21 11.79L12.75 14.27Z" fill="currentColor"></path>
+                            </svg>  
+                            </span>
+                         </a>
+                        `
+
+                        var open_doc = `
+                        <a class="btn btn-sm btn-icon btn-danger" onclick='delete_gallery_carousel(this)' data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" href="#">
+                            <span class="btn-inner">
+                               <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor">
+                                  <path d="M19.3248 9.46826C19.3248 9.46826 18.7818 16.2033 18.4668 19.0403C18.3168 20.3953 17.4798 21.1893 16.1088 21.2143C13.4998 21.2613 10.8878 21.2643 8.27979 21.2093C6.96079 21.1823 6.13779 20.3783 5.99079 19.0473C5.67379 16.1853 5.13379 9.46826 5.13379 9.46826" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                  <path d="M20.708 6.23975H3.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                  <path d="M17.4406 6.23973C16.6556 6.23973 15.9796 5.68473 15.8256 4.91573L15.5826 3.69973C15.4326 3.13873 14.9246 2.75073 14.3456 2.75073H10.1126C9.53358 2.75073 9.02558 3.13873 8.87558 3.69973L8.63258 4.91573C8.47858 5.68473 7.80258 6.23973 7.01758 6.23973" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                               </svg>
+                            </span>
+                         </a>
+                        `
+                        item.action = download + open_doc;
+                    });
+                    
+                    return data;
+                }
+            },
+            
+            columns: [
+                { data: "path"},
+                { data: "action"},
+            ],
+            buttons: [
+                {
+                    extend: 'print',
+                    text: 'Print',
+                    filename: 'file',
+                    title: 'Print',
+                    titleAttr: 'Print'
+                    ,'className': 'btn btn-sm btn-warning'
+                }
+            ],
+            "pagingType": "full_numbers",
+            "pageLength": 8,
+            "order":false
+        });
+    }
+
+    function delete_gallery_carousel(elem){
+        var tr = $(elem).closest('tr');
+        var dataArr = $('#tbl_gallery_carousel').DataTable().row(tr).data()
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+            customClass: 'swal_css',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                  'Deleted!',
+                  'Your file has been deleted.',
+                  'success'
+                )
+                sendDataWithCallback('/del_gallery_carousel',dataArr,function(res){
+                    if(res){
+                        $('#tbl_gallery_carousel').DataTable().ajax.reload();
+                        saved(res)
+                    }
+                })
+            }
+        })
+    }
+
+    var input = document.querySelector ("#fileInput");
+
+    input.addEventListener ("change", function () {
+        var file = input.files [0];
+        if (file) {
+            var img = new Image ();
+          
+            img.onload = function () {
+                if(this.width<1280 || this.height<720){
+                    alert ("Please upload minimum dimension of: 1280x720");
+                    getbyId('fileInput').value=""
+                    getbyId('div_viewer').style.display="none"
+                }else{
+                    getbyId('div_viewer').style.display="block"
+                    readURL_full(input,'div_sample_background')
+                }
+             };
+          
+          img.src = (window.URL || window.webkitURL).createObjectURL (file);
+        }
+    });
+</script>

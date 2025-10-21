@@ -1,0 +1,74 @@
+<div class="colfull">
+	<form id="form_send_emails2">
+		<div align="center">
+			<img src="static/icon/gmail.png" style="width: 100px;height: 100px;">
+		</div>
+		<h3>Send via Gmail</h3>
+		<div class="colfull" id="list_file">
+			
+		</div>
+		<div class="colfull" id="list_path">
+			
+		</div>
+
+		<p>Email To</p>
+		<div class="colfull fl">
+			<input type="email" name="g_email" required>
+		</div>
+		<div class="colfull fl">
+			<p>Subject</p>
+			<textarea class="colfull" name="subject"></textarea>
+		</div>
+		<div class="colfull fl" style="padding-bottom: 30px;">
+			<p>Body</p>
+			<textarea id="textarea_send_mail" class="colfull" name="body"></textarea>
+		</div>
+		<div class="colfull" align="center">
+			<button type="submit" class="btn btn-primary">Send</button>
+			<!-- <button  class="btn btn-primary"> -->
+				<a type="button" class="btn btn-primary" id="download_file_id" style="text-decoration: none;color: #fff;text-align: center;display: none;">Download</a>
+			<!-- </button> -->
+		</div>
+	</form>
+</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var form_id='#form_send_emails2'
+		 $(form_id).submit(function(e){
+		 	var form_save = $(form_id).serializeObject();
+	        e.preventDefault();
+	        
+	        swal.fire({
+				title: "Are you sure want to save?",
+				text: "Click ok to continue",
+				type: "info",
+				showCancelButton: true,
+				showLoaderOnConfirm: true,
+				preConfirm: () => {
+					$('#div_email_modal').modal('hide');
+					return fetch(console.log("log"))
+					.then(
+
+						sendDataWithCallback('/send_emails',form_save, function(res){
+							if(res[0]){
+								if(res=='Successfully sent email'){
+									saved(res)
+								}else{
+									error_in_saving(res)
+								}
+								
+							}
+						})
+					)
+					.catch(() => {
+					    Swal.fire({
+					      icon: 'error',
+					      title: 'Error occured'
+					    })
+					})
+				}
+			})
+	        
+	    })
+	})
+</script>

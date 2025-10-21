@@ -1,0 +1,162 @@
+<div class="col-sm-12">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+           <div class="header-title">
+                <i class="fa-solid fa-left-long">
+                	
+                </i><a onclick="show_gal()">Go Back </a>
+           		<h1 id="title_gallery">Title Here</h1>
+           </div>
+        </div>
+        <div class="card-body">
+            <form id="form_add_images">
+				<label>Import Your File </label>
+				<input type="file" id="inp_file_images" name="upload_file" class="form-control" multiple="" accept="image/png, image/gif, image/jpeg" />
+			</form>
+
+			<div class="row" id="div_gallery_images">
+			</div>
+       </div>
+    </div>
+</div>
+
+
+<!-- Gallery -->
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		var x=localStorage.getItem("gallery_id");
+		get_gallery_images(x)
+	})
+
+
+	$('#inp_file_images').change(function() {
+		swal.fire({
+			title: "Are you sure want to save?",
+			text: "Click ok to continue",
+			type: "info",
+			showCancelButton: true,
+			showLoaderOnConfirm: true,
+			preConfirm: () => {
+				return fetch(console.log("log"))
+				.then(
+					upload_gallery_album_images()
+				)
+				.catch(() => {
+				    Swal.fire({
+				      icon: 'error',
+				      title: 'Error occured'
+				    })
+				})
+			}
+		})		
+	});
+
+
+	function show_gal(){
+		getbyId('gallery_albums_').style.display='block'
+		getbyId('albums_navigation').style.display='none'
+	}
+
+	function upload_gallery_album_images(){
+    	var mydata = new FormData();
+        mydata.append('gallery_id', localStorage.getItem("gallery_id"));
+
+        jQuery.each($("#inp_file_images")[0].files, function(i, file) {
+	        mydata.append('file['+i+']', file);
+	    });
+        
+	    $.ajax({
+	        type: 'POST',
+	        url: "/save_album_images",
+	        contentType:false,
+	        processData:false,
+	        cache: false,
+	        data:mydata,
+	        beforeSend: function() {
+		       console.log(mydata)
+		    },
+	        success: function(res){
+	        	get_gallery_images(localStorage.getItem("gallery_id"))
+				saved(res)
+	        },
+	        error: function() {
+	            error_in_saving("error occured in sending to");
+	        }
+	    });
+	}
+
+
+	function get_gallery_images(x){
+		sendDataWithCallback("/get_gallery_images",{gallery_id:x},function(res){
+			if(res){
+				if(res[0]){
+					getbyId('title_gallery').innerHTML=res[0].album_name
+					getbyId('div_gallery_images').innerHTML=""
+					var div_parent=getbyId('div_gallery_images')
+					res.forEach(function(i,index){
+						var div= document.createElement("div")
+						div.className="col-lg-4 col-md-12 mb-4 mb-lg-0"
+						var btn = document.createElement('button')
+						btn.innerHTML="x"
+						btn.id="btn-del_pic" + index
+						btn.setAttribute("style",
+							`position:relative;float:right;top:16px;border-radius:150px;
+							border:1px solid white;color:white;background-color:gray;width:27px;visibility:hidden`
+						)
+						btn.onclick=function(){
+							Swal.fire({
+								title: 'Are you sure?',
+								text: "You won't be able to revert this!",
+								icon: 'warning',
+								showCancelButton: true,
+								confirmButtonColor: '#d33',
+								cancelButtonColor: '#3085d6',
+								confirmButtonText: 'Yes, delete it!',
+								customClass: 'swal_css',
+							}).then((result) => {
+								if (result.isConfirmed) {
+									sendDataWithCallback('/del_pic',{id:res[index].pic_id},function(res){
+										var x=localStorage.getItem("gallery_id");
+										get_gallery_images(x)
+										Swal.fire(
+										'Deleted!',
+										'Your file has been deleted.',
+										'success'
+										)
+									})
+								}
+							})
+						}
+						div.onmouseover = function(){
+							var b= "btn-del_pic" + index
+							getbyId(b).style.visibility='visible'
+						};
+						div.onmouseleave = function(){
+							var b= "btn-del_pic" + index
+							getbyId(b).style.visibility='hidden'
+						};
+						var img = document.createElement("img")
+						img.className="w-100 shadow-1-strong rounded mb-4"
+						if(i.path){
+							img.height="350"
+							img.onclick=function(){
+								window.open("../static/uploads/"+i.path, '_blank').focus();
+							}
+							img.src="../static/uploads/"+i.path
+						}else{
+							var p=document.createElement("p")
+							p.innerHTML="No available images to show"
+							p.style="text-align:center"
+
+							div_parent.appendChild(p)
+						}
+						div.appendChild(btn)
+						div.appendChild(img)
+						div_parent.appendChild(div)
+					})
+				}
+			}
+		})
+	}
+</script>

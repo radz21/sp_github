@@ -1,0 +1,263 @@
+<div class="col-sm-12">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+           <div class="header-title">
+                <h4 class="card-title">SYSTEM CITY INFORMATION</h4>
+           </div>
+        </div>
+        <div class="card-body">
+            <p>CITY/MUNICIPALITY NAME</p>
+            <div class="colfull">
+                <form id="form_city_name">
+                    <input type="hidden" name="h_config_info_id1" id="h_config_info_id1" value="0">
+                    <div class="col90">
+                        <input style="height: 40px !important;" type="text" name="city_name" id="city_name" class="form-control" required>
+                    </div>
+                    <div class="col10">
+                        <button type="submit" class="btn btn-success">Save</button>
+                    </div>
+                </form>
+            </div>
+
+            
+            <div class="colfull fl">
+                <p>Province</p>
+                <form id="form_province">
+                    <div class="col90">
+                        <input style="height: 40px !important;" type="text" name="province" id="province" class="form-control" required>
+                    </div>
+                    <div class="col10">
+                        <button type="submit" class="btn btn-success">Save</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="colfull" style="margin-top: 10px;">
+                <p class="colfull fl">Vice Mayor's Corner</p>
+                <div class="colfull">
+                    <form id="form_v_mayor_corner">
+                        <div class="col90">
+                            <textarea style="height: 80px !important;" class="form-control" name="vice_mayors_corner" id="vice_mayors_corner"></textarea>
+                        </div>
+                        <div class="col10">
+                            <button class="btn btn-success">Save</button>
+                        </div>
+                    </form>
+                </div>
+                <p class="colfull fl" >Mission</p>
+                <div class="colfull">
+                    <form id="form_config_mission">
+                        <div class="col90">
+                            <textarea style="height: 80px !important;" class="form-control" name="mission" id="mission"></textarea>
+                        </div>
+                        <div class="col10">
+                            <button class="btn btn-success">Save</button>
+                        </div>
+                    </form>
+                </div>
+
+                <p class="colfull fl">Vision</p>
+                <div class="colfull">   
+                    <form id="form_config_vission">
+                        <div class="col90">
+                            <textarea style="height: 80px !important;" class="form-control" name="vission" id="vission"></textarea>
+                        </div>
+                        <div class="col10">
+                            <button type="submit" class="btn btn-success">Save</button>
+                        </div>
+                    </form>
+                </div>         
+            </div>
+       </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $( "#config-menu" ).addClass("show");
+
+        var form_id='#form_city_name'
+        $(form_id).submit(function(e){
+            var form_save = $(form_id).serializeObject();
+            e.preventDefault();
+
+            swal.fire({
+                title: "Are you sure want to save?",
+                text: "Click ok to continue",
+                type: "info",
+                showCancelButton: true,
+                showLoaderOnConfirm: true,
+                preConfirm: () => {
+                    return fetch(console.log("log"))
+                    .then(
+                        sendDataWithCallback('/save_city_name',form_save,function(res){
+                            if (res) {
+                                // get_city_name()
+                                saved(res)
+                            }
+                        })
+                    )
+                    .catch(() => {
+                        Swal.fire({
+                          icon: 'error',
+                          title: 'Error occured'
+                        })
+                    })
+                }
+            })
+        })
+
+
+
+        var form_id12='#form_province'
+        $(form_id12).submit(function(e){
+            var form_save12 = $(form_id12).serializeObject();
+            form_save12.h_config_info_id1=getbyId('h_config_info_id1').value
+            e.preventDefault();
+
+            swal.fire({
+                title: "Are you sure want to save?",
+                text: "Click ok to continue",
+                type: "info",
+                showCancelButton: true,
+                showLoaderOnConfirm: true,
+                preConfirm: () => {
+                    return fetch(console.log("log"))
+                    .then(
+                        sendDataWithCallback('/save_province',form_save12,function(res){
+                            if (res) {
+                                // get_city_name()
+                                saved(res)
+                            }
+                        })
+                    )
+                    .catch(() => {
+                        Swal.fire({
+                          icon: 'error',
+                          title: 'Error occured'
+                        })
+                    })
+                }
+            })
+        })
+
+
+        var form_id2='#form_v_mayor_corner'
+        $(form_id2).submit(function(e){
+            var form_save2 = $(form_id2).serializeObject();
+
+            form_save2.h_config_info_id1=getbyId('h_config_info_id1').value
+            e.preventDefault();
+
+            swal.fire({
+                title: "Are you sure want to save?",
+                text: "Click ok to continue",
+                type: "info",
+                showCancelButton: true,
+                showLoaderOnConfirm: true,
+                preConfirm: () => {
+                    return fetch(console.log("log"))
+                    .then(
+                        sendDataWithCallback('/save_v_mayor_corner',form_save2,function(res){
+                            if (res) {
+                                // get_city_name()
+                                saved(res)
+                            }
+                        })
+                    )
+                    .catch(() => {
+                        Swal.fire({
+                          icon: 'error',
+                          title: 'Error occured'
+                        })
+                    })
+                }
+            })
+        })
+
+        var form_id3='#form_config_mission'
+        $(form_id3).submit(function(e){
+            var form_save3 = $(form_id3).serializeObject();
+
+            form_save3.h_config_info_id1=getbyId('h_config_info_id1').value
+            e.preventDefault();
+
+            swal.fire({
+                title: "Are you sure want to save?",
+                text: "Click ok to continue",
+                type: "info",
+                showCancelButton: true,
+                showLoaderOnConfirm: true,
+                preConfirm: () => {
+                    return fetch(console.log("log"))
+                    .then(
+                        sendDataWithCallback('/save_mission',form_save3,function(res){
+                            if (res) {
+                                // get_city_name()
+                                saved(res)
+                            }
+                        })
+                    )
+                    .catch(() => {
+                        Swal.fire({
+                          icon: 'error',
+                          title: 'Error occured'
+                        })
+                    })
+                }
+            })
+        })
+
+        var form_id4='#form_config_vission'
+        $(form_id4).submit(function(e){
+            var form_save4 = $(form_id4).serializeObject();
+            form_save4.h_config_info_id1=getbyId('h_config_info_id1').value
+            e.preventDefault();
+
+            swal.fire({
+                title: "Are you sure want to save?",
+                text: "Click ok to continue",
+                type: "info",
+                showCancelButton: true,
+                showLoaderOnConfirm: true,
+                preConfirm: () => {
+                    return fetch(console.log("log"))
+                    .then(
+                        sendDataWithCallback('/save_vission',form_save4,function(res){
+                            if (res) {
+                                // get_city_name()
+                                saved(res)
+                            }
+                        })
+                    )
+                    .catch(() => {
+                        Swal.fire({
+                          icon: 'error',
+                          title: 'Error occured'
+                        })
+                    })
+                }
+            })
+        })
+
+        // get_city_name()
+
+    })
+
+    // function get_city_name(){
+    //     getDataWithCallback('/get_city_name', function(res){
+    //         if(res){
+    //             getbyId('city_name').value=res[0].city_name
+    //             getbyId('h_config_info_id1').value=res[0].config_info_id
+
+    //             getbyId('vice_mayors_corner').value=res[0].vice_mayors_corner
+
+    //             getbyId('mission').value=res[0].mission
+    //             getbyId('vission').value=res[0].vission
+
+    //             getbyId('province').value=res[0].province
+    //         }
+    //     })
+    // }
+
+</script>

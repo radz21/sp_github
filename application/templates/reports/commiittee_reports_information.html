@@ -1,0 +1,96 @@
+<div class="container">
+	<div class="colfull" style="padding: 30px;" id="print_committee_report">
+		<div class="colfull fl">
+			<div class="col20" style="position: relative;">
+				<div>
+					<img id="committee_report_city_logo" src="static/icon/your_logo.png" style="height: 100px;width: 100px;">
+				</div>
+			</div>
+			
+			<div class="col60" style="position: relative;top: -100px">
+				<div style="width: 60%;margin: 0 auto;" align="center">
+					<p style="text-align: center;">Republic of the Philippines</p>
+					<p>Province of <span id="committee_report_province"></span></p>
+					<p><span id="committee_report_state_location"></span> of <span id="committee_report_city_name" style="text-transform:capitalize;"></span></p>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="colfull" style="margin-top: -80px">
+			<div class="colfull fl" align="center">
+				<p style="font-size:18px;font-weight: bolder;">
+					Legislative Committee <span id="committee_report_type_report">Report</span>
+				</p>
+			</div>
+			<br>
+			<div class="colfull">
+				<table class="table table_report" style=" width: 100%;border-collapse: collapse;" border="1">
+					<thead>
+						<th>No</th>
+						<th>Subject</th>
+		                <th>Date Reffered</th>
+		            </thead>
+		            <tbody id="tbody_committee_reports_information"></tbody>
+				</table>
+			</div>
+			
+			<div class="colfull" style="margin-top: 30px;">
+				<div class="col50">
+					<div class="col30">
+						<p style="font-size: 15px;">Prepared by:</p>
+					</div>
+					<div class="col20">
+						<p style="border-bottom: 1px solid black;width: 250px!important" contenteditable="true"></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		var form='#form_committee_reports_information'
+        $(form).submit(function(e){
+            e.preventDefault();
+
+            var form_save = $(form).serializeObject();
+            
+            sendDataWithCallback('/get_committee_reports_information',form_save, (res)=>{
+            	if(res){
+            		if(res.length>0){
+            			topRightAlert(`${res.length} data was found`)
+            		}else{
+            			topRightAlert(`No data was found`)
+            		}
+            	}
+
+				var tbody=getbyId('tbody_committee_reports_information')
+
+				tbody.innerHTML="";
+
+	            for(var x=0; x<res.length; x++){
+	            	var tr=document.createElement('tr')
+
+		            var td1=document.createElement('td')
+		            var td2=document.createElement('td')
+		            var td3=document.createElement('td')
+
+		            td1.innerHTML= x + 1
+		            td2.innerHTML=`<a href="../../static/uploads/${res[x].file}" target='_blank' title='download' style='color:black;text-decoration:none'>${res[x].subject}</a>`
+		            td3.innerHTML=res[x].date_reffered
+		            
+
+		            tr.appendChild(td1)
+		            tr.appendChild(td2)
+		            tr.appendChild(td3)
+
+		            tbody.appendChild(tr)
+	            }
+			})
+					
+        })
+	})
+	
+</script>

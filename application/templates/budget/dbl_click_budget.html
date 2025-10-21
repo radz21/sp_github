@@ -1,0 +1,70 @@
+<div class="colfull" style="padding: 20px 20px 0px 20px; height: auto;">
+	<form id="form_update_sp_year">
+		<div class="colfull">
+			<input type="hidden" id="inp_sp_budget_id" name="sp_buget_id">
+			<div>
+				<p class="col-md-12">Title</p>
+				<input type="text" class="disabledbutton form-control" name="title" id="p_sangunian_title" readonly="">
+			</div>
+			<div>
+				<p class="col-md-12">Year</p>
+				<input type="number" class="form-control"  name="budget_year" id="budget_year">
+			</div>
+		</div>
+		<div class="colfull">
+			<table class="table" id="tbl_sp_budget_allocation" border="1">
+				<thead>
+					<th>Id</th>
+					<th>Position</th>
+					<th>Name</th>
+					<th>Allocated</th>
+				</thead>
+				<tbody id="tbody_sp_budget"></tbody>
+			</table>
+		</div>
+		<div class="colfull" align="center">
+			<button class="btn btn-success">Update</button>
+		</div>
+	</form>
+</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#budget_year").datepicker({
+		    format: "yyyy",
+		    viewMode: "years", 
+		    minViewMode: "years"
+		});
+		
+		var form_id='#form_update_sp_year'
+         $(form_id).submit(function(e){
+            var form_save = $(form_id).serializeObject();
+            e.preventDefault();
+
+            swal.fire({
+                title: "Are you sure want to save?",
+                text: "Click ok to continue",
+                type: "info",
+                showCancelButton: true,
+                showLoaderOnConfirm: true,
+                preConfirm: () => {
+                    return fetch(console.log("log"))
+                    .then(
+                        sendDataWithCallback('/update_sp_budget_year',form_save,function(res){
+                            if (res) {
+                                saved(res)
+                            	window.location.href='/sp_budget'
+                            }
+                        })
+                    )
+                    .catch(() => {
+                        Swal.fire({
+                          icon: 'error',
+                          title: 'Error occured'
+                        })
+                    })
+                }
+            })
+
+        })
+	})
+</script>

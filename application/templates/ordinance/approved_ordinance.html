@@ -1,0 +1,151 @@
+<div class="col-sm-12">
+	<div class="card">
+		<div class="card-header d-flex justify-content-between">
+           <div class="header-title">
+              	<h4 class="card-title">APPROVED ORDINANCE</h4>
+           </div>
+        </div>
+        <div class="card-body">
+       		<div class="table-responsive">
+			    <table id="tbl_approved_ordinance" class="table table-striped" data-toggle="data-table" width="99.8%">
+					<thead >						
+						<th>Ordinance No</th>
+						<th>Ordinance Title</th>
+						<th>Date Enacted</th>
+						<th>Remarks</th>
+						<th>Action</th>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</div>
+       </div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$( "#approval_ordinance" ).addClass( "active" );
+		$( "#ordinance-menu" ).addClass( "show" );
+		load_approved_ordinance()
+	})
+
+	function load_approved_ordinance() {
+	    if ($.fn.DataTable.isDataTable("#tbl_approved_ordinance")) {
+	        $("#tbl_approved_ordinance").DataTable().destroy();
+	    }
+
+	    $.fn.dataTable.ext.type.order['ordinance-number-pre'] = function (data) {
+	        if (!data) return 0;
+	        var clean = data.toString().replace(/<[^>]*>/g, '').trim();
+	        var match = clean.match(/^ORD(\d{4})-(\d{1,})$/i);
+	        if (match) {
+	            var year = parseInt(match[1], 10);
+	            var seq = parseInt(match[2], 10);
+	            return (year * 1000000) + seq;
+	        }
+	        return 0;
+	    };
+
+	    var table = $('#tbl_approved_ordinance').DataTable({
+	        responsive: true,
+	        searching: true,
+	        bStateSave: true,
+	        ajax: {
+	            type: "POST",
+	            url: '/get_ordinance_status',
+	            contentType: 'application/JSON',
+	            data: function () {
+	                return JSON.stringify({ status: 6 });
+	            },
+	            "dataSrc": function (data) {
+	                data.forEach(function (item) {
+	                    var open_doc = `<button type='button' class="btn btn-sm btn-icon text-primary flex-end" onclick='open_doc_ord(this, "#tbl_approved_ordinance")'>
+	                        	<span class="btn-inner">
+			                        <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" >
+			                            <path d="M11.4925 2.78906H7.75349C4.67849 2.78906 2.75049 4.96606 2.75049 8.04806V16.3621C2.75049 19.4441 4.66949 21.6211 7.75349 21.6211H16.5775C19.6625 21.6211 21.5815 19.4441 21.5815 16.3621V12.3341" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+			                            <path fill-rule="evenodd" clip-rule="evenodd" d="M8.82812 10.921L16.3011 3.44799C17.2321 2.51799 18.7411 2.51799 19.6721 3.44799L20.8891 4.66499C21.8201 5.59599 21.8201 7.10599 20.8891 8.03599L13.3801 15.545C12.9731 15.952 12.4211 16.181 11.8451 16.181H8.09912L8.19312 12.401C8.20712 11.845 8.43412 11.315 8.82812 10.921Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+			                            <path d="M15.1655 4.60254L19.7315 9.16854" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+			                        </svg>
+			                    </span>
+			                </button>`;
+	                    item.action = open_doc;
+	                });
+
+	                return data;
+	            }
+	        },
+	        dom: 'Bfrtip',
+	        columns: [
+	            { data: "ordinance_number" },
+	            { data: "ordinance_title" },
+	            { data: "date_enacted" },
+	            { data: "remarks" },
+	            { data: "action" }
+	        ],
+	        columnDefs: [
+	            { responsivePriority: 1, targets: 0 },
+	            { targets: 0, type: 'ordinance-number-pre' } // custom sort on ordinance number
+	        ],
+	        buttons: [
+	            {
+	                text: "Add",
+	                className: 'btn btn-sm btn-primary',
+	                action: function () {
+	                    getbyId('btn_ordinance_committee').style.display = "none";
+	                    getbyId('form_ordinance').reset();
+	                    clear_ordinance();
+
+	                    getbyId('form_ordinance').type_ord.value = "Ordinance";
+	                    getbyId('status_ordinance').value = 6;
+
+	                    clearDataTable('#tbl_add_ordinance_file');
+	                    clearDataTable('#tbl_add_minutes_file');
+	                    clearDataTable('#tbl_veto_ordinance');
+
+	                    getbyId('h_ordinance_id').value = 0;
+	                    getbyId('h_committee_id_ord').value = "";
+	                    getbyId('h_sp_legislature').value = "";
+
+	                    count_authors = 0;
+	                    count_co_authors = 0;
+	                    count_sponsor = 0;
+
+	                    $('#inp_committee_ordinance').val('').trigger("chosen:updated");
+
+	                    getbyId('div_ordinance_author').innerHTML = "";
+	                    getbyId('div_ordinance_co_author').innerHTML = "";
+	                    getbyId('div_ordinance_sponsor').innerHTML = "";
+
+	                    $('#sel_ordinance_category').val('').trigger('chosen:updated');
+	                    $("#div_add_ordinance").modal('toggle');
+	                }
+	            },
+	            {
+	                extend: 'print',
+	                text: 'Print',
+	                className: 'btn btn-sm btn-warning',
+	                filename: 'file',
+	                title: 'Print',
+	                titleAttr: 'Print'
+	            }
+	        ],
+	        pagingType: "full_numbers",
+	        pageLength: 7,
+	        order: [[0, "asc"]] // sort ordinance_number descending
+	    });
+
+	    $('#tbl_approved_ordinance').off('draw.dt').on('draw.dt', function () {
+	        var table = $('#tbl_approved_ordinance').DataTable();
+	        if (table.order()[0][0] !== 0) {
+	            table.order([0, 'desc']).draw();
+	        }
+	    });
+
+	}
+
+	function clearDataTable(tableId) {
+        if ($.fn.DataTable.isDataTable(tableId)) {
+            $(tableId).DataTable().clear().draw();
+        }
+    }
+</script>

@@ -1,0 +1,104 @@
+<div class="colfull">
+	<form id="form_committee_minutes">
+		<input type="text" hidden name="h_committee_minutes_id" id="h_committee_minutes_id" value="0">
+		<div class="colfull">
+			<p>Tracking No.</p>
+			<input type="text" class="form-control" name="tracking_number">
+			<p>Subject</p>
+			<textarea rows="8" class="form-control" style="white-space: pre-wrap;" name="subject" autocomplete="off"></textarea>
+			<p>Committee</p>
+			<select class="chosen-select" name="committee_id" id="sel_committee_committee_minutes"></select>
+
+			<p>Date</p>
+			<input type="date" class="form-control" name="date">
+
+			<p>Upload Scanned File</p>
+			<input type="file" id="upload_file_committee_minutes" name="upload_file" accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf" multiple>
+
+			<br>
+		</div>
+
+		<div class="colfull" style="margin-top:30px">
+			<table id="tbl_committee_minutes_path" class="table table-striped" style="width: 100%;table-layout: fixed;border-collapse: collapse;" border="1">
+				<thead>
+					<th>filename</th>
+					<th>Action</th>
+				</thead>
+			</table>
+		</div>
+
+		<div class="colfull text-center">
+			<button class="btn btn-success">SAVE</button>
+		</div>
+	</form>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function(res){
+		getDataWithCallback('/get_sp_active_only', (res)=>{
+			if(res){
+				getbyId('active_sp_id').value = res[0].sp_id
+				getCommitteeBysp(res[0].sp_id,'sel_committee_committee_minutes')
+			}
+		})
+
+		var form_id='#form_committee_minutes'
+		 $(form_id).submit(function(e){
+		 	var form_save = $(form_id).serializeObject();
+
+		 	form_save.sp_id = getbyId('active_sp_id').value
+	        e.preventDefault();
+
+	        swal.fire({
+				title: "Are you sure want to save?",
+				text: "Click ok to continue",
+				type: "info",
+				showCancelButton: true,
+				showLoaderOnConfirm: true,
+				preConfirm: () => {
+					return fetch(console.log("log"))
+					.then(
+						upload_files_committee_minutes(form_save)
+					)
+					.catch(() => {
+					    Swal.fire({
+					      icon: 'error',
+					      title: 'Error occured'
+					    })
+					})
+				}
+			})
+	    })
+	})
+
+	function upload_files_committee_minutes(form){
+    	var mydata = new FormData();
+
+    	mydata.append("Serialized",JSON.stringify(form))
+
+        jQuery.each($("#upload_file_committee_minutes")[0].files, function(i, file) {
+	        mydata.append('file['+i+']', file);
+	    });
+        
+	    $.ajax({
+	        type: 'POST',
+	        url: "/save_committee_minutes",
+	        contentType:false,
+	        processData:false,
+	        cache: false,
+	        data:mydata,
+	        beforeSend: function() {
+		       console.log(mydata)
+		    },
+	        success: function(res) {
+				getbyId('form_committee_minutes').reset()
+				get_all_committee_minutes()
+				$('#div_committee_minutes_modal').modal('toggle');
+				saved(res)
+	        },
+	        error: function() {
+	            error_in_saving("error occured in sending to");
+	        }
+	    });
+	}
+</script>

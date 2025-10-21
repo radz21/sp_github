@@ -1,0 +1,220 @@
+<div class="colfull">
+	<form id="form_role_access">
+		<input type="text" hidden="" id="role_login_id" name="login_id">
+		<p id="role_fullname" style="text-transform: uppercase;"></p>
+
+		<div class="form-check form-check-inline">
+		  <p>ROLE</p>
+		</div>
+
+		<div class="form-check form-check-inline">
+		  <input required class="form-check-input" type="radio" name="role_access" id="exampleRadios1" value="1" onclick="getbyId('div_role_config').style.display='block'">
+		  <label class="form-check-label" for="exampleRadios1">
+		    User
+		  </label>
+		</div>
+
+		<div class="form-check form-check-inline">
+		  <input required class="form-check-input" type="radio" name="role_access" id="exampleRadios2" value="2" onclick="getbyId('div_role_config').style.display='none'">
+		  <label class="form-check-label" for="exampleRadios2">
+		    Admin
+		  </label>
+		</div>
+
+		
+		<div class="list-group" id="div_role_config">
+		  <label class="list-group-item" style="padding-left: 40px!important">
+		    <input class="form-check-input me-1" name="session" type="checkbox" style="position: absolute;left: 10px;">
+		    <div class="ms-2 me-auto">
+		      <div class="fw-bold">Session</div>
+		      /sessions
+		    </div>
+		  </label>
+		  <label class="list-group-item" style="padding-left: 40px!important">
+		    <input class="form-check-input me-1" name="ordinance" type="checkbox" style="position: absolute;left: 10px;">
+		    <div class="ms-2 me-auto">
+		      <div class="fw-bold">All Ordinance</div>
+		    </div>
+		  </label>
+		  <label class="list-group-item" style="padding-left: 40px!important">
+		    <input class="form-check-input me-1" name="resolution" type="checkbox" style="position: absolute;left: 10px;">
+		    <div class="ms-2 me-auto">
+		      <div class="fw-bold">All Resolution</div>
+		    </div>
+		  </label>
+		  <label class="list-group-item" style="padding-left: 40px!important">
+		    <input class="form-check-input me-1" name="petition" type="checkbox" style="position: absolute;left: 10px;">
+		    <div class="ms-2 me-auto">
+		      <div class="fw-bold">Petition</div>
+		      /petition
+		    </div>
+		  </label>
+		  <label class="list-group-item" style="padding-left: 40px!important">
+		    <input class="form-check-input me-1" name="minutes" type="checkbox" style="position: absolute;left: 10px;">
+		    <div class="ms-2 me-auto">
+		      <div class="fw-bold">Minutes</div>
+		      /minutes
+		    </div>
+		  </label>
+
+		  <label class="list-group-item" style="padding-left: 40px!important">
+		    <input class="form-check-input me-1" name="document_tracking" type="checkbox" style="position: absolute;left: 10px;">
+		    <div class="ms-2 me-auto">
+		      <div class="fw-bold">Document Tracking</div>
+		      /document_tracking
+		    </div>
+		  </label>
+
+		  <label class="list-group-item" style="padding-left: 40px!important">
+		    <input class="form-check-input me-1" name="sp_budget" type="checkbox" style="position: absolute;left: 10px;">
+		    <div class="ms-2 me-auto">
+		      <div class="fw-bold">Sp/Sb Budget</div>
+		      /sp_budget
+		    </div>
+		  </label>
+
+		  <label class="list-group-item" style="padding-left: 40px!important">
+		    <input class="form-check-input me-1" name="configuration" type="checkbox" style="position: absolute;left: 10px;">
+		    <div class="ms-2 me-auto">
+		      <div class="fw-bold">All Configuration</div>
+		    </div>
+		  </label>
+
+		  <label class="list-group-item" style="padding-left: 40px!important">
+		    <input class="form-check-input me-1" name="committee" type="checkbox" style="position: absolute;left: 10px;">
+		    <div class="ms-2 me-auto">
+		      <div class="fw-bold">Committee</div>
+		      /committee
+		    </div>
+		  </label>
+
+		  <label class="list-group-item" style="padding-left: 40px!important">
+		    <input class="form-check-input me-1" name="gallery_albums" type="checkbox" style="position: absolute;left: 10px;">
+		    <div class="ms-2 me-auto">
+		      <div class="fw-bold">Gallery</div>
+		      /gallery_albums
+		    </div>
+		  </label>
+
+		  <label class="list-group-item" style="padding-left: 40px!important">
+		    <input class="form-check-input me-1" name="executive_order" type="checkbox" style="position: absolute;left: 10px;">
+		    <div class="ms-2 me-auto">
+		      <div class="fw-bold">Executive Order</div>
+		      /executive_order
+		    </div>
+		  </label>
+
+		  <label class="list-group-item" style="padding-left: 40px!important">
+		    <input class="form-check-input me-1" name="memorandom" type="checkbox" style="position: absolute;left: 10px;">
+		    <div class="ms-2 me-auto">
+		      <div class="fw-bold">Memorandom</div>
+		      /memorandom
+		    </div>
+		  </label>
+
+		  <label class="list-group-item" style="padding-left: 40px!important">
+		    <input class="form-check-input me-1" name="barangay_ordinance" type="checkbox" style="position: absolute;left: 10px;">
+		    <div class="ms-2 me-auto">
+		      <div class="fw-bold">Barangay Ordinance</div>
+		      /barangay_ordinance
+		    </div>
+		  </label>
+
+		  <label class="list-group-item" style="padding-left: 40px!important">
+		    <input class="form-check-input me-1" name="barangay_resolution" type="checkbox" style="position: absolute;left: 10px;">
+		    <div class="ms-2 me-auto">
+		      <div class="fw-bold">Barangay Resolution</div>
+		      /barangay_resolution
+		    </div>
+		  </label>
+
+		  <label class="list-group-item" style="padding-left: 40px!important">
+		    <input class="form-check-input me-1" name="documents_refferals" type="checkbox" style="position: absolute;left: 10px;">
+		    <div class="ms-2 me-auto">
+		      <div class="fw-bold">Code and Refferences</div>
+		      /documents_refferals
+		    </div>
+		  </label>
+
+		  <label class="list-group-item" style="padding-left: 40px!important">
+		    <input class="form-check-input me-1" name="reports" type="checkbox" style="position: absolute;left: 10px;">
+		    <div class="ms-2 me-auto">
+		      <div class="fw-bold">Reports</div>
+		      /reports
+		    </div>
+		  </label>
+
+		  <label class="list-group-item" style="padding-left: 40px!important">
+		    <input class="form-check-input me-1" name="profiling_ordinance" type="checkbox" style="position: absolute;left: 10px;">
+		    <div class="ms-2 me-auto">
+		      <div class="fw-bold">Profiling Ordinance</div>
+		      /profiling_ordinance
+		    </div>
+		  </label>
+
+		  <label class="list-group-item" style="padding-left: 40px!important">
+		    <input class="form-check-input me-1" name="citezen_charter" type="checkbox" style="position: absolute;left: 10px;">
+		    <div class="ms-2 me-auto">
+		      <div class="fw-bold">Citezen Charter</div>
+		      /citezen_charter
+		    </div>
+		  </label>
+
+		  <label class="list-group-item" style="padding-left: 40px!important">
+		    <input class="form-check-input me-1" name="rules_and_procedure" type="checkbox" style="position: absolute;left: 10px;">
+		    <div class="ms-2 me-auto">
+		      <div class="fw-bold">Rules and Procedure</div>
+		      /rules_and_procedure
+		    </div>
+		  </label>
+
+		  <label class="list-group-item" style="padding-left: 40px!important">
+		    <input class="form-check-input me-1" name="download_center" type="checkbox" style="position: absolute;left: 10px;">
+		    <div class="ms-2 me-auto">
+		      <div class="fw-bold">Download Center</div>
+		      /download_center
+		    </div>
+		  </label>
+		</div>
+
+		<div style="text-align: center;">
+			<button type="submit" class="btn btn-success">SAVE</button>
+		</div>
+	</form>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+
+		var form_id='#form_role_access'
+		 $(form_id).submit(function(e){
+		 	var form_save = $(form_id).serializeObject();
+	        e.preventDefault();
+
+	        swal.fire({
+				title: "Are you sure want to save?",
+				text: "Click ok to continue",
+				type: "info",
+				showCancelButton: true,
+				showLoaderOnConfirm: true,
+				preConfirm: () => {
+					return fetch(console.log("log"))
+					.then(
+						sendDataWithCallback('/save_role',form_save,function(res){
+							if(res){
+								load_login()
+								saved(res)
+							}
+						})
+					)
+					.catch(() => {
+					    Swal.fire({
+					      icon: 'error',
+					      title: 'Error occured'
+					    })
+					})
+				}
+			})
+	    })
+	})
+</script>

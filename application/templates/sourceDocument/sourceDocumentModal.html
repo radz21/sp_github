@@ -1,0 +1,49 @@
+<div class="colfull">
+	<form id="form_source_document">
+		<input type="hidden" name="id" id="h_source_document" value="0">
+		<div class="colfull">
+			<p>Title</p>
+			<textarea class="form-control" id="title" name="title" required="" autocomplete="off" autofocus style="height: 100px;"></textarea>
+		</div>
+
+		<div class="colfull" align="center" style="margin-top: 10px">
+			<button type="submit" class="btn btn-success">Save</button>
+		</div>
+	</form>
+</div>
+<script type="text/javascript">
+	$(document).ready(function(res){
+		var form_id='#form_source_document'
+		 $(form_id).submit(function(e){
+		 	var form_save = $(form_id).serializeObject();
+	        e.preventDefault();
+
+	        swal.fire({
+				title: "Are you sure want to save?",
+				text: "Click ok to continue",
+				type: "info",
+				showCancelButton: true,
+				showLoaderOnConfirm: true,
+				preConfirm: () => {
+					return fetch(console.log("log"))
+					.then(
+						sendDataWithCallback("/save_source_document", form_save, (res)=>{
+							$('#tbl_source_document').DataTable().ajax.reload();
+							saved(res)
+						})
+					)
+					.catch(() => {
+					    Swal.fire({
+					      icon: 'error',
+					      title: 'Error occured'
+					    })
+					})
+				}
+			})
+	        
+	    })	
+	})
+
+
+	
+</script>

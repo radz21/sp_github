@@ -1,0 +1,748 @@
+<div class="colfull">
+	<form id="form_resolution" class="form-group">
+		<input type="text" hidden name="resolution_id" id="h_resolution_id" value="0">
+		<input type="text" hidden name="sp_id" id="h_legislature_res">
+		<input type="text" hidden name="" id="h_committee_id_res">
+        
+        <div class="colfull">
+        	<div class="row">
+				<div class="col-sm">
+					<label for="">Resolution Number</label>
+					<input class="form-control" type="text" id="resolution_no" name="resolution_no" required>
+				</div>
+			</div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm">
+                <label for="">Tracking Number</label>
+				<div class="input-group">
+					<input type="search" class="form-control border border-warning border-1"  placeholder="Tracking No."  id="resolution_series_number" name="series_number" required>
+					<button type="button" class="btn btn-outline-primary" title="Find Tracking"> 
+						<svg width="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.38948 8.98403H6.45648C4.42148 8.98403 2.77148 10.634 2.77148 12.669V17.544C2.77148 19.578 4.42148 21.228 6.45648 21.228H17.5865C19.6215 21.228 21.2715 19.578 21.2715 17.544V12.659C21.2715 10.63 19.6265 8.98403 17.5975 8.98403L16.6545 8.98403" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12.0215 2.19044V14.2314" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.10645 5.1189L12.0214 2.1909L14.9374 5.1189" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>                          
+					</button>
+					<button type="button" class="btn btn-outline-danger" title="Clear">
+						 <svg width="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						 	<path fill-rule="evenodd" clip-rule="evenodd" d="M11.9852 21.606C11.9852 21.606 19.6572 19.283 19.6572 12.879C19.6572 6.474 19.9352 5.974 19.3192 5.358C18.7042 4.742 12.9912 2.75 11.9852 2.75C10.9792 2.75 5.26616 4.742 4.65016 5.358C4.03516 5.974 4.31316 6.474 4.31316 12.879C4.31316 19.283 11.9852 21.606 11.9852 21.606Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+						 	<path d="M13.864 13.8249L10.106 10.0669" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+						 	<path d="M10.106 13.8249L13.864 10.0669" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+						 </svg>                        
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+            <div class="col-sm">
+                <label for="">Select Category</label>
+				<select class="chosen-select" id="sel_ordinance_category_res" multiple></select>
+            </div>
+        </div>
+
+        <div class="row" hidden>
+            <div class="col-sm">
+                <label for="">Document Tracking #</label>
+				<input class="form-control" type="text" id="tracking_no_res" name="tracking_no" autofocus>
+            </div>
+            <div class="col-sm">
+                <label for="">Legislation Year</label>
+				<input class="form-control disabledbutton" type="text" name="year" disabled>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm">
+                <label for="">Governance Classification</label>
+				<select class="form-control" id="sel_ordinance_classification_res" name="gov_classification"></select>
+            </div>
+            <div class="col-sm" hidden>
+            	<label for="">Progress of Resolution</label>
+				<select class="form-control" required="" id="status_resolution" name="status">
+					<option value="" selected disabled>--SELECT--</option>
+					<!-- <option value="1">Proposed Resolution</option>
+					<option value="2">2nd Reading Resolution</option>
+					<option value="3">3rd Reading Resolution</option>
+					<option value="4">3rd Reading Resolution Excemption</option>
+					<option value="5">For mayors Approval</option> -->
+					<option value="6" selected>Approved Resolution</option>
+					<!-- <option value="7">Veto Resolution</option>
+					<option value="8">Archive Resolution</option> -->
+				</select>
+
+                
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm">
+                <label for="">Date Adopted (mm/dd/yy)</label>
+				<input class="form-control" type="date" id="date_enacted_res" name="date_enacted" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm">
+                <label for="">Resolution Title</label>
+				<textarea  class="form-control" type="text" id="resolution_title" name="resolution_title" style="height: 300px;resize:vertical;"></textarea>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+		    <div class="panel-heading">
+		    	<p class="ptop">Resolution Author
+		    		<span class="btn btn-sm btn-icon text-primary flex-end" onclick="add_res_author()">
+		    			<svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+		    				<path fill-rule="evenodd" clip-rule="evenodd" d="M9.5 12.5537C12.2546 12.5537 14.4626 10.3171 14.4626 7.52684C14.4626 4.73663 12.2546 2.5 9.5 2.5C6.74543 2.5 4.53737 4.73663 4.53737 7.52684C4.53737 10.3171 6.74543 12.5537 9.5 12.5537ZM9.5 15.0152C5.45422 15.0152 2 15.6621 2 18.2464C2 20.8298 5.4332 21.5 9.5 21.5C13.5448 21.5 17 20.8531 17 18.2687C17 15.6844 13.5668 15.0152 9.5 15.0152ZM19.8979 9.58786H21.101C21.5962 9.58786 22 9.99731 22 10.4995C22 11.0016 21.5962 11.4111 21.101 11.4111H19.8979V12.5884C19.8979 13.0906 19.4952 13.5 18.999 13.5C18.5038 13.5 18.1 13.0906 18.1 12.5884V11.4111H16.899C16.4027 11.4111 16 11.0016 16 10.4995C16 9.99731 16.4027 9.58786 16.899 9.58786H18.1V8.41162C18.1 7.90945 18.5038 7.5 18.999 7.5C19.4952 7.5 19.8979 7.90945 19.8979 8.41162V9.58786Z" fill="currentColor">
+		    				</path>                            
+		    			</svg> 
+		    		</span>
+		    	</p>
+		    </div>
+		    <div class="panel-body">
+		    	<div class="colfull" id="div_resolution_author" style="padding:0px 20px 0px 20px">
+					
+				</div>
+		    </div>
+		</div>
+
+		<div class="panel panel-default">
+		    <div class="panel-heading">
+		    	<p class="ptop">Resolution CO-Author
+		    		<span class="btn btn-sm btn-icon text-primary flex-end" onclick="add_res_co_author()">
+		    			<svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+		    				<path fill-rule="evenodd" clip-rule="evenodd" d="M9.5 12.5537C12.2546 12.5537 14.4626 10.3171 14.4626 7.52684C14.4626 4.73663 12.2546 2.5 9.5 2.5C6.74543 2.5 4.53737 4.73663 4.53737 7.52684C4.53737 10.3171 6.74543 12.5537 9.5 12.5537ZM9.5 15.0152C5.45422 15.0152 2 15.6621 2 18.2464C2 20.8298 5.4332 21.5 9.5 21.5C13.5448 21.5 17 20.8531 17 18.2687C17 15.6844 13.5668 15.0152 9.5 15.0152ZM19.8979 9.58786H21.101C21.5962 9.58786 22 9.99731 22 10.4995C22 11.0016 21.5962 11.4111 21.101 11.4111H19.8979V12.5884C19.8979 13.0906 19.4952 13.5 18.999 13.5C18.5038 13.5 18.1 13.0906 18.1 12.5884V11.4111H16.899C16.4027 11.4111 16 11.0016 16 10.4995C16 9.99731 16.4027 9.58786 16.899 9.58786H18.1V8.41162C18.1 7.90945 18.5038 7.5 18.999 7.5C19.4952 7.5 19.8979 7.90945 19.8979 8.41162V9.58786Z" fill="currentColor">
+		    				</path>                            
+		    			</svg> 
+		    		</span>
+		    	</p>
+		    </div>
+		    <div class="panel-body">
+		    	<div class="colfull" id="div_resolution_co_author" style="padding:0px 20px 0px 20px">
+					
+				</div>
+		    </div>
+		</div>
+
+		<div class="panel panel-default">
+		    <div class="panel-heading">
+		    	<p class="ptop">Resolution Sponsor
+		    		<span class="btn btn-sm btn-icon text-primary flex-end" onclick="add_res_sponsor()">
+		    			<svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+		    				<path fill-rule="evenodd" clip-rule="evenodd" d="M9.5 12.5537C12.2546 12.5537 14.4626 10.3171 14.4626 7.52684C14.4626 4.73663 12.2546 2.5 9.5 2.5C6.74543 2.5 4.53737 4.73663 4.53737 7.52684C4.53737 10.3171 6.74543 12.5537 9.5 12.5537ZM9.5 15.0152C5.45422 15.0152 2 15.6621 2 18.2464C2 20.8298 5.4332 21.5 9.5 21.5C13.5448 21.5 17 20.8531 17 18.2687C17 15.6844 13.5668 15.0152 9.5 15.0152ZM19.8979 9.58786H21.101C21.5962 9.58786 22 9.99731 22 10.4995C22 11.0016 21.5962 11.4111 21.101 11.4111H19.8979V12.5884C19.8979 13.0906 19.4952 13.5 18.999 13.5C18.5038 13.5 18.1 13.0906 18.1 12.5884V11.4111H16.899C16.4027 11.4111 16 11.0016 16 10.4995C16 9.99731 16.4027 9.58786 16.899 9.58786H18.1V8.41162C18.1 7.90945 18.5038 7.5 18.999 7.5C19.4952 7.5 19.8979 7.90945 19.8979 8.41162V9.58786Z" fill="currentColor">
+		    				</path>                            
+		    			</svg> 
+		    		</span>
+		    	</p>
+		    </div>
+		    <div class="panel-body">
+		    	<div class="colfull" id="div_resolution_sponsor" style="padding:0px 20px 0px 20px">
+					
+				</div>
+		    </div>
+		</div>
+
+		<div class="panel panel-default">
+		    <div class="panel-heading">
+		    	<p class="ptop">Resolution CO-Sponsor
+		    		<span class="btn btn-sm btn-icon text-primary flex-end" onclick="add_res_cosponsor()">
+		    			<svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+		    				<path fill-rule="evenodd" clip-rule="evenodd" d="M9.5 12.5537C12.2546 12.5537 14.4626 10.3171 14.4626 7.52684C14.4626 4.73663 12.2546 2.5 9.5 2.5C6.74543 2.5 4.53737 4.73663 4.53737 7.52684C4.53737 10.3171 6.74543 12.5537 9.5 12.5537ZM9.5 15.0152C5.45422 15.0152 2 15.6621 2 18.2464C2 20.8298 5.4332 21.5 9.5 21.5C13.5448 21.5 17 20.8531 17 18.2687C17 15.6844 13.5668 15.0152 9.5 15.0152ZM19.8979 9.58786H21.101C21.5962 9.58786 22 9.99731 22 10.4995C22 11.0016 21.5962 11.4111 21.101 11.4111H19.8979V12.5884C19.8979 13.0906 19.4952 13.5 18.999 13.5C18.5038 13.5 18.1 13.0906 18.1 12.5884V11.4111H16.899C16.4027 11.4111 16 11.0016 16 10.4995C16 9.99731 16.4027 9.58786 16.899 9.58786H18.1V8.41162C18.1 7.90945 18.5038 7.5 18.999 7.5C19.4952 7.5 19.8979 7.90945 19.8979 8.41162V9.58786Z" fill="currentColor">
+		    				</path>                            
+		    			</svg> 
+		    		</span>
+		    	</p>
+		    </div>
+		    <div class="panel-body">
+		    	<div class="colfull" id="div_resolution_cosponsor" style="padding:0px 20px 0px 20px">
+					
+				</div>
+		    </div>
+		</div>
+
+		<div class="row" style="margin-top: 20px;">
+            <div class="col-sm">
+                <input class="mb10" type="hidden" id="resolution_author" list="list_author">
+                <label for="">Title Description</label>
+				<textarea class="mb10" id="tx_description_res"></textarea>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm">
+                <label for="">Upload Attachment</label>
+				<div class="colful">
+					<input type="file" id="resolution_file" multiple="" accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.pdf">
+
+					<p style="margin-top: 10px;">Attach File 
+						<span style="font-style: italic;">(Allow pdf, doc ,xls , jpg file only)</span>
+					</p>
+
+					<div class="colfull" style="padding-right: 20px;">
+						<table id="tbl_res_attach_file" class="table" style="table-layout: fixed;width: 100% !important" border="1">
+							<thead>
+								<th>File</th>
+								<th>Action</th>
+							</thead>
+						</table>
+					</div>
+				</div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm">
+                <label for="">Select SP Legislature</label>
+                <div class='with-select'>
+                	<select id="inp_sp_ord_legislature_res" class="chosen-select" name="inp_sp_ord_legislature_res" onchange="getCommitteeBysp(this.value, 'inp_committee_res')"></select>
+                </div>
+            </div>
+            <div class="col-sm">
+                <label for="">Session number</label>
+				<input class="form-control" type="text" id="inp_session_res" name="session_id">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm">
+                <label for="">Reffered Committee</label>
+				<div class="colful">
+					<div class="colfull">
+						<select name="inp_committee_res" class="chosen-select" multiple id="inp_committee_res"></select>
+					</div>
+					<div class="col5">
+						<div class="colfull">
+							<button hidden id="btn_resolution_committee" type="button" onclick="saved_resolution_committee()">Reffer to Other Committee</button>&nbsp;
+						</div>
+					</div>
+				</div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm">
+                <label for="">Source of Document</label>
+				<select class="form-control" onchange="specify_source_res()" name="source_of_document" id="sel_source_docs_res">
+					<!-- <option value="" selected disabled>--SELECT--</option>
+					<option value="1">Sangunian Files</option>
+					<option value="2">Sangunian Panlalawigan</option>
+					<option value="3">Other</option> -->
+				</select>
+            </div>
+            <div class="col-sm" id="div_source_specify_res" hidden>
+				 <div class="colfull">
+				 	<label for="">Please Specify:</label>
+					<input type="text" class="form-control" id="source_document_specify_res" name="source_document_specify">
+				</div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm">
+                <label for="">Remarks</label>
+				<input class="form-control" type="text" id="remarks_res" name="remarks">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm">
+                <label for="">Upload Supporting Documents</label>
+				<input class="form-control" type="text" hidden id="resolution_minutes_id" value="0">
+				<input class="form-control" id="minutes_resolution_file" type="file" accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.pdf">
+				<p>Attach File 
+					<span style="font-style: italic;">(Allow pdf, doc ,xls , jpg file only)</span>
+				</p>
+            </div>
+            <div class="col-sm" hidden>
+                <label for="">Supporting Documents Title</label>
+				<input class="form-control" type="text" id="minutes_resolution" name="minutes_title">
+            </div>
+        </div>
+
+        <div class="colfull fl" style="padding-right: 20px;">
+			<table id="tbl_add_minutes_file_resolution" class="table" style="table-layout: fixed;width: 100% !important" border="1">
+				<thead>
+					<th>File</th>
+					<th>Action</th>
+				</thead>
+			</table>
+		</div>
+
+		<!-- <div class="colfull" style="margin-top: 50px;">
+			<div class="panel panel-primary">
+				<div class="panel-heading">Veto Attachment</div>
+				<div class="panel-body">
+					<input id="veto_resolution_file" style="margin-top: 20px;" type="file" accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.pdf">
+					<p style="margin-top: 10px;">Attach File 
+						<span style="font-style: italic;">(Allow pdf, doc ,xls , jpg file only)</span>
+					</p>
+				</div>
+			</div>
+		</div>
+		
+		<div class="colfull" style="padding-right: 20px;">
+			<table id="tbl_veto_resolution" class="table" style="table-layout: fixed;width: 100% !important" border="1">
+				<thead>
+					<th>File</th>
+					<th>Action</th>
+				</thead>
+			</table>
+		</div> -->
+
+		<div class="colfull txcenter">
+			<button type="submit" class="btn btn-success">SAVE</button>
+			<button type="button" class="btn btn-danger" onclick="del_resolution()">DELETE</button>
+		</div>
+	</form>
+</div>
+<script type="text/javascript">
+	var get_info=[]
+
+	$(document).ready(function(){
+
+		loadfirstdatatable('tbl_res_attach_file')
+		loadfirstdatatable('tbl_add_minutes_file_resolution')
+
+		var form_id='#form_resolution'
+		$(form_id).submit(function(e){
+		    e.preventDefault();
+
+		    var mydata_res = new FormData();
+		    var form = $('#form_resolution').serializeObject();
+
+		    var ref_committee = [];
+	        $.each($("#inp_committee_res"), function(){            
+	            ref_committee.push($(this).val());
+	        });
+
+	        var categories = [];
+	        $.each($("#sel_ordinance_category_res"), function(){            
+	            categories.push($(this).val());
+	        });
+
+		    var tx_description_res = tinymce.get('tx_description_res').getContent();
+		    form.description =tx_description_res
+
+		    if (form.input_authors) {
+		    	var new_data1 = form.input_authors.filter(function(item){
+			      	return item[0] != "";
+			    });
+		    }
+		    
+		    if (form.input_co_authors) {
+		    	var new_data2 = form.input_co_authors.filter(function(item){
+			      	return item[0] != "";
+			    });
+		    }
+		    
+		    if (form.input_sponsor) {
+		    	var new_data3 = form.input_sponsor.filter(function(item){
+			      	return item[0] != "";
+			    });
+		    }
+
+		    if (form.input_cosponsor) {
+		    	var new_data4 = form.input_cosponsor.filter(function(item){
+			      	return item[0] != "";
+			    });
+		    }
+
+		   	form.ordinance_id=getbyId('h_resolution_id').value
+		    form.minutes_id= getbyId('resolution_minutes_id').value
+		    form.sp_id=getbyId('inp_sp_ord_legislature_res').value
+		    form.ref_committee=ref_committee;
+		    form.categories = categories
+
+		    jQuery.each($("#resolution_file")[0].files, function(i, file) {
+		        mydata_res.append('file_attach['+i+']', file);
+		    })
+
+		    jQuery.each($("#minutes_resolution_file")[0].files, function(i, file) {
+		        mydata_res.append('file_minutes['+i+']', file);
+		    })
+
+		    mydata_res.append("Serialized",JSON.stringify(form))
+
+		    swal.fire({
+				title: "Are you sure want to save?",
+				text: "Click ok to continue",
+				type: "info",
+				showCancelButton: true,
+				showLoaderOnConfirm: true,
+				preConfirm: () => {
+					return fetch(console.log("log"))
+					.then(
+						$.ajax({
+					        type: 'POST',
+					        url: "/save_resolution",
+					        contentType:false,
+					        processData:false,
+					        cache: false,
+					        data:mydata_res,
+					        beforeSend: function() {
+						       console.log(mydata_res)
+						    },
+					        success: function(res) {
+					        	if(res=="Resolution Number Already exists"){
+					        		error_in_saving(res)
+					        	}else{
+					        		clear_resolution()
+									getbyId('form_resolution').reset()
+									$('#div_resolution_modal').modal('toggle');
+									$('#tbl_resolution').DataTable().ajax.reload();
+									saved(res)
+					        	}
+					        	
+					        },
+					        error: function() {
+					            error_in_saving("error occured in sending to");
+					        }
+					    })
+					)
+					.catch(() => {
+					    Swal.fire({
+					      icon: 'error',
+					      title: 'Error occured'
+					    })
+					})
+				}
+
+			})   
+
+			
+		})
+
+		getDataWithCallback('/get_info', function(res) {
+	        var datalistId = getbyId('list_author');
+	        for(var i = 0; i < res.length; i++) {
+	            var opt = document.createElement('option');
+	            opt.setAttribute('data-id',res[i].info_id)
+	            opt.setAttribute('value',res[i].fullname)
+	            datalistId.appendChild(opt)
+	        }
+
+	        get_info = res
+
+	    })
+
+
+		getDataWithCallback('/get_gov_classification',function(res){
+			$('#sel_ordinance_classification_res').append(`<option value="" disabled selected> ${'--SELECT--'} </option>`); 
+			for(var x=0; x<res.length; x++){
+				$('#sel_ordinance_classification_res').append(`<option value="${res[x]['classification_id']}"> ${res[x]['title']} </option>`); 
+			}
+		})
+
+		getDataWithCallback('/get_category',function(res){ 
+			for(var x=0; x<res.length; x++){
+				$('#sel_ordinance_category_res').append(`<option value="${res[x]['category_id']}"> ${res[x]['title']} </option>`); 
+			}
+			$('#sel_ordinance_category_res').trigger('chosen:updated')
+		})
+
+	})
+
+
+	var count_authors=0
+	// var arr=[]
+	function add_res_author(callback){
+		var div =getbyId('div_resolution_author')
+
+		var div_gen=document.createElement("div")
+		var div_id='gendiv_authors'+count_authors
+		div_gen.id=div_id
+
+		var input=document.createElement('select')
+		input.setAttribute('class', "col95")
+		var inp_id='inp' + count_authors;
+		input.id=inp_id
+		input.name="input_authors["+count_authors+"]";
+		
+		var option_blank = document.createElement("option");
+		option_blank.innerHTML = "--SELECT--"
+		option_blank.value = ""
+		option_blank.disabled = true
+		option_blank.selected = true
+
+		input.appendChild(option_blank);
+		get_info.forEach(function(i){
+			var option = document.createElement("option");
+			option.innerHTML = i['fullname'];
+			option.value = i['info_id'];
+			input.appendChild(option);
+		})
+
+		var btn=document.createElement('button')
+		btn.setAttribute('class', "col5 btn btn-sm btn btn-outline-danger")
+		btn.type="button"
+		btn.style="float:right"
+		btn.innerHTML="X"
+		
+		btn.setAttribute('data-div',div_id)
+		btn.setAttribute('data-inp',inp_id);
+		btn.onclick = function() {
+			var div=this.getAttribute('data-div');
+			document.getElementById(div).remove();
+	    };
+		
+		div_gen.appendChild(input)
+		div_gen.appendChild(btn)
+		div.appendChild(div_gen)
+
+	 	$(input).chosen({width: "90%"})
+
+	 	count_authors++;
+		if(callback) {
+			callback(input)
+		}
+	}
+
+
+
+	var count_co_authors=0
+	function add_res_co_author(callback){
+		
+		var div =getbyId('div_resolution_co_author')
+
+		var div_gen=document.createElement("div")
+		var div_id='gendiv_co_authors'+count_co_authors
+		div_gen.id=div_id
+
+		var input=document.createElement('select')
+		input.setAttribute('class', "col95")
+		var inp_id='inp_co_author' + count_co_authors;
+		input.id=inp_id
+		input.name="input_co_authors["+count_co_authors+"]";
+
+		var option_blank = document.createElement("option");
+		option_blank.innerHTML = "--SELECT--"
+		option_blank.value = ""
+		option_blank.disabled = true
+		option_blank.selected = true
+
+		input.appendChild(option_blank);
+		get_info.forEach(function(i){
+			var option = document.createElement("option");
+			option.innerHTML = i['fullname'];
+			option.value = i['info_id'];
+			input.appendChild(option);
+			
+		})
+
+		var btn=document.createElement('button')
+		btn.setAttribute('class', "col5 btn btn-sm btn btn-outline-danger")
+		btn.type="button"
+		btn.style="float:right"
+		btn.innerHTML="X"
+		
+		btn.setAttribute('data-div',div_id)
+		btn.setAttribute('data-inp',inp_id);
+		btn.onclick = function() {
+			var div=this.getAttribute('data-div');
+			document.getElementById(div).remove();
+	    };
+		
+		div_gen.appendChild(input)
+		div_gen.appendChild(btn)
+		div.appendChild(div_gen)
+
+	 	$(input).chosen({width: "90%"})
+
+	    count_co_authors++;
+		if(callback) {
+			callback(input)
+		}
+	}
+
+
+	var count_sponsor=0
+	// var arr_sponsor=[]
+	function add_res_sponsor(callback){
+		
+		var div =getbyId('div_resolution_sponsor')
+		var div_gen=document.createElement("div")
+		var div_id='gendiv_sponsor'+count_sponsor
+		div_gen.id=div_id
+
+		var input=document.createElement('select')
+		input.setAttribute('class', "col95")
+		var inp_id='inp_sponsor' + count_sponsor;
+		input.id=inp_id
+		input.name="input_sponsor["+count_sponsor+"]";
+
+		var option_blank = document.createElement("option");
+		option_blank.innerHTML = "--SELECT--"
+		option_blank.value = ""
+		option_blank.disabled = true
+		option_blank.selected = true
+
+		input.appendChild(option_blank);
+		
+		get_info.forEach(function(i){
+			console.log(i['fullname'])
+			var option = document.createElement("option");
+			option.innerHTML = i['fullname'];
+			option.value = i['info_id'];
+			input.appendChild(option);
+			
+		})
+
+		var btn=document.createElement('button')
+		btn.setAttribute('class', "col5 btn btn-sm btn btn-outline-danger")
+		btn.type="button"
+		btn.style="float:right"
+		btn.innerHTML="X"
+		
+		btn.setAttribute('data-div',div_id)
+		btn.setAttribute('data-inp',inp_id);
+		btn.onclick = function() {
+			var div=this.getAttribute('data-div');
+			document.getElementById(div).remove();
+	    };
+		
+		div_gen.appendChild(input)
+		div_gen.appendChild(btn)
+		div.appendChild(div_gen)
+
+	 	$(input).chosen({width: "90%"})
+	 	count_sponsor++;
+	    if(callback) {
+			callback(input)
+		}
+	}
+
+	
+	var count_cosponsor=0
+	function add_res_cosponsor(callback){
+		
+		var div =getbyId('div_resolution_cosponsor')
+		var div_gen=document.createElement("div")
+		var div_id='gendiv_cosponsor'+count_cosponsor
+		div_gen.id=div_id
+
+		var input=document.createElement('select')
+		input.setAttribute('class', "col95")
+		var inp_id='inp_cosponsor' + count_cosponsor;
+		input.id=inp_id
+		input.name="input_cosponsor["+count_cosponsor+"]";
+
+		var option_blank = document.createElement("option");
+		option_blank.innerHTML = "--SELECT--"
+		option_blank.value = ""
+		option_blank.disabled = true
+		option_blank.selected = true
+
+		input.appendChild(option_blank);
+		get_info.forEach(function(i){
+			var option = document.createElement("option");
+			option.innerHTML = i['fullname'];
+			option.value = i['info_id'];
+			input.appendChild(option);
+			
+		})
+
+		var btn=document.createElement('button')
+		btn.setAttribute('class', "col5 btn btn-sm btn btn-outline-danger")
+		btn.type="button"
+		btn.style="float:right"
+		btn.innerHTML="X"
+		
+		btn.setAttribute('data-div',div_id)
+		btn.setAttribute('data-inp',inp_id);
+		btn.onclick = function() {
+			var div=this.getAttribute('data-div');
+			document.getElementById(div).remove();
+	    };
+		
+		div_gen.appendChild(input)
+		div_gen.appendChild(btn)
+		div.appendChild(div_gen)
+
+	 	$(input).chosen({width: "90%"})
+	 	count_sponsor++;
+	    if(callback) {
+			callback(input)
+		}
+	}
+
+
+	function saved_resolution_committee(){
+		var committee_id=getbyId('h_committee_id_res').value
+		if(committee_id!=""){
+			var data={
+				committee_id:getbyId('h_committee_id_res').value,
+				resolution_id:getbyId('h_resolution_id').value
+			}
+			swal.fire({
+	            title: "Are you sure want to save?",
+	            text: "Click ok to continue",
+	            type: "info",
+	            showCancelButton: true,
+	            showLoaderOnConfirm: true,
+	            preConfirm: () => {
+	                return fetch(console.log("log"))
+	                .then(
+	                    sendDataWithCallback('/save_resolution_committee',data,function(res){
+							if(res){
+								saved(res)
+							}
+						})
+	                )
+	                .catch(() => {
+	                    Swal.fire({
+	                      icon: 'error',
+	                      title: 'Error occured'
+	                    })
+	                })
+	            }
+	        })
+		}else{
+			inform("No committee Selected")
+		}
+	}
+
+	function specify_source_res(){
+		var typ=getbyId('sel_source_docs_res').value
+		if(typ=="3"){
+			getbyId('div_source_specify_res').style.display="block";
+		}else{
+			getbyId('div_source_specify_res').style.display="none"
+			getbyId('source_document_specify_res').value = ""
+		}
+	}
+
+
+	function del_resolution(){
+		Swal.fire({
+		  title: 'Are you sure?',
+		  text: "You won't be able to revert this!",
+		  icon: 'warning',
+		  showCancelButton: true,
+		  confirmButtonColor: '#d33',
+		  cancelButtonColor: '#3085d6',
+		  confirmButtonText: 'Yes, delete it!',
+		  customClass: 'swal_css',
+		}).then((result) => {
+			if (result.isConfirmed) {
+				Swal.fire(
+				  'Deleted!',
+				  'Your file has been deleted.',
+				  'success'
+				)
+				var data ={
+					resolution_id:getbyId('h_resolution_id').value
+				}
+				sendDataWithCallback('/del_resolution',data,function(res){
+					$('#tbl_resolution').DataTable().ajax.reload();
+					$('#div_resolution_modal').modal('toggle');
+				})
+			}
+		})
+	}
+
+	
+	function clear_resolution(){
+		getbyId('h_resolution_id').value = "0"
+		getbyId('h_legislature_res').value = "";
+		getbyId('h_committee_id_res').value = "";
+	}
+</script>

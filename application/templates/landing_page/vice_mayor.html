@@ -1,0 +1,102 @@
+{% extends 'landing_page/index.html'%}
+
+{% block body%}
+	<div class="container my-5">
+		<p class="lead" style="text-align:center; font-weight: bold;">OFFICE OF THE VICE MAYOR</p>
+		<hr>
+        
+        <div class="row">
+            <div>
+                <div class="input-group" style="float: right; width: 300px;">
+                    <select class="form-select" aria-label="Default select example" id="sel_vice_mayor">
+                    {% if data %}
+                        {% for item in data %}
+                            <option value="{{ item.sp_id }}">{{ item.sp_title }}</option>
+                        {% endfor %}
+                    {% else %}
+                        <option value="">Please Add Vice Mayor</option>
+                    {% endif %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px">
+            <div class="col d-flex justify-content-center">
+                {% if data %}
+                    {% set index = 0 %}
+                    {% for item in data %}
+                        {% set index = loop.index %}
+                        {% if index == 1 %}
+                            {% if item.fullname %}
+                                <div class="card mb-3 vice_mayor_cards" id="{{item.sp_id}}">
+                                    <div class="row g-0">
+                                        <div class="col-md-4">
+                                            <img src="../static/uploads/{{ item.img }}" onerror="this.src='../static/icon/user.png'" class="img-fluid rounded-start" style="height: 95%;width: 100%;" />
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ item.fullname }}</h5>
+                                                <p class="card-text">
+                                                    {{ item.about }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            <div class="card mb-3 vice_mayor_cards" id="{{item.sp_id}}" class="vice_mayor_cards" style="display: none">
+                                <div class="row g-0">
+                                    <div class="col-md-4">
+                                        <img src="../static/uploads/{{ item.img }}" onerror="this.src='../static/icon/user.png'" class="img-fluid rounded-start" style="height: 95%;width: 100%;" />
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ item.fullname }}</h5>
+                                            <p class="card-text">
+                                                {{ item.about }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <option value="">Please Add Vice Mayor</option>
+                {% endif %}
+                
+            </div>
+        </div>
+
+	</div>
+
+	<script type="text/javascript">
+		document.getElementById('menu_about').style.color = "black";
+        document.querySelectorAll('.form-outline').forEach((formOutline) => {
+          new mdb.Input(formOutline).init();
+        });
+
+        document.getElementById('sel_vice_mayor').addEventListener('change', function() {
+            var cls = document.getElementsByClassName('vice_mayor_cards');
+            for(var x of cls) {
+                x.style.display = 'none'
+                // console.log()
+            }
+
+            document.getElementById(this.value).style.display = 'block'
+        })
+
+        getDataWithCallback('/get_city_name', function(res){
+            if(res[0].type==null || res[0].type==""){
+                var type = 'SANGUNIANG BAYAN';
+                document.getElementById('act_members_sp_sb').innerHTML="SB MEMBERS";
+            }else{
+                var type = 'SANGUNIANG PANLUNGSOD';
+                document.getElementById('act_members_sp_sb').innerHTML="SP MEMBERS";
+            }
+
+            document.getElementById('lan_cityname').innerHTML=res[0]['city_name'];
+        })
+	</script>
+{% endblock%}

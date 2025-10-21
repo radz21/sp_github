@@ -1,0 +1,124 @@
+<div class="colfull">
+
+	<input type="text" hidden id="h_committee_petition_id" value="0">
+	<input type="text" hidden id="h_committee_petition_id_main">
+
+	<form id="form_committee_petition">
+		<div class="panel panel-primary" style="margin-top: 10px;">
+			<div class="panel-heading">Upload Committee Report </div>
+			<div class="panel-body">
+				<div class="colfull">
+					<input type="file" id="committee_petition_attach" multiple>
+
+					<table id="tbl_committee_petition_file" class="table" style="width: 100%">
+						<thead>
+							<th>Filename</th>
+							<th>Action</th>
+						</thead>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<div class="panel panel-primary">
+			<div class="panel-heading">Upload Minutes Report </div>
+			<div class="panel-body">
+				<div class="colfull">
+					<input type="file" id="committee_petition_minutes">
+
+					<table id="tbl_committee_petition_minutes_file" class="table" style="width: 100%">
+						<thead>
+							<th>Filename</th>
+							<th>Action</th>
+						</thead>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<div class="colfull">
+			<p>ACTION TAKEN</p>
+			<select id="sel_committee_petition_action_taken" class="form-control">
+				<option value="" disabled selected>--SELECT</option>
+				<option>PENDING</option>
+				<option>APPROVED</option>
+				<option>REJECTED</option>
+			</select>
+		</div>
+		<div class="colfull" align="center" style="margin-top: 55px;">
+			<button type="submit" class="btn btn-success">Save</button>
+		</div>
+	</form>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		var form_id='#form_committee_petition'
+		 $(form_id).submit(function(e){
+	        e.preventDefault();
+	        upload_committee_petition()
+	    })
+	})
+
+	function upload_committee_petition(){
+		var mydata = new FormData();
+
+		mydata.append('petition_id', getbyId('h_committee_petition_id').value)
+
+		mydata.append('petition_id_main', getbyId('h_committee_petition_id_main').value)
+
+		mydata.append('action_taken', getbyId('sel_committee_petition_action_taken').value)
+
+		mydata.append('committee_id', getbyId('h_committee_id').value)
+
+		jQuery.each($("#committee_petition_attach")[0].files, function(i, file) {
+	        mydata.append('file_attach['+i+']', file);
+	    })
+
+	    jQuery.each($("#committee_petition_minutes")[0].files, function(i, file) {
+	        mydata.append('file_minutes['+i+']', file);
+	    })
+
+	 	swal.fire({
+			title: "Are you sure want to save?",
+			text: "Click ok to continue",
+			type: "info",
+			showCancelButton: true,
+			showLoaderOnConfirm: true,
+			preConfirm: () => {
+				return fetch(console.log("log"))
+				.then(
+					$.ajax({
+				        type: 'POST',
+				        url: "/save_committee_petition",
+				        contentType:false,
+				        processData:false,
+				        cache: false,
+				        data:mydata,
+				        beforeSend: function() {
+					       console.log(mydata)
+					    },
+				        success: function(res) {
+				        	getbyId('form_committee_petition').reset()
+				        	// var data={
+			          //   		committee_id:getbyId('h_committee_id').value
+			          //   	}
+				        	// load_committee_ordinance_attach_minutes(data)
+				        	$('#div_committee_ord_petiton_modal').modal('toggle');
+							saved(res)
+				        },
+				        error: function() {
+				            error_in_saving("error occured in sending to");
+				        }
+				    })
+				)
+				.catch(() => {
+				    Swal.fire({
+				      icon: 'error',
+				      title: 'Error occured'
+				    })
+				})
+			}
+		})
+	}
+</script>

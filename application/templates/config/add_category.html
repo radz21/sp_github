@@ -1,0 +1,45 @@
+<form id="form_category">
+	<div class="colfull" style ="padding:10px;">
+		<input type="hidden" name="h_category_id" id="h_category_id" value="0">
+		<p >Category</p>
+		<input  type="text" class="form-control" name="title" required>
+	</div>
+	<div class="colfull" align="center">
+		<button type="submit" class="btn btn-success">SAVE</button>
+		<button id="btn_del_category" type="button" class="btn btn-danger" onclick="del_category()">DELETE</button>
+	</div>
+</form>
+
+<script type="text/javascript">
+	function del_category(){
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "You won't be able to revert this!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#d33',
+			cancelButtonColor: '#3085d6',
+			confirmButtonText: 'Yes, delete it!',
+			customClass: 'swal_css',
+		}).then((result) => {
+			if (result.isConfirmed) {
+				var data={
+					category_id:getbyId('h_category_id').value
+				}
+				sendDataWithCallback('/del_category',data,function(res){
+					getbyId('h_category_id').value=0;
+					$('#div_category').modal('toggle');
+					$("#tbl_category").dataTable().fnDestroy();
+					load_category()
+
+					Swal.fire(
+					  'Deleted!',
+					  'Your file has been deleted.',
+					  'success'
+					)
+				})
+			}
+		})
+		
+	}
+</script>

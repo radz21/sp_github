@@ -1,0 +1,144 @@
+<div class="col-sm-12">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+           <div class="header-title">
+                <h4 class="card-title">MEMORANDUM CIRCULAR</h4>
+           </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="tbl_memorandom" class="table table-striped" data-toggle="data-table" width="99.8%">
+                    <colgroup>
+						<col style="width:2px"></col>
+						<col style="width:10px"></col>
+						<col style="width:5px"></col>
+						<col style="width:2px"></col>
+					</colgroup>
+					<thead>
+						<th>Id</th>
+						<th>Title</th>
+						<th>Date</th>
+						<th>Action</th>
+					</thead>
+                </table>
+            </div>
+       </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#tbl_memorandom').DataTable();
+		load_memorandom()
+		loadfirstdatatable('tbl_memorandom_path')
+	})
+
+	function open_memorandum(elem){
+		var tr = $(elem).closest('tr')
+		var dataArr = $('#tbl_memorandom').DataTable().row(tr).data();
+	 	if(dataArr){
+	 		getbyId('del_memorandom').style.display='inline-block'
+	 		getbyId('h_memorandom').value=dataArr.memorandom_id
+	 		getbyId('memorandom_title').value=dataArr.title
+
+	 		var data={
+	 			memorandom_id:dataArr.memorandom_id
+	 		}
+
+	 		load_memorandom_attach(data)
+	 		
+	 		$("#div_memorandom").modal('toggle');
+	 	}
+	}
+
+	function load_memorandom(){
+        if ($.fn.DataTable.isDataTable("#tbl_memorandom")) {
+            $("#tbl_memorandom").DataTable().destroy();
+        }
+
+        var table=$('#tbl_memorandom').DataTable( {
+            responsive: true,
+            "processing": true,
+            'bStateSave':true,
+            dom: 'Bfrtip',
+            "ajax": {
+                "type": "GET",
+                "url": '/get_memorandom',
+                contentType: 'application/JSON',
+                "dataSrc": function(data) {
+                    data.forEach(function(item){
+                        var open_doc = `<button type='button'  class="btn btn-sm btn-icon text-primary flex-end" onclick='open_memorandum(this)'>
+                        <span class="btn-inner">
+                            <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" >
+                                <path d="M11.4925 2.78906H7.75349C4.67849 2.78906 2.75049 4.96606 2.75049 8.04806V16.3621C2.75049 19.4441 4.66949 21.6211 7.75349 21.6211H16.5775C19.6625 21.6211 21.5815 19.4441 21.5815 16.3621V12.3341" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.82812 10.921L16.3011 3.44799C17.2321 2.51799 18.7411 2.51799 19.6721 3.44799L20.8891 4.66499C21.8201 5.59599 21.8201 7.10599 20.8891 8.03599L13.3801 15.545C12.9731 15.952 12.4211 16.181 11.8451 16.181H8.09912L8.19312 12.401C8.20712 11.845 8.43412 11.315 8.82812 10.921Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M15.1655 4.60254L19.7315 9.16854" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                        </span>
+                        </button>`
+                        item.action =  open_doc;
+                    });
+                    return data;
+                }
+            },
+            
+            columns: [
+             	{data:"memorandom_id"},
+             	{data:"title"},
+             	{data:"dates"},
+             	{data:"action"}
+            ],
+            buttons: [
+             	{
+	                text: "Add",
+	                action: function ( e, dt, node, config ) {
+	                	clear_memorandom_id()
+	                	getbyId('del_memorandom').style.display="none"
+	                	getbyId('form_memorandom').reset();
+	                	if ($.fn.DataTable.isDataTable('#tbl_memorandom_path')) {
+				        	$('#tbl_memorandom_path').DataTable().clear().draw();
+				       	}
+	                    $("#div_memorandom").modal('toggle');
+	                },
+	                'className': 'btn btn-sm btn-primary'
+	            }, {
+		            extend: 'print',
+		            text: 'Print',
+		            filename: 'file',
+		            title: 'Print',
+		            titleAttr: 'Print'
+		            ,'className': 'btn btn-sm btn-warning'
+		        }
+            ],
+            "pagingType": "full_numbers",
+            "pageLength": 8,
+            "order":false
+        });
+	}
+
+	function load_memorandom_attach(data){
+		sendDataWithCallback('/get_memorandom_doc',data,function(res){
+ 			if(res){
+ 				res.forEach(function(file) {
+					var del_btn = "<button type='button' data-memorandom_path_id="+ file.memorandom_path_id+ " data-id=" + file.memorandom_id+ " onclick=delete_file_memorandom(this)> DELETE </button>"
+					var dl_btn = "<a data-path=" +file.path+ " href=" + '/static/uploads/'+file.path+ "><button type='button'> DOWNLOAD </button></a>"
+					file.action = dl_btn + del_btn ;
+				})
+
+ 				if ($.fn.DataTable.isDataTable('#tbl_memorandom_path')) {
+		        	$('#tbl_memorandom_path').DataTable().destroy();
+		       	}
+				
+				var table=$('#tbl_memorandom_path').DataTable({
+	                data:res,
+	                 columns: [
+	                 	{data:"filename"},
+	                 	{data: "action"}
+	                 ],
+	                responsive: true,
+	                searching: false, paging: false, info: false
+	            });
+ 			}
+ 		})
+	}
+</script>

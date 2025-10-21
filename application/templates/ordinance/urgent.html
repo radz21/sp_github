@@ -1,0 +1,211 @@
+{% extends 'index.html' %}
+{% block body %}
+<div class="colfull">
+	<table id="tbl_urgent" border="1" class="table cell-border hover display" style="width: 100%">
+		<thead >
+			<th>Id</th>
+			<th>Ordinance No</th>
+			<th>Date Enacted</th>
+			<th>Source of Document</th>
+			<th>Subject Category</th>
+			<th>Status</th>
+			<th>Source of Document</th>
+			<th>Progress Status</th>
+		</thead>
+		<tbody></tbody>
+	</table>
+</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		// $( "#li_ordinance" ).addClass( "active" );
+		$( "#ordinance-menu" ).addClass( "show" );
+		load_urgent()
+	})
+
+	function load_urgent(){
+		var data={
+			status:9
+		}
+		sendDataWithCallback('/get_ordinance_status',data,function(res){
+			$("#tbl_urgent").dataTable().fnDestroy();
+            var table=$('#tbl_urgent').DataTable({
+                data:res,
+                 columns: [
+                 	{data:"ordinance_id"},
+                 	{data:"ordinance_number"},
+                 	{data:"date_enacted"},
+                 	{data:"source_of_document"},
+                 	{data:"category"},
+                 	{data:"status"},
+                 	{data:"source_of_document"},
+                 	{data:"status"}
+                 ],
+                responsive: true,
+                dom: 'Bfrtip',
+                 buttons: [
+                 	{
+		                text: "Add",
+		                action: function ( e, dt, node, config ) {
+		                	getbyId('btn_ordinance_committee').style.display="none";
+		                	getbyId('form_ordinance').reset();
+		                	clear_ordinance()
+		                	if ($.fn.DataTable.isDataTable('#tbl_add_ordinance_file')) {
+					        	$('#tbl_add_ordinance_file').DataTable().clear().draw();
+					       	}
+					       	if ($.fn.DataTable.isDataTable('#tbl_add_minutes_file')) {
+					        	$('#tbl_add_minutes_file').DataTable().clear().draw();
+					       	}
+					       	if ($.fn.DataTable.isDataTable('#tbl_veto_ordinance')) {
+					        	$('#tbl_veto_ordinance').DataTable().clear().draw();
+					       	}
+
+					       	getbyId('h_ordinance_id').value=0
+					       	getbyId('h_committee_id_ord').value=""
+					       	getbyId('h_sp_legislature').value=""
+
+					       	count_authors=0
+					       	count_co_authors=0
+					       	count_sponsor=0
+
+					       	// $('#inp_sp_ord_legislature').val('').trigger("chosen:updated")
+					       	$('#inp_committee_ordinance').val('').trigger("chosen:updated")
+					       	
+					       	getbyId('div_ordinance_author').innerHTML=""
+					       	getbyId('div_ordinance_co_author').innerHTML=""
+					       	getbyId('div_ordinance_sponsor').innerHTML=""
+
+					       	getbyId('h_ordinance_id').value=0
+					       	getbyId('h_committee_id_ord').value=""
+					       	getbyId('h_sp_legislature').value=""
+
+					       	getbyId('status_ordinance').disabled=true;
+					       	$('#sel_ordinance_category').val('').trigger('chosen:updated')
+		                    $("#div_add_ordinance").modal('toggle');
+		                },
+		                'className': 'btn btn-sm btn-primary'
+		            },{
+	                    extend: 'print',
+	                    text: 'Print',
+	                    filename: 'file',
+	                    title: 'Print',
+	                    titleAttr: 'Print'
+	                    ,'className': 'btn btn-warning'
+	                }
+                ],
+                "pagingType": "full_numbers"
+            }); 
+
+            $('#tbl_urgent tbody').on('dblclick', 'tr', function (){
+	            var dataArr = $('#tbl_urgent').DataTable().row( this ).data();
+	            if(dataArr){
+	            	getbyId('btn_ordinance_committee').style.display="block"
+	            	getbyId('h_ordinance_id').value=dataArr.ordinance_id;
+	            	var data={
+	            		ordinance_id:dataArr.ordinance_id
+	            	}
+	            	sendDataWithCallback('/get_ordinance_by_status',data,function(res){
+	            		getbyId('status_ordinance').value=res[0].status
+	            		getbyId('tracking_no_ord').value=res[0].tracking_number
+	            		getbyId('sel_ordinance_classification').value=res[0].classification_id
+	            		getbyId('h_committee_id_ord').value=res[0].committee_id
+
+	            		getbyId('sel_ordinance_category').value=res[0].category
+
+	            		getbyId('ordinance_no').value=res[0].ordinance_number
+	            		getbyId('date_enacted_ord').value=res[0].date_enacted
+	            		getbyId('ordinance_title').value=res[0].ordinance_title
+	            		getbyId('h_sp_legislature').value=res[0].sp_id
+	            		// getbyId('inp_sp_ord_legislature').value=res[0].sp_title
+
+	            		getbyId('inp_session_ordinance').value=res[0].session_id
+
+	            		$('#inp_sp_ord_legislature').val(res[0].sp_id).trigger('chosen:updated')
+                    	$('#inp_committee_ordinance').val(dataArr.committee_ids).trigger('chosen:updated')
+                    	
+	            		// getbyId('inp_committee_ordinance').value=res[0].committee
+	            		getbyId('sel_source_docs').value=res[0].source_of_document
+
+	            		getbyId('series_number').value=res[0].series_number
+
+
+	            		if(res[0].ammended_no!=""){
+	            			getbyId('amended_no_ord').value=res[0].ammended_no
+	            			getbyId('amended_ord').checked=true
+	            		}
+	            		if(res[0].repealed_no!=""){
+	            			getbyId('repealed_no_ord').value=res[0].repealed_no
+	            			getbyId('repealed_ord').checked=true
+	            		}
+	            		if(res[0].superseded_no!=""){
+	            			getbyId('supers_no_ord').value=res[0].superseded_no
+	            			getbyId('supers_ord').checked=true
+	            		}
+	            		getbyId('remarks_ord').value=res[0].remarks
+
+	            		if(res[0].original=="1"){
+	            			getbyId('orginal_3_status_ord').checked=true
+	            		}
+
+	            		if(res[0].missing_ord=="1"){
+	            			getbyId('missing_ord').checked=true
+	            		}
+
+
+	            		var text = ""
+			     		if(res[0].description == null || res[0].description == "") {
+			     			text="NO DESCRIPTION"
+			     		}else{
+			     			text = res[0].description
+			     		}
+			     		tinymce.get("tx_description").setContent(text);
+
+			     		getbyId('minutes_ordinance').value=res[0].minutes_title
+			     		getbyId('ordinance_minutes_id').value=res[0].min_id
+
+	            		load_ordinance_file(data)
+	            		load_minutes_file(data)
+	            		load_ordinance_veto_file(data)
+
+	            		count_authors=0
+		     			sendDataWithCallback('/get_author_ordinances',data,function(res){
+		     				getbyId('div_ordinance_author').innerHTML="";
+	                        res.forEach(function(i,index){
+		                        add_ord_author(function(sel) {
+		                            sel.value = i['author']
+		                            $(sel).trigger('chosen:updated');
+		                        });
+		                    })
+
+			     		})
+
+		     			count_co_authors=0
+						sendDataWithCallback('/get_co_author_ordinance',data,function(res){
+							getbyId('div_ordinance_co_author').innerHTML="";
+	          				res.forEach(function(i,index){
+		                        add_ord_co_author(function(sel) {
+		                            sel.value = i['co_author']
+		                            $(sel).trigger('chosen:updated');
+		                        });
+		                    })
+			     		})
+
+						count_sponsor=0
+			     		sendDataWithCallback('/get_sponsor_ordinance',data,function(res){
+			     			getbyId('div_ordinance_sponsor').innerHTML="";
+	          				res.forEach(function(i,index){
+		                        add_ord_sponsor(function(sel) {
+		                            sel.value = i['sponsor']
+		                            $(sel).trigger('chosen:updated');
+		                        });
+		                    })
+			     		})
+	            		
+	            	})
+	                $('#div_add_ordinance').modal('toggle');    
+	            }
+	        });
+        })
+	}
+</script>
+
+{% endblock %}

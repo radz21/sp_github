@@ -1,0 +1,60 @@
+{% extends 'landing_page/index.html'%}
+
+{% block body%}
+	<div class="container my-5">
+		<p class="lead" style="text-align:center; font-weight: bold;">ANNOUNCEMENTS</p>
+		<hr>
+
+		<div class="accordion" id="accordionExample">
+            {% if data %}
+                {% set index = 0 %}
+                {% for item in data %}
+                    {% if item.status == 'Active' %}
+                        {% set index = loop.index %}
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                              <button class="accordion-button" type="button" data-mdb-toggle="collapse" data-mdb-target="#announcement{{ index }}" aria-expanded="true" aria-controls="announcement{{ index }}">
+                                    <p>{{ item.announcement_title }}</p>
+                              </button>
+                            </h2>
+                            {% if index == 1 %}
+                            <div id="announcement{{ index }}" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-mdb-parent="#accordionExample">
+                            {% else %}
+                            <div id="announcement{{ index }}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-mdb-parent="#accordionExample">
+                            {% endif %}
+                                <div class="accordion-body">
+                                    <p>
+                                        {{ item.announcement }}
+                                    </p>
+
+                                    <p style="margin-top: 20px; color: #1266f1;">{{ item.date_announce }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            
+        </div>
+
+	</div>
+
+	<script type="text/javascript">
+		document.getElementById('menu_announcement').style.color = "black";
+
+        $('document').ready(function(){
+            getDataWithCallback('/get_city_name', function(res){
+                if(res[0].type==null || res[0].type==""){
+                    var type = 'SANGUNIANG BAYAN';
+                    getbyId('act_members_sp_sb').innerHTML="SB MEMBERS";
+                }else{
+                    var type = 'SANGUNIANG PANLUNGSOD';
+                    getbyId('act_members_sp_sb').innerHTML="SP MEMBERS";
+                }
+
+                getbyId('lan_cityname').innerHTML=res[0]['city_name'];
+            })
+        })
+	</script>
+{% endblock%}

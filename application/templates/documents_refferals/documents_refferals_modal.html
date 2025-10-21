@@ -1,0 +1,171 @@
+<div class="colfull">
+	<form id="form_documents_refferals">
+		<input type="text" hidden id="h_document_reffreral" value="0">
+		<div class="colfull">
+			<p>Title</p>
+			<textarea class="form-control" id="inp_documents_refferals_title" name="title" required="" autocomplete="off" autofocus style="height: 100px;"></textarea>
+			<p>Documents</p>
+
+			<input type="file" id="upload_file_documents_refferals" name="upload_file" accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf" multiple>
+
+			<p>Type</p>
+
+			<select class="form-control" name="type" id="code_ref_type">
+				<option value="1">Codes</option>
+				<option value="2">Refferences</option>
+			</select>
+		</div>
+
+		<div class="colfull" style="margin-top: 50px;">
+			<p>Referred Document</p>
+			<table id="tbl_document_referal_path" class="table" border="1" style="width: 100%">
+				<thead>
+					<th>filename</th>
+					<th>Action</th>
+				</thead>
+			</table>
+		</div>
+
+		<div class="colfull" align="center">
+			<button type="submit" class="btn btn-success">Save</button>
+			<button type="button" class="btn btn-danger" style="display: none" id="del_documents_refferals" onclick="delete_documents_refferals()">Delete</button>
+		</div>
+	</form>
+</div>
+<script type="text/javascript">
+	$(document).ready(function(res){
+		var form_id='#form_documents_refferals'
+		 $(form_id).submit(function(e){
+		 	var form_save = $(form_id).serializeObject();
+	        e.preventDefault();
+
+	        swal.fire({
+				title: "Are you sure want to save?",
+				text: "Click ok to continue",
+				type: "info",
+				showCancelButton: true,
+				showLoaderOnConfirm: true,
+				preConfirm: () => {
+					return fetch(console.log("log"))
+					.then(
+						upload_files_documents_refferals()
+					)
+					.catch(() => {
+					    Swal.fire({
+					      icon: 'error',
+					      title: 'Error occured'
+					    })
+					})
+				}
+			})
+	        
+	    })	
+	})
+
+	function upload_files_documents_refferals(){
+    	var mydata = new FormData();
+    	mydata.append('title', getbyId('inp_documents_refferals_title').value);
+        mydata.append('document_referal_id', getbyId('h_document_reffreral').value);
+        mydata.append('sp_id', getbyId('active_sp_id').value);
+        mydata.append('type', getbyId('code_ref_type').value);
+
+        jQuery.each($("#upload_file_documents_refferals")[0].files, function(i, file) {
+	        mydata.append('file['+i+']', file);
+	    });
+        
+	    $.ajax({
+	        type: 'POST',
+	        url: "/save_documents_refferals",
+	        contentType:false,
+	        processData:false,
+	        cache: false,
+	        data:mydata,
+	        beforeSend: function() {
+		       console.log(mydata)
+		    },
+	        success: function(res) {
+				getbyId('form_documents_refferals').reset()
+				clear_ref()
+				load_document_referals()
+				$('#div_documents_refferals_modal').modal('toggle');
+				saved(res)
+	        },
+	        error: function() {
+	            error_in_saving("error occured in sending to");
+	        }
+	    });
+	}
+
+	function delete_documents_refferals(){
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "You won't be able to revert this!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#d33',
+			cancelButtonColor: '#3085d6',
+			confirmButtonText: 'Yes, delete it!',
+			customClass: 'swal_css',
+		}).then((result) => {
+			if (result.isConfirmed) {
+				Swal.fire(
+				  'Deleted!',
+				  'Your file has been deleted.',
+				  'success'
+				)
+				var data={
+					'document_referal_id':getbyId('h_document_reffreral').value
+				}
+				sendDataWithCallback('/del_documents_refferals',data,function(res){
+					getbyId('form_documents_refferals').reset();
+					clear_ref()
+					if ($.fn.DataTable.isDataTable('#tbl_documents_refferals')) {
+			        	$('#tbl_documents_refferals').DataTable().clear().draw();
+			       	}
+					load_document_referals()
+					$('#div_documents_refferals_modal').modal('toggle');
+				})
+			}
+		})
+	}
+
+	function delete_file_document_referal(elem){
+		var data={
+			documents_refferals_path_id:elem.getAttribute('data-documents_refferals_path_id'),
+			documents_refferals_id:elem.getAttribute('data-id')
+		}
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "You won't be able to revert this!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#d33',
+			cancelButtonColor: '#3085d6',
+			confirmButtonText: 'Yes, delete it!',
+			customClass: 'swal_css',
+		}).then((result) => {
+			if (result.isConfirmed) {
+				Swal.fire(
+				  'Deleted!',
+				  'Your file has been deleted.',
+				  'success'
+				)
+				sendDataWithCallback('/del_document_referals_file',data,function(res){
+					if(res){
+						if ($.fn.DataTable.isDataTable('#tbl_document_referal_path')){
+   				        	$('#tbl_document_referal_path').DataTable().clear().draw();
+   				        }
+   				        var data={
+			     			documents_refferals_id:getbyId('h_document_reffreral').value
+			     		}
+   				        load_document_referals_attach(data)
+					}
+				})
+			}
+		})
+	}
+
+	function clear_ref(){
+		getbyId("h_document_reffreral").value = "0"
+	}
+</script>

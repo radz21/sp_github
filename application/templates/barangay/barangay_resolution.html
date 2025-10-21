@@ -1,0 +1,135 @@
+{% extends 'index.html' %}
+{% block body %}
+<div class="colfull">
+	<h3>BARANGAY RESOLUTION</h3>
+	<table id="tbl_barangay_resolution" class="table table-bordered" width="100%">
+		<thead>
+			<th>Id</th>
+			<th>Title</th>
+			<th>Description</th>
+			<th>Date</th>
+			<th>Action</th>
+		</thead>
+	</table>
+</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$( "#barangay2" ).addClass( "selected_page_color" );
+		$('#tbl_barangay_resolution').DataTable();
+
+		getDataWithCallback('/get_barangay', function(res){
+			$('#sel_barangay_resolution_barangay').append(`<option value="" disabled selected> ${'--SELECT--'} </option>`); 
+			for(var x=0; x<res.length; x++){
+				$('#sel_barangay_resolution_barangay').append(`<option value="${res[x]['brgy_id']}"> ${res[x]['barangay']} </option>`); 
+			}
+		})
+
+		load_barangay_resolution()
+		loadfirstdatatable('tbl_barangay_resolution_path')
+
+        
+	})
+
+	function open_barangay_res(elem){
+		var tr = $(elem).closest('tr')
+		var dataArr = $('#tbl_barangay_resolution').DataTable().row(tr).data();
+     	if(dataArr){
+     		getbyId('del_barangay_resolution').style.display='inline-block'
+     		getbyId('h_barangay_resolution').value=dataArr.barangay_resolution_id
+     		getbyId('inp_barangay_resolution_title').value=dataArr.title
+     		getbyId('barangay_resolution_desc').value=dataArr.description
+     		getbyId('sel_barangay_resolution_barangay').value=dataArr.brgy_id
+
+     		var data={
+     			barangay_resolution_id:dataArr.barangay_resolution_id
+     		}
+
+     		load_barangay_resolution_attach(data)
+     		
+     		$("#div_barangay_resolution_modal").modal('toggle');
+     	}
+	}
+
+	function load_barangay_resolution_attach(data){
+		sendDataWithCallback('/get_barangay_resolution_doc',data,function(res){
+ 			if(res){
+ 				res.forEach(function(file) {
+					var del_btn = "<button type='button' data-barangay_resolution_path_id="+ file.barangay_resolution_path_id+ " data-id=" + file.barangay_resolution_id+ " onclick=delete_file_barangay_resolution(this)> DELETE </button>"
+					var dl_btn = "<a data-path=" +file.path+ " href=" + '/static/uploads/'+file.path+ "><button type='button'> DOWNLOAD </button></a>"
+					file.action = dl_btn + del_btn ;
+				})
+
+ 				if ($.fn.DataTable.isDataTable('#tbl_barangay_resolution_path')) {
+		        	$('#tbl_barangay_resolution_path').DataTable().destroy();
+		       	}
+				
+				var table=$('#tbl_barangay_resolution_path').DataTable({
+	                data:res,
+	                 columns: [
+	                 	{data:"filename"},
+	                 	{data: "action"}
+	                 ],
+	                responsive: true,
+	                searching: false, paging: false, info: false
+	            });
+ 			}
+ 		})
+	}
+
+	function load_barangay_resolution(){
+        if ($.fn.DataTable.isDataTable("#tbl_barangay_resolution")) {
+            $("#tbl_barangay_resolution").DataTable().destroy();
+        }
+
+        var table=$('#tbl_barangay_resolution').DataTable({
+            responsive: true,
+            searching: true,
+            bStateSave: true,
+            "ajax": {
+                "type": "GET",
+                "url": '/get_barangay_resolution',
+                contentType: 'application/JSON',
+                "dataSrc": function(data) {
+                    data.forEach(function(item){
+                        var open_doc = `<button type='button' class='btn btn-sm btn-primary' onclick='open_barangay_res(this)'><i class='fa-solid fa-square-up-right'></i></button>`
+                        item.action =  open_doc;
+                    });
+                    return data;
+                }
+            },
+            dom: 'Bfrtip',
+            columns: [
+             	{data:"barangay_resolution_id"},
+             	{data:"title"},
+             	{data:"description"},
+             	{data:"dates"},
+             	{data:"action"}
+            ],
+             buttons: [
+                 	{
+		                text: "Add",
+		                action: function ( e, dt, node, config ) {
+		                	clear_ref()
+		                	getbyId('del_barangay_resolution').style.display='none'
+		                	getbyId('form_barangay_resolution').reset();
+		                	if ($.fn.DataTable.isDataTable('#tbl_barangay_resolution_path')) {
+					        	$('#tbl_barangay_resolution_path').DataTable().clear().draw();
+					       	}
+		                    $("#div_barangay_resolution_modal").modal('toggle');
+		                },
+		                'className': 'btn btn-sm btn-primary'
+		            }, {
+				            extend: 'print',
+				            text: "Print",
+				            filename: 'file',
+				            title: 'Print',
+				            titleAttr: 'Print',
+				            'className': 'btn btn-sm btn-warning'
+	                    } 
+                ],
+            "pagingType": "full_numbers",
+            "pageLength": 7
+        });
+	}
+</script>
+{% endblock %}

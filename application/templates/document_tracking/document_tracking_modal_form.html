@@ -1,0 +1,110 @@
+<div class="colfull">
+	<form id="form_add_document_tracking">
+		<input type="text" hidden id="h_document_tracking" name="h_document_tracking" value="0">
+		<div class="colfull">
+			<p>Tracking Number</p>
+			<input type="text" class="form-control" name="tracking_no" required autocomplete="false">
+
+			<p>Title</p>
+			<textarea class="form-control" id="document_title" name="title" required="" autocomplete="off" autofocus style="height: 150px;"></textarea>
+
+			<p>Source of Document</p>
+			<input type="text" name="refferal_from" class="form-control">
+		</div>
+
+		<div class="colfull" style="margin-top: 50px;">
+
+			<p>DOCUMENT FILE ATTACHMENT</p>
+				<input type="file" id="upload_support_filer" name="upload_support_filer" accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf" multiple>
+			
+			<p>Scanned File</p>
+			<table id="tbl_document_tracking_add_path" class="table" border="1" style="width: 100%">
+				<thead>
+					<th>filename</th>
+					<th>Action</th>
+				</thead>
+			</table>
+		</div>
+
+		<div class="colfull" align="center" style="margin-top: 50px;">
+			<button type="submit" class="btn btn-success">Save</button>
+		</div>
+	</form>
+</div>
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		loadfirstdatatable('tbl_document_tracking_add_path')
+
+		var form_id='#form_add_document_tracking'
+		 $(form_id).submit(function(e){
+		 	var form_save = $(form_id).serializeObject();
+	        e.preventDefault();
+
+	        swal.fire({
+				title: "Are you sure want to save?",
+				text: "Click ok to continue",
+				type: "info",
+				showCancelButton: true,
+				showLoaderOnConfirm: true,
+				preConfirm: () => {
+					return fetch(console.log("log"))
+					.then(
+						upload_document_tracking(form_save)
+					)
+					.catch(() => {
+					    Swal.fire({
+					      icon: 'error',
+					      title: 'Error occured'
+					    })
+					})
+				}
+			})
+	        
+	    })
+	})
+
+	function changeType(val){
+		let x = getbyId('div_refferal_form')
+		if(val=='Petition'){
+			x.style.display = 'block'
+		}else{
+			x.style.display = 'none'
+		}
+	}
+
+	function upload_document_tracking(form_save){
+		var mydata = new FormData();
+
+        mydata.append("Serialized", JSON.stringify(form_save))
+
+        jQuery.each($("#upload_support_filer")[0].files, function(i, file) {
+	        mydata.append('file['+i+']', file);
+	    });
+        
+	    $.ajax({
+	        type: 'POST',
+	        url: "/save_document_tracking",
+	        contentType:false,
+	        processData:false,
+	        cache: false,
+	        data:mydata,
+	        beforeSend: function() {
+		       console.log(mydata)
+		    },
+	        success: function(res) {
+				getbyId('form_add_document_tracking').reset()
+
+				load_document_tracking()
+				$("#div_doc_tracking").modal('toggle');
+
+				saved(res)
+	        },
+	        error: function() {
+	            error_in_saving("error occured in sending to");
+	        }
+	    });
+	}
+
+</script>

@@ -1,0 +1,230 @@
+{% extends 'index.html' %}
+{% block body %}
+<div class="col-sm-12">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+           <div class="header-title">
+                <h4 class="card-title">COMMITTEE MINUTES</h4>
+
+           </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive" style="margin-top: 20px!important">
+                <table id="tbl_committee_minutes" class="table table-striped" data-toggle="data-table" width="99.8%">
+                    <thead>
+						<th>Id</th>
+						<th>Tracking No</th>
+						<th>Subject</th>
+						<th>Committee</th>
+						<th>Date Referal</th>
+						<th></th>
+					</thead>
+                </table>
+            </div>
+       </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$( "#view_committee_minutes" ).addClass( "active" );
+		$( "#committee-menu" ).addClass( "show" );
+		
+		get_all_committee_minutes()
+	})
+
+	function open_committee_minutes(elem){
+		var tr = $(elem).closest('tr');
+        let dataArr = $('#tbl_committee_minutes').DataTable().row( tr ).data();
+
+        var form = getbyId('form_committee_minutes');
+
+        form.h_committee_minutes_id.value = dataArr['id']
+        form.tracking_number.value = dataArr.tracking_number
+        form.committee_id.value = dataArr.committee_id
+        form.subject.value = dataArr.subject
+        form.date.value=moment(dataArr.date).format('YYYY-MM-DD')
+
+        $('#sel_committee_committee_minutes').val(dataArr['committee_id']).trigger('chosen:updated');
+
+        if(dataArr){
+            if ($.fn.DataTable.isDataTable('#tbl_committee_minutes_path')) {
+                $('#tbl_committee_minutes_path').DataTable().clear().draw();
+            }
+
+            load_get_committee_minutes_file(dataArr.id)
+        }
+
+        $('#div_committee_minutes_modal').modal('toggle');
+	}
+
+	function load_get_committee_minutes_file(id){
+        sendDataWithCallback('/get_committee_minutes_file',{committee_minutes_id : id}, function(res){
+            if(res){
+                res.forEach(function(file) {
+                    var del_btn = "<button type='button' onclick=delete_specific_committee_minutes_file(this)> DELETE </button>"
+                    var dl_btn = "<a data-path=" +file.path+ " href=" + '/static/uploads/'+file.path+ " target='_blank'><button type='button'> DOWNLOAD </button></a>"
+                    file.action = dl_btn + del_btn ;
+                })
+
+                if ($.fn.DataTable.isDataTable('#tbl_committee_minutes_path')) {
+                    $('#tbl_committee_minutes_path').DataTable().destroy();
+                }
+
+                var table=$('#tbl_committee_minutes_path').DataTable({
+                    data:res,
+                    columns: [
+                        {data:"filename"},
+                        {data:"action"},
+                     ],
+                    responsive: true,
+                    dom: 'ftipr',
+                    "pagingType": "full_numbers"
+                }); 
+            }
+        })
+    }
+
+    function delete_specific_committee_minutes_file(elem){
+        var tr = $(elem).closest('tr');
+        let dataArr = $('#tbl_committee_minutes_path').DataTable().row( tr ).data();
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+            customClass: 'swal_css',
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                sendDataWithCallback('/delete_committee_minutes_file',dataArr,function(res){
+                    if ($.fn.DataTable.isDataTable('#tbl_committee_minutes_path')) {
+                        $('#tbl_committee_minutes_path').DataTable().clear().draw();
+                    }
+
+                    load_get_committee_minutes_file(dataArr.committee_minutes_id)
+
+                    saved(res)
+                })
+            }
+        })
+    }
+
+	function get_all_committee_minutes(){
+		if ($.fn.DataTable.isDataTable("#tbl_committee_minutes")) {
+            $("#tbl_committee_minutes").DataTable().destroy();
+        }
+
+        var table=$('#tbl_committee_minutes').DataTable( {
+            responsive: true,
+            "processing": true,
+            'bStateSave':true,
+            dom: 'Bfrtip',
+            "ajax": {
+                "type": "POST",
+                "url": '/get_committee_minutes',
+                contentType: 'application/JSON',
+                "data":function(){
+                    return JSON.stringify({
+                        sp_id: ''
+                    })
+                },
+                "dataSrc": function(data) {
+                    data.forEach(function(item){
+                        var open_doc = `<button type='button' class="btn btn-sm btn-icon text-primary flex-end" onclick='open_committee_minutes(this)'>
+                        	<span class="btn-inner">
+		                        <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" >
+		                            <path d="M11.4925 2.78906H7.75349C4.67849 2.78906 2.75049 4.96606 2.75049 8.04806V16.3621C2.75049 19.4441 4.66949 21.6211 7.75349 21.6211H16.5775C19.6625 21.6211 21.5815 19.4441 21.5815 16.3621V12.3341" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+		                            <path fill-rule="evenodd" clip-rule="evenodd" d="M8.82812 10.921L16.3011 3.44799C17.2321 2.51799 18.7411 2.51799 19.6721 3.44799L20.8891 4.66499C21.8201 5.59599 21.8201 7.10599 20.8891 8.03599L13.3801 15.545C12.9731 15.952 12.4211 16.181 11.8451 16.181H8.09912L8.19312 12.401C8.20712 11.845 8.43412 11.315 8.82812 10.921Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+		                            <path d="M15.1655 4.60254L19.7315 9.16854" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+		                        </svg>
+		                    </span>
+                        </button>`
+
+                        var del_btn = `<button type='button' class='btn btn-sm btn-icon text-danger flex-end' title='DELETE' onclick='delete_committee_minutes(this)'>
+                        <span class="btn-inner">
+                         <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor">
+                              <path d="M19.3248 9.46826C19.3248 9.46826 18.7818 16.2033 18.4668 19.0403C18.3168 20.3953 17.4798 21.1893 16.1088 21.2143C13.4998 21.2613 10.8878 21.2643 8.27979 21.2093C6.96079 21.1823 6.13779 20.3783 5.99079 19.0473C5.67379 16.1853 5.13379 9.46826 5.13379 9.46826" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              <path d="M20.708 6.23975H3.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              <path d="M17.4406 6.23973C16.6556 6.23973 15.9796 5.68473 15.8256 4.91573L15.5826 3.69973C15.4326 3.13873 14.9246 2.75073 14.3456 2.75073H10.1126C9.53358 2.75073 9.02558 3.13873 8.87558 3.69973L8.63258 4.91573C8.47858 5.68473 7.80258 6.23973 7.01758 6.23973" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                           </svg>
+                        </span>
+                        </button>`
+
+                        item.action =  open_doc + del_btn;
+                    });
+
+                    return data;
+                }
+            },
+            columns: [
+             	{data:"id"},
+             	{data:"tracking_number"},
+             	{data:"subject"},
+             	{data:"committee"},
+             	{data:"date"},
+             	{data:"action"}
+            ],
+             buttons: [
+             	{
+	                text: "Add",
+	                action: function ( e, dt, node, config ) {
+	                    $("#div_committee_minutes_modal").modal('toggle');
+	                },
+	                'className': 'btn btn-sm btn-primary'
+	            },{
+		            extend: 'print',
+		            text: 'Print',
+		            filename: 'file',
+		            title: 'Print',
+		            titleAttr: 'Print',
+		            'className': 'btn btn-sm btn-warning'
+		        }
+            ],
+            "pagingType": "full_numbers",
+            "pageLength": 8,
+            "order":false
+        });
+	}
+
+	function delete_committee_minutes(elem){
+        var tr = $(elem).closest('tr');
+        let dataArr = $('#tbl_committee_minutes').DataTable().row( tr ).data();
+
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Yes, delete it!',
+          customClass: 'swal_css',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                sendDataWithCallback('/delete_committee_minutes',dataArr,function(res){
+                    if(res[0]){
+                        if ($.fn.DataTable.isDataTable('#tbl_committee_minutes')) {
+                            $('#tbl_committee_minutes').DataTable().clear().draw();
+                        }
+
+                        get_all_committee_minutes()
+
+                        Swal.fire(
+                          'Deleted!',
+                          'Your file has been deleted.',
+                          'success'
+                        )
+                    }
+                    
+                })
+            }
+        })
+    }
+
+</script>
+{% endblock %}

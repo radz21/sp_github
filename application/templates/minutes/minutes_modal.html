@@ -1,0 +1,406 @@
+<div class="colfull">
+	<form id="form_minutes">
+		<input type="hidden" name="" id="h_minutes_id" value="0">
+		<input type="hidden" id="h_minutes_committee_id">
+
+		<div class="row">
+            <div class="col-sm">
+            	<p>Session Number</p>
+				<input type="text" id="minutes_no" name="minutes_no" class="form-control">
+            </div>
+            <div class="col-sm">
+            	<p>Type</p>
+				<select class="form-control" id="type_minutes">
+					<option>REGULAR</option>
+					<option>JOINT</option>
+					<option>SPECIAL</option>
+				</select>
+            </div>
+        </div>
+
+	   <!--  <div class="panel panel-default" hidden>
+		    <div class="panel-heading ">
+		    	<p class="ptop">Ordinance Author 
+		    		<span class="btn btn-sm btn-icon text-primary flex-end" onclick="add_movant()">
+		    			<svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+		    				<path fill-rule="evenodd" clip-rule="evenodd" d="M9.5 12.5537C12.2546 12.5537 14.4626 10.3171 14.4626 7.52684C14.4626 4.73663 12.2546 2.5 9.5 2.5C6.74543 2.5 4.53737 4.73663 4.53737 7.52684C4.53737 10.3171 6.74543 12.5537 9.5 12.5537ZM9.5 15.0152C5.45422 15.0152 2 15.6621 2 18.2464C2 20.8298 5.4332 21.5 9.5 21.5C13.5448 21.5 17 20.8531 17 18.2687C17 15.6844 13.5668 15.0152 9.5 15.0152ZM19.8979 9.58786H21.101C21.5962 9.58786 22 9.99731 22 10.4995C22 11.0016 21.5962 11.4111 21.101 11.4111H19.8979V12.5884C19.8979 13.0906 19.4952 13.5 18.999 13.5C18.5038 13.5 18.1 13.0906 18.1 12.5884V11.4111H16.899C16.4027 11.4111 16 11.0016 16 10.4995C16 9.99731 16.4027 9.58786 16.899 9.58786H18.1V8.41162C18.1 7.90945 18.5038 7.5 18.999 7.5C19.4952 7.5 19.8979 7.90945 19.8979 8.41162V9.58786Z" fill="currentColor">
+		    				</path>                            
+		    			</svg> 
+		    		</span>
+		    	</p>
+		    </div>
+		    <div class="panel-body">
+		    	<div id="div_movant"  style="padding: 0px 50px 0px 50px"></div>	
+		    </div>
+		</div>
+
+		<div class="panel panel-default" hidden>
+		    <div class="panel-heading ">
+		    	<p class="ptop">Ord Co-Author 
+		    		<span class="btn btn-sm btn-icon text-primary flex-end" onclick="div_seconder()">
+		    			<svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+		    				<path fill-rule="evenodd" clip-rule="evenodd" d="M9.5 12.5537C12.2546 12.5537 14.4626 10.3171 14.4626 7.52684C14.4626 4.73663 12.2546 2.5 9.5 2.5C6.74543 2.5 4.53737 4.73663 4.53737 7.52684C4.53737 10.3171 6.74543 12.5537 9.5 12.5537ZM9.5 15.0152C5.45422 15.0152 2 15.6621 2 18.2464C2 20.8298 5.4332 21.5 9.5 21.5C13.5448 21.5 17 20.8531 17 18.2687C17 15.6844 13.5668 15.0152 9.5 15.0152ZM19.8979 9.58786H21.101C21.5962 9.58786 22 9.99731 22 10.4995C22 11.0016 21.5962 11.4111 21.101 11.4111H19.8979V12.5884C19.8979 13.0906 19.4952 13.5 18.999 13.5C18.5038 13.5 18.1 13.0906 18.1 12.5884V11.4111H16.899C16.4027 11.4111 16 11.0016 16 10.4995C16 9.99731 16.4027 9.58786 16.899 9.58786H18.1V8.41162C18.1 7.90945 18.5038 7.5 18.999 7.5C19.4952 7.5 19.8979 7.90945 19.8979 8.41162V9.58786Z" fill="currentColor">
+		    				</path>                            
+		    			</svg> 
+		    		</span>
+		    	</p>
+		    </div>
+		    <div class="panel-body">
+		    	<div id="div_seconder"  style="padding: 0px 50px 0px 50px"></div>	
+		    </div>
+		</div> -->
+
+	    <div class="colfull fl">
+	    	<p>Date</p>
+	    	<input class="form-control" type="date" id="inp_minutes_date" required>	
+	    </div>
+	
+		<div class="colfull fl" style="margin-top: 10px">
+			<p>SCANNED FILE/DOCUMENTS</p>
+			<input type="file" id="upload_file_minutes" name="upload_file" multiple accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf">
+			<div class="colfull" id="div_minutes_path" style="margin-top: 40px;">
+				<table id="tbl_minutes_path" class="table" style="width: 100% !important;table-layout:relative;" border="1">
+					<thead>
+						<th>Path</th>
+						<th>Action</th>
+					</thead>
+				</table>
+			</div>
+	    </div>
+
+	    <div class="colfull fl" style="margin-top: 10px">
+			<p>RAW FILE/DOCUMENTS</p>
+			<input type="file" id="upload_file_minutes_2" name="upload_file" multiple accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf">
+			<div class="colfull" id="div_minutes_path" style="margin-top: 40px;">
+				<table id="tbl_minutes_path_2" class="table" style="width: 100% !important;table-layout:relative;" border="1">
+					<thead>
+						<th>Path</th>
+						<th>Action</th>
+					</thead>
+				</table>
+			</div>
+	    </div>
+		
+		<div class="colfull" align="center">
+			<button type="submit" class="btn btn-success">Save</button>
+			<button type="button" class="btn btn-danger" style="display: none" id="del_minutes" onclick="delete_minutes()">Delete</button>
+		</div>
+		
+	</form>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function(res){
+		var form_id='#form_minutes'
+		 $(form_id).submit(function(e){
+		 	var form_save = $(form_id).serializeObject();
+	        e.preventDefault();
+
+	        swal.fire({
+				title: "Are you sure want to save?",
+				text: "Click ok to continue",
+				type: "info",
+				showCancelButton: true,
+				showLoaderOnConfirm: true,
+				preConfirm: () => {
+					return fetch(console.log("log"))
+					.then(
+						upload_files_minutes(form_save)
+					)
+					.catch(() => {
+					    Swal.fire({
+					      icon: 'error',
+					      title: 'Error occured'
+					    })
+					})
+				}
+			})  
+	    })
+
+		
+	})
+
+    function upload_files_minutes(form_save){
+    	var mydata = new FormData();
+        if(form_save.hasOwnProperty('inpt_movant')){
+
+		}else{
+			form_save.inpt_movant=""
+		}
+
+		if(form_save.hasOwnProperty('inpt_seconder')){
+
+		}else{
+			form_save.inpt_seconder=""
+		}
+
+        mydata.append('data', JSON.stringify(form_save));
+        mydata.append('type_minutes', getbyId('type_minutes').value);
+        mydata.append('date', getbyId('inp_minutes_date').value);
+        mydata.append('minutes_no', getbyId('minutes_no').value);
+        mydata.append('minutes_id',getbyId('h_minutes_id').value)
+        mydata.append('',getbyId('h_minutes_committee_id').value)
+        mydata.append('sp_id',getbyId('active_sp_id').value)
+
+        jQuery.each($("#upload_file_minutes")[0].files, function(i, file) {
+	        mydata.append('file['+i+']', file);
+	    });
+
+	    jQuery.each($("#upload_file_minutes_2")[0].files, function(i, file) {
+	        mydata.append('file2['+i+']', file);
+	    });
+        
+	    $.ajax({
+	        type: 'POST',
+	        url: "/save_minutes",
+	        contentType:false,
+	        processData:false,
+	        cache: false,
+	        data:mydata,
+	        beforeSend: function() {
+		       console.log(mydata)
+		    },
+	        success: function(res) {
+	        	clear_minutes()
+				getbyId('form_minutes').reset()
+				$('#div_minutes_modal').modal('toggle');
+				$("#tbl_minutes").dataTable().fnDestroy();
+				load_minutes()
+				saved(res)
+	        },
+	        error: function() {
+	            error_in_saving("error occured in sending to");
+	        }
+	    });
+	}
+
+	function delete_minutes(){
+		var data={
+			'minutes_id':getbyId('h_minutes_id').value
+		}
+		Swal.fire({
+			  title: 'Are you sure?',
+			  text: "You won't be able to revert this!",
+			  icon: 'warning',
+			  showCancelButton: true,
+			  confirmButtonColor: '#d33',
+			  cancelButtonColor: '#3085d6',
+			  confirmButtonText: 'Yes, delete it!',
+			  customClass: 'swal_css',
+			}).then((result) => {
+				if (result.isConfirmed) {
+					Swal.fire(
+					  'Deleted!',
+					  'Your file has been deleted.',
+					  'success'
+					)
+					$('#div_minutes_modal').modal('toggle');
+					sendDataWithCallback('/del_minutes',data,function(res){
+						clear_minutes()
+						getbyId('form_minutes').reset()
+						$("#tbl_minutes").dataTable().fnDestroy();
+						load_minutes()
+					})
+				}
+			})
+	}
+
+	function load_committee_minutes_file(){
+		var data={
+ 			minutes_id:getbyId('h_minutes_id').value
+ 		}
+ 		sendDataWithCallback('/get_minutes_doc',data,function(res){
+
+ 			if ($.fn.DataTable.isDataTable('#tbl_minutes_path')) {
+                $('#tbl_minutes_path').DataTable().destroy();
+          	}
+			res.forEach(function(file) {
+				var del_btn = "<button type='button' data-minutes_id="+ file.minutes_path_id+ " data-id=" + file.minutes_path_id+ " onclick=delete_file_minutes(this)> DELETE </button>"
+				var dl_btn = "<a data-path=" +file.path+ " href=" + '/static/uploads/'+file.path+ "><button type='button'> DOWNLOAD </button></a>"
+				file.action = dl_btn + del_btn ;
+			})
+
+			$('#tbl_minutes_path').DataTable().destroy();
+			var table=$('#tbl_minutes_path').DataTable({
+                data:res,
+                 columns: [
+                 	{data:"filename"},
+                 	{data: "action"}
+                 ],
+                responsive: true,
+                searching: false, paging: false, info: false
+            });
+ 		})
+	}
+
+
+	function load_committee_minutes_file2(){
+		var data={
+ 			minutes_id:getbyId('h_minutes_id').value
+ 		}
+ 		sendDataWithCallback('/get_minutes_doc2',data,function(res){
+ 			if ($.fn.DataTable.isDataTable('#tbl_minutes_path_2')) {
+                $('#tbl_minutes_path_2').DataTable().destroy();
+          	}
+			res.forEach(function(file) {
+				var dl_btn = "<a data-path=" +file.path+ " href=" + '/static/uploads/'+file.path+ "><button type='button'> DOWNLOAD </button></a>"
+
+				var del_btn = "<button type='button' data-minutes_id="+ file.minutes_path_id+ " data-id=" + file.minutes_path_id+ " onclick=delete_file_minutes2(this)> DELETE </button>"
+
+				file.action = dl_btn + del_btn ;
+			})
+
+			$('#tbl_minutes_path_2').DataTable().destroy();
+			var table=$('#tbl_minutes_path_2').DataTable({
+                data:res,
+                 columns: [
+                 	{data:"filename"},
+                 	{data: "action"}
+                 ],
+                responsive: true,
+                searching: false, paging: false, info: false
+            });
+ 		})
+	}
+
+	function clear_minutes(){
+		getbyId('h_minutes_id').value = "0";
+		getbyId('h_minutes_committee_id').value = ""
+	}
+
+	var count_movant=0
+	// var arr_movant=[]
+
+	// function add_movant(){
+	// 	count_movant++;
+	// 	var div=document.getElementById('div_movant')
+	// 	var cdiv=document.createElement("div")
+	// 	var div_id='gendiv_movant'+count_movant
+	// 	cdiv.id=div_id
+	// 	cdiv.setAttribute("class", "colfull");
+
+	// 	var inpt_movant = document.createElement("select");
+
+	// 	var option_blank = document.createElement("option");
+	// 	option_blank.innerHTML = "--SELECT--"
+	// 	option_blank.value = ""
+	// 	option_blank.disabled = true
+	// 	option_blank.selected = true
+
+	// 	inpt_movant.appendChild(option_blank);
+
+	// 	inpt_movant.required = true
+	// 	inpt_movant.setAttribute("class", "col95")
+	// 	var inp_id='inp_movant' + count_movant;
+	// 	inpt_movant.id=inp_id
+	// 	inpt_movant.name="inpt_movant["+count_movant+"]";
+
+	// 	var btn = document.createElement("button");
+	// 	var t = document.createTextNode("X");
+	// 	btn.appendChild(t);
+	// 	btn.setAttribute('data-div',div_id)
+	// 	btn.setAttribute('data-inp',inp_id);
+	// 	btn.setAttribute('class','col5 btn-danger')
+	// 	btn.style="float:right"
+	// 	btn.type="button"
+	// 	btn.onclick = function() {
+	// 		var div=this.getAttribute('data-div');
+	// 		document.getElementById(div).remove();
+	// 		var inp=this.getAttribute('data-inp');
+	// 		for(var i=0; i<arr_movant.length;i++){
+	// 			if(arr_movant[i]==inp){
+	// 				arr_movant.splice(i,1);
+	// 			}
+	// 		}
+	// 		console.log(arr)
+	//     };
+
+	//     cdiv.appendChild(inpt_movant)
+
+	// 	p_info.forEach(function(i){
+	// 		var option = document.createElement("option");
+	// 		option.innerHTML = i['fullname'];
+	// 		option.value = i['info_id'];
+	// 		inpt_movant.appendChild(option);
+	// 	})
+
+		
+	// 	$(inpt_movant).chosen({width: "95%"})
+
+	//     cdiv.appendChild(inpt_movant);
+	//     cdiv.appendChild(btn);
+	//     div.appendChild(cdiv)
+
+	//     // cdiv.insertBefore(div,cdiv.firstChild);
+	// }
+
+	var count_seconder=0
+	// var arr_seconder=[]
+	
+	// function div_seconder(){
+	// 	count_seconder++;
+	// 	var div=document.getElementById('div_seconder')
+	// 	var cdiv=document.createElement("div")
+	// 	var div_id='gendiv_seconder'+count_seconder
+	// 	cdiv.id=div_id
+	// 	cdiv.setAttribute("class", "colfull");
+
+	// 	var inpt_seconder = document.createElement("select");
+
+	// 	var option_blank = document.createElement("option");
+	// 	option_blank.innerHTML = "--SELECT--"
+	// 	option_blank.value = ""
+	// 	option_blank.disabled = true
+	// 	option_blank.selected = true
+
+	// 	inpt_seconder.appendChild(option_blank);
+
+	// 	inpt_seconder.required = true
+	// 	inpt_seconder.setAttribute("class", "col95")
+	// 	var inp_id='inp_seconder' + count_seconder;
+	// 	inpt_seconder.id=inp_id
+	// 	inpt_seconder.name="inpt_seconder["+count_seconder+"]";
+
+	// 	// arr_seconder.push(inp_id)
+
+	// 	var btn = document.createElement("button");
+	// 	var t = document.createTextNode("X");
+	// 	btn.appendChild(t);
+	// 	btn.setAttribute('data-div',div_id)
+	// 	btn.setAttribute('data-inp',inp_id);
+	// 	btn.setAttribute('class','col5 btn-danger')
+	// 	btn.type="button"
+	// 	btn.style="float:right"
+	// 	btn.onclick = function() {
+	// 		var div=this.getAttribute('data-div');
+	// 		document.getElementById(div).remove();
+	// 		var inp=this.getAttribute('data-inp');
+	// 		for(var i=0; i<arr_seconder.length;i++){
+	// 			if(arr_seconder[i]==inp){
+	// 				arr_seconder.splice(i,1);
+	// 			}
+	// 		}
+	// 		console.log(arr)
+	//     };
+
+	//     cdiv.appendChild(inpt_seconder);
+	//     cdiv.appendChild(btn);
+	//     div.appendChild(cdiv)
+
+	//     cdiv.appendChild(inpt_seconder)
+	    
+
+	// 	p_info.forEach(function(i){
+	// 		var option = document.createElement("option");
+	// 		option.innerHTML = i['fullname'];
+	// 		option.value = i['info_id'];
+	// 		inpt_seconder.appendChild(option);
+	// 	})
+
+		
+	// 	$(inpt_seconder).chosen({width: "95%"})
+
+	// 	// cdiv.insertBefore(div,cdiv.firstChild);
+	// }
+	
+</script>

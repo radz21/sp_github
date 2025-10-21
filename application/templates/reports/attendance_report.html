@@ -1,0 +1,180 @@
+<div class="container">
+	<div class="colfull" style="padding: 30px;" id="print_attendance_report">
+	<div class="colfull fl">
+		<div class="col20" style="position: relative;">
+			<div>
+				<img onerror="this.src='../static/icon/photo_blank.png'" id="attendance_report_city_logo" src="static/icon/your_logo.png" style="height: 100px;width: 100px;">
+			</div>
+		</div>
+		
+		<div class="col60" style="position: relative;top: -100px">
+			<div style="width: 60%;margin: 0 auto;" align="center">
+				<p style="text-align: center;">Republic of the Philippines</p>
+				<p>Province of <span id="attendance_report_province"></span></p>
+				<p><span id="attendance_report_state_location"></span> of <span id="attendance_report_city_name" style="text-transform:capitalize;"></span></p>
+			</div>
+		</div>
+		<div class="col20">
+			&nbsp;
+		</div>
+
+	</div>
+
+	<div class="colfull" style="margin-top: -80px">
+		<div class="colfull fl" align="center" >
+			<p style="font-size:18px;font-weight: bolder;">
+				Attendance Report
+			</p>
+		</div>
+		<div class="colfull">
+			<div class="center_div">
+				<div class="col40">
+					<p>Period Covered</p>
+				</div>
+				<div class="col60">
+					<p><span id="month_attendance"></span><span id="inp_attendance_report_period_covered"></span></p>
+				</div>
+			</div>
+		</div>
+		<div class="colfull">
+			<table id="tbl_attendance_report" class="table table-bordered" style="width: 100%!important;border-collapse: collapse!important;">
+				<thead>
+					<tr>
+						<th colspan="6" style="text-align: center;">Record of Attendance</th>
+					</tr>
+					<tr>
+						<th colspan="6" style="text-align: center;"><span id="total_report_session"></span> Session</th>
+					</tr>
+					<tr>
+						<th>
+							<p>Legislator's Name</p>
+						</th>
+						<th>
+							<p>Present</p>
+						</th>
+						<th>
+							<p>Travel</p>
+						</th>
+						<th>
+							<p>Leave</p>
+						</th>
+						<th>
+							<p style="font-size: 11px!important">Absent</p>
+							<p style="font-size: 10px!important">(Unauthorized)</p>
+						</th>
+						<th>
+							<p>Remarks</p>
+						</th>
+					</tr>
+				</thead>
+				<tfoot>
+					<tr>
+						<th>Total</th>
+						<th></th> 
+						<th></th> 
+						<th></th> 
+						<th></th> 
+						<th></th>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+		<div class="colfull" style="margin-top: 30px;">
+			<div class="col50">
+				<div class="col30">
+					<p style="font-size: 15px;">Prepared by:</p>
+				</div>
+				<div class="col20">
+					<p style="border-bottom: 1px solid black;width: 250px!important" contenteditable="true"></p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		loadfirstdatatable('tbl_attendance_report')
+
+		var form_id2='#form_report_attendance'
+	    $(form_id2).submit(function(e){
+	        var form_save2 = $(form_id2).serializeObject();
+	        e.preventDefault();
+
+	        getbyId('prnt_btn_reports').disabled=false;
+			const session_type = (form_save2.type_session=="1" ? 'REGULAR' : form_save2.type_session=="2" ? 'SPECIAL' : 'JOINT')
+	        sendDataWithCallback('/get_attendance_report_by',form_save2,function(res){
+	        	getbyId('total_report_session').innerHTML=res[1]
+	            if(res[0]){
+	            	const filteredData = res[0].filter(row => row.session_type === session_type);
+
+					if (filteredData.length > 0) {
+						topRightAlert(`Total result ${filteredData.length}`);
+					} else {
+						topRightAlert(`No data result`);
+					}
+
+					let totalPresent = 0;
+					let totalTravel = 0;
+					let totalLeave = 0;
+					let totalAbsent = 0;
+
+					filteredData.forEach(row => {
+						totalPresent += parseInt(row.present) || 0;
+						totalTravel += parseInt(row.travel) || 0;
+						totalLeave += parseInt(row.leave) || 0;
+						totalAbsent += parseInt(row.absent) || 0;
+					});
+
+					$('#present_total').text(totalPresent);
+					$('#travel_total').text(totalTravel);
+					$('#leave_total').text(totalLeave);
+					$('#absent_total').text(totalAbsent);
+
+	                if ($.fn.DataTable.isDataTable('#tbl_attendance_report')) {
+	                    $('#tbl_attendance_report').DataTable().destroy();
+	                }
+
+	                var table = $('#tbl_attendance_report').DataTable({
+					data: filteredData.reverse(),
+					columns: [
+						{ data: "fullname" },
+						{ data: "present" },
+						{ data: "travel" },
+						{ data: "leave" },
+						{ data: "absent" },
+						{ data: "remarks" },
+					],
+					responsive: true,
+					dom: 'ftipr',
+					paging: false,
+					searching: false,
+					bInfo: false,
+					ordering: false,
+					showNEntries: false,
+					footerCallback: function (row, data, start, end, display) {
+						let api = this.api();
+
+						// Helper function to sum column
+						const intVal = i => typeof i === 'string' ? parseInt(i) || 0 : i;
+
+						// Calculate totals
+						let totalPresent = api.column(1).data().reduce((a, b) => intVal(a) + intVal(b), 0);
+						let totalTravel = api.column(2).data().reduce((a, b) => intVal(a) + intVal(b), 0);
+						let totalLeave = api.column(3).data().reduce((a, b) => intVal(a) + intVal(b), 0);
+						let totalAbsent = api.column(4).data().reduce((a, b) => intVal(a) + intVal(b), 0);
+
+						// Update footer
+						$(api.column(1).footer()).html(totalPresent);
+						$(api.column(2).footer()).html(totalTravel);
+						$(api.column(3).footer()).html(totalLeave);
+						$(api.column(4).footer()).html(totalAbsent);
+					}
+				});
+	            }
+	        })
+	    })
+	})
+</script>

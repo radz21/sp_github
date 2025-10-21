@@ -1,0 +1,22 @@
+<div class="colfull" style="padding:10px;">
+	<form id="form_budget">
+		<input type="hidden" name="sp_id" id="h_sp_id">
+		<div class="colfull">
+			<p>Select SANGUNIAN COUNCIL</p>
+			<select id="inp_sp_title" class="form-control" name="sp_id" onchange="getbyId('h_sp_id').value=this.value;"></select>
+			<!-- <datalist id="list_sp_title"></datalist> -->
+			<p>Year</p>
+			<input type="number" placeholder="Select Year" id="read_year" class="form-control" name="year" autocomplete="off" required="">
+		</div>
+		<div class="colfull" style="margin-top: 50px;" align="center">
+			<button type="submit" class="btn btn-success">SAVE</button>
+		</div>
+	</form>
+</div>
+<script type="text/javascript">
+	$("#read_year").datepicker({
+	    format: "yyyy",
+	    viewMode: "years", 
+	    minViewMode: "years"
+	});
+</script>

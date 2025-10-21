@@ -1,0 +1,239 @@
+<div class="colfull">
+	<form id="form_petition">
+		<input type="hidden" id="h_petition_id" value="0">
+		<input type="hidden" id="h_petition_id_main">
+		<input type="hidden" id="h_committee_id_petition">
+		<div class="colfull">
+			<!-- <div class="row">
+                <div class="col-sm">
+                	<label for="">Tracking No</label>
+                	<input class="form-control" id="inp_petition_track" name="inp_petition_track" required="">
+                </div>
+            </div> -->
+            <div class="input-group">
+				<input type="search" class="form-control border border-warning border-1"  placeholder="Tracking No."  id="inp_petition_track" name="inp_petition_track" required>
+				<button type="button" class="btn btn-outline-primary" title="Find Tracking"> 
+					<svg width="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.38948 8.98403H6.45648C4.42148 8.98403 2.77148 10.634 2.77148 12.669V17.544C2.77148 19.578 4.42148 21.228 6.45648 21.228H17.5865C19.6215 21.228 21.2715 19.578 21.2715 17.544V12.659C21.2715 10.63 19.6265 8.98403 17.5975 8.98403L16.6545 8.98403" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12.0215 2.19044V14.2314" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.10645 5.1189L12.0214 2.1909L14.9374 5.1189" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>                          
+				</button>
+				<button type="button" class="btn btn-outline-danger" title="Clear">
+					 <svg width="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					 	<path fill-rule="evenodd" clip-rule="evenodd" d="M11.9852 21.606C11.9852 21.606 19.6572 19.283 19.6572 12.879C19.6572 6.474 19.9352 5.974 19.3192 5.358C18.7042 4.742 12.9912 2.75 11.9852 2.75C10.9792 2.75 5.26616 4.742 4.65016 5.358C4.03516 5.974 4.31316 6.474 4.31316 12.879C4.31316 19.283 11.9852 21.606 11.9852 21.606Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+					 	<path d="M13.864 13.8249L10.106 10.0669" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+					 	<path d="M10.106 13.8249L13.864 10.0669" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+					 </svg>                        
+				</button>
+			</div>
+
+			<div class="row">
+                <div class="col-sm">
+                	<label for="">Title</label>
+                	<textarea style="text-align: left;" class="form-control" id="inp_petition_title" name="title" required="" autocomplete="off" autofocus></textarea>
+                </div>
+            </div>
+
+			<div class="row">
+                <div class="col-sm">
+                	<label for="">Description</label>
+                	<textarea id="pet_desc"></textarea>
+                </div>
+            </div>
+			
+			<div class="row">
+                <div class="col-sm">
+                    <label for="">Referred Committee</label>
+					<select id="inp_petition_committee_id" name="committee_id" multiple></select>
+					<button hidden id="btn_petition_committee" type="button" onclick="saved_petition_committee()">Reffer to Other Committee</button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm">
+                	<label for="">Source of Documents</label>
+					<select class="form-control" onchange="specify_source()" name="source_of_document" id="petition_source_of_doc" required>
+						<option value="" selected disabled>--SELECT--</option>
+						<option value="1">Sangunian Files</option>
+						<option value="2">Sangunian Panlalawigan</option>
+						<option value="3">Other</option>
+					</select>
+                </div>
+                <div class="col-sm">
+                	<label for="">Action Taken</label>
+                	<select class="form-control" id="inp_petition_action_taken" name="inp_petition_action_taken" required="">
+						<option value="" disabled selected>--SELECT--</option>
+						<option value="0">PENDING</option>
+						<option value="1">APPROVED</option>
+						<option value="2">REJECTED</option>
+						<option value="3">ADAPT AS ORDINANCE</option>
+						<option value="4">Adapt AS RESOLUTION</option>
+					</select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm">
+                	<label for="">Documents</label>
+                	<input class="form-control" type="file" id="upload_file" name="upload_file" multiple accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf">
+                </div>
+            </div>
+			
+		</div>
+
+		<div class="colfull">
+			<table style="table-layout: fixed;width: 100%" class="table" id="tbl_petition_path" border="1">
+				<thead>
+					<th>Path</th>
+					<th>Action</th>
+				</thead>
+			</table>
+		</div>
+
+		<div class="colfull" align="center">
+			<button type="submit" class="btn btn-success">Save</button>
+			<button type="button" class="btn btn-danger" style="display: none" id="del_petition" onclick="delete_petition()">Delete</button>
+		</div>
+	</form>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function(res){
+		var form_id='#form_petition'
+		 $(form_id).submit(function(e){
+		 	var form_save = $(form_id).serializeObject();
+	        e.preventDefault();
+
+	        swal.fire({
+				title: "Are you sure want to save?",
+				text: "Click ok to continue",
+				type: "info",
+				showCancelButton: true,
+				showLoaderOnConfirm: true,
+				preConfirm: () => {
+					return fetch(console.log("log"))
+					.then(
+						upload_files()
+					)
+					.catch(() => {
+					    Swal.fire({
+					      icon: 'error',
+					      title: 'Error occured'
+					    })
+					})
+				}
+			})
+	        
+	    })
+
+		getDataWithCallback('/get_committee', function(res) {
+		    $('#inp_petition_committee_id').chosen({width:"100%"})
+			for(var x=0; x<res.length; x++){
+				$('#inp_petition_committee_id').append(`<option value="${res[x].committee_id}"> ${res[x].committee} </option>`);
+			}
+			$('#inp_petition_committee_id').trigger("chosen:updated")
+		})
+
+	})
+
+    function upload_files(){
+    	var pet_desc = tinymce.get('pet_desc').getContent();
+    	var form = $("#form_petition").serializeObject();
+    	var mydata = new FormData();
+    	mydata.append('tracking_no', getbyId('inp_petition_track').value)
+    	mydata.append('description', pet_desc)
+    	mydata.append('title', getbyId('inp_petition_title').value);
+        mydata.append('committee_id', getbyId('inp_petition_committee_id').value);
+        mydata.append('petition_id', getbyId('h_petition_id').value);
+        mydata.append("source_of_document", getbyId('petition_source_of_doc').value)
+        mydata.append('petition_id_main', getbyId('h_petition_id_main').value)
+        mydata.append('action_taken', getbyId('inp_petition_action_taken').value)
+        mydata.append('sp_id', getbyId('active_sp_id').value)
+
+        jQuery.each($("#upload_file")[0].files, function(i, file) {
+	        mydata.append('photo['+i+']', file);
+	    });
+        
+	    $.ajax({
+	        type: 'POST',
+	        url: "/save_petition",
+	        contentType:false,
+	        processData:false,
+	        cache: false,
+	        data:mydata,
+	        beforeSend: function() {
+		       console.log(mydata)
+		    },
+	        success: function(res) {
+	        	clear_petition();
+				getbyId('form_petition').reset()
+				$('#div_petition_modal').modal('toggle');
+				$("#tbl_petition").dataTable().fnDestroy();
+				load_petition()
+				saved(res)
+	        },
+	        error: function() {
+	            error_in_saving("error occured in sending to");
+	        }
+	    });
+	}
+
+	function delete_petition(){
+		var data={
+			'petition_id':getbyId('h_petition_id').value
+		}
+		Swal.fire({
+			  title: 'Are you sure?',
+			  text: "You won't be able to revert this!",
+			  icon: 'warning',
+			  showCancelButton: true,
+			  confirmButtonColor: '#d33',
+			  cancelButtonColor: '#3085d6',
+			  confirmButtonText: 'Yes, delete it!',
+			  customClass: 'swal_css',
+			}).then((result) => {
+				if (result.isConfirmed) {
+					Swal.fire(
+					  'Deleted!',
+					  'Your file has been deleted.',
+					  'success'
+					)
+					$('#div_petition_modal').modal('toggle');
+					sendDataWithCallback('/del_petition',data,function(res){
+						clear_petition();
+						getbyId('form_petition').reset()
+						$("#tbl_petition").dataTable().fnDestroy();
+						load_petition()
+						saved(res)
+					})
+				}
+			})
+	}
+
+	function saved_petition_committee(){
+		var data={
+			petition_id_main:getbyId('h_petition_id_main').value,
+			committee_id:getbyId('h_committee_id_petition').value
+		}
+		swal.fire({
+            title: "Are you sure want to save?",
+            text: "Click ok to continue",
+            type: "info",
+            showCancelButton: true,
+            showLoaderOnConfirm: true,
+            preConfirm: () => {
+                return fetch(console.log("log"))
+                .then(
+                    sendDataWithCallback('/save_petition_ref_committee',data,function(res){
+						if(res){
+							saved(res)	
+						}
+					})
+                )
+                .catch(() => {
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Error occured'
+                    })
+                })
+            }
+        })
+	}
+</script>

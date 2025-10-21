@@ -1,0 +1,491 @@
+{% extends 'index.html' %}
+{% block body %}
+<style type="text/css">
+	.dash_column{height: 230px;border-radius: 5px;margin-bottom: 1%;overflow-x: auto;overflow-y:hidden;padding: 0.2%;width: 100%;white-space: nowrap;
+		background-color: #f5f5f5}
+	.scrolling-wrapper {
+	  overflow-x: auto;
+	  overflow-y: hidden;
+	  white-space: nowrap;
+	  .card {display: inline-block;}
+	}
+	.arial{font-family: Arial, Helvetica, sans-serif;text-shadow: 0.5px 0.5px #000;}
+
+	/* width */
+	::-webkit-scrollbar {height: 5px;}
+	::-webkit-scrollbar {width: 5px;}
+
+	/* Track */
+	::-webkit-scrollbar-track {background: #f1f1f1;}
+	 
+	/* Handle */
+	::-webkit-scrollbar-thumb {background: #888; }
+
+	/* Handle on hover */
+	::-webkit-scrollbar-thumb:hover {background: #555; }
+	.word-break {
+	   word-break: break-all!important;
+	}
+</style>
+<div class="row">
+	<div class="dash_column scrolling-wrapper" id="councilor_div_id"></div>
+
+	<button  data-toggle="modal" data-target="#div_email_modal">Send Email</button>
+
+	<div class="dash_column" style="overflow: hidden;width: 50%!important;float: left!important">
+		<div class="colfull" style="height: 150px;">
+			<div class="col20">
+				<div class="colfull">
+				    <div class="col20">
+				    	<input type="radio" value="1"  name="optradio" id="toggle1" class="visually-hidden" checked onclick="get_reso_ordi_peti()">
+				    	<div class="control-me" style="margin-top: 5px;"></div>
+				    </div>
+				    <div class="col80">
+				    	<label class="labels" for="toggle1">Resolution</label>
+				    </div>
+				</div>
+			</div>
+
+			<div class="col20">
+				<div class="colfull">
+				    <div class="col20">
+				    	<input type="radio" value="2" name="optradio" id="toggle2" class="visually-hidden" onclick="get_reso_ordi_peti()">
+				    	<div class="control-me" style="margin-top: 5px;"></div>
+				    </div>
+				    <div class="col80">
+				    	<label class="labels" for="toggle2">Ordinance</label>
+				    </div>
+				</div>
+			</div>
+
+			<div class="col20">
+				<div class="colfull">
+				    <div class="col20">
+				    	<input type="radio" value="3" name="optradio" id="toggle3" class="visually-hidden" onclick="get_reso_ordi_peti()">
+				    	<div class="control-me" style="margin-top: 5px;"></div>
+				    </div>
+				    <div class="col80">
+				    	<label class="labels" for="toggle3">Petition</label>
+				    </div>
+				</div>
+			</div>
+
+			<div class="colfull" style="margin-top: 1%">
+				<div class="col-md-12">
+					<div class="row">
+						<div class="col-md-2">
+							<p class="arial" style="float: right;font-size: 12px">Search:</p>
+						</div>
+						<div class="col-md-10">
+							<input style="width: 50%;height: 20px!important;margin-right: 50%;font-size: 12px;" type="" name="" list="find_data_list" id="search_inp_id" onchange="get_data_reso_ordi_peti()" autocomplete="off">
+							<datalist id="find_data_list"></datalist>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+			<form id="form_search_doc">
+				<div class="colfull" id="res_ordi_petition_div" style="overflow-y: auto;overflow-x: hidden;height: 170px;font-size: 10px;padding: 30px;">				
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="dash_column" style="overflow-y: auto;width: 50%!important;margin-left: 51%">
+		<div class="colfull" style="height: 150px;padding: 1%;font-size: 10px;padding: 4%">
+			<label>ANNOUNCEMENT</label>
+			<div class="colfull" id="annoucement_id">
+
+<!-- 				<div style="margin-top: 1%;background-color: #fff;padding: 1%">
+					<p>Title</p>
+					<p>Date</p>
+					<div style="width: 100%; white-space: normal;">
+							Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book.
+					</div>
+				</div> -->
+
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$( "#home1" ).addClass( "selected_page_color" );
+		get_announcements()
+
+		getDataWithCallback('/get_active_councilor',function(res){
+			if (res) {
+				var parent  = byId('councilor_div_id');
+				if (res.length!=0) {
+					res.forEach(function(item,index){
+						var child = document.createElement('div'),
+							div1 = document.createElement('div'),
+							img = document.createElement('img'),
+							p = document.createElement('p'),
+							div2 = document.createElement('div'),
+							p1 = document.createElement('p'),
+							span1 = document.createElement('span'),
+							p2 = document.createElement('p'),
+							span2 = document.createElement('span'),
+							p3 = document.createElement('p'),
+							span3 = document.createElement('span'),
+							p4 = document.createElement('p'),
+							span4 = document.createElement('span');
+
+						child.className = "card";
+						child.style = "height: 220px;background-color: #337ab7;margin-left: 0.5%;border-radius: 4px;width: 20%;display: inline-block;";
+						div1.style = "justify-content: center;display: flex;";
+						img.style = "width: 120px;height: 120px;border-radius: 60px;";
+						p.style = "text-align: center;font-weight: bold;color: #fff;font-size: 12px;font-family: Arial, Helvetica, sans-serif;text-shadow: 0.5px 0.5px #000;";
+						div2.className = "colfull";
+						div2.style = "color: #fff;font-weight: bold;line-height: 40%;padding: 1%;font-size: 12px;margin-left: 6%";
+						// p.id = "names_font"
+						p.className = "arial names_font";
+						p1.className = "arial";
+						p2.className = "arial";
+						p3.className = "arial";
+						p4.className = "arial";
+						span1.className = "arial";
+						span2.className = "arial";
+						span3.className = "arial";
+						span4.className = "arial";
+
+						p.innerHTML = "Hon. "+ item.fullname;
+						p1.innerHTML = "RESOLUTION: ";
+						p2.innerHTML = "ORDINANCE: ";
+						p3.innerHTML = "SESSION ATTENDED: ";
+						p4.innerHTML = "SESSION ABENCES: ";
+
+						if (item.resolution) {
+							if (item.resolution.length) {
+								item.resolution.forEach(function(item1){
+									span1.innerHTML = item1.total;
+								});
+
+							}
+						}
+
+						if (item.ordinance) {
+							if (item.ordinance.length) {
+								item.ordinance.forEach(function(item2){
+									span2.innerHTML = item2.total;
+								});
+							}
+						}
+
+
+						span3.innerHTML = "0";
+						span4.innerHTML = "0";
+
+
+						if(item.img!=null){
+							img.setAttribute('src',"static/"+item.img);
+						}else{
+							img.setAttribute('src',"static/images/Cartoon-Avatar-Transparent-Image.png");
+						}
+
+						
+
+						div1.appendChild(img);
+
+						p1.appendChild(span1);
+						p2.appendChild(span2);
+						p3.appendChild(span3);
+						p4.appendChild(span4);
+
+						div2.appendChild(p1);
+						div2.appendChild(p2);
+						div2.appendChild(p3);
+						div2.appendChild(p4);
+
+						child.appendChild(div1);
+						child.appendChild(p);
+						child.appendChild(div2);
+
+						parent.appendChild(child);
+					});
+				}else{
+					
+				}
+			}	
+		});
+		get_reso_ordi_peti();
+
+		var form_id='#form_search_doc'
+		 $(form_id).submit(function(e){
+		 	var form_save = $(form_id).serializeObject();
+	        e.preventDefault();
+
+	        sendDataWithCallback('/send_emails',form_save,function(res){
+	        	if(res){
+	        		if(res=="Successfully sent email"){
+	        			saved(res)
+	        		}else{
+	        			error_in_saving(res)
+	        		}
+	        	}
+	        })
+	    })
+	})	
+
+	function get_reso_ordi_peti(){
+		var rd = $("input[type='radio'][name='optradio']:checked").val();
+		byId("res_ordi_petition_div").innerHTML = ""
+		byId('search_inp_id').value = ""
+		sendDataWithCallback('/get_minutes_selected',{data_id:rd},function(res){
+			if (res) {
+				var datalistId = getbyId('find_data_list');
+				datalistId.innerHTML = "";
+	            for(var i = 0; i < res.length; i++) {
+	                var opt = document.createElement('option');
+	                opt.setAttribute('data-id',res[i].ids);
+	                opt.setAttribute('value',res[i].title);
+	                datalistId.appendChild(opt)
+	            }
+			}
+		});
+	}
+
+
+	function get_data_reso_ordi_peti(){
+		var rd = $("input[type='radio'][name='optradio']:checked").val();
+		var datalistId = getbyId('find_data_list');
+		var srch = byId("search_inp_id");
+		var flag = 0
+		for(var i =0; i < datalistId.options.length; i++){
+			if (srch.value == datalistId.options[i].value) {
+				var data_id = datalistId.options[i].getAttribute('data-id');
+				flag = 1
+			}
+		}
+
+		if (flag == 0) {
+			console.log("NO SP ACTIVE");
+			srch.value = ""
+		}else{
+			sendDataWithCallback('/get_data_reso_ordi_peti', {type_id:rd, ids:data_id}, function(res){
+				if (res) {
+					var parent = byId('res_ordi_petition_div');
+					parent.innerHTML = "";
+					if (rd == 1 || rd == '1') {
+						var child = document.createElement('div'),
+						fdst = document.createElement('fieldset'),
+						lgn = document.createElement('legend'),
+						p = document.createElement('p'),
+						p1 = document.createElement('p'),
+						spn = document.createElement('span'),
+						p2 = document.createElement('p'),
+						a = document.createElement('a'),
+						p3= document.createElement('p'),
+
+						p_files=document.createElement('p'),
+
+						div_email=document.createElement("div"),
+						input_email=document.createElement("input"),
+						p_gmail=document.createElement("p"),
+
+						input1=document.createElement("input")
+
+
+						button=document.createElement("button")
+
+
+						div_email.setAttribute("class","form-input col40")
+						div_email.setAttribute("style", "border:solid 1px black;height:30px;")
+
+						input_email.setAttribute("class", "input_inner col70")
+						input_email.setAttribute("style","text-align:right")
+
+						input_email.name="reso_email"
+						input1.name="file"
+						input1.setAttribute("style","display:none")
+
+						input_email.pattern="[a-zA-Z][a-zA-Z0-9-_.]{1,20}"
+						p_gmail.setAttribute("style", "margin-top:5px;")
+
+						button.setAttribute("class", "btn btn-primary")
+
+						child.classassName = "col80";
+						child.style = "margin-top: 3%";
+						fdst.style = "border:1px solid #000;margin-left: 1%;padding: 1%;margin-left: 15%";
+						lgn.style ="border:1px solid #000;font-size: 10px";
+						lgn.innerHTML = res[0].resolution_title;
+						p.innerHTML = "Description: "+res[0].description;
+						p1.innerHTML = "Author";
+						spn.innerHTML = res[0].author;
+						p2.innerHTML = "FILE: ";
+
+						p3.innerHTML = "Send to Email: ";
+						p_gmail.innerHTML="@gmail.com"
+
+						button.innerHTML="Send"
+
+
+						p1.appendChild(spn)
+
+						if (res[0].minutes_data) {
+							if (res[0].minutes_data.length!=0) {
+								res[0].minutes_data.forEach(function(item){
+									a.href = "static/"+item.path;
+									input1.value="static/"+item.path;
+									a.innerHTML = item.filename;
+									p2.appendChild(a)
+								});
+							}else{
+								a.innerHTML = "NO DATA"
+								a.href = "#"
+							}
+						}
+
+						fdst.appendChild(lgn);
+						fdst.appendChild(p);
+						fdst.appendChild(p1);
+						fdst.appendChild(p2);
+						fdst.appendChild(p3);
+						fdst.appendChild(input1);
+
+						fdst.appendChild(div_email);
+						div_email.appendChild(input_email);
+						div_email.appendChild(p_gmail);
+
+						fdst.appendChild(button);
+						child.appendChild(fdst);
+						parent.appendChild(child);
+					}else if (rd == 2 || rd == '2') {
+						var child = document.createElement('div'),
+						fdst = document.createElement('fieldset'),
+						lgn = document.createElement('legend'),
+						p = document.createElement('p'),
+						p1 = document.createElement('p'),
+						spn = document.createElement('span'),
+						p2 = document.createElement('p'),
+						a = document.createElement('a'),
+
+						p3= document.createElement('p')
+
+						child.className = "col80";
+						child.style = "margin-top: 3%";
+						fdst.style = "border:1px solid #000;margin-left: 1%;padding: 1%;margin-left: 15%";
+						lgn.style ="border:1px solid #000;font-size: 15px";
+						lgn.innerHTML = res[0].ordinance_title;
+						p.innerHTML = "Description: "+res[0].description;
+						p1.innerHTML = "Author";
+						spn.innerHTML = res[0].author;
+						p2.innerHTML = "FILE: ";
+
+						p3.innerHTML = "Send to Email: ";
+
+
+						p1.appendChild(spn)
+
+						if (res[0].minutes_data) {
+							if (res[0].minutes_data.length!=0) {
+								res[0].minutes_data.forEach(function(item){
+									a.href = "static/"+item.path;
+									a.innerHTML = item.filename;
+									p2.appendChild(a)
+								});
+							}else{
+								a.innerHTML = "NO DATA"
+								a.href = "#"
+							}
+						}
+						
+
+						fdst.appendChild(lgn);
+						fdst.appendChild(p);
+						fdst.appendChild(p1);
+						fdst.appendChild(p2);
+						fdst.appendChild(p3);
+						child.appendChild(fdst);
+						parent.appendChild(child);
+					}else if (rd == 3 || rd == '3') {
+						var child = document.createElement('div'),
+						fdst = document.createElement('fieldset'),
+						lgn = document.createElement('legend'),
+						p = document.createElement('p'),
+						p1 = document.createElement('p'),
+						spn = document.createElement('span'),
+						p2 = document.createElement('p'),
+
+						p3= document.createElement('p')
+
+						child.className = "col80";
+						child.style = "margin-top: 3%";
+						fdst.style = "border:1px solid #000;margin-left: 1%;padding: 1%;margin-left: 15%";
+						lgn.style ="border:1px solid #000;font-size: 15px";
+						lgn.innerHTML = res[0].title;
+						p.innerHTML = "Description: "+ res[0].description;
+						p1.innerHTML = "Author";
+						spn.innerHTML = res[0].source_of_document;
+						p2.innerHTML = "FILE: ";
+
+
+						p3.innerHTML = "Send to Email: ";
+
+
+						p1.appendChild(spn)
+
+						if (res[0].petition_data) {
+							if (res[0].petition_data.length!=0) {
+								res[0].petition_data.forEach(function(item){
+									a = document.createElement('a')
+									a.href = "static/"+item.path;
+									a.innerHTML = item.filename;
+									p2.appendChild(a)
+								});
+							}else{
+								a = document.createElement('a')
+								a.innerHTML = "NO DATA"
+								a.href = "#"
+								p2.appendChild(a)
+							}
+						}
+
+						fdst.appendChild(lgn);
+						fdst.appendChild(p);
+						fdst.appendChild(p1);
+						fdst.appendChild(p2);
+						fdst.appendChild(p3);
+						child.appendChild(fdst);
+						parent.appendChild(child);
+					}
+					
+				}
+			})
+		}
+	}
+	function get_announcements(){
+		var parent = getbyId("annoucement_id");
+		getDataWithCallback('/get_announcement', function(res){
+			if (res) {
+				res.forEach(function(item){
+					var child = document.createElement("div"),
+						p1 = document.createElement("p"),
+						p2= document.createElement("p"),
+						div = document.createElement("div");
+
+					child.style = "margin-top: 1%;background-color: #fff;padding: 1%";
+					div.style = "width: 100%; white-space: normal;";
+
+					var date = moment(item.date_announce).format("LL");
+					p1.innerHTML = item.announcement_title;
+					p2.innerHTML = date;
+					div.innerHTML = item.announcement
+
+					child.appendChild(p1);
+					child.appendChild(p2);
+					child.appendChild(div);
+					parent.appendChild(child);
+				})
+
+			}else{
+				var p = document.createElement("p");
+				p.innerHTML = "NO ANNOUCEMENT"
+				parent.appendChild(p)
+			}
+		});
+	}
+</script>
+{% endblock %}

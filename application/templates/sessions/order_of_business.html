@@ -1,0 +1,390 @@
+{% extends 'index.html' %}
+{% block body %}
+<div class="colfull">
+	<div class="colfull">
+		<div class="col" style="padding: 50px;">
+			<datalist id="commitee_list"></datalist>
+			<datalist id="council_list_active"></datalist>
+		    <div class="form-group">
+		        <label>SP Title:</label>
+		        <select class="form-control" id="session_sp_title" style="height: 40px!important;" onchange="get_sessionNumber();"></select>
+		        <!-- <input type="text" name="" id="session_number_id" class="form-control"> -->
+		    </div>
+		    <div class="form-group">
+		        <label>Session number:</label>
+		        <select id="session_number_id" class="form-control" style="height: 40px!important"></select>
+		    </div>
+		   <button type="button" class="btn btn-primary btn-sm" onclick="startSession()" style="margin-top: 1%;">Search</button>
+		</div>
+	</div>
+	<!-- <div style="justify-content: center;text-align: center;display: flex;">
+		<button class="btn btn-primary" type="button" style="margin-top: 10%;" data-toggle="modal" data-target="#order_B">Start Session</button>
+	</div> -->
+
+</div>
+	<div id="order_of_business_modal" class="modal fade" role="dialog" style="overflow-y: scroll;">
+    	<div style="position: fixed;margin: 0;background-color: #fff;width: 20%;margin-top: 2%;border-radius: 5px;font-weight: bold;padding: 1%">
+    		<p>CODE AND REFERENCES</p>
+    		<div id="code_reff_id"></div>
+    	</div>
+	    <div class="modal-dialog modal-lg" style="width: 70%!important;margin-left: 21%">
+	        <div class="modal-content" style="padding: 1%">
+	        	<div id="print_oob_id" style="width: 100% !important;">
+    				<link rel="stylesheet" type="text/css" href="../../static/css/bootstrap.min.css">
+		        	<style type="text/css">
+						.textStyle{font-family: Arial, Helvetica, sans-serif;line-height: normal}
+						.mBtm{margin-bottom: 2%!important}
+						#tbl_visitor table {
+						  font-family: arial, sans-serif!important;
+						  border-collapse: collapse!important;
+						  width: 100%!important;
+						}
+
+						#tbl_visitor td, th {
+						  border: 1px solid #dddddd!important;
+						  text-align: left!important;
+						  padding: 8px!important;
+						}
+						.inline_lbl{width: 33%!important; position: relative !important; float: left !important;}
+					</style>
+		        	<form id="form_order_of_business">
+			        	<div class="modal-header">
+			        		<input type="hidden" name="session_id" id="session_oob_id">
+			                <button type="button" class="close" data-dismiss="modal">&times;</button>
+			                <p class="modal-title" style="text-align: center;text-decoration: underline;font-weight: bold;font-family: Arial, Helvetica, sans-serif;font-size: 15px;margin-bottom: 2%">TANGGAPAN NG SANGGUNIANG <span id="system_type_order_of_business"></span></p>
+			                <img id="oob_logo" style="width: 120px;height:120px;position: absolute;margin-top: -5%">
+			            	<div class="col" style="display: flex;justify-content: center;">
+			            		<div>
+				            		<p style="text-align: center!important;text-decoration: underline!important;font-size: 14px!important;font-family: Arial, Helvetica, sans-serif!important;line-height: normal!important;font-weight: bold!important;color: #d26035!important">NOTICE OF SESSION</p>
+				            		<p style="text-align: center!important;font-weight: bold!important;font-family: Arial, Helvetica, sans-serif!important;font-size: 14px!important;line-height: normal!important">	<span id="session_id" class="textStyle"></span> Regular Session</p>
+				            		<p style="text-align: center!important;font-weight: bold!important;font-family: Arial, Helvetica, sans-serif!important;font-size: 14px!important;line-height: normal!important" id="session_date"></p>
+			            		</div>
+			            	</div>
+			            </div>
+			            <div class="modal-body">
+			            	<div class="row">
+			                	<div class="col-md-12">
+			                		<p style="text-align: center;font-weight: bold;text-decoration: underline;font-size: 12px;font-family: Arial, Helvetica, sans-serif; color: #3384bc!important">ORDER OF BUSINESS</p>
+			                	</div>
+			                	<div class="col-md-12 mBtm">
+			                		<p class="textStyle" style="font-size: 12px">INTRO</p>
+			                	</div>
+
+			                	<div class="col-md-12 mBtm">
+			                		<p class="textStyle" style="font-size: 12px">I. CALL TO ORDER</p>
+			                	</div>
+
+			                	<div class="col-md-12 mBtm" style="width: 100%!important;">
+			                		<div class="inline_lbl">
+			                			<p class="textStyle" style="font-size: 12px">II. NATIONAL ANTHEM </p>
+			                		</div>
+			                		<div class="inline_lbl">
+			                			<p class="textStyle" style="font-size: 12px"> - - - - - - - - - - - - - - - - - - - - </p>
+			                		</div>
+			                		<div class="inline_lbl">
+			                			<p style="font-size: 12px" id="session_national_anthem" class="textStyle">NONE</p>
+			                		</div>
+			                	</div>
+
+			                	<div class="col-md-12 mBtm">
+			                		<div class="inline_lbl">
+			                			<p class="textStyle" style="font-size: 12px">III. OPENING PRAYER</p>
+			                		</div>
+			                		<div class="inline_lbl">
+			                			<p class="textStyle" style="font-size: 12px"> - - - - - - - - - - - - - - - - - - - - </p>
+			                		</div>
+			                		<div class="inline_lbl">
+			                			<p style="font-size: 12px" id="session_opening_prayer" class="textStyle">NONE</p>
+			                		</div>
+			                	</div>
+
+			                	<div class="col-md-12 mBtm" style="display: table !important;">
+			                		<div class="inline_lbl">
+			                			<p class="textStyle" style="font-size: 12px">IV. RECITATION OF COUNCILOR'S CREED</p>
+			                		</div>
+			                		<div class="inline_lbl">
+			                			<p class="textStyle" style="font-size: 12px"> - - - - - - - - - - - - - - - - - - - - </p>
+			                		</div>
+			                		<div class="inline_lbl">
+			                			<p style="font-size: 12px" id="session_creed" class="textStyle">NONE</p>
+			                		</div>
+			                	</div>	                	
+			            		
+			            		<div class="col-md-12 mBtm" style="width: 100%!important">
+			            			<div style="width: 100% !important;">
+			            				<p class="textStyle" style="font-size: 12px">V. ROLL CALL/DETERMINATION OF QUOROM</p>
+			            			</div>
+			                		<div style="width: 100%!important;" id="session_roll_call"></div>
+			            		</div>
+
+
+			                	<div class="col-md-12 mBtm">
+			                		<p class="textStyle" style="font-size: 12px">VI. READING, CONSIDERATION AND APPROVAL OF THE PREVIOUS MINUTES DATED</p>
+			                		<div class="col-md-12" id="session_reading_prev" style="padding: 2%;"></div>
+			                	</div>
+
+			                	<div class="col-md-12 mBtm">
+			                		<p class="textStyle" style="font-size: 12px">VII. QUESTION HOUR/VISITOR HOUR - (<i>Official Business only</i>)</p>
+			                		<table id="tbl_visitor" style="width: 100%">
+			                			<tr style="background-color: #E6E6FA">
+			                				<th style="color: #fff">Visitor</th>
+			                				<th style="color: #fff">Subject</th>
+			                			</tr>
+			                			<tbody id="qh_visitor_id">
+			                				<td colspan="2" style="text-align: center;">NO DATA</td>
+			                			</tbody>
+			                		</table>
+			                	</div>
+
+
+			                	<div class="col-md-12 mBtm">
+			                		<p class="textStyle" style="font-size: 12px">VIII. PRIVILEGE HOUR - (three[3] minutes - maximum)</p>
+			                		<p class="textStyle" style="text-align: center;font-size: 12px"> (<i>Kindly provide copy of the  privilege speech for proper documentation</i>) </p>
+			                	</div>
+
+			                	<div class="col-md-12 mBtm">
+			                		<p class="textStyle mBtm" style="font-size: 12px">IX. INSERTION ON THE CALENDER OF BUSINESS</p>
+			                	</div>
+
+			                	<div class="col-md-12 mBtm">
+			                		<p class="textStyle mBtm" style="font-size: 12px">X. READING AND REFERENCE OF BUSINESS</p>
+			                		<div class="col-md-12">
+
+				                		<div class="col-md-12 mBtm">
+				                			<p class="textStyle" style="font-size: 12px">A. PROPOSED ORDINANCE:</p>
+				                			<div class="col-md-12 mBtm" id="session_proposed_ordinance"></div>
+				                		</div>
+
+				                		<div class="col-md-12 mBtm">
+				                			<p class="textStyle" style="font-size: 12px">B. PROPOSED RESOLUTIONS:</p>
+				                			<div class="col-md-12 mBtm" id="session_proposed_resolution"></div>
+				                		</div>
+
+				                		<div class="col-md-12 mBtm">
+				                			<p class="textStyle" style="font-size: 12px">C. PETITIONS OR REQUEST FOR REFERRAL:</p>
+				                			<div class="col-md-12" id="session_petition_req"></div>
+				                		</div>
+
+				                		<div class="col-md-12 mBtm">
+				                			<p class="textStyle" style="font-size: 12px">D. VETO MESSAGE:</p>
+				                			<div class="col-md-12">
+						                		
+						                		<div class="col-md-12 mBtm">
+						                			<p class="textStyle" style="font-size: 12px">A. ORDINANCE:</p>
+						                			<div class="col-md-12" id="session_veto_ordinance"></div>
+						                		</div>
+
+						                		<div class="col-md-12 mBtm">
+						                			<p class="textStyle" style="font-size: 12px">B. RESOLUTION:</p>
+						                			<div class="col-md-12" id="session_veto_resolution"></div>
+						                		</div>
+
+				                			</div>
+				                		</div>
+
+			                		</div>
+			                	</div>
+
+								<div class="col-md-12 mBtm">
+			                		<p class="textStyle mBtm" style="font-size: 12px">XI. COMMITEE</p>
+			                		<div class="col-md-12">
+				                		<div class="col-md-12 mBtm">
+				                			<p class="textSylte" style="font-size: 12px">REPORT/INFORMATION:</p>
+				                			<div class="col-md-12">
+				                				<div class="col-md-12" id="rep_info_id">
+				                					<p>NO DATA</p>
+				                				</div>
+				                			</div>
+				                		</div>
+			                		
+			                		</div>
+			                	</div>
+
+								<div class="col-md-12 mBtm">
+			                		<p class="textStyle mBtm" style="font-size: 12px">XII. CALENDAR OF BUSINESS</p>
+			                		<div class="col-md-12">
+				                		
+				                		<div class="col-md-12 mBtm">
+				                			<p class="textStyle" style="font-size: 12px">A. UNFINISHED BUSINESS:</p>
+				                			<div class="col-md-12">
+				                				<p>NONE</p>
+				                			</div>
+				                		</div>
+
+				                		<div class="col-md-12 mBtm">
+				                			<p class="textStyle" style="font-size: 12px">B. BUSINESS OF THE DAY:</p>
+				                			<div class="col-md-12">
+				                				<p>NONE</p>
+				                			</div>
+				                		</div>
+
+				                		<div class="col-md-12 mBtm">
+				                			<p class="textStyle" style="font-size: 12px">B.1. PROPOSED RESOLUTIONS OR ORDINANCE FOR SECOND READING:</p>
+				                			<div class="col-md-12">
+
+				                				<div class="col-md-12 mBtm">
+						                			<p class="textStyle" style="font-size: 12px">A. ORDINANCE:</p>
+						                			<div class="col-md-12" id="proposed_2nd_ordinance"></div>
+						                		</div>
+
+						                		<div class="col-md-12 mBtm">
+						                			<p class="textStyle" style="font-size: 12px">B. RESOLUTION:</p>
+						                			<div class="col-md-12" id="proposed_2nd_resolution"></div>
+						                		</div>
+
+				                			</div>
+				                		</div>
+
+				                		<div class="col-md-12 mBtm">
+				                			<p class="textStyle" style="font-size: 12px">B.2 PROPOSED RESOLUTION OR ORDINANCES CERTIFIED AS URGENT:</p>
+				                			<div class="col-md-12">
+				                				<div class="col-md-12 mBtm">
+						                			<p class="textStyle" style="font-size: 12px">A. ORDINANCE:</p>
+						                			<div class="col-md-12" id="session_urgent_ordinance"></div>
+						                		</div>
+
+						                		<div class="col-md-12 mBtm">
+						                			<p class="textStyle" style="font-size: 12px">B. RESOLUTION:</p>
+						                			<div class="col-md-12" id="session_urgent_resolution"></div>
+						                		</div>
+				                			</div>
+				                		</div>
+
+				                		<div class="col-md-12 mBtm">
+				                			<p class="textStyle" style="font-size: 12px">B.2.2 JUST INSERTED:</p>
+				                			<div class="col-md-12">
+				                				<p>NONE</p>
+				                			</div>
+				                		</div>
+
+
+				                		<div class="col-md-12 mBtm">
+				                			<p class="textStyle" style="font-size: 12px">B.3 UNASSIGNED BUSINESS/MEASURES EXCEPTED FROM THREE READING RULE:</p>
+				                			<div class="col-md-12">
+				                				<p>NONE</p>
+				                			</div>
+				                		</div>
+
+				                		<div class="col-md-12 mBtm">
+				                			<p class="textStyle" style="font-size: 12px">B.3.1 CALENDARED MEASURES:</p>
+				                			<div class="col-md-12">
+				                				<p>NONE</p>
+				                			</div>
+				                		</div>
+
+				                		<div class="col-md-12 mBtm">
+				                			<p class="textStyle" style="font-size: 12px">B.3.2 NEW MEASURES:</p>
+				                			<div class="col-md-12">
+				                				<p>NONE</p>
+				                			</div>
+				                		</div>
+			                		
+			                		</div>
+			                	</div>
+
+								<div class="col-md-12 mBtm">
+			                		<p class="textStyle mBtm" style="font-size: 12px">XIII. SUMMARY CORRECTIONS IN THE TITLE OF APPROVED RESOLUTION/S AND ORDINANCE/S</p>
+			                		<div class="col-md-12">
+			                			<div id="correction_ordinance_id" class="row">
+			                				<div class="col-md-12">
+			                					<p class="textStyle" style="font-size: 12px">ORDINANCE:</p>
+			                				</div>
+			                				<div id="child">
+			                					<div class="row">
+			                						<div class="col-md-6">
+			                									
+			                						</div>
+			                						<div class="col-md-6">
+			                							
+			                						</div>
+			                					</div>
+			                				</div>
+			                			</div>
+
+			                			<div id="correction_reso_id" class="row">
+			                				<div class="col-md-12">
+			                					<p class="textStyle" style="font-size: 12px">RESOLUTION:</p>
+			                				</div>
+			                				<div id="child">
+			                					<div class="row">
+			                						<div class="col-md-6">
+			                									
+			                						</div>
+			                						<div class="col-md-6">
+			                							
+			                						</div>
+			                					</div>
+			                				</div>
+			                			</div>
+
+			                		</div>
+			                	</div>
+
+								<div class="col-md-12 mBtm">
+			                		<p class="textStyle mBtm" style="font-size: 12px">XIV. ANNOUCEMENT</p>
+			                		<div class="col-md-12">
+			                			<div class="form-group">
+			                				<textarea class="form-control" rows="3" id="session_announcement"></textarea>
+			                			</div>
+			                		</div>
+			                	</div>
+
+			                	<div class="col-md-12 mBtm">
+			                		<p class="textStyle mBtm" style="font-size: 12px">XV. BUSINESS ON THIRD READING</p>
+			                		<div class="col-md-12">
+
+		                				<div class="col-md-12 mBtm">
+				                			<p class="textStyle" style="font-size: 12px">A. ORDINANCE:</p>
+				                			<div class="col-md-12" id="session_third_ordinance"></div>
+				                		</div>
+
+				                		<div class="col-md-12 mBtm">
+				                			<p class="textStyle" style="font-size: 12px">B. RESOLUTION:</p>
+				                			<div class="col-md-12" id="session_third_resolution"></div>
+				                		</div>
+
+			                		</div>
+			                	</div>
+
+			                	<div class="col-md-12 mBtm">
+			                		<div class="inline_lbl">
+			                			<p class="textStyle mBtm" style="font-size: 12px">XVI. ADJOURNMENT/CLOSING PRAYER</p>
+			                		</div>
+			                		<div class="inline_lbl">
+			                			<p class="textStyle" style="font-size: 12px"> - - - - - - - - - - - - - - - - - - - - </p>
+			                		</div>
+			                		<div class="inline_lbl">
+			                			<p><span style="font-size: 12px" class="textStyle" id="session_closing_prayer">JOCKEY M. FERNANDEZ</span></p>
+			                		</div>
+
+			                	</div>
+			            	</div>
+			            </div>
+		        	</form>
+	        	</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary btn-sm" onclick="startSession()">Search</button>
+				</div>
+	        </div>
+	    </div>
+	</div>
+<script type="text/javascript">
+
+	$(document).ready(function(){
+        $( "#session2" ).addClass( "selected_page_color" );
+	});
+
+    function get_council_active(){
+    	getDataWithCallback('/get_all_active_councilor', function(res){
+            var datalistId = getbyId('council_list_active');
+            console.log(res)
+            for(var i = 0; i < res.length; i++) {
+                var opt = document.createElement('option');
+                opt.setAttribute('data-id',res[i].info_id)
+                opt.setAttribute('value',res[i].fullname)
+                datalistId.appendChild(opt)
+            }
+        });
+    }
+</script>
+{% endblock %}

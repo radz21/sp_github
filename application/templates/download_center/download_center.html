@@ -1,0 +1,209 @@
+<div class="col-sm-12">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+           <div class="header-title">
+                <h4 class="card-title">DOWNLOAD CENTER</h4>
+
+                <form id="form_download_center">
+                    <input type="text" hidden name="id" value="0">
+                    <p>TITLE</p>
+                    <input type="text" name="title" class="form-control">
+                    <p>FILE</p>
+                    <input type="file" name="download_upload" id="download_upload" multiple class="form-control">
+                    <div style="margin-top: 1rem;">
+                        <button class="btn btn-success">SAVE</button>
+                    </div>
+                </form>
+
+           </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="tbl_download_center" class="table table-bordered" style="width:100%">
+                    <thead>
+                        <th>ID</th>
+                        <th>FILENAME</th>
+                        <th>DESCRIPTION</th>
+                        <th>DATE</th>
+                        <th>ACTION</th>         
+                    </thead>
+                </table>
+            </div>
+       </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $( "#li_download_center" ).addClass( "active" );
+        
+        var form_id='#form_download_center'
+         $(form_id).submit(function(e){
+            var form_save = $(form_id).serializeObject();
+            e.preventDefault();
+
+            swal.fire({
+                title: "Are you sure want to save?",
+                text: "Click ok to continue",
+                type: "info",
+                showCancelButton: true,
+                showLoaderOnConfirm: true,
+                preConfirm: () => {
+                    return fetch(console.log("log"))
+                    .then(
+                        upload_download_center(form_save)
+                    )
+                    .catch(() => {
+                        Swal.fire({
+                          icon: 'error',
+                          title: 'Error occured'
+                        })
+                    })
+                }
+            })
+        })
+
+        load_citezen_charter()
+    })
+
+    function load_citezen_charter(){
+        if ($.fn.DataTable.isDataTable("#tbl_download_center")) {
+            $("#tbl_download_center").DataTable().destroy();
+        }
+
+        var table=$('#tbl_download_center').DataTable( {
+            responsive: true,
+            "processing": true,
+            'bStateSave':true,
+            dom: 'Bfrtip',
+            "ajax": {
+                "type": "POST",
+                "url": '/get_download_center',
+                contentType: 'application/JSON',
+                "dataSrc": function(data) {
+                    data.forEach(function(item){
+                        var edit =`<button  class='btn btn-sm btn-icon text-primary flex-end' title='EDIT' onclick='edit_download_center(this)'>
+                        <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">                            <path fill-rule="evenodd" clip-rule="evenodd" d="M9.3764 20.0279L18.1628 8.66544C18.6403 8.0527 18.8101 7.3443 18.6509 6.62299C18.513 5.96726 18.1097 5.34377 17.5049 4.87078L16.0299 3.69906C14.7459 2.67784 13.1541 2.78534 12.2415 3.95706L11.2546 5.23735C11.1273 5.39752 11.1591 5.63401 11.3183 5.76301C11.3183 5.76301 13.812 7.76246 13.8651 7.80546C14.0349 7.96671 14.1622 8.1817 14.1941 8.43969C14.2471 8.94493 13.8969 9.41792 13.377 9.48242C13.1329 9.51467 12.8994 9.43942 12.7297 9.29967L10.1086 7.21422C9.98126 7.11855 9.79025 7.13898 9.68413 7.26797L3.45514 15.3303C3.0519 15.8355 2.91395 16.4912 3.0519 17.1255L3.84777 20.5761C3.89021 20.7589 4.04939 20.8879 4.24039 20.8879L7.74222 20.8449C8.37891 20.8341 8.97316 20.5439 9.3764 20.0279ZM14.2797 18.9533H19.9898C20.5469 18.9533 21 19.4123 21 19.9766C21 20.5421 20.5469 21 19.9898 21H14.2797C13.7226 21 13.2695 20.5421 13.2695 19.9766C13.2695 19.4123 13.7226 18.9533 14.2797 18.9533Z" fill="currentColor"></path>                            </svg>                        
+                        </button>`
+                        var download = `<a href='static/`+item.path+`' target='_blank'><button type='button' class='btn btn-sm btn-icon text-primary flex-end' title='DOWNLOAD'>
+                        <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11.2301 7.29052V3.2815C11.2301 2.85523 11.5701 2.5 12.0001 2.5C12.3851 2.5 12.7113 2.79849 12.763 3.17658L12.7701 3.2815V7.29052L17.55 7.29083C19.93 7.29083 21.8853 9.23978 21.9951 11.6704L22 11.8861V16.9254C22 19.373 20.1127 21.3822 17.768 21.495L17.56 21.5H6.44C4.06 21.5 2.11409 19.5608 2.00484 17.1213L2 16.9047L2 11.8758C2 9.4281 3.87791 7.40921 6.22199 7.29585L6.43 7.29083H11.23V13.6932L9.63 12.041C9.33 11.7312 8.84 11.7312 8.54 12.041C8.39 12.1959 8.32 12.4024 8.32 12.6089C8.32 12.7659 8.3648 12.9295 8.45952 13.0679L8.54 13.1666L11.45 16.1819C11.59 16.3368 11.79 16.4194 12 16.4194C12.1667 16.4194 12.3333 16.362 12.4653 16.2533L12.54 16.1819L15.45 13.1666C15.75 12.8568 15.75 12.3508 15.45 12.041C15.1773 11.7594 14.7475 11.7338 14.4462 11.9642L14.36 12.041L12.77 13.6932V7.29083L11.2301 7.29052Z" fill="currentColor">
+                            </path>
+                        </svg>                        
+                        </button></a>`
+                        var del_doc = `<button type='button' class='btn btn-sm btn-icon text-danger flex-end' title='DELETE' onclick='delete_download_center(this)'>
+                            <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor">
+                              <path d="M19.3248 9.46826C19.3248 9.46826 18.7818 16.2033 18.4668 19.0403C18.3168 20.3953 17.4798 21.1893 16.1088 21.2143C13.4998 21.2613 10.8878 21.2643 8.27979 21.2093C6.96079 21.1823 6.13779 20.3783 5.99079 19.0473C5.67379 16.1853 5.13379 9.46826 5.13379 9.46826" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              <path d="M20.708 6.23975H3.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              <path d="M17.4406 6.23973C16.6556 6.23973 15.9796 5.68473 15.8256 4.91573L15.5826 3.69973C15.4326 3.13873 14.9246 2.75073 14.3456 2.75073H10.1126C9.53358 2.75073 9.02558 3.13873 8.87558 3.69973L8.63258 4.91573C8.47858 5.68473 7.80258 6.23973 7.01758 6.23973" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                           </svg>
+                        </button>`
+                        item.action = edit + download + del_doc;
+                    });
+                    
+                    return data;
+                }
+            },
+            
+            columns: [
+                { data: "id"},
+                { data: "filename"},
+                { data: "description"},
+                { data: "date_gen"},
+                { data: "action"},
+            ],
+            buttons: [
+                {
+                    extend: 'print',
+                    text: 'Print',
+                    filename: 'file',
+                    title: 'Print',
+                    titleAttr: 'Print'
+                    ,'className': 'btn btn-sm btn-warning'
+                }
+                ,
+                // {
+                //     extend: 'excel',
+                //     text: 'Excel',
+                //     filename: 'file',
+                //     title: 'Print',
+                //     titleAttr: 'Export to excel'
+                //     ,'className': 'btn btn-sm btn-success'
+                // },
+            ],
+            "pagingType": "full_numbers",
+            "pageLength": 8,
+            "order":false
+        });
+    }
+
+
+    function edit_download_center(elem){
+        var tr = $(elem).closest('tr');
+        let dataArr = $('#tbl_download_center').DataTable().row( tr ).data();
+
+        var form=getbyId('form_download_center')
+        form.title.value=dataArr['description']
+        form.id.value=dataArr['id']
+    }
+
+
+    function upload_download_center(form_save){
+        var mydata = new FormData();
+
+        jQuery.each($("#download_upload")[0].files, function(i, file) {
+            mydata.append('file['+i+']', file);
+        });
+
+        mydata.append("Serialized",JSON.stringify(form_save))
+        
+        $.ajax({
+            type: 'POST',
+            url: "/save_download_center",
+            contentType:false,
+            processData:false,
+            cache: false,
+            data:mydata,
+            beforeSend: function() {
+               console.log(mydata)
+            },
+            success: function(res) {
+                $('#tbl_download_center').DataTable().ajax.reload();
+                saved(res)
+            },
+            error: function() {
+                error_in_saving("error occured in sending to");
+            }
+        });
+    }
+
+    function delete_download_center(elem){
+        var tr = $(elem).closest('tr');
+        var dataArr = $('#tbl_download_center').DataTable().row(tr).data()
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+            customClass: 'swal_css',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                
+                sendDataWithCallback('/del_download_center_file',dataArr,function(res){
+                    if(res){
+                        $('#tbl_download_center').DataTable().ajax.reload();
+                        Swal.fire(
+                          'Deleted!',
+                          'Your file has been deleted.',
+                          'success'
+                        )
+                    }
+                })
+            }
+        })
+    }
+</script>

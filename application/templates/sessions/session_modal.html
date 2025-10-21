@@ -1,0 +1,975 @@
+<form id="form_session">
+    <div class="col" style="padding: 20px;">
+        <div class="row">
+            <datalist id="councilor_list"></datalist>
+            <input type="text" hidden name="session_id" value="0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm">
+                        <label for="">SESSION TYPE:</label>
+                        <select class="form-control" name="sp_type" id="sp_type">
+                            <option value="REGULAR">REGULAR SESSION</option>
+                            <option value="SPECIAL">SPECIAL SESSION</option>
+                            <option value="JOINT">JOINT SESSION</option>
+                        </select>
+                    </div>
+
+                     <div class="col-sm">
+                        <label for="">SP/SB Term:</label>
+                        <select class="form-control" name="sp_number" id="sp_number"></select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm">
+                        <label for="">Number of Session:</label>
+                        <input class="form-control" type="text" name="session_number" id="session_number" autocomplete="off">
+                    </div>
+                    <div class="col-sm">
+                        <label for="">Date:</label>
+                        <input class="form-control" type="date" name="session_date" id="session_date" autocomplete="off">
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <!-- <div class="col-sm">
+                        <label for="">Opening Prayer:</label>
+                        <input class="form-control" type="text" autocomplete="off" name="opening_prayer" id="opening_prayer" id="opening_prayer" list="councilor_list" autocomplete="off">
+                    </div>
+                    <div class="col-sm">
+                        <label for="">Recitation of Councilor's Creed:</label>
+                        <input class="form-control" type="text" id="couns_creed" name="couns_creed" list="councilor_list" autocomplete="off">
+                    </div> -->
+                   
+                </div>
+
+                
+            </div>
+            
+            <div class="col-xl-12" style="margin-top:5%;">
+
+                <p>
+                   <a data-bs-toggle="collapse" href="#collapse_intro" role="button" aria-expanded="false" aria-controls="collapse1">
+                    INTRO
+                   </a>
+                </p>
+
+                <div id="collapse_intro" class="collapse">
+                    <div class="card card-body">
+                        <div class="col-md-12">
+                          <div class="video-list">
+                            <ul>
+
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="col-sm">
+                            <input type="file" id="intro_video" name="intro_video" class="form-control d-none" accept=" video/*" />
+                            <button type="button" class="btn btn-secondary" id="intro_videoBtn">Import Your Video<i class="fa fa-camera"></i> </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!--  -->
+
+                <p>
+                    <a data-bs-toggle="collapse" href="#collapse_call_order" role="button" aria-expanded="false" aria-controls="collapse1">
+                        I. CALL TO ORDER
+                    </a>
+                </p>
+
+                <div id="collapse_call_order" class="collapse">
+                    <div class="card card-body">
+                        
+
+                    </div>
+                </div>
+
+                <!--  -->
+
+                <p>
+                  <a data-bs-toggle="collapse" href="#collapse_nation_anthem" role="button" aria-expanded="false" aria-controls="collapse1">
+                    II. NATIONAL ANTHEM
+                  </a>
+                </p>
+
+                <div id="collapse_nation_anthem" class="collapse">
+                    <div class="card card-body">
+                        <div class="col-md-12">
+                          <div class="video-list1">
+                            <ul></ul>
+                          </div>
+                        </div>
+                        <div class="col-sm">
+                            <input type="file" id="national_anthem_video" name="national_anthem_video" class="form-control d-none" multiple="" accept=" video/*" />
+                            <button type="button" class="btn btn-secondary" id="national_anthem_videoBtn">Import Your Video<i class="fa fa-camera"></i> </button>
+                        </div>
+                        <div class="col-sm">
+                            <label for="">National Anthem Lead By:</label>
+                            <input class="form-control" type="text" autocomplete="off" name="national_anthem" id="national_anthem" list="councilor_list" autocomplete="off">
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <!--  -->
+
+                <p>
+                  <a data-bs-toggle="collapse" href="#collapse_opening" role="button" aria-expanded="false" aria-controls="collapse1">
+                    III OPENING PRAYER
+                  </a>
+                </p>
+
+                <div id="collapse_opening" class="collapse">
+                    <div class="card card-body">
+                        <div class="col-md-12">
+                          <div class="video-list2">
+                            <ul>
+
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="col-sm">
+                            <input type="file" id="prayer_video" name="prayer_video" class="form-control d-none" accept=" video/*" />
+                            <button type="button" class="btn btn-secondary" id="prayer_videoBtn">Import Your Video<i class="fa fa-camera"></i> </button>
+                        </div>
+                    </div>
+                    <div class="card card-body">
+                        <div class="col-sm">
+                            <label for="">Opening Prayer:</label>
+                            <input class="form-control" type="text" autocomplete="off" name="opening_prayer" id="opening_prayer" id="opening_prayer" list="councilor_list" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+
+                <!--  -->
+
+                <p>
+                  <a data-bs-toggle="collapse" href="#collapse_recitation" role="button" aria-expanded="false" aria-controls="collapse1">
+                    III RECITATION OF COUNCILOR'S CREED
+                  </a>
+                </p>
+
+                <div id="collapse_recitation" class="collapse">
+                    <div class="card card-body">
+                        <label for="">Recitation of Councilor's Creed:</label>
+                        <input class="form-control" type="text" id="couns_creed" name="couns_creed" list="councilor_list" autocomplete="off">
+                        
+                        <label>Import Your File </label>
+                        <input type="file" name="recitation_file" id="recitation_file" class="form-control" multiple=""/>
+
+                        <div style="margin-top: 8px;">
+                            <ul id="ul_recitation" class="list-group">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!--  -->
+
+                <!-- $('#attendance_coun_modal').modal('show'); -->
+
+                <p onclick="pop_rollcall()"> 
+                  <a data-bs-toggle="collapse" href="#collapse1" role="button" aria-expanded="false" aria-controls="collapse1">
+                    V. ROLL CALL.DETERMINATION OF QUOROM
+                  </a>
+                </p>
+
+                <div id="collapse1" class="collapse">
+                    <div class="card card-body">
+                        <p style="color:red;font-style: italic;">Posted in actual session</p>
+                        <div hidden>
+                            <div class="col-sm-6">
+                                <a href="#" class="btn btn-colour-1" onclick="populateRollcall()">Add</a>
+                            </div>
+                            <div class="col-xl-12">
+                                <div id="div_rollcall">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p>
+                  <a data-bs-toggle="collapse" href="#collapse2" role="button" aria-expanded="false" aria-controls="collapse2">
+                    IV. READING, CONSIDERATION AND APPROVAL OF THE PREVIOUS MINUTES DATED
+                  </a>
+                </p>
+
+                <div id="collapse2" class="collapse">
+                    <div class="card card-body">
+                        <div class="col-xl-12">
+                            <a href="#" class="btn btn-colour-1" onclick="add_reading_consid()">Add</a>
+                            <div style="width: 100%;margin-top: 20px;" id="div_reading_consideration"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <p>
+                  <a data-bs-toggle="collapse" href="#collapse3" role="button" aria-expanded="false" aria-controls="collapse3">
+                    VII. QUESTION HOUR/ VISITOR HOUR- (<i>Official Business only</i>)
+                  </a>
+                </p>
+
+                <div id="collapse3" class="collapse">
+                    <div class="card card-body">
+                        <div class="col-xl-12">
+                            <a href="#" class="btn btn-colour-1" onclick="add_question_hour()">Add</a>
+                            <div style="width: 100%;" id="div_question_hour"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <p>
+                  <a data-bs-toggle="collapse" href="#collapse4" role="button" aria-expanded="false" aria-controls="collapse4">
+                    VIII. PRIVILEGE HOUR - (three [3] minutes - maximum)
+                  </a>
+                </p>
+
+                <div id="collapse4" class="collapse">
+                    <div class="card card-body">
+                        <div class="col-xl-12">
+                            <a href="#" class="btn btn-colour-1" onclick="add_privilege_hour()">Add</a>
+                            <div style="width: 100%;" id="div_privilege_hour"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <p>
+                  <a data-bs-toggle="collapse" href="#collapse_insertiion" role="button" aria-expanded="false" aria-controls="collapse_insertiion">
+                        IX. INSERTION OF THE CALENDAR OF BUSSINESS
+                  </a>
+                </p>
+
+                <div id="collapse_insertiion" class="collapse">
+                    <div class="card card-body">
+                        <div class="col-xl-12">
+                            <p style="font-style:italic;">(Kindly provide copies of draft resolutions/ordinances and references)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <p>
+                  <a data-bs-toggle="collapse" href="#collapse6" role="button" aria-expanded="false" aria-controls="collapse6">
+                        X. READING AND REFERENCE OF BUSINESS
+                  </a>
+                </p>
+
+                <div id="collapse6" class="collapse">
+                    <div class="card card-body">
+                        <div class="col-xl-12">
+                            <p style="background-color: #E6E6FA;">
+                                <a style="font-size: 20px;" data-bs-toggle="collapse" href="#proposed" role="button" aria-expanded="false" aria-controls="proposed">A. PROPOSED ORDINANCE:
+                              </a>
+                            </p>
+
+                            <div class="collapse" id="proposed">
+                                <div class="card card-body">
+                                    <div class="col-xl-12">
+                                        <a href="#" class="btn btn-colour-1" onclick="add_propose_ord()">Add</a>
+                                        <div style="width: 100%;margin-top: 20px;" id="div_propose_ord"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <p style="background-color: #E6E6FA;">
+                                <a style="font-size: 20px;" data-bs-toggle="collapse" href="#resolution" role="button" aria-expanded="false" aria-controls="resolution">B. PROPOSED RESOLUTIONS:
+                              </a>
+                            </p>
+
+                            <div class="collapse" id="resolution">
+                                <div class="card card-body">
+                                    <div class="col-xl-12">
+                                        <a href="#" class="btn btn-colour-1" onclick="add_propose_reso()">Add</a>
+                                        <div style="width: 100%;margin-top: 20px;" id="div_propose_reso"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p style="background-color: #E6E6FA;">
+                                <a style="font-size: 20px;" data-bs-toggle="collapse" href="#petition" role="button" aria-expanded="false" aria-controls="petition">C. PETITIONS OR REQUESTS FOR REFERRAL
+                              </a>
+                            </p>
+
+                            <div class="collapse" id="petition">
+                                <div class="card card-body">
+                                    <div class="col-xl-12">
+                                        <a href="#" class="btn btn-colour-1" onclick="add_petitions_for_refferals()">Add</a>
+                                        <div style="width: 100%;margin-top: 20px;" id="div_petitions_for_refferals"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p style="background-color: #E6E6FA;">
+                                <a style="font-size: 20px;" data-bs-toggle="collapse" href="#c2" role="button" aria-expanded="false" aria-controls="petition">C II. ADDITIONAL REFERRALS
+                              </a>
+                            </p>
+
+                            <div class="collapse" id="c2">
+                                <div class="card card-body">
+                                    <div class="col-xl-12">
+                                        <a href="#" class="btn btn-colour-1" onclick="add_additional_refferals()">Add</a>
+                                        <div style="width: 100%;margin-top: 20px;" id="div_additional_refferals"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p style="background-color: #E6E6FA;">
+                                <a style="font-size: 20px;" data-bs-toggle="collapse" href="#veto" role="button" aria-expanded="false" aria-controls="veto">D. VETO MESSAGE
+                              </a>
+                            </p>
+
+                            <div class="collapse" id="veto">
+                                <div class="card card-body">
+                                    <div class="tab-content">
+                                        <div class="col-xl-12">
+                                            <a href="#" class="btn btn-colour-1" onclick="add_veto_message()">Add</a>
+                                            <div style="width: 100%;margin-top: 20px;" id="div_veto_message"></div>
+                                        </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <p>
+                  <a data-bs-toggle="collapse" href="#collapse7" role="button" aria-expanded="false" aria-controls="collapse7">
+                        XI. COMMITTEE
+                  </a>
+                </p>
+
+                <div id="collapse7" class="collapse">
+                    <div class="card card-body">
+                        <div class="col-xl-12">
+                            <div class="panel-group" id="commite">
+
+                                <p style="background-color: #E6E6FA;">
+                                  <a style="font-size: 20px;" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                    A. REPORT
+                                  </a>
+                                </p>
+
+                                <div class="collapse" id="collapseExample">
+                                    <div class="card card-body">
+                                        <div class="col-xl-12">
+                                            <a href="#" class="btn btn-colour-1" onclick="add_committee_report_()">Add</a>
+                                            <div style="width: 100%;" id="div_committee_report_"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <p style="background-color: #E6E6FA;">
+                                  <a style="font-size: 20px;" data-bs-toggle="collapse" href="#collapseInformation" role="button" aria-expanded="false" aria-controls="collapseInformation">
+                                    B. INFORMATION
+                                  </a>
+                                </p>
+
+                                <div class="collapse" id="collapseInformation">
+                                    <div class="card card-body">
+                                        <div class="col-xl-12">
+                                            <a href="#" class="btn btn-colour-1" onclick="add_committee_information_()">Add</a>
+                                            <div style="width: 100%;" id="div_committee_information_"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <p>
+                  <a data-bs-toggle="collapse" href="#collapse8" role="button" aria-expanded="false" aria-controls="collapse8">
+                     XII. CALENDAR OF BUSINESS
+                  </a>
+                </p>
+
+                <div id="collapse8" class="collapse">
+                    <div class="card card-body">
+                        <div class="col-xl-12">
+                            <p style="background-color: #E6E6FA;">
+                                <a style="font-size: 20px;" data-bs-toggle="collapse" href="#calendar_of_business" role="button" aria-expanded="false" aria-controls="calendar_of_business">A. UNFINISHED BUSINESS
+                                </a>
+                            </p>
+                        
+                            <div class="collapse" id="calendar_of_business">
+                                <div class="card card-body">
+                                    <div class="col-xl-12">
+                                        <a href="#" class="btn btn-colour-1" onclick="add_unfinished()">Add</a>
+                                        <div style="width: 100%;margin-top: 20px;" id="div_unfinished"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-xl-12">
+                            <p style="background-color: #E6E6FA;">
+                                <a style="font-size: 20px;" data-bs-toggle="collapse" href="#calendar_bussiness_of_day" role="button" aria-expanded="false" aria-controls="calendar_bussiness_of_day">B. BUSINESS OF THE DAY
+                                </a>
+                            </p>
+
+                            <div class="collapse" id="calendar_bussiness_of_day">
+                                <div class="card card-body">
+                                    <p style="background-color: #E6E6FA;">
+                                        <a style="font-size: 20px;" data-bs-toggle="collapse" href="#business1" role="button" aria-expanded="false" aria-controls="business1">
+                                            B.1 PROPOSED RESOLUTIONS OR ORDINANCE FOR SECOND READING:
+                                        </a>
+                                    </p>
+                                
+                                    <div class="collapse" id="business1" style="padding: 0px 50px 50px 50px;">
+                                        <div class="col-xl-12">
+                                            <a href="#" class="btn btn-colour-1" onclick="add_bussiness1()">Add</a>
+                                            <div style="width: 100%;margin-top: 20px;" id="div_business1"></div>
+                                        </div>
+                                    </div>
+
+                                    <p style="background-color: #E6E6FA;">
+                                        <a style="font-size: 20px;" data-bs-toggle="collapse" href="#business2" role="button" aria-expanded="false" aria-controls="business2">
+                                            B.2 PROPOSED RESOLUTION OR ORDINANCES 
+                                        </a>
+                                    </p>
+                                
+                                    <div class="collapse" id="business2" style="padding: 0px 50px 50px 50px;">
+
+                                        <p style="background-color: #E6E6FA;">
+                                            <a style="font-size: 20px;" data-bs-toggle="collapse" href="#urgent" role="button" aria-expanded="false" aria-controls="">
+                                                B.2.1 CERTIFIED AS URGENT:
+                                            </a>
+                                        </p>
+
+                                        <div class="collapse" id="urgent">
+                                            <div class="card card-body">
+                                                <div class="col-xl-12">
+                                                    <a href="#" class="btn btn-colour-1" onclick="add_urgent()">Add</a>
+                                                    <div style="width: 100%;margin-top: 20px;" id="div_urgent"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <p style="background-color: #E6E6FA;">
+                                            <a style="font-size: 20px;" data-bs-toggle="collapse" href="#justinserted" role="button" aria-expanded="false" aria-controls="">
+                                                B.2.2 JUST INSERTED:
+                                            </a>
+                                        </p>
+
+                                        <div class="collapse" id="justinserted">
+                                            <div class="panel-body">
+                                                <div class="col-xl-12">
+                                                    <a href="#" class="btn btn-colour-1" onclick="add_just_inserted()">Add</a>
+                                                    <div style="width: 100%;margin-top: 20px;" id="div_just_inserted"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="tab-content">
+                                            <div class="tab-pane fade show active" id="pills-menu_ord_urg" role="tabpanel" aria-labelledby="pills-menu_ord_urg-tab">
+                                                <!-- <h3>ORDINANCE</h3> -->
+                                                
+                                            </div>
+                                            <div class="tab-pane fade" id="pills-menu_reso_urg" role="tabpanel" aria-labelledby="pills-menu_reso_urg-tab">
+                                                <!-- <h3>RESOLUTION</h3> -->
+                                                
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <p style="background-color: #E6E6FA;">
+                                        <a style="font-size: 20px;" data-bs-toggle="collapse" href="#business3" role="button" aria-expanded="false" aria-controls="business3">
+                                            B.3 UNASSIGNED BUSINESS/MEASURES EXCEPTED FROM THREE READING RULE:
+                                        </a>
+                                    </p>
+                                
+                                    <div class="collapse" id="business3">
+                                        <div class="panel-body">
+                                            <p style="background-color: #E6E6FA;text-indent: 40px">
+                                                <a style="font-size: 20px;" data-bs-toggle="collapse" href="#business3-1" role="button" aria-expanded="false" aria-controls="business3-1">B.3.1 CALENDARED MEASURES</a>
+                                            </p>
+                                            <div class="collapse" id="business3-1" style="padding:0px 50px 10px 50px">
+                                                <div class="panel-body">
+                                                    <div class="col-xl-12">
+                                                        <a href="#" class="btn btn-colour-1" onclick="add_calendar_measure()">Add</a>
+                                                        <div style="width: 100%;margin-top: 20px;" id="calendar_measure"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <p style="background-color: #E6E6FA;text-indent: 40px">
+                                                <a style="font-size: 20px;" data-bs-toggle="collapse" href="#business3-2" role="button" aria-expanded="false" aria-controls="business3-2">B.3.2 NEW MEASURES</a>
+                                            </p>
+                                            <div class="collapse" id="business3-2" style="padding:0px 50px 10px 50px">
+                                                <div class="panel-body">
+                                                    <div class="col-xl-12">
+                                                        <a href="#" class="btn btn-colour-1" onclick="add_new_measure()">Add</a>
+                                                        <div style="width: 100%;margin-top: 20px;" id="new_measure"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p>
+                  <a data-bs-toggle="collapse" href="#collapse9" role="button" aria-expanded="false" aria-controls="collapse9">
+                     XIII. SUMMARY CORRECTIONS IN THE TITLE OF APPROVED RESOLUTION/S AND ORDINANCE/S
+                  </a>
+                </p>
+
+                <div id="collapse9" class="collapse">
+                    <p style="font-style: italic; color: red;">Change document title manually if approved. </p>
+                    <div class="card card-body">
+                        <div class="col-xl-12">
+                            <div class="col-xl-12">
+                                <a href="#" class="btn btn-colour-1" onclick="add_summary_correction()">Add</a>
+                                <div style="width: 100%;margin-top: 20px;" id="summary_correction"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p>
+                  <a data-bs-toggle="collapse" href="#collapse10" role="button" aria-expanded="false" aria-controls="collapse10">
+                     XIV. ANNOUNCEMENT
+                  </a>
+                </p>
+
+                <div id="collapse10" class="collapse">
+                    <div class="card card-body">
+                        <div class="col-xl-12">
+                            <a href="#" class="btn btn-colour-1" onclick="add_announcement()">Add</a>
+                            <div style="width: 100%;" id="div_announcement_"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <p>
+                  <a data-bs-toggle="collapse" href="#collapse11" role="button" aria-expanded="false" aria-controls="collapse11">
+                    XV. BUSINESS ON THIRD READING
+                  </a>
+                </p>
+
+                <div id="collapse11" class="collapse">
+                    <div class="card card-body">
+                        <div class="col-xl-12">
+                            <a href="#" class="btn btn-colour-1" onclick="add_bussiness_third()">Add</a>
+                            <div style="width: 100%;margin-top: 20px;" id="div_bussiness_third"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <p>
+                  <a data-bs-toggle="collapse" href="#collapse12" role="button" aria-expanded="false" aria-controls="collapse12">
+                    XVI. ADJOURNMENT/CLOSING PRAYER
+                  </a>
+                </p>
+
+                <div id="collapse12" class="collapse">
+                    <div class="card card-body">
+                        <div class="col-xl-12">
+                            <div id="form-group">
+                                <label>Lead by</label>
+                                <input class="form-control" type="text" name="closing_prayer_lead" list="councilor_list">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary btn-sm">SAVE</button>
+        <button type="button" id="btn_del_session" class="btn btn-danger btn-sm" style="display: none" onclick="delete_session()">DELETE</button>
+    </div>
+</form>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        var form_id='#form_session'
+         $(form_id).submit(function(e){
+            var form_save = $(form_id).serializeObject();
+            e.preventDefault();
+
+            swal.fire({
+                title: "Are you sure want to save?",
+                text: "Click ok to continue",
+                type: "info",
+                showCancelButton: true,
+                showLoaderOnConfirm: true,
+                preConfirm: () => {
+                    return fetch(console.log("log"))
+                    .then(
+                        save_session_(form_save)
+                    )
+                    .catch(() => {
+                        Swal.fire({
+                          icon: 'error',
+                          title: 'Error occured'
+                        })
+                    })
+                }
+            })
+        })
+    })
+
+
+    function pop_rollcall(session_id){
+        sendDataWithCallback('/get_session_attendance', {session_id : byId('session_oob_id').value}, (res)=>{
+            document.getElementById('div_rollcall_session').innerHTML= ""
+            rollCall_ = 0;
+            res.forEach(function(item, index){
+                var form = getbyId('form_rollcall_session')
+                form.session_id.value = item['session_id']
+                populateRollcall_()
+                var id = "rollCall["+index+"][id]";
+                form[id].value = item['roll_call_id'];
+                var name = "rollCall["+index+"][fullname]";
+                form[name].value = item['fullname'];
+                var status = "rollCall["+index+"][status]";
+                form[status].value = item['status'];
+            })
+
+            $('#attendance_coun_modal').modal('show');
+        })
+    }
+
+    var rollCall_ = 0;
+    function populateRollcall_(){
+        var parent = byId("div_rollcall_session");
+
+        var child = createElem('div'),
+
+        inp_hidden = createElem('input'),
+        inp_hidden_info_id = createElem('input'),
+        inp = createElem('input'),
+        sel = createElem('select'),
+
+        opt1 = createElem('option'),
+        opt2 = createElem('option'),
+        opt3 = createElem('option'),
+        opt4 = createElem('option'),
+        opt5 = createElem('option'),
+        btn = createElem('button');
+
+        opt1.innerHTML = "PRESENT";
+        opt2.innerHTML = "ABSENT";
+        opt3.innerHTML = "LEAVE";
+        opt4.innerHTML = "TRAVEL";
+        opt5.innerHTML = "PRESIDING OFFICER";
+
+        opt1.value = "0";
+        opt2.value = "1";
+        opt3.value = "2";
+        opt4.value = "3";
+        opt5.value = "4";
+
+        child.style = "margin-top: 1%;";
+        child.id = "child"+rollCall_;
+
+        inp_hidden.name = "rollCall["+rollCall_+"][id]";
+        inp_hidden_info_id.name = "rollCall["+rollCall_+"][info_id]";
+        inp_hidden.type = "hidden"
+        inp_hidden_info_id.type = "hidden"
+
+        inp.name = "rollCall["+rollCall_+"][fullname]";
+        inp.setAttribute("placeholder","Choose name")
+        inp.className = "form-control";
+        inp.style = "width: 45%;float: left;cursor:pointer";
+        inp.readOnly = true;
+
+        sel.style = "width: 45%;float: left;height:38px";
+        sel.className = "form-control";
+        sel.name = "rollCall["+rollCall_+"][status]";
+
+        btn.type = "button";
+        btn.style = "width: 10%;height:38px";
+        btn.innerHTML = "x";
+        btn.setAttribute('data-inp_id','child'+rollCall_);
+        btn.className = "btn btn-sm btn-danger"
+        btn.onclick = function(){
+            var id = this.getAttribute('data-inp_id')
+            let val = inp_hidden.value
+            sendDataWithCallback('/delete_people_attendance', {id: val}, function(res){
+                saved(res)
+                byId(id).remove();
+            })
+        }
+
+        sel.appendChild(opt1)
+        sel.appendChild(opt2)
+        sel.appendChild(opt3)
+        sel.appendChild(opt4)
+        sel.appendChild(opt5)
+
+        child.appendChild(inp_hidden);
+        child.appendChild(inp_hidden_info_id);
+        
+        child.appendChild(inp);
+        child.appendChild(sel);
+        child.appendChild(btn);
+        parent.insertBefore(child,parent.firstChild);
+        rollCall_++;
+    }
+
+
+
+    $('#intro_videoBtn').click(function() {
+        $(this).parents().find('#intro_video').click();
+    });
+
+    $('#national_anthem_videoBtn').click(function() {
+        $(this).parents().find('#national_anthem_video').click();
+    });
+
+    
+    $('#prayer_videoBtn').click(function() {
+        $(this).parents().find('#prayer_video').click();
+    });
+
+    document.getElementById('intro_video').onchange = e => {
+      $('.video-list ul').empty();
+      const file = e.target.files[0];
+      const url = URL.createObjectURL(file);
+      const li = ` <li> <video controls="controls" src=" ${url} " type="video/mp4" width="400px" height="200px"></video>
+           <span><i class="fa fa-trash"></i></span>
+       </li>`
+      $('.video-list ul').append(li);
+    };
+
+    document.getElementById('national_anthem_video').onchange = e => {
+      $('.video-list1 ul').empty();
+      const file = e.target.files[0];
+      const url = URL.createObjectURL(file);
+      const li = ` <li> <video controls="controls" src=" ${url} " type="video/mp4" width="400px" height="200px"></video>
+           <span><i class="fa fa-trash"></i></span>
+       </li>`
+      $('.video-list1 ul').append(li);
+    };
+
+    document.getElementById('prayer_video').onchange = e => {
+      $('.video-list1 ul').empty();
+      const file = e.target.files[0];
+      const url = URL.createObjectURL(file);
+      const li = ` <li> <video controls="controls" src=" ${url} " type="video/mp4" width="400px" height="200px"></video>
+           <span><i class="fa fa-trash"></i></span>
+       </li>`
+      $('.video-list2 ul').append(li);
+    };
+
+
+
+    function save_session_(form_data){
+        getbyId('loading').style.display = 'block';
+        var mydata = new FormData();
+        
+        if(form_data.attendance) {
+            if(form_data.attendance.length != 0) {
+                var new_data =  form_data.attendance.filter( function(item) {
+                    if (item.names!="") {
+                        var list = byId('councilor_list');
+                        if (item.names != "") {
+                            for(var x=0; x<list.options.length; x++){
+                                if (item.names == list.options[x].value) {
+                                    var data=list.options[x].getAttribute('data-id')
+                                    return item.info_id= data
+                                }
+                            }
+                        }
+                    }
+                });
+                form_data.attendance = new_data;
+            }
+        }else{
+            form_data.attendance = [];
+        }
+
+        mydata.append('data', JSON.stringify(form_data));
+
+        // INTRO 
+        jQuery.each($("#intro_video")[0].files, function(i, file) {
+            mydata.append('intro['+i+']', file);
+        });
+
+        // NATIONAL ANTHEM 
+        jQuery.each($("#national_anthem_video")[0].files, function(i, file) {
+            mydata.append('national_anthem['+i+']', file);
+        });
+
+
+        // PRAYER ANTHEM 
+        jQuery.each($("#prayer_video")[0].files, function(i, file) {
+            mydata.append('prayer['+i+']', file);
+        });
+
+        // RECITATION FILE
+        jQuery.each($("#recitation_file")[0].files, function(i, file) {
+            mydata.append('recitation_of_councilor['+i+']', file);
+        });
+
+        if(form_data.hasOwnProperty('announcement_')){
+            var new_data =  form_data.announcement_.filter( function(item, index) {
+                var fl = byId("announcement_file"+ index).files;
+                var file = [];
+                if (fl.length !=0) {
+                    for (var i = 0; i < fl.length; i++) {
+                        file.push(fl[i])
+                    }
+                }
+
+                item.document_file = file;
+            })
+        }
+
+        if(form_data.hasOwnProperty('question_hour')){
+            var new_data2 =  form_data.question_hour.filter( function(item, index) {
+                var fl = byId("question_hour_file"+ index).files;
+                var file = [];
+                if (fl.length !=0) {
+                    for (var i = 0; i < fl.length; i++) {
+                        file.push(fl[i])
+                    }
+                }
+
+                item.document_file = file;
+            })
+        }
+        
+
+        if(form_data.hasOwnProperty('privilege_hour')){
+            var new_data3 =  form_data.privilege_hour.filter( function(item, index) {
+                var fl = byId("privilege_hour_file"+ index).files;
+                var file = [];
+                if (fl.length !=0) {
+                    for (var i = 0; i < fl.length; i++) {
+                        file.push(fl[i])
+                    }
+                }
+
+                item.document_file = file;
+            })
+        }
+        
+
+        if(form_data.hasOwnProperty('committee_report')){
+            var new_data4 =  form_data.committee_report.filter( function(item, index) {
+                var fl = byId("committee_report_file"+ index).files;
+                var file = [];
+                if (fl.length !=0) {
+                    for (var i = 0; i < fl.length; i++) {
+                        file.push(fl[i])
+                    }
+                }
+
+                item.document_file = file;
+            })
+        }
+        
+
+        if(form_data.hasOwnProperty('committee_information')){
+            var new_data5 =  form_data.committee_information.filter( function(item, index) {
+                var fl = byId("committee_information_file"+ index).files;
+                var file = [];
+                if (fl.length !=0) {
+                    for (var i = 0; i < fl.length; i++) {
+                        file.push(fl[i])
+                    }
+                }
+
+                item.document_file = file;
+            })
+        }
+        
+
+        for ( var key in form_data ) {
+            var data = form_data[key]
+            if( Array.isArray(form_data[key])) {
+                
+                if(key == 'announcement_') {
+                    form_data[key].forEach(function(rd_new) {
+                        if(rd_new.document_file.length !=0) {                            
+                            rd_new.document_file.forEach(function(file) {
+                                mydata.append("announcement_file", file)
+                            })
+                        }
+                    })
+                }
+
+                if(key == 'question_hour') {
+                    form_data[key].forEach(function(rd_new) {
+                        if(rd_new.document_file.length !=0) {                            
+                            rd_new.document_file.forEach(function(file) {
+                                mydata.append("question_hour_file", file)
+                            })
+                        }
+                    })
+                }
+
+                if(key == 'privilege_hour') {
+                    form_data[key].forEach(function(rd_new) {
+                        if(rd_new.document_file.length !=0) {                            
+                            rd_new.document_file.forEach(function(file) {
+                                mydata.append("privilege_hour_file", file)
+                            })
+                        }
+                    })
+                }
+
+                if(key == 'committee_report') {
+                    form_data[key].forEach(function(rd_new) {
+                        if(rd_new.document_file.length !=0) {                            
+                            rd_new.document_file.forEach(function(file) {
+                                mydata.append("committee_report_file", file)
+                            })
+                        }
+                    })
+                }
+
+                if(key == 'committee_information') {
+                    form_data[key].forEach(function(rd_new) {
+                        if(rd_new.document_file.length !=0) {                            
+                            rd_new.document_file.forEach(function(file) {
+                                mydata.append("committee_information_file", file)
+                            })
+                        }
+                    })
+                }
+            }
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: "/save_session_",
+            contentType:false,
+            processData:false,
+            cache: false,
+            data:mydata,
+            success: function(res) {
+                if(res=="session number already exists"){
+                    getbyId('loading').style.display = 'none';
+                    error_in_saving(res)
+                }else{
+                    $('#tbl_session').DataTable().ajax.reload();
+                    getbyId('loading').style.display = 'none';
+                    saved(res)
+                }
+                
+            },
+            error: function() {
+                error_in_saving("error occured in sending to");
+            }
+        });
+    }
+</script>

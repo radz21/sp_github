@@ -1,0 +1,633 @@
+<div class="col-sm-12">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+           <div class="header-title">
+                <h4 class="card-title">Reports</h4>
+           </div>
+        </div>
+
+        <div class="card-body">
+            <div class="container">
+            	<div class="row row-cols-1 row-cols-md-4 g-4">
+            	  <div class="col animate__animated card-report">
+				    <a href="/codification_reports">
+				    	<div class="card text-center">
+					      <span class="card-img-top">
+							<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
+							  <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
+							  <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+							</svg>
+					      </span>
+					      
+					      <div class="card-body">
+					        <h5 class="card-title text-center">Codification Reports</h5>
+					      </div>
+					    </div>
+				    </a>
+				  </div>
+
+				  <div class="col animate__animated card-report">
+				    <a href="#" onclick="sel_print_reports(5)">
+				    	<div class="card text-center">
+					      <span class="card-img-top">
+							<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
+							  <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
+							  <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+							</svg>
+					      </span>
+					      
+					      <div class="card-body">
+					        <h5 class="card-title text-center">Attendance</h5>
+					      </div>
+					    </div>
+				    </a>
+				  </div>
+
+				  <div class="col animate__animated card-report">
+				    <a href="#" onclick="sel_print_reports(7)">
+				    	<div class="card text-center">
+					      <span class="card-img-top">
+							<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-file-richtext" viewBox="0 0 16 16">
+							  <path d="M7 4.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0zm-.861 1.542 1.33.886 1.854-1.855a.25.25 0 0 1 .289-.047l1.888.974V7.5a.5.5 0 0 1-.5.5H5a.5.5 0 0 1-.5-.5V7s1.54-1.274 1.639-1.208zM5 9a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1H5z"/>
+							  <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z"/>
+							</svg>
+					      </span>
+					      <div class="card-body">
+					        <h5 class="card-title text-center">Sangunian Member</h5>
+					      </div>
+					    </div>
+				    </a>
+				  </div>
+
+				  <div class="col animate__animated card-report">
+				    <a href="#" onclick="sel_print_reports(8)">
+				    	<div class="card text-center">
+					      <span class="card-img-top text-center">
+							<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
+							  <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
+							  <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+							</svg>
+					      </span>
+					      <div class="card-body">
+					        <h5 class="card-title text-center">Resolutions</h5>
+					      </div>
+					    </div>
+				    </a>
+				  </div>
+
+				  <div class="col animate__animated card-report">
+				    <a href="#" onclick="sel_print_reports(11)">
+				    	<div class="card text-center">
+					      <span class="card-img-top text-center">
+							<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-file-richtext" viewBox="0 0 16 16">
+							  <path d="M7 4.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0zm-.861 1.542 1.33.886 1.854-1.855a.25.25 0 0 1 .289-.047l1.888.974V7.5a.5.5 0 0 1-.5.5H5a.5.5 0 0 1-.5-.5V7s1.54-1.274 1.639-1.208zM5 9a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1H5z"/>
+							  <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z"/>
+							</svg>
+					      </span>
+					      <div class="card-body">
+					        <h5 class="card-title text-center">Ordinances</h5>
+					      </div>
+					    </div>
+				    </a>
+				  </div>
+
+				  <div class="col animate__animated card-report">
+				    <div class="card text-center">
+				      <a href="#" onclick="sel_print_reports(14)">
+				      	<span class="card-img-top">
+							<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
+							  <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
+							  <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+							</svg>
+					    </span>
+					    <div class="card-body">
+					        <h5 class="card-title text-center">Committees</h5>
+					    </div>
+				      </a>
+				    </div>
+				  </div>
+
+				  <div class="col animate__animated card-report">
+				    <div class="card text-center">
+				      <a href="#" onclick="sel_print_reports(15)">
+				      	<span class="card-img-top">
+							<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
+							  <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
+							  <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+							</svg>
+					    </span>
+					    <div class="card-body">
+					        <h5 class="card-title text-center">Committee Minutes</h5>
+					    </div>
+				      </a>
+				    </div>
+				  </div>
+
+
+				  <div class="col animate__animated card-report">
+				    <div class="card text-center">
+				      <a href="#" onclick="sel_print_reports(16)">
+				      	<span class="card-img-top">
+							<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
+							  <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
+							  <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+							</svg>
+					    </span>
+					    <div class="card-body">
+					        <h5 class="card-title text-center">List of Sessions</h5>
+					    </div>
+				      </a>
+				    </div>
+				  </div>
+
+
+				  <div class="col animate__animated card-report">
+				    <div class="card text-center">
+				      <a href="#" onclick="sel_print_reports(17)">
+				      	<span class="card-img-top">
+							<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
+							  <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
+							  <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+							</svg>
+					    </span>
+					    <div class="card-body">
+					        <h5 class="card-title text-center">Minutes Report</h5>
+					    </div>
+				      </a>
+				    </div>
+				  </div>
+
+				</div>
+            </div>
+       </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+	$(".card-report").hover(
+	  function () {
+	    $(this).addClass("animate__pulse");
+	  },
+	  function () {
+	    $(this).removeClass("animate__pulse");
+	  }
+	);
+
+	$(document).ready(function(){
+		$( "#li_reports" ).addClass( "active" );
+	})
+
+	function sel_print_reports(typ){
+		if(typ==1){
+			getDataWithCallback('/get_city_logo', function(res){
+				if(res){
+					if(res!="No City Logo Uploaded"){
+						getbyId('img_report_office_of_sangunian_city_logo').src="/static/uploads/"+res[0].city_logo
+					}
+				}
+			})
+
+			getDataWithCallback('/get_tbl_config_info', function(res){
+				if(res){
+					getbyId('office_sangunian_city_name').innerHTML=res[0].city_name.replace("CITY", "")
+					getbyId('office_sangunian_province').innerHTML=res[0].province;
+					getbyId('office_sangunian_state_location').innerHTML=(res[0].type ? 'City' : 'Municipality')
+				}
+			})
+			
+			$('#div_integreated_legislative').modal('toggle')
+			
+		}else if(typ==2){
+			getDataWithCallback('/get_city_logo', function(res){
+				if(res){
+					if(res!="No City Logo Uploaded"){
+						getbyId('img_general_list_city_logo').src="/static/uploads/"+res[0].city_logo
+					}
+				}
+			})
+
+			getDataWithCallback('/get_tbl_config_info', function(res){
+				if(res){
+					getbyId('general_list_city_name').innerHTML=res[0].city_name.replace("CITY", "")
+					getbyId('general_list_province').innerHTML=res[0].province;
+					getbyId('general_list_state_location').innerHTML=(res[0].type ? 'City' : 'Municipality')
+				}
+			})
+
+			getDataWithCallback('/get_sp',function(res){
+				$('#sel_options').append(`<option value="" selected> ${'--SELECT--'} </option>`);
+	            for(var x=0; x<res.length; x++){
+	                $('#sel_options').append(`<option value="${res[x].sp_id}"> ${res[x].sp_title} </option>`);
+	            }
+	            $('#sel_options').trigger("chosen:updated")
+
+	            $("#sel_options").chosen().change(function (event) {
+				    getbyId('h_lis_sp').value = $(event.target).val()
+
+				    // sendDataWithCallback('/get_committeeBySp',{sp_id:$(event.target).val()},function(res){
+					// 	if(res){
+					// 		getbyId('sel_options2').innerHTML=""
+					// 		$('#sel_options2').append(`<option value="" selected> ${'--SELECT--'} </option>`);
+				    //         for(var x=0; x<res.length; x++){
+				    //             $('#sel_options2').append(`<option value="${res[x].committee_id}"> ${res[x].committee} </option>`);
+				    //         }
+				    //         $('#sel_options2').trigger("chosen:updated")
+
+				    //         $("#sel_options2").chosen().change(function (event) {
+					// 		    getbyId('h_lis_committee').value = $(event.target).val()
+					// 		});
+					// 	}
+					// })
+
+				    // sendDataWithCallback('/get_committeeBySp',{sp_id:$(event.target).val()},function(res){
+					// 	if(res){
+					// 		getbyId('sel_options2').innerHTML=""
+					// 		$('#sel_options2').append(`<option value="" selected> ${'--SELECT--'} </option>`);
+				    //         for(var x=0; x<res.length; x++){
+				    //             $('#sel_options2').append(`<option value="${res[x].committee_id}"> ${res[x].committee} </option>`);
+				    //         }
+				    //         $('#sel_options2').trigger("chosen:updated")
+
+				    //         $("#sel_options2").chosen().change(function (event) {
+					// 		    getbyId('h_lis_committee').value = $(event.target).val()
+					// 		});
+					// 	}
+					// })
+				});
+			})
+
+			$('#div_general_list_active_referrals').modal('toggle')
+
+		}else if(typ==5){
+			getDataWithCallback('/get_city_logo', function(res){
+				if(res){
+					if(res!="No City Logo Uploaded"){
+						getbyId('attendance_report_city_logo').src="/static/uploads/"+res[0].city_logo
+					}
+				}
+			})
+
+			getDataWithCallback('/get_tbl_config_info', function(res){
+				if(res){
+					getbyId('attendance_report_city_name').innerHTML=res[0].city_name.replace("CITY", "");
+					getbyId('attendance_report_province').innerHTML=res[0].province;
+					getbyId('attendance_report_state_location').innerHTML=(res[0].type ? 'City' : 'Municipality')
+				}
+			})
+
+			$('#div_attendance_report').modal('toggle')
+
+		}else if(typ==7){
+
+			getbyId('sel_master_list').innerHTML=""
+			getbyId('tbody_sp_masterlist').innerHTML=""
+
+			getDataWithCallback('/get_city_logo', function(res){
+				if(res){
+					if(res!="No City Logo Uploaded"){
+						getbyId('img_master_list_city_logo').src="/static/uploads/"+res[0].city_logo
+					}
+				}
+			})
+
+			getDataWithCallback('/get_tbl_config_info', function(res){
+				if(res){
+					getbyId('master_list_city_name').innerHTML=res[0].city_name.replace("CITY", "")
+					getbyId('master_list_province').innerHTML=res[0].province;
+					getbyId('master_list_state_location').innerHTML=(res[0].type ? 'City' : 'Municipality')
+				}
+			})
+
+			getDataWithCallback("/get_sp",function(res){
+	            if(res){
+
+	                var sel_master_list=getbyId('sel_master_list')
+	                $('#sel_master_list').append(`<option value="" disabled selected> ${'--SELECT--'} </option>`); 
+	                for(var x=0; x<res.length;x++){
+	                	var option=createElem('option')
+	                	option.value=res[x].sp_id
+	                	option.innerHTML=res[x].sp_title
+	                	sel_master_list.appendChild(option)
+	                }
+
+	                getbyId('sel_master_list').addEventListener('change', function(){
+	                	getbyId('input_term_of_office').innerHTML=$('#sel_master_list option:selected').text()
+	                	var data={
+	                		sp_id:this.value
+	                	}
+	                	sendDataWithCallback('/get_master_list_sp_members',data,function(res){
+	                		if(res){
+	                			getbyId('tbody_sp_masterlist').innerHTML=""
+	                			var tbody=getbyId('tbody_sp_masterlist')
+
+					            // Vice Mayor
+
+					            var tr2=document.createElement('tr')
+
+					            var td2_1=document.createElement('td')
+					            var td2_2=document.createElement('td')
+					            var td2_3=document.createElement('td')
+					            var td2_4=document.createElement('td')
+					            var td2_5=document.createElement('td')
+
+					            td2_2.innerHTML=res[0].vmayor_fullname
+					            td2_1.innerHTML="Vice Mayor"
+					            td2_3.innerHTML=res[0].vmayor_phone
+					            td2_4.innerHTML=res[0].vmayor_email
+					            td2_5.innerHTML=res[0].vmayor_address
+					            
+
+					            tr2.appendChild(td2_2)
+					            tr2.appendChild(td2_1)
+					            tr2.appendChild(td2_3)
+					            tr2.appendChild(td2_4)
+					            tr2.appendChild(td2_5)
+
+					            tbody.appendChild(tr2)
+
+					            // Secretary
+
+					            var tr3=document.createElement('tr')
+
+					            var td3_1=document.createElement('td')
+					            var td3_2=document.createElement('td')
+					            var td3_3=document.createElement('td')
+					            var td3_4=document.createElement('td')
+					            var td3_5=document.createElement('td')
+
+					            td3_2.innerHTML=res[0].sec_fullname
+					            td3_1.innerHTML="Secretary"
+					            td3_3.innerHTML=res[0].sec_phone
+					            td3_4.innerHTML=res[0].sec_email
+					            td3_5.innerHTML=res[0].sec_address
+
+					            tr3.appendChild(td3_2)
+					            tr3.appendChild(td3_1)
+					            tr3.appendChild(td3_3)
+					            tr3.appendChild(td3_4)
+					            tr3.appendChild(td3_5)
+
+					            tbody.appendChild(tr3)
+
+					            for(var x=0; x<res.length; x++){
+					                var tr=document.createElement('tr')
+
+					                var td1=document.createElement('td')
+					                var td2=document.createElement('td')
+					                var td3=document.createElement('td')
+					                var td4=document.createElement('td')
+					                var td5=document.createElement('td')
+
+					                td2.innerHTML=res[x].councilors
+					                td1.innerHTML="Councilor"
+					                td3.innerHTML=res[x].coun_phone
+					                td4.innerHTML=res[x].coun_email
+					                td5.innerHTML=res[x].coun_address
+
+					                tr.appendChild(td2)
+					                tr.appendChild(td1)
+					                tr.appendChild(td3)
+					                tr.appendChild(td4)
+					                tr.appendChild(td5)
+					                
+					                tbody.appendChild(tr)
+					            }
+	                		}
+	                	})
+	                })
+
+	            }
+	        })
+
+			$('#div_Master_list_of_sangunian_member_by_term_of_office').modal('toggle')
+		}else if(typ==8){
+			getDataWithCallback('/get_city_logo', function(res){
+				if(res){
+					if(res!="No City Logo Uploaded"){
+						getbyId('img_report_list_adopted_reso_city_logo').src="/static/uploads/"+res[0].city_logo
+					}
+				}
+			})
+
+			getDataWithCallback('/get_tbl_config_info', function(res){
+				if(res){
+					getbyId('list_adpoted_reso_city_name').innerHTML=res[0].city_name.replace("CITY", "")
+					getbyId('list_adpoted_reso_province').innerHTML=res[0].province;
+					getbyId('list_adpoted_state_location').innerHTML=(res[0].type ? 'City' : 'Municipality')
+				}
+			})
+
+			// getbyId('p_list_adopted_resolution_by').value=""
+
+			$('#div_list_of_adopted_resolutions_for_period').modal('toggle')
+
+		}else if(typ==11){
+
+			getDataWithCallback('/get_city_logo', function(res){
+				if(res){
+					if(res!="No City Logo Uploaded"){
+						getbyId('img_report_list_enacted_ord_city_logo').src="/static/uploads/"+res[0].city_logo
+					}
+				}
+			})
+
+			getDataWithCallback('/get_tbl_config_info', function(res){
+				if(res){
+					getbyId('list_enacted_ord_city_name').innerHTML=(res[0].city_name).replace("CITY", "")
+					getbyId('list_enacted_ord_province').innerHTML=res[0].province;
+					getbyId('list_enacted_state_location').innerHTML=(res[0].type ? 'City' : 'Municipality')
+				}
+			})
+
+			$('#div_list_of_enacted_for_period').modal('toggle')
+		}else if(typ==12){
+			getbyId('sel_barangay').innerHTML=""
+			getDataWithCallback('/get_city_logo', function(res){
+				if(res){
+					if(res!="No City Logo Uploaded"){
+						getbyId('img_brgy_ordinance_city_logo').src="/static/uploads/"+res[0].city_logo
+					}
+				}
+			})
+
+			getDataWithCallback('/get_tbl_config_info', function(res){
+				if(res){
+					getbyId('brgy_ordinance_city_name').innerHTML=res[0].city_name.replace("CITY", "")
+					getbyId('brgy_ordinance_province').innerHTML=res[0].province
+				}
+			})
+
+			getDataWithCallback("/get_barangay",function(res){
+	            if(res){
+	            	var sel_barangay=getbyId('sel_barangay')
+	                $('#sel_barangay').append(`<option value="" disabled selected> ${'--SELECT--'} </option>`); 
+	                for(var x=0; x<res.length;x++){
+	                	var option=createElem('option')
+	                	option.value=res[x].brgy_id
+	                	option.innerHTML=res[x].barangay
+	                	sel_barangay.appendChild(option)
+	                }
+	            }
+	        })
+
+	        getbyId('sel_barangay').addEventListener('change', function(){
+            	getbyId('input_brgy_ordinance_barangay').value=$('#sel_barangay option:selected').text()
+            	var data={
+            		brgy_id:this.value
+            	}
+            	sendDataWithCallback('/get_barangay_ordinance_report',data,function(res){
+	        		if(res){
+	        			
+	        			if ($.fn.DataTable.isDataTable('#tbl_barangay_ordinance_report')) {
+			                $('#tbl_barangay_ordinance_report').DataTable().destroy();
+			            }
+
+			            var table=$('#tbl_barangay_ordinance_report').DataTable({
+			                data:res,
+			                 columns: [
+			                    {data:"barangay"},
+			                    {data:"title"},
+			                    {data:"description"},
+			                    {data:"path"}
+			                ],
+			                responsive: true,
+					        dom: 'ftipr',
+					        paging:false,
+					        searching:false,
+					        "showNEntries" : false
+			            }); 
+
+	        		}
+        		})
+            })
+
+			$('#div_list_of_barangay_ordinance').modal('toggle')
+
+		}else if(typ==13){
+			getbyId('sel_barangay_brgy_resolution').innerHTML=""
+			getDataWithCallback('/get_city_logo', function(res){
+				if(res){
+					if(res!="No City Logo Uploaded"){
+						getbyId('img_brgy_resolution_city_logo').src="/static/uploads/"+res[0].city_logo
+					}
+				}
+			})
+
+			getDataWithCallback('/get_tbl_config_info', function(res){
+				if(res){
+					getbyId('brgy_resolution_city_name').innerHTML=res[0].city_name.replace("CITY", "")
+					getbyId('brgy_resolution_province').innerHTML=res[0].province
+				}
+			})
+
+			getDataWithCallback("/get_barangay",function(res){
+	            if(res){
+	            	var sel_barangay_brgy_resolution=getbyId('sel_barangay_brgy_resolution')
+	                $('#sel_barangay_brgy_resolution').append(`<option value="" disabled selected> ${'--SELECT--'} </option>`); 
+	                for(var x=0; x<res.length;x++){
+	                	var option=createElem('option')
+	                	option.value=res[x].brgy_id
+	                	option.innerHTML=res[x].barangay
+	                	sel_barangay_brgy_resolution.appendChild(option)
+	                }
+	            }
+	        })
+
+	        getbyId('sel_barangay_brgy_resolution').addEventListener('change', function(){
+            	getbyId('input_brgy_resolution_barangay').innerHTML=$('#sel_barangay_brgy_resolution option:selected').text()
+            	var data={
+            		brgy_id:this.value
+            	}
+            	sendDataWithCallback('/get_barangay_resolution_report',data,function(res){
+	        		if(res){
+	        			
+	        			if ($.fn.DataTable.isDataTable('#tbl_barangay_resolution_report')) {
+			                $('#tbl_barangay_resolution_report').DataTable().destroy();
+			            }
+
+			            var table=$('#tbl_barangay_resolution_report').DataTable({
+			                data:res,
+			                 columns: [
+			                    {data:"barangay"},
+			                    {data:"title"},
+			                    {data:"description"},
+			                    {data:"path"}
+			                ],
+			                responsive: true,
+					        dom: 'ftipr',
+					        paging:false,
+					        searching:false,
+					        "showNEntries" : false
+			            }); 
+
+	        		}
+        		})
+            })
+
+			$('#div_list_of_brgy_resolution').modal('toggle')
+		}
+		else if(typ==14){
+			getDataWithCallback('/get_city_logo', function(res){
+				if(res){
+					if(res!="No City Logo Uploaded"){
+						getbyId('committee_report_city_logo').src="/static/uploads/"+res[0].city_logo
+					}
+				}
+			})
+
+			getDataWithCallback('/get_tbl_config_info', function(res){
+				if(res){
+					getbyId('committee_report_city_name').innerHTML=res[0].city_name.replace("CITY", "")
+					getbyId('committee_report_province').innerHTML=res[0].province;
+					getbyId('committee_report_state_location').innerHTML=(res[0].type ? 'City' : 'Municipality')
+				}
+			})
+			
+			$('#div_commiittee_reports_information_modal').modal('toggle')
+		}
+
+		else if(typ==15){
+
+			getDataWithCallback('/get_city_logo', function(res){
+				if(res){
+					if(res!="No City Logo Uploaded"){
+						getbyId('committee_minutes_city_logo').src="/static/uploads/"+res[0].city_logo
+					}
+				}
+			})
+
+			getDataWithCallback('/get_tbl_config_info', function(res){
+				if(res){
+					getbyId('committee_minutes_city_name').innerHTML=res[0].city_name.replace("CITY", "")
+					getbyId('committee_minutes_province').innerHTML=res[0].province;
+					getbyId('committee_minutes_state_location').innerHTML=(res[0].type ? 'City' : 'Municipality')
+				}
+			})
+			
+			$('#div_committee_minutes_report').modal('toggle')
+		}
+
+		else if(typ==16){
+
+			getDataWithCallback('/get_city_logo', function(res){
+				if(res){
+					if(res!="No City Logo Uploaded"){
+						getbyId('img_list_sessions_city_logo').src="/static/uploads/"+res[0].city_logo
+					}
+				}
+			})
+
+			getDataWithCallback('/get_tbl_config_info', function(res){
+				if(res){
+					getbyId('list_sessions_city_name').innerHTML=res[0].city_name.replace("CITY", "")
+					getbyId('list_sessions_province').innerHTML=res[0].province;
+					getbyId('list_sessions_location').innerHTML=(res[0].type ? 'City' : 'Municipality')
+				}
+			})
+			
+			$('#div_list_of_sessions_modal').modal('toggle')
+		}
+
+		
+	}
+</script>

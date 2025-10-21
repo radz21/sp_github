@@ -1,0 +1,67 @@
+<div class="colfull">
+	<form id="form_back_ground">
+		<div class="colfull">
+			<img id="img_display_bg" style="width: 100%">
+		</div>
+		<div class="colfull">
+			<input name="file" id="file_bg" class="btn-2" type="file" name="bg_img" accept="image/jpg"  onchange="readURL(this,'img_display_bg');">
+		</div>
+		<div class="colfull">
+			<p>Font-color Title</p>
+			<input type="color" name="color" id="color_pick" onchange="change_color()">
+		</div>
+		<div class="colfull" align="center">
+			 <button class="btn btn-success" style="margin-top: 20px;">SAVE</button>
+		</div>
+	</form>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$( "#li_background" ).addClass( "active" );
+
+		var form_id='#form_back_ground'
+		$(form_id).submit(function(e){
+		    e.preventDefault();
+		    var mydata = new FormData();
+		    if($('#file_bg')[0].files[0]){
+		    	mydata.append('file', $('#file_bg')[0].files[0]);
+		    	mydata.append('color', getbyId('color_pick').value); 
+				$.ajax({
+		            type: 'POST',
+		            url:'/send_image',
+		            enctype: 'multipart/form-data',
+		            contentType:false,
+		            processData:false,
+		            data:mydata,
+		            success: function(data) {
+		               saved(data);
+		               $('#div_upload_bg_modal').modal('hide');
+		               get_bg()
+		            },
+		            error: function() {
+		                error_in_saving("error occured in sending to");
+		            }
+		        });
+		    }else{
+		    	change_color()
+		    	$('#div_upload_bg_modal').modal('hide')
+		    }
+		})
+	})
+
+	function change_color(){
+		var data={
+			color_title:getbyId('color_pick').value
+		}
+
+		sendDataWithCallback('/update_color',data,function(res){
+			if(res){
+				getbyId('landing_city').style.color=res[0]['color_title']
+				getbyId('title_landing1').style.color=res[0]['color_title']
+				getbyId('title_landing2').style.color=res[0]['color_title']
+			}
+		})
+	}
+
+</script>

@@ -1,0 +1,24 @@
+<div class="colfull">
+	<form id="form_user">
+		<input type="text" hidden name="h_user" id='login_id' value="0">
+		<div style="width: 50%;margin:auto;margin-top: 20px;">
+			<p id="msg_user" style="color: red"></p>
+			<div id="user_create_or_not">
+				<p style="margin-top: 10px;">Enter Old Password</p>
+				<input type="password" role="presentation" class="form-control" id="inp_old_pass" name="old_pass" required onkeyup="clearAll('msg_user')" autocomplete="new-password">
+			</div>
+			<p>New Username</p>
+			<input type="text" role="presentation" autocomplete="new-password" class="form-control" name="new_username">
+			<p>Enter New Password</p>
+			<input type="password" class="form-control" name="new_pass" required onkeyup="clearAll('msg_user')">
+			<p>Confirm New Password</p>
+			<input type="password" class="form-control" name="confirm_pass" required onkeyup="clearAll('msg_user')">
+			<p>Fullname</p>
+			<input type="text" name="fullname" class="form-control" required onkeyup="clearAll('msg_user')">
+		</div>
+		<div class="colfull fl" align="center">
+			<button type="submit" class="btn btn-success" style="margin-top: 20px;">Submit</button>
+			<button type="button" onclick="delete_user()" class="btn btn-danger" style="margin-top: 20px;">Delete</button>
+		</div>
+	</form>
+</div>

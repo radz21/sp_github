@@ -1,0 +1,892 @@
+<div class="colfull" style="padding: 20px;padding-top: 0px;">
+	<form id="form_ordinance">
+		<input type="hidden" name="" id="h_ordinance_id" value="0">
+		<input type="hidden" name="sp_id" id="h_sp_legislature">
+		<input type="hidden" name="committee_id" id="h_committee_id_ord">
+		<div class="colfull">
+			<div class="row">
+				<div class="col-sm">
+					<label for="">Ordinance Number</label>
+					<input class="form-control" type="text" id="ordinance_no" name="ordinance_no">
+				</div>
+			</div>
+
+			<div class="row">
+                <div class="col-sm">
+                    <label for="">Tracking Number</label>
+					<div class="input-group">
+						<input type="search" class="form-control border border-warning border-1"  placeholder="Tracking No."  id="series_number" name="series_number" required>
+						<button type="button" class="btn btn-outline-primary" title="Find Tracking"> 
+							<svg width="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.38948 8.98403H6.45648C4.42148 8.98403 2.77148 10.634 2.77148 12.669V17.544C2.77148 19.578 4.42148 21.228 6.45648 21.228H17.5865C19.6215 21.228 21.2715 19.578 21.2715 17.544V12.659C21.2715 10.63 19.6265 8.98403 17.5975 8.98403L16.6545 8.98403" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12.0215 2.19044V14.2314" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.10645 5.1189L12.0214 2.1909L14.9374 5.1189" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>                          
+						</button>
+						<button type="button" class="btn btn-outline-danger" title="Clear">
+							 <svg width="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							 	<path fill-rule="evenodd" clip-rule="evenodd" d="M11.9852 21.606C11.9852 21.606 19.6572 19.283 19.6572 12.879C19.6572 6.474 19.9352 5.974 19.3192 5.358C18.7042 4.742 12.9912 2.75 11.9852 2.75C10.9792 2.75 5.26616 4.742 4.65016 5.358C4.03516 5.974 4.31316 6.474 4.31316 12.879C4.31316 19.283 11.9852 21.606 11.9852 21.606Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+							 	<path d="M13.864 13.8249L10.106 10.0669" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+							 	<path d="M10.106 13.8249L13.864 10.0669" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+							 </svg>                        
+						</button>
+					</div>
+                </div>
+            </div>
+
+            <br>
+            <div class="row" hidden>
+                <div class="col-sm">
+                    <label for="">Type of Ordinance</label>
+					<select class="form-control" name="type_ord">
+						<option>Ordinance</option>
+						<option>Appropriation Ordinance</option>
+					</select>
+                </div>
+            </div>
+
+			<div class="row">
+                <div class="col-sm">
+                    <label for="">Governance Classification</label>
+					<select class="form-control" id="sel_ordinance_classification" name="gov_classification"></select>
+                </div>
+            </div>
+
+            <div class="row" hidden>
+                <div class="col-sm">
+                    <label for="">Legislation Year</label>
+					<input class="form-control disabledbutton" type="text" name="year" disabled>
+                </div>
+                <div class="col-sm">
+                    <label for="">Document Tracking #</label>
+					<input class="form-control" type="text" id="tracking_no_ord" name="tracking_no" autofocus>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm">
+                    <label for="">Select Category</label>
+					<select class="chosen-select" id="sel_ordinance_category" multiple></select>
+                </div>
+                <div class="col-sm" hidden>
+                    <label for="">Progress of Ordinance/Action Taken</label>
+                    <select class="form-control" required="" id="status_ordinance" name="status_ordinance">
+						<option value="" selected disabled>--SELECT--</option>
+						<!-- <option value="1">Proposed Ordinance</option>
+						<option value="2">2nd Reading Ordinance</option>
+						<option value="3">3rd Reading Ordinance</option>
+						<option value="4">3rd Reading Ordinance Excemption</option>
+						<option value="5">For mayors Approval</option> -->
+						<option value="6" selected>Approved Ordinance</option>
+						<!-- <option value="7">Veto Ordinance</option>
+						<option value="8">Archive Ordinance</option> -->
+					</select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm">
+                    <label for="">Date Enacted (mm/dd/yy)</label>
+					<input class="form-control" type="date" id="date_enacted_ord" name="date_enacted">
+                </div>
+            </div>
+			
+			
+			<p class="ptop">Ordinance Title</p>
+			<textarea class="form-control" id="ordinance_title" name="ordinance_title" style="resize:vertical;height: 300px;"></textarea>
+
+
+			<div class="panel panel-default">
+			    <div class="panel-heading ">
+			    	<p class="ptop">Ordinance Author 
+			    		<span class="btn btn-sm btn-icon text-primary flex-end" onclick="add_ord_author()">
+			    			<svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+			    				<path fill-rule="evenodd" clip-rule="evenodd" d="M9.5 12.5537C12.2546 12.5537 14.4626 10.3171 14.4626 7.52684C14.4626 4.73663 12.2546 2.5 9.5 2.5C6.74543 2.5 4.53737 4.73663 4.53737 7.52684C4.53737 10.3171 6.74543 12.5537 9.5 12.5537ZM9.5 15.0152C5.45422 15.0152 2 15.6621 2 18.2464C2 20.8298 5.4332 21.5 9.5 21.5C13.5448 21.5 17 20.8531 17 18.2687C17 15.6844 13.5668 15.0152 9.5 15.0152ZM19.8979 9.58786H21.101C21.5962 9.58786 22 9.99731 22 10.4995C22 11.0016 21.5962 11.4111 21.101 11.4111H19.8979V12.5884C19.8979 13.0906 19.4952 13.5 18.999 13.5C18.5038 13.5 18.1 13.0906 18.1 12.5884V11.4111H16.899C16.4027 11.4111 16 11.0016 16 10.4995C16 9.99731 16.4027 9.58786 16.899 9.58786H18.1V8.41162C18.1 7.90945 18.5038 7.5 18.999 7.5C19.4952 7.5 19.8979 7.90945 19.8979 8.41162V9.58786Z" fill="currentColor">
+			    				</path>                            
+			    			</svg> 
+			    		</span>
+			    	</p>
+			    </div>
+			    <div class="panel-body">
+			    	<div class="colfull" id="div_ordinance_author" style="padding:0px 20px 0px 20px">
+						
+					</div>
+			    </div>
+			</div>
+
+			<div class="panel panel-default">
+			    <div class="panel-heading">
+			    	<p class="ptop" >Ordinance CO-Author 
+			    		<span class="btn btn-sm btn-icon text-primary flex-end" onclick="add_ord_co_author()">
+			    			<svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+			    				<path fill-rule="evenodd" clip-rule="evenodd" d="M9.5 12.5537C12.2546 12.5537 14.4626 10.3171 14.4626 7.52684C14.4626 4.73663 12.2546 2.5 9.5 2.5C6.74543 2.5 4.53737 4.73663 4.53737 7.52684C4.53737 10.3171 6.74543 12.5537 9.5 12.5537ZM9.5 15.0152C5.45422 15.0152 2 15.6621 2 18.2464C2 20.8298 5.4332 21.5 9.5 21.5C13.5448 21.5 17 20.8531 17 18.2687C17 15.6844 13.5668 15.0152 9.5 15.0152ZM19.8979 9.58786H21.101C21.5962 9.58786 22 9.99731 22 10.4995C22 11.0016 21.5962 11.4111 21.101 11.4111H19.8979V12.5884C19.8979 13.0906 19.4952 13.5 18.999 13.5C18.5038 13.5 18.1 13.0906 18.1 12.5884V11.4111H16.899C16.4027 11.4111 16 11.0016 16 10.4995C16 9.99731 16.4027 9.58786 16.899 9.58786H18.1V8.41162C18.1 7.90945 18.5038 7.5 18.999 7.5C19.4952 7.5 19.8979 7.90945 19.8979 8.41162V9.58786Z" fill="currentColor">
+			    				</path>                            
+			    			</svg> 
+			    		</span>
+			    	</p>
+			    </div>
+			    <div class="panel-body">
+			    	<div class="colfull" id="div_ordinance_co_author" style="padding:0px 20px 0px 20px">
+						
+					</div>
+			    </div>
+			</div>
+
+
+			<div class="panel panel-default">
+			    <div class="panel-heading">
+			    	<p class="ptop">Ordinance Sponsor 
+			    		<span class="btn btn-sm btn-icon text-primary flex-end" onclick="add_ord_sponsor()">
+			    			<svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+			    				<path fill-rule="evenodd" clip-rule="evenodd" d="M9.5 12.5537C12.2546 12.5537 14.4626 10.3171 14.4626 7.52684C14.4626 4.73663 12.2546 2.5 9.5 2.5C6.74543 2.5 4.53737 4.73663 4.53737 7.52684C4.53737 10.3171 6.74543 12.5537 9.5 12.5537ZM9.5 15.0152C5.45422 15.0152 2 15.6621 2 18.2464C2 20.8298 5.4332 21.5 9.5 21.5C13.5448 21.5 17 20.8531 17 18.2687C17 15.6844 13.5668 15.0152 9.5 15.0152ZM19.8979 9.58786H21.101C21.5962 9.58786 22 9.99731 22 10.4995C22 11.0016 21.5962 11.4111 21.101 11.4111H19.8979V12.5884C19.8979 13.0906 19.4952 13.5 18.999 13.5C18.5038 13.5 18.1 13.0906 18.1 12.5884V11.4111H16.899C16.4027 11.4111 16 11.0016 16 10.4995C16 9.99731 16.4027 9.58786 16.899 9.58786H18.1V8.41162C18.1 7.90945 18.5038 7.5 18.999 7.5C19.4952 7.5 19.8979 7.90945 19.8979 8.41162V9.58786Z" fill="currentColor">
+			    				</path>                            
+			    			</svg> 
+			    		</span>
+			    	</p>
+			    </div>
+			    <div class="panel-body">
+			    	<div class="colfull" id="div_ordinance_sponsor" style="padding:0px 20px 0px 20px">
+						
+					</div>
+			    </div>
+			</div>
+
+			<div class="row" hidden>
+                <div class="col-sm">
+                    <label for="">Ordinance Author <button class="btn btn-primary btn-sm" type="button" onclick="add_author_ordinance()">Add</button></label>
+					<div class="colfull" id="author_ordinance_id" style="padding: 1%;"></div>
+					<datalist id="list_author"></datalist>
+                </div>
+            </div>
+
+			<div class="row" style="margin-top: 20px;">
+                <div class="col-md">
+                    <label for="">Title Description</label>
+					<textarea id="tx_description" class="form-control"></textarea>
+                </div>
+            </div>
+
+			<div class="panel panel-primary" style="margin-top: 30px">
+				<div class="panel-heading">Upload Attachment</div>
+				<div class="panel-body">
+					<div class="colfull">
+						<input type="file" id="ordinance_file" name="file_attach" multiple="" accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.pdf">
+
+						<p style="margin-top: 10px;">Attach File 
+							<span style="font-style: italic;">(Allow pdf, doc ,xls , jpg file only)</span>
+						</p>
+
+						<div class="colfull">
+							<table class="table" id="tbl_add_ordinance_file" style="table-layout: fixed;width: 100% !important" border="1">
+								<thead>
+									<th>File</th>
+									<th>Action</th>
+								</thead>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="row">
+                <div class="col-sm">
+                    <label for="">Select SP Legislature</label>
+                    <select class="chosen-select" id="inp_sp_ord_legislature" name="inp_sp_ord_legislature" onchange="getCommitteeBysp(this.value, 'inp_committee_ordinance')"></select>
+                </div>
+                <div class="col-sm">
+                    <label for="">Session Number</label>
+                    <input class="form-control" type="number" name="session_id" id="inp_session_ordinance">
+                </div>
+            </div>
+
+            <div class="row">
+                <label for="">Reffered Committee</label>
+				<div class="colful">
+					<div class="colfull">
+						<select class="chosen-select" multiple id="inp_committee_ordinance"></select>
+					</div>
+					<div class="col5">
+						<div class="colfull">
+							<button hidden id="btn_ordinance_committee" type="button" onclick="saved_ordinance_committee()">Reffer to Other Committee</button>&nbsp;
+						</div>
+					</div>
+				</div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm">
+                    <label for="">Source of Document</label>
+	                <select class="form-control" onchange="specify_source()" name="source_of_document" id="sel_source_docs">
+						<!-- <option value="" selected disabled>--SELECT--</option>
+						<option value="1">Sangunian Files</option>
+						<option value="2">Sangunian Panlalawigan</option>
+						<option value="3">Other</optio -->n>
+					</select>
+					<div class="colfull" style="display: none" id="div_source_specify">
+						<p class="ptop">Please Specify:</p>
+						<input class="form-control" type="text" id="source_document_specify" name="source_document_specify">
+					</div>
+	            </div>
+            </div>
+
+			<div class="colfull fl">
+				<p class="ptop">Status of Ordinance</p>
+
+				<div class="form-check mb-3">
+                       <input type="checkbox" name="checkBoxCodification" class="form-check-input" id="orginal_3_status_ord">
+                       <label class="form-check-label" for="orginal_3_status_ord">Original.</label>
+                </div>
+
+				<div class="fl">
+                    <div class="row">
+                    	<div class="col-md-4">
+	                    	<div class="form-check mb-3">
+		                       <input type="checkbox" name="checkBoxCodification" class="form-check-input" id="amended_ord">
+		                       <label class="form-check-label" for="amended_ord">Amended by Ord No.</label>
+		                    </div>
+	                    </div>
+	                    <div class="col-md-6" style="position: relative;top: -20px">
+	                    	<input type="text" class="form-control input_none" name="" id="amended_no_ord" list="list_ord_ammend" autocomplete="off">
+					    	<datalist id="list_ord_ammend"></datalist>
+	                    </div>
+                    </div>
+				</div>
+
+				<div class="fl">
+					<div class="row">
+                    	<div class="col-md-4">
+	                    	<div class="form-check mb-3">
+		                        <input type="checkbox" name="checkBoxCodification" class="form-check-input" id="repealed_ord">
+	                       		<label class="form-check-label" for="repealed_ord">Repealed by Ord No.</label>
+		                    </div>
+	                    </div>
+	                    <div class="col-md-6" style="position: relative;top: -20px">
+	                    	<input type="text" class="form-control input_none" name="" id="repealed_no_ord" list="list_ord_repealed" autocomplete="off">
+					    	<datalist id="list_ord_repealed"></datalist>
+	                    </div>
+                    </div>
+				</div>
+
+				<div class="fl">
+					<div class="row">
+                    	<div class="col-md-4">
+	                    	<div class="form-check mb-3">
+		                        <input type="checkbox" name="checkBoxCodification" class="form-check-input" id="supers_ord">
+	                       		<label class="form-check-label" for="supers_ord">Superseded by Ord No.</label>
+		                    </div>
+	                    </div>
+	                    <div class="col-md-6" style="position: relative;top: -20px">
+	                    	<input type="text" class="form-control input_none" name="" id="supers_no_ord" list="list_ord_superseded" autocomplete="off">
+					    	<datalist id="list_ord_superseded"></datalist>
+	                    </div>
+                    </div>
+				</div>
+
+				<div class="fl">
+					<div class="row">
+                    	<div class="col-md-4">
+	                    	<div class="form-check mb-3">
+		                         <input type="checkbox" name="checkBoxCodification" class="form-check-input" id="missing_ord">
+	                       		<label class="form-check-label" for="missing_ord">Missing Ordinance</label>
+		                    </div>
+	                    </div>
+	                    <div class="col-md-6" style="position: relative;top: -20px">
+	                    	<input type="text" class="form-control input_none" name="" id="missing_no_ord" list="list_ord_repealed" autocomplete="off">
+					    	<datalist id="list_ord_repealed"></datalist>
+	                    </div>
+                    </div>
+				</div>
+
+				<div class="fl">
+					<div class="form-check mb-3">
+	                       <input type="checkbox" name="checkBoxCodification" class="form-check-input" id="obsolet_ord">
+	                       <label class="form-check-label" for="obsolet_ord">OBSOLETE Ordinance</label>
+                    </div>
+				</div>
+
+			</div>
+
+			<div class="row">
+                <div class="col-sm">
+                    <label for="">Remarks</label>
+					<input class="form-control" type="text" id="remarks_ord" name="remarks">
+                </div>
+            </div>
+
+            <div class="colfull">
+            	<div class="panel panel-primary">
+					<div class="panel-heading">Upload Supporting Documents</div>
+					<div class="panel-body">
+						<input id="minutes_ordinance_file" style="margin-top: 20px;" type="file" accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.pdf">
+						<p style="margin-top: 10px;">Attach File 
+							<span style="font-style: italic;">(Allow pdf, doc ,xls , jpg file only)</span>
+						</p>
+					</div>
+				</div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm">
+                	<input type="hidden" id="ordinance_minutes_id" value="0">
+                    <label for="" hidden>Files Title</label>
+					<input class="form-control" id="minutes_ordinance" type="text" name="minutes_title" hidden>
+					<div class="colfull">
+						<table id="tbl_add_minutes_file" class="table" style="table-layout: fixed;width: 100% !important" border="1">
+							<thead>
+								<th>File</th>
+								<th>Action</th>
+							</thead>
+						</table>
+					</div>
+                </div>
+            </div>
+
+
+			<div class="colfull">
+				<div class="panel panel-primary">
+					<div class="panel-heading">Veto Attachment</div>
+					<div class="panel-body">
+						<input id="veto_ordinance_file" style="margin-top: 20px;" type="file" accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.pdf">
+
+						<p style="margin-top: 10px;">Attach File 
+							<span style="font-style: italic;">(Allow pdf, doc ,xls , jpg file only)</span>
+						</p>
+
+						<div class="colfull">
+							<table id="tbl_veto_ordinance" class="table" style="table-layout: fixed;width: 100% !important" border="1">
+								<thead>
+									<th>File</th>
+									<th>Action</th>
+								</thead>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="colfull txcenter" style="position: relative;top: 20px;">
+				<button type="submit" class="btn btn-success">SAVE</button>
+				<button type="button" class="btn btn-danger" onclick="del_ordinance()">DELETE</button>
+			</div>
+		</div>
+	</form>
+</div>
+
+<script type="text/javascript">
+	var get_info=[]
+	$(document).ready(function(){
+		loadfirstdatatable('tbl_add_ordinance_file')
+		loadfirstdatatable('tbl_add_minutes_file')
+
+		var form_id='#form_ordinance'
+		$(form_id).submit(function(e){
+		    e.preventDefault();
+
+		    var org_stat=getbyId('orginal_3_status_ord')
+		    var amended_ord=getbyId('amended_ord')
+		    var repealed_ord=getbyId('repealed_ord')
+		    var supers_ord=getbyId('supers_ord')
+		    var missing_ord=getbyId('missing_ord')
+
+		    var mydata_ord = new FormData();
+		    var form = $('#form_ordinance').serializeObject();
+
+		    var ref_committee = [];
+	        $.each($("#inp_committee_ordinance"), function(){            
+	            ref_committee.push($(this).val());
+	        });
+
+	        var categories = [];
+	        $.each($("#sel_ordinance_category"), function(){            
+	            categories.push($(this).val());
+	        });
+
+		    var tx_description = tinymce.get('tx_description').getContent();
+		    form.description = tx_description
+
+		    if (form.input_authors) {
+		    	var new_data1 = form.input_authors.filter(function(item){
+			      	return item[0] != "";
+			    });
+		    }
+		    
+		    if (form.input_co_authors) {
+		    	var new_data2 = form.input_co_authors.filter(function(item){
+			      	return item[0] != "";
+			    });
+		    }
+		    
+		    if (form.input_sponsor) {
+		    	var new_data3 = form.input_sponsor.filter(function(item){
+			      	return item[0] != "";
+			    });
+		    }
+
+		    if(org_stat.checked==true){
+		    	form.original=1
+		    }else{
+		    	form.original=0
+		    }
+
+		    if(amended_ord.checked==true){
+		    	form.ammended_no=getbyId('amended_no_ord').value
+		    }else{
+		    	form.ammended_no=""
+		    }
+
+		    if(repealed_ord.checked==true){
+		    	form.repealed_no=getbyId('repealed_no_ord').value
+		    }else{
+		    	form.repealed_no=""
+		    }
+
+		    if(supers_ord.checked==true){
+		    	form.superseded_no=getbyId('supers_no_ord').value
+		    }
+		    else{
+		    	form.superseded_no=""
+		    }
+		    if(missing_ord.checked==true){
+		    	form.missing_ord=1
+		    }
+		    else{
+		    	form.missing_ord=0
+		    }
+
+		    var flag = 0;
+
+		    form.ordinance_id=getbyId('h_ordinance_id').value
+		    form.minutes_id= getbyId('ordinance_minutes_id').value
+		    form.sp_id=getbyId('inp_sp_ord_legislature').value
+		    form.ref_committee=ref_committee;
+		    form.categories = categories
+
+		    jQuery.each($("#ordinance_file")[0].files, function(i, file) {
+		        mydata_ord.append('file_attach['+i+']', file);
+		    })
+
+		    jQuery.each($("#minutes_ordinance_file")[0].files, function(i, file) {
+		        mydata_ord.append('file_committee_ref['+i+']', file);
+		    })
+
+		    jQuery.each($("#veto_ordinance_file")[0].files, function(i, file) {
+		        mydata_ord.append('file_veto['+i+']', file);
+		    })
+
+		    mydata_ord.append("Serialized",JSON.stringify(form))
+
+		    swal.fire({
+				title: "Are you sure want to save?",
+				text: "Click ok to continue",
+				type: "info",
+				showCancelButton: true,
+				showLoaderOnConfirm: true,
+				preConfirm: () => {
+					return fetch(console.log("log"))
+					.then(
+						$.ajax({
+					        type: 'POST',
+					        url: "/save_ordinance",
+					        contentType:false,
+					        processData:false,
+					        cache: false,
+					        data:mydata_ord,
+					        beforeSend: function() {
+						       console.log(mydata_ord)
+						    },
+					        success: function(res) {
+								if(res=="Ordinance Number Already exists"){
+									error_in_saving(res)
+								}else{
+									$('#div_add_ordinance').modal('toggle');
+
+									if ($.fn.DataTable.isDataTable("#tbl_ordinance")) {
+							            $('#tbl_ordinance').DataTable().ajax.reload();
+							        }
+							        if ($.fn.DataTable.isDataTable("#tbl_2nd_reading")) {
+							            $('#tbl_2nd_reading').DataTable().ajax.reload();
+							        }
+									if ($.fn.DataTable.isDataTable("#tbl_3rd_reading")) {
+							            $('#tbl_3rd_reading').DataTable().ajax.reload();
+							        }
+							        if ($.fn.DataTable.isDataTable("#tbl_proposed_ordinance")) {
+							            $('#tbl_proposed_ordinance').DataTable().ajax.reload();
+							        }
+							        if ($.fn.DataTable.isDataTable("#tbl_3rd_reading_exemption")) {
+							            $('#tbl_3rd_reading_exemption').DataTable().ajax.reload();
+							        }
+							        if ($.fn.DataTable.isDataTable("#tbl_for_approval_ordinance")) {
+							            $('#tbl_for_approval_ordinance').DataTable().ajax.reload();
+							        }
+							        if ($.fn.DataTable.isDataTable("#tbl_approved_ordinance")) {
+							            $('#tbl_approved_ordinance').DataTable().ajax.reload();
+							        }
+							        if ($.fn.DataTable.isDataTable("#tbl_archive_ord")) {
+							            $('#tbl_archive_ord').DataTable().ajax.reload();
+							        }
+
+							        if ($.fn.DataTable.isDataTable("#tbl_appropriation_ordinance")) {
+							            $('#tbl_appropriation_ordinance').DataTable().ajax.reload();
+							        }
+									
+									saved(res)
+								}
+					        },
+					        error: function() {
+					            error_in_saving("error occured in sending to");
+					        }
+					    })
+					)
+					.catch(() => {
+					    Swal.fire({
+					      icon: 'error',
+					      title: 'Error occured'
+					    })
+					})
+				}
+
+			})
+		})
+
+		getDataWithCallback('/get_ordinance_for_number', function(res) {
+	        var datalistId1 = getbyId('list_ord_ammend');
+	        
+	        for(var i = 0; i < res.length; i++) {
+	            var opt = document.createElement('option');
+	            opt.setAttribute('label',res[i].ordinance_title)
+	            
+	            if(res[i].ordinance_number){
+	            	opt.setAttribute('value',res[i].ordinance_number)
+	            }else{
+	            	opt.setAttribute('value','')
+	            }
+
+	            datalistId1.appendChild(opt)
+	        }
+
+	        var datalistId2 = getbyId('list_ord_repealed');
+	        for(var i = 0; i < res.length; i++) {
+	            var opt = document.createElement('option');
+	            opt.setAttribute('label',res[i].ordinance_title)
+
+	            if(res[i].ordinance_number){
+	            	opt.setAttribute('value',res[i].ordinance_number)
+	            }else{
+	            	opt.setAttribute('value','')
+	            }
+	            
+	            datalistId2.appendChild(opt)
+	        }
+
+	        var datalistId3 = getbyId('list_ord_superseded');
+	        for(var i = 0; i < res.length; i++) {
+	            var opt = document.createElement('option');
+	            opt.setAttribute('label',res[i].ordinance_title)
+
+	            if(res[i].ordinance_number){
+	            	opt.setAttribute('value',res[i].ordinance_number)
+	            }else{
+	            	opt.setAttribute('value','')
+	            }
+	            
+	            datalistId3.appendChild(opt)
+	        }
+	        
+	    })
+
+		getDataWithCallback('/get_info', function(res) {
+	        get_info = res
+	    })
+
+		get_gov_classification()
+		get_category();
+	})
+
+	var count_authors=0
+	function add_ord_author(callback){
+		var div =getbyId('div_ordinance_author')
+
+		var div_gen=document.createElement("div")
+		var div_id='gendiv_authors'+count_authors
+		div_gen.id=div_id
+
+		var input=document.createElement('select')
+		input.style="height:33px!important;"
+		var inp_id='input_authors' + count_authors;
+		input.id=inp_id
+		input.name="input_authors["+count_authors+"]";
+
+		var option_blank = document.createElement("option");
+		option_blank.innerHTML = "--SELECT--"
+		option_blank.value = ""
+		option_blank.disabled = true
+		option_blank.selected = true
+
+		input.appendChild(option_blank);
+		get_info.forEach(function(i){
+			var option = document.createElement("option");
+			option.innerHTML = i['fullname'];
+			option.value = i['info_id'];
+			input.appendChild(option);
+		})
+
+		var btn=document.createElement('button')
+		btn.setAttribute('class', "col5 btn btn-sm btn btn-outline-danger")
+		btn.style="float:right"
+		btn.type="button"
+		btn.innerHTML="X"
+		
+		btn.setAttribute('data-div',div_id)
+		btn.setAttribute('data-inp',inp_id);
+		btn.onclick = function() {
+			var id = this.getAttribute('data-div');
+			document.getElementById(id).remove();
+	    };
+		
+		div_gen.appendChild(input)
+		div_gen.appendChild(btn)
+
+		div.appendChild(div_gen)
+
+		$(input).chosen({width: "90%"})
+
+
+		count_authors++;
+		if(callback) {
+			callback(input)
+		}
+	}
+
+	var count_co_authors=0
+	function add_ord_co_author(callback){
+		var div =getbyId('div_ordinance_co_author')
+
+		var div_gen=document.createElement("div")
+		var div_id='gendiv_co_authors'+count_co_authors
+		div_gen.id=div_id
+
+		var input=document.createElement('select')
+		input.setAttribute('class', "col95")
+		var inp_id='inp_co_author' + count_co_authors;
+		input.id=inp_id
+		input.name="input_co_authors["+count_co_authors+"]";
+
+		var option_blank = document.createElement("option");
+		option_blank.innerHTML = "--SELECT--"
+		option_blank.value = ""
+		option_blank.disabled = true
+		option_blank.selected = true
+
+		input.appendChild(option_blank);
+		get_info.forEach(function(i){
+			var option = document.createElement("option");
+			option.innerHTML = i['fullname'];
+			option.value = i['info_id'];
+			input.appendChild(option);
+			
+		})
+
+		var btn=document.createElement('button')
+		btn.setAttribute('class', "col5 btn btn-sm btn btn-outline-danger")
+		btn.style="float:right"
+		btn.type="button"
+		btn.innerHTML="X"
+		
+		btn.setAttribute('data-div',div_id)
+		btn.setAttribute('data-inp',inp_id);
+		btn.onclick = function() {
+			var div=this.getAttribute('data-div');
+			document.getElementById(div).remove();
+	    };
+		
+		div_gen.appendChild(input)
+		div_gen.appendChild(btn)
+		div.appendChild(div_gen)
+
+	 	$(input).chosen({width: "90%"})
+	 	count_co_authors++;
+	    if(callback) {
+			callback(input)
+		}
+	}
+
+
+	var count_sponsor=0
+	function add_ord_sponsor(callback){
+		var div =getbyId('div_ordinance_sponsor')
+
+		var div_gen=document.createElement("div")
+		var div_id='gendiv_sponsor'+count_sponsor
+		div_gen.id=div_id
+
+		var input=document.createElement('select')
+		input.setAttribute('class', "col95")
+		var inp_id='inp_sponsor' + count_sponsor;
+		input.id=inp_id
+		input.name="input_sponsor["+count_sponsor+"]";
+
+		var option_blank = document.createElement("option");
+		option_blank.innerHTML = "--SELECT--"
+		option_blank.value = ""
+		option_blank.disabled = true
+		option_blank.selected = true
+
+		input.appendChild(option_blank);
+		get_info.forEach(function(i){
+			var option = document.createElement("option");
+			option.innerHTML = i['fullname'];
+			option.value = i['info_id'];
+			input.appendChild(option);
+			
+		})
+
+		var btn=document.createElement('button')
+		btn.setAttribute('class', "col5 btn btn-sm btn btn-outline-danger")
+		btn.style="float:right"
+		btn.type="button"
+		btn.innerHTML="X"
+		
+		btn.setAttribute('data-div',div_id)
+		btn.setAttribute('data-inp',inp_id);
+		btn.onclick = function() {
+			var div=this.getAttribute('data-div');
+			document.getElementById(div).remove();
+	    };
+		
+		div_gen.appendChild(input)
+		div_gen.appendChild(btn)
+		div.appendChild(div_gen)
+
+	    $(input).chosen({width: "90%"})
+	    count_sponsor++;
+	    if(callback) {
+			callback(input)
+		}
+	}
+
+	function specify_source(){
+		var typ=getbyId('sel_source_docs').value
+		if(typ=="3"){
+			getbyId('div_source_specify').style.display="block"
+		}else{
+			getbyId('div_source_specify').style.display="none"
+		}
+	}
+
+	function saved_ordinance_committee(){
+		var committee_id=getbyId('h_committee_id_ord').value
+		if(committee_id!=""){
+			var data={
+				committee_id:getbyId('h_committee_id_ord').value,
+				ordinance_id:getbyId('h_ordinance_id').value
+			}
+			swal.fire({
+	            title: "Are you sure want to save?",
+	            text: "Click ok to continue",
+	            type: "info",
+	            showCancelButton: true,
+	            showLoaderOnConfirm: true,
+	            preConfirm: () => {
+	                return fetch(console.log("log"))
+	                .then(
+	                    sendDataWithCallback('/save_ordinance_committee',data,function(res){
+							if(res){
+								saved(res)
+							}
+						})
+	                )
+	                .catch(() => {
+	                    Swal.fire({
+	                      icon: 'error',
+	                      title: 'Error occured'
+	                    })
+	                })
+	            }
+	        })
+		}else{
+			inform("No committee Selected")
+		}
+	}
+
+	function del_ordinance(){
+		Swal.fire({
+		  title: 'Are you sure?',
+		  text: "You won't be able to revert this!",
+		  icon: 'warning',
+		  showCancelButton: true,
+		  confirmButtonColor: '#d33',
+		  cancelButtonColor: '#3085d6',
+		  confirmButtonText: 'Yes, delete it!',
+		  customClass: 'swal_css',
+		}).then((result) => {
+			if (result.isConfirmed) {
+				Swal.fire(
+				  'Deleted!',
+				  'Your file has been deleted.',
+				  'success'
+				)
+				var data ={
+					ordinance_id:getbyId('h_ordinance_id').value
+				}
+				sendDataWithCallback('/del_ordinance',data,function(res){
+					$('#div_add_ordinance').modal('toggle');
+
+					if ($.fn.DataTable.isDataTable("#tbl_ordinance")) {
+			            $('#tbl_ordinance').DataTable().ajax.reload();
+			        }
+			        if ($.fn.DataTable.isDataTable("#tbl_2nd_reading")) {
+			            $('#tbl_2nd_reading').DataTable().ajax.reload();
+			        }
+					if ($.fn.DataTable.isDataTable("#tbl_3rd_reading")) {
+			            $('#tbl_3rd_reading').DataTable().ajax.reload();
+			        }
+			        if ($.fn.DataTable.isDataTable("#tbl_proposed_ordinance")) {
+			            $('#tbl_proposed_ordinance').DataTable().ajax.reload();
+			        }
+			        if ($.fn.DataTable.isDataTable("#tbl_3rd_reading_exemption")) {
+			            $('#tbl_3rd_reading_exemption').DataTable().ajax.reload();
+			        }
+			        if ($.fn.DataTable.isDataTable("#tbl_for_approval_ordinance")) {
+			            $('#tbl_for_approval_ordinance').DataTable().ajax.reload();
+			        }
+			        if ($.fn.DataTable.isDataTable("#tbl_approved_ordinance")) {
+			            $('#tbl_approved_ordinance').DataTable().ajax.reload();
+			        }
+			        if ($.fn.DataTable.isDataTable("#tbl_archive_ord")) {
+			            $('#tbl_archive_ord').DataTable().ajax.reload();
+			        }
+
+			        if ($.fn.DataTable.isDataTable("#tbl_appropriation_ordinance")) {
+			            $('#tbl_appropriation_ordinance').DataTable().ajax.reload();
+			        }
+					// window.location.href=window.location.href;
+				})
+			}
+		})
+	}
+
+	function clear_ordinance(){
+		getbyId('h_ordinance_id').value = "0";
+		getbyId("h_sp_legislature").value = "";
+	}
+
+	var author_count = 0;
+	function add_author_ordinance(){
+		var parent = getbyId('author_ordinance_id');
+		var child = document.createElement('div'),
+		inp = document.createElement('input'),
+		btn = document.createElement('button');
+
+		child.className = "row";
+		inp.className = "mb10 col-md-10";
+		inp.type = "text";
+		inp.name = "author"+author_count;
+		inp.setAttribute('list','list_author');
+		inp.setAttribute('autocomplete','off');
+		inp.setAttribute("placeholder",'Author');
+		inp.style = "height: 30px!important;margin-left: 1%;"	
+		btn.className = 'btn btn-danger btn-sm col-md-1'
+		btn.innerHTML = "x"
+		child.appendChild(inp)
+		child.appendChild(btn)
+		parent.append(child);
+		author_count++;
+	}
+</script>

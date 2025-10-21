@@ -1,0 +1,65 @@
+{% extends 'landing_page/index.html'%}
+
+{% block body %}
+	<div class="container my-5">
+		<p class="lead" style="text-align:center; font-weight: bold;">Downloadable Files</p>
+		<div>
+			<table class="table table-hover" style="table-layout: fixed; width: 100%;">
+				<colgroup>
+					<col style="width: 10px">
+					<col style="width: 25px">
+					<col style="width: 7px">
+				</colgroup>
+				<thead>
+					<tr>
+						<th>FILENAME</th>
+						<th>DESCRIPTION</th>
+						<th>DOWNLOAD</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% if data %}
+						{% for item in data %}
+							<tr>
+								<td>{{ item.filename }}</td>
+								<td>{{ item.description }}</td>
+								<td>
+									<button class="btn btn-sm btn-success">
+										<a style="color: white;" href="/static/uploads/{{ item.path }}" target="_blank">
+											<i class="bi bi-arrow-down-square" style="font-size: 12px !important"></i>
+										</a>
+									</button>
+									
+								</td>
+							</tr>
+						{% endfor %}
+					{% else %}
+						<tr>
+							<td style="text-align:center;" colspan="3">Please add downloadable files in system configuration</td>
+						</tr>
+					{% endif %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		$('document').ready(function(){
+            getDataWithCallback('/get_city_name', function(res){
+                if(res[0].type==null || res[0].type==""){
+                    var type = 'SANGUNIANG BAYAN';
+                    getbyId('act_members_sp_sb').innerHTML="SB MEMBERS";
+                    getbyId('footer_text').innerHTML = type
+                }else{
+                    var type = 'SANGUNIANG PANLUNGSOD';
+                    getbyId('act_members_sp_sb').innerHTML="SP MEMBERS";
+                    getbyId('footer_text').innerHTML = type
+                }
+
+                getbyId('lan_cityname').innerHTML=res[0]['city_name'];
+            })
+        })
+	</script>
+
+	
+{% endblock%}

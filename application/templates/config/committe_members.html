@@ -1,0 +1,279 @@
+<div class="colfull" style="padding-bottom: 20px;">
+	<div class="colfull" style="padding: 0px;">	
+		<input type="hidden" name="committee_id" id="h_committee_id" value="0">
+
+		<ul class="nav nav-tabs" id="myTab" role="tablist">
+			<li class="nav-item" role="presentation">
+				<button class="nav-link active" id="tab1-tab" data-bs-toggle="tab" data-bs-target="#tab1" type="button" role="tab" aria-controls="home" aria-selected="true">Committee Info</button>
+			</li>
+			<li class="nav-item" role="presentation">
+				<button class="nav-link" id="tab2-tab" data-bs-toggle="tab" data-bs-target="#tab2" type="button" role="tab" aria-controls="2" aria-selected="false">Referred Ordinance</button>
+			</li>
+			<li class="nav-item" role="presentation">
+				<button class="nav-link" id="tab3-tab" data-bs-toggle="tab" data-bs-target="#tab3" type="button" role="tab" aria-controls="3" aria-selected="false">Referred Petitions</button>
+			</li>
+			<li class="nav-item" role="presentation">
+				<button class="nav-link" id="tab4-tab" data-bs-toggle="tab" data-bs-target="#tab4" type="button" role="tab" aria-controls="4" aria-selected="false">Referred Resolution</button>
+			</li>
+		</ul>
+
+		<div class="tab-content" id="myTabContent">
+
+			<div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+				<div class="colfull" style="padding: 20px 10px 10px 10px;">
+					<form id="form_committee">
+						<input type="hidden" name="co_chairman" id="h_co_chairman">
+						<div class="colfull" >
+
+							<p>SANGUNIAN COUNCIL</p>
+							<select class="form-control chosen-select"  name="sangunian_council" id="inpt_sangunian_council" required=""></select>
+
+							<p>Committee Name</p>
+							<input class="form-control" type="text" name="committee_name" required="">
+							<p>Committee Chairman</p>
+
+							<select class="form-control chosen-select"  name="committee_chair" id="inpt_committee_chair" required=""></select>
+							<p>Co Chairman</p>
+							<select class="form-control chosen-select"  name="co_chairman" id="inpt_committee_cochair"></select>
+
+							<p>Email</p>
+							<input class="form-control" type="email" name="committee_email">
+
+							<p>Phone</p>
+							<input class="form-control" type="text" name="phone">
+
+						</div>
+						<div class="colfull" style="margin-top: 20px;">
+							<button type="button" class="btn btn-primary" onclick="add_members()">Add Members</button>
+							<div id="div_committee_mem" style="padding:50px;"></div>
+						</div>
+						<div class="colfull txcenter">
+							<button type="submit" class="btn btn-success">SAVE</button>
+							<button onclick="del_committee()" type="button" class="btn btn-danger">DELETE</button>
+						</div>
+					</form>
+				</div>
+			</div>
+
+		  	<div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab" style="overflow:auto;">
+		  		<div class="colfull">
+					<table id="tbl_committee_ordinance_refferals" class="table table-striped" border="1" style="width:100%!important">
+						<thead>
+							<th>Id</th>
+							<th>Title</th>
+							<th>Status of Document</th>
+							<th>Date Referal</th>
+							<th>Action</th>
+						</thead>
+						<tbody></tbody>
+					</table>					
+				</div>
+			</div>
+
+		  	<div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab" style="overflow:auto;">
+				<div class="colfull">
+					<table class="table table-striped" border="1" id="tbl_committee_petition" style="width:100%!important">
+						<thead>
+							<th>Id</th>
+							<th>Title</th>
+							<th>Date Referal</th>
+							<th>Action</th>
+						</thead>
+					</table>
+				</div>
+		  	</div>
+
+			<div class="tab-pane fade" id="tab4" role="tabpanel" aria-labelledby="tab4-tab" style="overflow:auto;">
+			  	<div class="colfull">
+					<table class="table table-striped" border="1" id="tbl_committee_resolution" style="width:100%!important">
+						<thead>
+							<th>Id</th>
+							<th>Title</th>
+							<th>Date Referal</th>
+							<th>Action</th>
+						</thead>
+					</table>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+var p_info = [];
+
+$(document).ready(function(){
+	$('#myTab a:last').tab('show')
+	getSangunianCouncil()
+
+	var form_id='#form_committee'
+	 $(form_id).submit(function(e){
+	 	e.preventDefault();
+	 	var form_save = $(form_id).serializeObject();
+
+	 	if(form_save.hasOwnProperty('committee_mem')){
+	 		var new_data3 = form_save.committee_mem.filter(function(item){
+	    		return item[0] != "";
+		    });
+	 	}
+	 		
+	    form_save.members = new_data3;
+	 	form_save.committee_id=getbyId('h_committee_id').value
+
+        swal.fire({
+			title: "Are you sure want to save?",
+			text: "Click ok to continue",
+			type: "info",
+			showCancelButton: true,
+			showLoaderOnConfirm: true,
+			preConfirm: () => {
+				return fetch(console.log("log"))
+				.then(
+					sendDataWithCallback('/save_committee',form_save,function(res){
+						$('#tbl_committee').DataTable().ajax.reload();
+						$('#div_committee').modal('toggle')
+						saved(res)
+					})
+				)
+				.catch(() => {
+				    Swal.fire({
+				      icon: 'error',
+				      title: 'Error occured'
+				    })
+				})
+			}
+		})
+    })
+
+	// getDataWithCallback('/sel_personal_info', function(res) {
+	// 	$('#inpt_committee_chair').append(`<option value="" disabled selected> ${'--SELECT--'} </option>`); 
+	// 	$('#inpt_committee_cochair').append(`<option value="" disabled selected> ${'--SELECT--'} </option>`); 
+		
+    //     for(var x=0; x<res.length; x++){
+    //         $('#inpt_committee_chair').append(`<option value="${res[x]['fullname']}"> ${res[x]['fullname']} </option>`);
+    //         $('#inpt_committee_cochair').append(`<option value="${res[x]['info_id']}"> ${res[x]['fullname']} </option>`); 
+    //     }
+
+    //     $('#inpt_committee_chair').trigger("chosen:updated")
+    //     $('#inpt_committee_cochair').trigger("chosen:updated")
+
+    //     p_info = res
+
+	// })
+})
+
+var arr_committee_mem=[];
+var committee_mem_id=[];
+var committee_mem_counter=0;
+
+function getSangunianCouncil(){
+	getDataWithCallback('/get_sp',function(res){
+        $('#inpt_sangunian_council').chosen({width:"100%"})
+        $('#inpt_sangunian_council').append(`<option value="" disabled selected> ${'--SELECT--'} </option>`);
+        
+        for(var x=0; x<res.length; x++){
+            $('#inpt_sangunian_council').append(`<option value="${res[x].sp_id}"> ${res[x].sp_title} </option>`);
+        }
+        $('#inpt_sangunian_council').trigger("chosen:updated")
+
+    })
+}
+
+function add_members(){
+	committee_mem_counter++;
+	var div=getbyId('div_committee_mem')
+	var div1=document.createElement('div')
+
+	div1.style="padding-bottom:3px;width:100%!important"
+	div1.id='committee_mem'+committee_mem_counter
+
+	var select=document.createElement('select')
+	select.id='committee_mem_inp'+committee_mem_counter;
+	var btn=document.createElement('button')
+
+	select.setAttribute("class", "col30")
+	select.name="committee_mem["+committee_mem_counter+"]";
+	select.required = true
+
+	var option_blank = document.createElement("option");
+	option_blank.innerHTML = "--SELECT--"
+	option_blank.value = ""
+	option_blank.disabled = true
+	option_blank.selected = true
+
+	select.appendChild(option_blank);
+	
+	var inp_id='committee_mem'+committee_mem_counter
+	arr_committee_mem.push(inp_id)
+
+	this.addEventListener('change', function(){
+
+	})
+
+	btn.setAttribute("class", "col5 btn-danger btn btn-sm")
+	btn.innerHTML="X"
+	btn.type="button"
+	btn.setAttribute('data-div',committee_mem_counter)
+	btn.setAttribute('data-inp',inp_id);
+	btn.style="float:right"
+	btn.onclick=function(){
+		var data_id=this.getAttribute('data-div');
+		var div='committee_mem'+data_id
+		getbyId(div).remove();
+		var inp=this.getAttribute('data-inp');
+		for(var i=0; i<arr_committee_mem.length;i++){
+			if(arr_committee_mem[i]==inp){
+				arr_committee_mem.splice(i,1);
+				committee_mem_id.splice(i,1);
+			}
+		}
+	}
+
+	div1.appendChild(select)
+	div.appendChild(div1)
+
+	p_info.forEach(function(i){
+		var option = document.createElement("option");
+		option.innerHTML = i['fullname'];
+		option.value = i['info_id'];
+		select.appendChild(option);
+	})
+
+	$(select).chosen({width: "90%"})
+	div1.appendChild(btn)
+	div.insertBefore(div1,div.firstChild);
+}
+
+
+function del_committee(){
+	Swal.fire({
+		title: 'Are you sure?',
+		text: "You won't be able to revert this!",
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#d33',
+		cancelButtonColor: '#3085d6',
+		confirmButtonText: 'Yes, delete it!',
+		customClass: 'swal_css',
+	}).then((result) => {
+		if (result.isConfirmed) {
+			Swal.fire(
+			  'Deleted!',
+			  'Your file has been deleted.',
+			  'success'
+			)
+			var data={
+				committee_id:getbyId('h_committee_id').value
+			}
+			sendDataWithCallback('/del_committee',data,function(res){
+				getbyId('form_committee').reset()
+				$("#tbl_committee").dataTable().fnDestroy();
+				load_committe()
+				$('#div_committee').modal('toggle');
+				saved(res)
+			})
+		}
+	})
+}
+</script>

@@ -1,0 +1,43 @@
+{% extends 'landing_page/index.html'%}
+
+{% block body %}
+	<div class="container my-5">
+		<p class="lead" style="text-align:center; font-weight: bold;">Rules and Procedure</p>
+		{% if data %}
+			{% if data[0]['rules'] == None or data[0]['rules']=="" %}
+				<p>Please add rules and procedure in system configuration</p>
+			{% else %}
+				<p id="p_r_txt" style="display: none">
+					{{ data[0]["rules"] }}
+				</p>
+				<div id="rules_txt">
+					
+				</div>
+				<script type="text/javascript">
+					document.getElementById('rules_txt').innerHTML = document.getElementById('p_r_txt').innerText
+				</script>
+				
+			{% endif %}
+
+		{% endif %}
+	</div>
+
+	<script type="text/javascript">
+		$('document').ready(function(){
+			document.getElementById('menu_about').style.color = "black";
+            getDataWithCallback('/get_city_name', function(res){
+                if(res[0].type==null || res[0].type==""){
+                    var type = 'SANGUNIANG BAYAN';
+                    getbyId('act_members_sp_sb').innerHTML="SB MEMBERS";
+                    getbyId('footer_text').innerHTML = type
+                }else{
+                    var type = 'SANGUNIANG PANLUNGSOD';
+                    getbyId('act_members_sp_sb').innerHTML="SP MEMBERS";
+                    getbyId('footer_text').innerHTML = type
+                }
+
+                getbyId('lan_cityname').innerHTML=res[0]['city_name'];
+            })
+        })
+	</script>
+{% endblock %}

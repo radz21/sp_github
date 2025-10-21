@@ -1,0 +1,40 @@
+{% extends 'landing_page/index.html'%}
+
+{% block body %}
+	<div class="container my-5">
+		<p class="lead" style="text-align:center; font-weight: bold;">Citizens Charter</p>
+		{% if data %}
+			{% for item in data %}
+				<h3>{{ item.filename }}</h3>
+				<object width="100%" height="500" type="application/pdf" data="/static/uploads/{{ item.path }}">
+				    <p>Error in Loading PDF</p>
+				</object>
+
+			{% endfor %}
+		{% else %}
+			<p>Please add citizens charter in system configuration</p>
+		{% endif %}
+	</div>
+
+<script type="text/javascript">
+	$('document').ready(function(){
+
+		document.getElementById('menu_about').style.color = "black";
+		getDataWithCallback('/get_city_name', function(res){
+	        if(res[0].type==null || res[0].type==""){
+	            var type = 'SANGUNIANG BAYAN';
+	            getbyId('act_members_sp_sb').innerHTML="SB MEMBERS";
+	            getbyId('footer_text').innerHTML = type
+	        }else{
+	            var type = 'SANGUNIANG PANLUNGSOD';
+	            getbyId('act_members_sp_sb').innerHTML="SP MEMBERS";
+	            getbyId('footer_text').innerHTML = type
+	        }
+
+	        getbyId('lan_cityname').innerHTML=res[0]['city_name'];
+		})
+	})
+</script>
+	
+{% endblock %}
+

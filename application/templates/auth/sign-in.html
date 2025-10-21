@@ -1,0 +1,770 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title id="login_title"></title>
+      
+      <!-- Favicon -->
+      <link rel="shortcut icon" href="../static/images/favicon.ico" />
+      <!-- Library / Plugin Css Build -->
+      <link rel="stylesheet" href="../static/css/core/libs.min.css" />
+      <!-- Hope Ui Design System Css -->
+      <link rel="stylesheet" href="../static/css/hope-ui.min.css?v=1.2.0" />
+      <!-- Custom Css -->
+      <link rel="stylesheet" href="../static/css/custom.min.css?v=1.2.0" />
+      <!-- Dark Css -->
+      <link rel="stylesheet" href="../static/css/dark.min.css"/>
+      <!-- Customizer Css -->
+      <link rel="stylesheet" href="../static/css/customizer.min.css" />
+      <!-- RTL Css -->
+      <link rel="stylesheet" href="../static/css/rtl.min.css"/>
+
+      <link rel="stylesheet" href="../static/css/style.css"/>
+
+      <link rel="stylesheet" type="text/css" href="../static/css/bootstrap-datepicker.css">
+      <link rel="stylesheet" type="text/css" href="../static/js/chosen/chosen.min.css">
+  
+      <!-- App Script -->
+      <script type="text/javascript" src="../static/js/jquery.min.js"></script>
+      <script type="text/javascript" src="../static/js/jquery-3.5.1.js"></script>
+
+      <script type="text/javascript" src="../static/js/pdfmake.min.js"></script>
+      <script type="text/javascript" src="../static/js/printJS.js"></script>
+      
+      <script type="text/javascript" src="../static/js/script.js"></script>
+      <script type="text/javascript" src="../static/js/jquery.dataTables.min.js"></script>
+      <script type="text/javascript" src="../static/js/dataTables.buttons.min.js"></script>
+      
+      <script type="text/javascript" src="../static/js/buttons.html5.min.js"></script>
+      <script type="text/javascript" src="../static/js/buttons.print.min.js"></script>
+      <script type="text/javascript" src="../static/js/print.min.js"></script>
+      <script type="text/javascript" src="../static/js/jszip.min.js"></script>
+      <script type="text/javascript" src="../static/js/loadDataTable.js"></script>
+      <script type="text/javascript" src="../static/js/api.js"></script>
+      <script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
+      <script type="text/javascript" src="../static/js/swal.js"></script>
+      <script type="text/javascript" src="../static/datajs/session.js"></script>
+      <script type="text/javascript" src="../static/js/moment.js"></script>
+      <script type="text/javascript" src="../static/js/bootstrap-datepicker.js"></script>
+      <script src="../static/js/jquery.easing.min.js"></script>
+
+      <script src="static/js/hope-ui.js" defer=""></script>
+      
+      <style>
+        .swal2-popup {
+           font-size: 16px !important;
+        }
+
+        html, body {
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+  
+        /* Full-screen gradient background */
+        body {
+          background: linear-gradient(180deg, rgb(49, 99, 120), rgb(12, 97, 33));
+          background-size: cover;
+          background-attachment: fixed;
+        }
+  
+        /* Full height section */
+        .login-content {
+          height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+  
+        /* Login card design */
+        .login-card {
+          width: 100%;
+          max-width: 420px;
+          background: rgba(255, 255, 255, 0.96);
+          border-radius: 12px;
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+          padding: 2rem;
+        }
+  
+        .login-card h2 {
+          text-transform: uppercase;
+          font-size: 22px;
+          margin-bottom: 10px;
+        }
+  
+        .form-control {
+          border-radius: 0.375rem;
+          box-shadow: none !important;
+        }
+  
+        /* Show password icon */
+        .position-relative {
+          position: relative;
+        }
+  
+        .toggle-password {
+          position: absolute;
+          right: 10px;
+          top: 65%;
+          transform: translateY(-50%);
+          border: none;
+          background: transparent;
+          cursor: pointer;
+          color: #6c757d;
+        }
+  
+        .toggle-password:focus {
+          outline: none;
+        }
+  
+        /* Responsive */
+        @media (max-width: 576px) {
+          .login-card {
+            margin: 1rem;
+            padding: 1.5rem;
+          }
+        }
+      </style>
+  </head>
+  <body data-bs-spy="scroll" data-bs-target="#elements-section" data-bs-offset="0" tabindex="0">
+    <!-- loader Start -->
+    <div id="loading">
+        <div class="loader simple-loader">
+            <div class="loader-body"></div>
+        </div>
+    </div>
+    <!-- loader END -->
+    
+      <div class="wrapper" >
+          <section class="login-content">
+            <div class="flip-container">
+              <div id="div_login" class="flipper">
+                <div class="front">
+                  <div id="div_secondary" class="d-flex justify-content-center row m-0 align-items-center vh-100" style="background-image: linear-gradient(rgb(49, 99, 120), rgb(12, 97, 33))!important;">
+                    <div class="login-card animate__animated animate__fadeInDown">
+                      <div class="text-center mb-4">
+                        <img width="40" id="login_logo" src="../static/images/sb.png" onerror="this.style='display:none'">
+                        <h2 class="mt-2 mb-0" id="system_title">ILIMS Login</h2>
+                      </div>
+              
+                      <form id="form_login">
+                        <div class="mb-3">
+                          <label for="username" class="form-label fw-semibold">Username</label>
+                          <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
+                        </div>
+              
+                        <div class="mb-3 position-relative">
+                          <label for="password" class="form-label fw-semibold">Password</label>
+                          <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+                          <button type="button" class="toggle-password" id="togglePassword" aria-label="Toggle password visibility">
+                            <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16">
+                              <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7 7 0 0 0-2.79.588l.77.771A6 6 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755q-.247.248-.517.486z"/>
+                              <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829"/>
+                              <path d="M3.35 5.47q-.27.24-.518.487A13 13 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7 7 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12z"/>
+                            </svg>
+                          </button>
+                        </div>
+              
+                        <p id="error_login" class="text-danger text-center"></p>
+              
+                        <div class="d-grid mt-4">
+                          <button id="btn_submit_login" type="submit" class="btn btn-primary btn-block">Sign In</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="back">
+                  <div class="back-logo"></div>
+                  <div class="back-title"></div>
+                  
+                  <!-- SETUP -->
+                  <div class="container" style="margin-top: 40px;z-index: 9999">
+                      SETTING UP SYSTEM
+                      <div class="row">                
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="card">
+                              <form id="form-wizard1" class="mt-3 text-center" novalidate>
+                                <div class="card-header d-flex justify-content-between">
+                                <div class="header-title">
+                                    <h4 class="card-title">PRE-CONFIGURATION</h4>
+                                </div>
+                                </div>
+                                <div class="card-body">
+                                    <ul id="top-tab-list" class="p-0 row list-inline">
+                                        <li class="mb-2 col-lg-3 col-md-6 text-start active" id="account">
+                                            <a href="javascript:void();">
+                                                <div class="iq-icon me-3">
+                                                    <svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" height="20" width="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                                    </svg>
+                                                                                          
+                                                </div>
+                                                <span class="dark-wizard">SYSTEM INFO</span>
+                                            </a>
+                                        </li>
+                                        <li id="personal" class="mb-2 col-lg-3 col-md-6 text-start">
+                                            <a href="javascript:void();">
+                                                <div class="iq-icon me-3">
+                                                    <svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" height="20" width="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
+                                                    </svg>  
+                                                </div>
+                                                <span class="dark-wizard">Legislature</span>
+                                            </a>
+                                        </li>
+                                        <li id="payment" class="mb-2 col-lg-3 col-md-6 text-start">
+                                            <a href="javascript:void();">
+                                                <div class="iq-icon me-3">
+                                                    <svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" height="20" width="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                    </svg>
+                                                </div>
+                                                <span class="dark-wizard">LOGO</span>
+                                            </a>
+                                        </li>
+                                        <li id="confirm" class="mb-2 col-lg-3 col-md-6 text-start">
+                                            <a href="javascript:void();">
+                                                <div class="iq-icon me-3">
+                                                    <svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" height="20" width="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                                    </svg>
+                                                </div>
+                                                <span class="dark-wizard">Finish</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <!-- fieldsets -->
+                                    <fieldset>
+                                      <div class="form-card text-start">
+                                            <div class="row">
+                                              <div class="col-7">
+                                                  <h3 class="mb-4">Email Information:</h3>
+                                              </div>
+                                              <div class="col-5">
+                                                  <h2 class="steps">Step 1 - 4</h2>
+                                              </div>
+                                            </div>
+                                            <div class="row">
+                                              <div class="col-md-6">
+                                                  <div class="form-group">
+                                                      <label class="form-label">Email: *</label>
+                                                      <input type="email" class="form-control" name="email" placeholder="Email Id"/>
+                                                  </div>
+                                              </div>
+                                              <div class="col-md-6">
+                                                  <div class="form-group">
+                                                      <label class="form-label">Gmail password: *</label>
+                                                      <input type="text" class="form-control" name="gmail_pass" placeholder="UserName" />
+                                                  </div>
+                                              </div>
+
+                                              <div class="col-7">
+                                                  <h3 class="mb-4">Login Credentials:</h3>
+                                              </div>
+
+                                              <div class="col-md-6">
+                                                  <div class="form-group">
+                                                      <label class="form-label">Fullname: *</label>
+                                                      <input type="password" class="form-control" name="fullname" placeholder="Fullname" />
+                                                  </div>
+                                              </div>
+
+                                              <div class="col-md-6">
+                                                  <div class="form-group">
+                                                      <label class="form-label">Username: *</label>
+                                                      <input type="text" class="form-control" name="username" placeholder="Password" />
+                                                  </div>
+                                              </div>
+
+                                              <div class="col-md-6">
+                                                  <div class="form-group">
+                                                      <label class="form-label">Password: *</label>
+                                                      <input type="password" class="form-control" name="password" placeholder="Password" />
+                                                  </div>
+                                              </div>
+
+                                              
+                                            </div>
+                                            <div class="row">
+                                              <div class="col-7">
+                                                  <h3 class="mb-4">City Information:</h3>
+                                              </div>
+                                              <div class="col-5">
+                                                  <h2 class="steps">&nbsp;</h2>
+                                              </div>
+                                            </div>
+                                            <div class="row">
+                                              <div class="col-md-6">
+                                                  <div class="form-group">
+                                                      <label class="form-label">CITY/MUNICIPALITY: *</label>
+                                                      <input type="text" class="form-control" name="city" placeholder="CITY" />
+                                                  </div>
+                                              </div>
+                                            </div>
+                                      </div>
+
+                                      <button type="button" name="next" class="btn btn-primary next action-button float-end" value="Next" >Next</button>
+                                      <button type="button" class="btn btn-default float-end" onclick="window.location.href='/home'">Skip</button>
+                                    </fieldset>
+
+                                    <fieldset>
+                                        <div class="form-card text-start">
+                                            <div class="row">
+                                              <div class="col-7">
+                                                  <h3 class="mb-4">Legislature Information:</h3>
+                                              </div>
+                                              <div class="col-5">
+                                                  <h2 class="steps">Step 2 - 4</h2>
+                                              </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                  <button type="button"  class="btn btn-sm btn-icon text-primary flex-end" onclick="openAddprofile()">
+                                                    <svg width="25" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                      <path fill-rule="evenodd" clip-rule="evenodd" d="M9.5 12.5537C12.2546 12.5537 14.4626 10.3171 14.4626 7.52684C14.4626 4.73663 12.2546 2.5 9.5 2.5C6.74543 2.5 4.53737 4.73663 4.53737 7.52684C4.53737 10.3171 6.74543 12.5537 9.5 12.5537ZM9.5 15.0152C5.45422 15.0152 2 15.6621 2 18.2464C2 20.8298 5.4332 21.5 9.5 21.5C13.5448 21.5 17 20.8531 17 18.2687C17 15.6844 13.5668 15.0152 9.5 15.0152ZM19.8979 9.58786H21.101C21.5962 9.58786 22 9.99731 22 10.4995C22 11.0016 21.5962 11.4111 21.101 11.4111H19.8979V12.5884C19.8979 13.0906 19.4952 13.5 18.999 13.5C18.5038 13.5 18.1 13.0906 18.1 12.5884V11.4111H16.899C16.4027 11.4111 16 11.0016 16 10.4995C16 9.99731 16.4027 9.58786 16.899 9.58786H18.1V8.41162C18.1 7.90945 18.5038 7.5 18.999 7.5C19.4952 7.5 19.8979 7.90945 19.8979 8.41162V9.58786Z" fill="currentColor">
+                                                      </path>
+                                                    </svg> <span style="font-size: 18px;">Add People</span> 
+                                                  </button>
+                                                </div>
+                                                <div class="col-md-12" style="margin-top: 20px;">
+                                                    <div class="form-group">
+                                                        <label class="form-label">TITLE: *</label>
+                                                        <input type="text" class="form-control" name="sp_title" placeholder="TITLE" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-label">FROM: *</label>
+                                                        <input type="text" class="form-control" name="sp_from" placeholder="FROM" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-label">TO: *</label>
+                                                        <input type="text" class="form-control" name="sp_to" placeholder="TO" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-label">MAYOR: *</label>
+                                                        <select class="form-control chosen-select" id="con_mayor" name="mayor" required></select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-label">VICE MAYOR: *</label>
+                                                        <select class="form-control chosen-select" id="con_vmayor" name="vmayor" required></select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="form-label">SP SECRETARY: *</label>
+                                                        <select class="form-control chosen-select" id="con_sec" name="sec" required></select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12">
+                                                    <button type="button" class="dt-button btn btn-sm btn-primary" onclick="populateCouncil()">Add Councilors</button>
+                                                </div>
+
+                                                <div class="col-md-12">
+                                                  <div style="width: 60%;margin:auto;" id="con_councilor_id">
+                                                  
+                                                  </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="button" name="next" class="btn btn-primary next action-button float-end" value="Next" >Next</button>
+                                        <button type="button" name="previous" class="btn btn-dark previous action-button-previous float-end me-1" value="Previous" >Previous</button>
+                                    </fieldset>
+
+                                    <fieldset>
+                                        <div class="form-card text-start">
+                                          <div class="row">
+                                              <div class="col-7">
+                                                  <h3 class="mb-4">CITY LOGO Upload:</h3>
+                                              </div>
+                                              <div class="col-5">
+                                                  <h2 class="steps">Step 3 - 4</h2>
+                                              </div>
+                                          </div>
+                                          <div class="form-group">
+                                                <label class="form-label">Upload Your LOGO:</label>
+                                                <input type="file" class="form-control" id="pre_upload_logo" name="pic" accept="image/*">
+                                          </div>
+                                        </div>
+                                        <button type="submit" name="next" class="btn btn-primary next action-button float-end" value="Submit" >Submit</button>
+                                        <button type="button" name="previous" class="btn btn-dark previous action-button-previous float-end me-1" value="Previous" >Previous</button>
+                                    </fieldset>
+
+                                    <fieldset>
+                                        <div class="form-card">
+                                            <div class="row">
+                                            <div class="col-7">
+                                                <h3 class="mb-4 text-left">Finish:</h3>
+                                            </div>
+                                            <div class="col-5">
+                                                <h2 class="steps">Step 4 - 4</h2>
+                                            </div>
+                                            </div>
+                                            <br><br>
+                                            <h2 class="text-center text-success"><strong>SUCCESS !</strong></h2>
+                                            <br>
+                                            <div class="row justify-content-center">
+                                            <div class="col-3"> 
+
+                                              <!-- <img src="../static/images/pages/img-success.png" class="img-fluid" alt="fit-image">  -->
+
+                                               <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                                     <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                                                    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                                                </svg>
+                                            </div>
+
+
+                                            </div>
+                                            <br><br>
+                                            <div class="row justify-content-center">
+                                            <div class="text-center col-7">
+                                                <h5 class="text-center purple-text">You have Set Up Successfully</h5>
+                                                <button type="button" class="btn btn-default" onclick="window.location.href='/home'">Continue</button>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                
+                                </div>
+                              </form>
+                            </div>
+                        </div>
+                      </div>
+                  </div>
+                  <!-- END SETUP  -->
+                </div>
+              </div>
+            </div>
+             
+          </section>
+      </div>
+
+    <!-- Modal -->
+
+    <div class="modal fade" id="div_profile_config" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content form-control">
+                <div class="modal-header">
+                    <h5 class="modal-title">PROFILING</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {% include 'auth/personal_info.html' %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- End Modal -->
+      
+      <!-- Widgetchart Script -->
+      <script src="../static/js/charts/widgetcharts.js"></script>
+      
+      <!-- mapchart Script -->
+      <script src="../static/js/charts/vectore-chart.js"></script>
+      <!-- <script src="../static/js/charts/dashboard.js" ></script> -->
+      
+      <!-- fslightbox Script -->
+      <script src="../static/js/plugins/fslightbox.js"></script>
+      
+      <!-- Settings Script -->
+      <script src="../static/js/plugins/setting.js"></script>
+      
+      <!-- Slider-tab Script -->
+      <script src="../static/js/plugins/slider-tabs.js"></script>
+      
+      <!-- Form Wizard Script -->
+      <script src="../static/js/plugins/form-wizard.js"></script>
+
+      <script type="text/javascript" src="../static/js/chosen/chosen.jquery.min.js"></script>
+      <script type="text/javascript" src="../static/js/bootstrap-datepicker.js"></script>
+
+
+    <script type="text/javascript">                        
+      $('document').ready(function(){
+        const toggle = document.getElementById('togglePassword');
+        const password = document.getElementById('password');
+        const icon = document.getElementById('eyeIcon');
+
+        const svgEye = `
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+          <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+          <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+        </svg>`;
+        
+        const svgEyeSlash = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16">
+          <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7 7 0 0 0-2.79.588l.77.771A6 6 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755q-.247.248-.517.486z"/>
+          <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829"/>
+          <path d="M3.35 5.47q-.27.24-.518.487A13 13 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7 7 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12z"/>
+        </svg>`;
+
+        toggle.addEventListener('click', function () {
+          const isPassword = password.getAttribute('type') === 'password';
+          password.setAttribute('type', isPassword ? 'text' : 'password');
+          icon.innerHTML = isPassword ? svgEye : svgEyeSlash;
+        });
+
+        $('.chosen-select').chosen({
+           allow_single_deselect: true,
+           width:"100%"
+        });
+
+        get_location()
+
+        var form_id='#form_login' 
+        $(form_id).submit(function(e){
+          var form_save = $(form_id).serializeObject();
+              e.preventDefault();
+              sendDataWithCallback('/login',form_save,function(res){
+                if (res.result == "pass") {
+                  if (res.rd){
+                    document.getElementById('btn_submit_login').disabled = true;
+
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      position: 'center',
+                      showConfirmButton: false,
+                      timer: 1000,
+                      timerProgressBar: true,
+                      didOpen: (toast) => {
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                      }
+                    })
+
+                    Toast.fire({
+                      icon: 'success',
+                      title: 'Signed in Successfully'
+                    }).then((result) => {
+
+                        getDataWithCallback('/get_sp', function(res){
+                          setTimeout(function(){
+                            if(res.length>=1){
+                               window.location.href="/"
+                            }else{
+                               var element = document.getElementById("div_login");
+                               element.classList.add("flip_main_div");
+
+                               var element2 = document.getElementById("div_secondary");
+                               element2.classList.add("trash");
+                               
+                             }
+                          },800)
+                        })
+                    })
+                  }
+                }else if(res=='Invalid'){
+                  $('#div_body_login').addClass('animate__bounceIn').removeClass('animate__backInDown');
+                  document.getElementById('error_login').style.color="red"
+                  document.getElementById('error_login').innerHTML="Invalid Username or Password Try again!"
+                  setTimeout(()=>{document.getElementById('error_login').innerHTML=""}, 3000);
+                } 
+            });
+
+        })
+
+        loadprofile()
+
+        var form_id2='#form-wizard1'
+        $(form_id2).submit(function(e){
+          var form_save2 = $(form_id2).serializeObject();
+          e.preventDefault();
+
+          var mydata = new FormData();
+
+          jQuery.each($("#pre_upload_logo")[0].files, function(i, file) {
+              mydata.append('file['+i+']', file);
+          });
+
+
+          mydata.append("Serialized",JSON.stringify(form_save2))
+          
+          $.ajax({
+              type: 'POST',
+              url: "/pre_register",
+              contentType:false,
+              processData:false,
+              cache: false,
+              data:mydata,
+              beforeSend: function() {
+                 console.log(mydata)
+              },
+              success: function(res) {
+
+              },
+              error: function() {
+                  error_in_saving("error occured in sending to");
+              }
+          });
+
+          
+        })
+
+        var input1 = document.getElementById("username");
+        input1.addEventListener("keyup", function(event) {
+          if (event.keyCode === 13) {
+            event.preventDefault();
+            document.getElementById("btn_submit_login").click();
+          }
+        });
+
+        var input2 = document.getElementById("password");
+        input2.addEventListener("keyup", function(event) {
+          if (event.keyCode === 13) {
+            event.preventDefault();
+            document.getElementById("btn_submit_login").click();
+          }
+        });
+      });
+
+      $('#customCheck').click(function(){
+          var x = document.getElementById("password");
+          if (x.type === "password") {x.type = "text";} else {x.type = "password";}
+      })
+
+      function openAddprofile(){
+        $('#div_profile_config').modal('toggle');
+      }
+
+
+      function get_location(){
+        getDataWithCallback("/get_location_system",function(res){
+          document.getElementById('system_title').innerHTML=res[0]['types']+' '+res[0]['city_name']
+          document.getElementById('login_title').innerHTML=res[0]['types']+' '+res[0]['city_name']
+
+          if(res[0].type==null || res[0].type=="" || res[0].type==0 || res[0].type=="0" || res[0].type=="on"){
+            getbyId('login_logo').src="../static/images/sb.png"
+          }else{
+            getbyId('login_logo').src="../static/images/sp.png"
+          }
+          
+        })
+      }
+
+      function loadprofile(){
+        getbyId('con_vmayor').innerHTML=""
+        getbyId('con_sec').innerHTML=""
+
+        getDataWithCallback('/sel_personal_info', function(res) {
+          
+            $('#con_mayor').append(`<option value="" disabled selected> ${'--SELECT--'} </option>`); 
+            for(var x=0; x<res.length; x++){
+                $('#con_mayor').append(`<option value="${res[x]['info_id']}"> ${res[x]['fullname']} </option>`); 
+            }
+            $('#con_mayor').trigger("chosen:updated")
+
+            $('#con_vmayor').append(`<option value="" disabled selected> ${'--SELECT--'} </option>`); 
+            for(var x=0; x<res.length; x++){
+                $('#con_vmayor').append(`<option value="${res[x]['info_id']}"> ${res[x]['fullname']} </option>`); 
+            }
+            $('#con_vmayor').trigger("chosen:updated")
+
+            $('#con_sec').append(`<option value="" disabled selected> ${'--SELECT--'} </option>`); 
+            for(var x=0; x<res.length; x++){
+                $('#con_sec').append(`<option value="${res[x]['info_id']}"> ${res[x]['fullname']} </option>`); 
+            }
+            $('#con_sec').trigger("chosen:updated")
+
+            councilors = res
+        });
+      }
+
+
+      var councilCouter =0
+      function populateCouncil(callback){
+
+        var parent = document.getElementById('con_councilor_id');
+        var child = document.createElement('div');
+        var div1 = document.createElement('div');
+        var p = document.createElement('p');
+        var div2_container = document.createElement('div');
+        var div2_row = document.createElement('div');
+
+        var div2 = document.createElement('div');
+        var div2a = document.createElement('div');
+
+        var sel = document.createElement('select');
+        var btn = document.createElement('button');
+
+        div2_container.className="container"
+        div2_row.className="row"
+
+        child.className = "col-md-12";
+        child.style = "float: left;margin-top1%;";
+        child.id = "council"+councilCouter;
+        div1.className = "col-md-12";
+        p.innerHTML = "Councilor";
+
+        div2.className = "col-md-10";
+        div2a.className = "col-md-2";
+
+        sel.setAttribute("class",'form-control chosen-select');
+        sel.required = true;
+        sel.name = "council_name["+councilCouter+"][council_name]"
+        sel.id = "council_name["+councilCouter+"][council_name]"
+        sel.setAttribute("mulitiple", "")
+        
+        var option_blank = document.createElement("option");
+        option_blank.innerHTML = "--SELECT--"
+        option_blank.value = ""
+        option_blank.disabled = true
+        option_blank.selected = true
+
+        sel.appendChild(option_blank);
+        councilors.forEach(function(i){
+          var option = document.createElement("option");
+          option.innerHTML = i['fullname'];
+          option.value = i['info_id'];
+          sel.appendChild(option);
+          
+        })
+
+        btn.className = "col-xs-2 btn btn-sm btn btn-outline-danger";
+        btn.type = "button";
+        btn.innerHTML = "x"
+        // btn.style = "margin-top:5px"
+        btn.setAttribute('data-id',"council"+councilCouter);
+
+        btn.onclick = function(){
+          var id = this.getAttribute('data-id');
+          document.getElementById(id).remove();
+        }
+
+        div1.appendChild(p);
+        div2.appendChild(sel);
+        div2a.appendChild(btn);
+
+        $(sel).chosen({width: "100%"})
+
+        child.appendChild(div1)
+        div2_row.appendChild(div2)
+        div2_row.appendChild(div2a)
+
+        div2_container.appendChild(div2_row)
+        child.appendChild(div2_container)
+
+        parent.insertBefore(child,parent.firstChild);
+        councilCouter++;
+        if(callback) {
+          callback(sel)
+        }
+      }
+
+    </script>
+  </body>
+</html>

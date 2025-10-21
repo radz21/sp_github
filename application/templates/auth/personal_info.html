@@ -1,0 +1,139 @@
+<form id="form_registration">
+	<div class="col-md-12">
+		<input type="hidden" id="info_id" name="info_id" value="0">
+		<div class="col-sm-12" align="center">
+			<img id="info_photo" src="../static/icon/user.png" onerror="this.src='../static/icon/user.png'" style="height: 128px;width: 128px;border-radius: 100px;">
+			<p>Upload Photo</p>
+			 <input type="file" onchange="readURL(this,'info_photo');"  id="file_photo" name="file_photo"  accept="image/x-png,image/gif,image/jpeg,image/jpg" />
+		</div>
+		<p>Fullname</p>
+		<div class="col-md-12">
+			<div class="row">
+				<div class="col-sm-4">
+				<input type="search" id="fname" name="fname" required="" placeholder="Firstname" class="form-control">
+				</div>
+				<div class="col-sm-3">
+					<input type="search" id="mname" name="mname" placeholder="Middlename" class="form-control">
+				</div>
+				<div class="col-sm-3">
+					<input type="search" id="lname" name="lname" required="" placeholder="Lastname" class="form-control">
+				</div>
+				<div class="col-sm-2">
+					<input type="search" id="ext" name="ext" placeholder="Ext" class="form-control">
+				</div>
+			</div>
+		</div>
+		<p>Address:</p>
+		<input type="search" id="address" name="address" class="form-control">
+		<p>Email</p>
+		<input type="email" id="email" name="email" class="form-control"> 
+		<p>Phone no.</p>
+		<input type="search" id="phone" name="phone" class="form-control">
+		<p>Date of Birth</p>
+		<input type="date" id="date_of_birth" name="date_of_birth" class="form-control">
+		<p>About:</p>
+		<input type="search" id="about" name="about" class="form-control">
+
+		<div class="colfull txcenter" style="position: relative;margin-top: 50px">
+			<button type="submit" class="btn btn-success">SAVE</button>
+		</div>
+	</div>
+</form>
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		var form_id='#form_registration'
+		 $(form_id).submit(function(e){
+		 	// var form_save = $(form_id).serializeObject();
+		 	var mydata = new FormData();
+
+		 	mydata.append("info_id", getbyId('info_id').value)
+		 	mydata.append("fname", getbyId('fname').value)
+		 	mydata.append("mname", getbyId('mname').value)
+		 	mydata.append("lname", getbyId('lname').value)
+		 	mydata.append("lname", getbyId('lname').value)
+		 	mydata.append("address", getbyId('address').value)
+		 	mydata.append("about", getbyId('about').value)
+		 	mydata.append("email", getbyId('email').value)
+		 	mydata.append("phone", getbyId('phone').value)
+		 	mydata.append("date_of_birth", getbyId('date_of_birth').value)
+
+		 	jQuery.each($("#file_photo")[0].files, function(i, file) {
+		        mydata.append('photo['+i+']', file);
+		    })
+
+	        e.preventDefault();
+	        swal.fire({
+				title: "Are you sure want to save?",
+				text: "Click ok to continue",
+				type: "info",
+				showCancelButton: true,
+				showLoaderOnConfirm: true,
+				preConfirm: () => {
+					return fetch(console.log("log"))
+					.then(
+						 $.ajax({
+					        type: 'POST',
+					        url: "/save_personal_info",
+					        contentType:false,
+					        processData:false,
+					        cache: false,
+					        data:mydata,
+					        beforeSend: function() {
+						       console.log(mydata)
+						    },
+					        success: function(res) {
+								$('#div_accounts_modal').modal('toggle');
+								getbyId('form_registration').reset()
+								loadprofile()
+								saved(res)
+					        },
+					        error: function() {
+					            error_in_saving("error occured");
+					        }
+					    })
+					)
+					.catch(() => {
+					    Swal.fire({
+					      icon: 'error',
+					      title: 'Error occured'
+					    })
+					})
+				}
+			})
+	    })
+	})
+
+	function del_accounts(){
+		var data={
+			info_id:getbyId('info_id').value
+		}
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "You won't be able to revert this!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, delete it!',
+			customClass: 'swal_css',
+		}).then((result) => {
+			if (result.isConfirmed) {
+				Swal.fire(
+				  'Deleted!',
+				  'Your file has been deleted.',
+				  'success'
+				)
+				
+				sendDataWithCallback('/delete_accounts',data,function(res){
+					if(res){
+						$('#tbl_personal_info').DataTable().destroy();
+						load_tbl_personal_info()
+						$('#div_accounts_modal').modal('toggle')
+					}
+				})
+			}
+		})
+	}
+</script>

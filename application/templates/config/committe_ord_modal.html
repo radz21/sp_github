@@ -1,0 +1,125 @@
+<div class="colfull">
+	<form id="form_committee_ordinance">
+		<input type="hidden" id="h_committee_ordinance_id_submit" value="0">
+		<input type="hidden" id="h_ordinance_id_main">
+		
+		<div class="colfull">
+			<p>Progress of Ordinance/Action Taken</p>
+			<select id="sel_progress_action_taken" class="form-control">
+				<option value="" disabled selected>--SELECT</option>
+				<option value="2">2nd Reading Ordinance</option>
+				<option value="3">3rd Reading Ordinance</option>
+				<option value="4">3rd Reading Rule Excemption</option>
+				<option value="5">For mayors Approval</option>
+				<option value="6">Archive Ordinance</option>
+			</select>
+			<div class="panel panel-primary" style="margin-top: 50px;">
+				<div class="panel-heading">Upload Committee Report </div>
+				<div class="panel-body">
+					<div class="colful">
+						<input type="file" id="committee_ordinance_attach" multiple>
+						<table id="tbl_committee_ordinance_file" class="table" style="width: 100%">
+							<thead>
+								<th>Filename</th>
+								<th>Action</th>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+
+			<div class="panel panel-primary">
+				<div class="panel-heading">Upload Committee Minutes</div>
+				<div class="panel-body">
+					<div class="colful" >
+						<input type="file" id="committee_ordinance_minutes">
+						<table id="tbl_committee_minutes_file" class="table" style="width: 100%">
+							<thead>
+								<th>Filename</th>
+								<th>Action</th>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<div class="colfull" align="center" style="margin-top: 55px;">
+			<button type="submit" class="btn btn-success">Save</button>
+		</div>
+	</form>
+	
+</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var form_id='#form_committee_ordinance'
+		 $(form_id).submit(function(e){
+	        e.preventDefault();
+	        upload_committee_ordinance()
+	    })
+	})
+
+	function upload_committee_ordinance(){
+		var data={
+			ordinance_id:getbyId('h_ordinance_id_main').value
+		}
+
+		var mydata = new FormData();
+
+		mydata.append('ordinance_id_main', getbyId('h_ordinance_id_main').value)
+		mydata.append('status', getbyId('sel_progress_action_taken').value)
+		mydata.append('committee_id', getbyId('h_committee_id').value)
+
+		jQuery.each($("#committee_ordinance_attach")[0].files, function(i, file) {
+	        mydata.append('file_attach['+i+']', file);
+	    })
+
+	    jQuery.each($("#committee_ordinance_minutes")[0].files, function(i, file) {
+	        mydata.append('file_minutes['+i+']', file);
+	    })
+
+	    mydata.append('ordinance_id', getbyId('h_committee_ordinance_id_submit').value)
+
+	    swal.fire({
+			title: "Are you sure want to save?",
+			text: "Click ok to continue",
+			type: "info",
+			showCancelButton: true,
+			showLoaderOnConfirm: true,
+			preConfirm: () => {
+				return fetch(console.log("log"))
+				.then(
+					$.ajax({
+				        type: 'POST',
+				        url: "/save_committee_ordinance",
+				        contentType:false,
+				        processData:false,
+				        cache: false,
+				        data:mydata,
+				        beforeSend: function() {
+					       console.log(mydata)
+					    },
+				        success: function(res) {
+				        	var data={
+			            		committee_id:getbyId('h_committee_id').value
+			            	}
+				        	load_committee_ordinance_attach_minutes(data)
+				        	$('#div_committee_ord_modal').modal('toggle');
+							saved(res)
+				        },
+				        error: function() {
+				            error_in_saving("error occured in sending to");
+				        }
+				    })
+				)
+				.catch(() => {
+				    Swal.fire({
+				      icon: 'error',
+				      title: 'Error occured'
+				    })
+				})
+			}
+		})
+
+	}
+</script>

@@ -1,0 +1,1753 @@
+{% extends 'landing_page/index.html'%}
+
+{% block body%}
+	<div class="container my-5 affix" data-mdb-perfect-scrollbar='true'>
+		<p class="lead" style="text-align:center; font-weight: bold;">DOCUMENTS</p>
+		<hr>
+		<ul class="nav justify-content-center" style="width:auto;">
+		  <!-- Tab navs -->
+			<div class="nav flex-row nav-tabs text-center" id="v-tabs-tab" role="tablist" aria-orientation="horizontal">
+				<a class="nav-link"  onclick="saveState(this)" id="v-tabs-calendar-tab" data-mdb-toggle="tab" href="#v-tabs-calendar" role="tab" aria-controls="v-tabs-calendar" aria-selected="true" >Calendar of Business</a>
+				<a class="nav-link" onclick="saveState(this)" id="v-tabs-codes-tab" data-mdb-toggle="tab" href="#v-tabs-codes" role="tab" aria-controls="v-tabs-codes" aria-selected="false" >Codes</a>
+				<a class="nav-link" onclick="saveState(this)" id="v-tabs-reso-tab" data-mdb-toggle="tab" href="#v-tabs-reso" role="tab" aria-controls="v-tabs-reso" aria-selected="false" >Resolutions</a>
+				<a class="nav-link" onclick="saveState(this)" id="v-tabs-ordi-tab" data-mdb-toggle="tab" href="#v-tabs-ordi" role="tab" aria-controls="v-tabs-ordi" aria-selected="false" >Ordinances</a >
+				<a class="nav-link" onclick="saveState(this)" id="v-tabs-eo-tab" data-mdb-toggle="tab" href="#v-tabs-eo" role="tab" aria-controls="v-tabs-eo" aria-selected="false" >Executive Order</a>
+				
+				<a class="nav-link" onclick="saveState(this)" id="v-tabs-memo-tab" data-mdb-toggle="tab" href="#v-tabs-memo" role="tab" aria-controls="v-tabs-memo" aria-selected="false" >Memorandum</a>
+			</div>
+				<!-- Tab navs -->
+		</ul>
+	</div>
+
+<div class="container" style='margin-bottom: 100px;'>
+	<div class="justify-content-center">
+		<div class="container">
+			<!-- Tab content -->
+				<div class="tab-content" id="v-tabs-tabContent">
+					<div class="tab-pane fade" id="v-tabs-calendar" role="tabpanel" aria-labelledby="v-tabs-calendar-tab" >
+						<table class="table table-hover" id="tbl_cb" style="table-layout: fixed; width: 100%;">
+							<colgroup>
+								<col style="width: 10px">
+								<col style="width: 2px">
+							</colgroup>
+							<thead style="font-size: 1px">
+								<tr>
+									<th style="color: white">COL1</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										<p>Session number:</p>
+										<p>Session date:</p>
+									</td>
+									<td>
+										<button class="btn btn-sm btn-success"><i class="bi bi-arrow-up-square" style="font-size: 12px !important"></i></button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="tab-pane fade" id="v-tabs-reso" role="tabpanel" aria-labelledby="v-tabs-reso-tab" >
+						<table class="table table-hover" id="tbl_resolutions" style="table-layout: fixed; width: 100%;">
+							<colgroup>
+								<col style="width: 10px">
+								<col style="width: 2px">
+							</colgroup>
+							<thead style="font-size: 1px">
+								<tr>
+									<th style="color: white">COL1</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
+					<div class="tab-pane fade" id="v-tabs-ordi" role="tabpanel" aria-labelledby="v-tabs-ordi-tab" >
+						<table class="table table-hover" id="tbl_ordinances" style="table-layout: fixed; width: 100%;">
+							<colgroup>
+								<col style="width: 10px">
+								<col style="width: 2px">
+							</colgroup>
+							<thead style="font-size: 1px">
+								<tr>
+									<th style="color: white">COL1</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								
+							</tbody>
+						</table>
+					</div>
+					<div class="tab-pane fade" id="v-tabs-bordi" role="tabpanel" aria-labelledby="v-tabs-bordi-tab" > 
+						<table class="table table-hover" id="tbl_brgy_ordi" style="table-layout: fixed; width: 100%;">
+							<colgroup>
+								<col style="width: 10px">
+								<col style="width: 2px">
+							</colgroup>
+							<thead style="font-size: 1px">
+								<tr>
+									<th style="color: white">COL1</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								
+							</tbody>
+						</table>
+					</div>
+					<div class="tab-pane fade" id="v-tabs-breso" role="tabpanel" aria-labelledby="v-tabs-breso-tab" >
+						<table class="table table-hover" id="tbl_brgy_reso" style="table-layout: fixed; width: 100%;">
+							<colgroup>
+								<col style="width: 10px">
+								<col style="width: 2px">
+							</colgroup>
+							<thead style="font-size: 1px">
+								<tr>
+									<th style="color: white">COL1</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								
+							</tbody>
+						</table>
+					</div>
+					<!-- <div class="tab-pane fade" id="v-tabs-petitions" role="tabpanel" aria-labelledby="v-tabs-petitions-tab" > Petitions </div> -->
+					<div class="tab-pane fade" id="v-tabs-eo" role="tabpanel" aria-labelledby="v-tabs-eo-tab" >
+						<table class="table table-hover" id="tbl_eo" style="table-layout: fixed; width: 100%;">
+							<colgroup>
+								<col style="width: 10px">
+								<col style="width: 2px">
+							</colgroup>
+							<thead style="font-size: 1px">
+								<tr>
+									<th style="color: white">COL1</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								
+							</tbody>
+						</table>
+					</div>
+					<div class="tab-pane fade" id="v-tabs-codes" role="tabpanel" aria-labelledby="v-tabs-codes-tab" >
+						<table class="table table-hover" id="tbl_codes" style="table-layout: fixed; width: 100%;">
+							<colgroup>
+								<col style="width: 10px">
+								<col style="width: 2px">
+							</colgroup>
+							<thead style="font-size: 1px">
+								<tr>
+									<th style="color: white">COL1</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								
+							</tbody>
+						</table>
+					</div>
+					<div class="tab-pane fade" id="v-tabs-memo" role="tabpanel" aria-labelledby="v-tabs-memo-tab" >
+						<table class="table table-hover" id="tbl_memo" style="table-layout: fixed; width: 100%;">
+							<colgroup>
+								<col style="width: 10px">
+								<col style="width: 2px">
+							</colgroup>
+							<thead style="font-size: 1px">
+								<tr>
+									<th style="color: white">COL1</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								
+							</tbody>
+						</table>
+					</div>
+				</div>
+			<!-- Tab content -->
+		</div>
+	</div>
+</div>
+
+	<!-- modal cob -->
+
+	<script type="text/javascript">
+
+		document.getElementById('menu_home').style.color = "black";
+		var for_email_data = {};
+		
+		$(document).ready( function () {
+			var id = localStorage.getItem("saveState");
+			// localStorage.clear();
+
+			if(id){
+				$("#"+id).addClass("active");
+				str = id.slice(0, -4);
+				$("#"+str).addClass("active show");
+			}else{
+				$("#v-tabs-calendar-tab").addClass("active");
+				$("#v-tabs-calendar").addClass("active show");
+			}
+			
+
+			getDataWithCallback('/get_city_name', function(res){
+                if(res[0].type==null || res[0].type==""){
+                    var type = 'SANGUNIANG BAYAN';
+                    getbyId('act_members_sp_sb').innerHTML="SB MEMBERS";
+                    getbyId('system_type_order_buss').innerHTML = type
+                    getbyId('footer_text').innerHTML = type
+                }else{
+                    var type = 'SANGUNIANG PANLUNGSOD';
+                    getbyId('act_members_sp_sb').innerHTML="SP MEMBERS";
+                    getbyId('system_type_order_buss').innerHTML = type
+                    getbyId('footer_text').innerHTML = type
+                }
+
+                getbyId('lan_cityname').innerHTML=res[0]['city_name'];
+            })
+
+			document.querySelectorAll('.form-outline').forEach((formOutline) => {
+			  new mdb.Input(formOutline).init();
+			});
+		    $('#tbl_cb').DataTable({
+		    	"ajax": {
+					"type": "GET",
+				    "url": '/get_calendar_business',
+				    "dataSrc": function(data) {
+				    	data.forEach(function(item) {
+				    		var txt = `
+				    			<p style="font-weight: bold;">`+ item.sp_title +`</p>
+								<p>Session number:`+ item.session_number +`</p>
+								<p>Session date:`+ item.session_date +`</p>
+				    		`
+				    		item.text = txt
+
+				    		var action = `
+				    			<button class="btn btn-sm btn-primary" onclick='open_cb(this)'><i class="bi bi-arrow-up-square" style="font-size: 12px !important"></i></button>
+				    		`
+				    		item.action =  action
+				    	})
+			    		return data;
+				    }
+				},
+				columns: [
+					{data: "text"},
+					{data: "action"}
+				],
+		    	"lengthChange": false,
+		    	"ordering": false,
+		    	"info": false,
+		    	"pageLength": 5
+		    });
+
+		    $('#tbl_resolutions').DataTable({
+		    	"ajax": {
+					"type": "GET",
+				    "url": '/get_landing_resolution',
+				    "dataSrc": function(data) {
+				    	data.forEach(function(item) {
+				    		var file_txt = ""
+				    		if(item.file_path == "" || item.file_path == null) {
+				    			file_txt = ""
+				    		}else{
+					    		var files = item.file_name.split("|");
+					    		var files_path = item.file_path.split("|")
+
+					    		file_txt = "<p style='font-weight: bold; margin-top: 10px !important; color: #00913b'>FILES</p>"
+					    		
+					    		files.forEach(function(file,index) {
+					    			var link = "<a traget='_blank' href=/static/uploads/"+files_path[index]+">"+file+"</a><br>"
+					    			file_txt = file_txt + link
+					    		})
+				    		}
+
+				    		if(item.authors!=null){
+				    			var authr = `<p style="font-weight: bold;">Author/s: `+ item.authors +`</p>`
+				    		}else{
+				    			var authr = ``
+				    		}
+
+				    		if(item.co_authors!=null){
+				    			var co_authr = `<p style="font-weight: bold;">Author/s: `+ item.co_authors +`</p>`
+				    		}else{
+				    			var co_authr = ``
+				    		}
+
+				    		if(item.sponsors!=null){
+				    			var spons = `<p style="font-weight: bold;">Sponsor/s: `+ item.sponsors +`</p>`
+				    		}else{
+				    			var spons = ``
+				    		}
+				    		
+
+				    		var txt = `
+				    			<p style="font-weight: bold;font-size: 15px">`+ (item.resolution_number ? item.resolution_number: '') +`</p>
+				    			<p style="font-weight: bold;">`+ item.resolution_title +`</p>
+				    			<p style="margin-top: 20px !important; color: #1266f1;">`+moment(item.date_enacted).format('LL')+`</p>
+
+				    			${authr}
+				    			${co_authr}
+				    			${spons}
+				    		`
+				    		item.text = txt + file_txt
+
+
+				    		var action = `
+								<button class="btn btn-sm btn-danger" onclick="email(this,'tbl_resolutions')"><i class="bi bi-envelope"></i></button>
+				    		`
+				    		item.action = action
+				    		item.title = item.resolution_title
+				    	})
+			    		return data;
+				    }
+				},
+				columns: [
+					{data: "text"},
+					{data: "action"}
+				],
+		    	"lengthChange": false,
+		    	"ordering": false,
+		    	"info": false,
+		    	"pageLength": 3
+		    });
+
+		    $('#tbl_ordinances').DataTable({
+		    	"ajax": {
+					"type": "GET",
+				    "url": '/get_landing_ordinance',
+				    "dataSrc": function(data) {
+				    	data.forEach(function(item) {
+				    		var file_txt = ""
+				    		if(item.file_path == "" || item.file_path == null) {
+				    			file_txt = ""
+				    		}else{
+					    		var files = item.file_name.split("|");
+					    		var files_path = item.file_path.split("|")
+
+					    		file_txt = "<p style='font-weight: bold; margin-top: 10px !important; color: #00913b'>FILES</p>"
+					    		
+					    		files.forEach(function(file,index) {
+					    			var link = "<a traget='_blank' href=/static/uploads/"+files_path[index]+">"+file+"</a><br>"
+					    			file_txt = file_txt + link
+					    		})
+				    		}
+
+				    		if(item.authors!=null){
+				    			var authr = `<p style="font-weight: bold;">Author/s: `+ item.authors +`</p>`
+				    		}else{
+				    			var authr = ``
+				    		}
+
+				    		if(item.co_authors!=null){
+				    			var co_authr = `<p style="font-weight: bold;">Author/s: `+ item.co_authors +`</p>`
+				    		}else{
+				    			var co_authr = ``
+				    		}
+
+				    		if(item.sponsors!=null){
+				    			var spons = `<p style="font-weight: bold;">Sponsor/s: `+ item.sponsors +`</p>`
+				    		}else{
+				    			var spons = ``
+				    		}
+
+
+				    		var txt = `
+				    			<p style="font-weight: bold;font-size: 15px">`+ item.ordinance_number +`</p>
+				    			<p style="font-weight: bold;">`+ item.ordinance_title +`</p>
+				    			<p style="margin-top: 20px !important; color: #1266f1;">`+moment(item.date_enacted).format('LL')+`</p>
+
+				    			${authr}
+				    			${co_authr}
+				    			${spons}
+				    		`
+				    		item.text = txt + file_txt
+
+				    		var action = `
+								<button class="btn btn-sm btn-danger" onclick="email(this,'tbl_ordinances')"><i class="bi bi-envelope"></i></button>
+				    		`
+				    		item.action = action
+				    		item.title = item.ordinance_title
+				    	})
+			    		return data;
+				    }
+				},
+				columns: [
+					{data: "text"},
+					{data: "action"}
+				],
+		    	"lengthChange": false,
+		    	"ordering": false,
+		    	"info": false,
+		    	"pageLength": 3
+		    });
+
+		    $('#tbl_brgy_ordi').DataTable({
+		    	"ajax": {
+					"type": "GET",
+				    "url": '/get_landing_barangay_ordinance',
+				    "dataSrc": function(data) {
+				    	data.forEach(function(item) {
+				    		var file_txt = ""
+				    		if(item.file_path == "" || item.file_path == null) {
+				    			file_txt = ""
+				    		}else{
+					    		var files = item.file_name.split("|");
+					    		var files_path = item.file_path.split("|")
+
+					    		file_txt = "<p style='font-weight: bold; margin-top: 10px !important; color: #00913b'>FILES</p>"
+					    		
+					    		files.forEach(function(file,index) {
+					    			var link = "<a traget='_blank' href=/static/uploads/"+files_path[index]+">"+file+"</a><br>"
+					    			file_txt = file_txt + link
+					    		})
+				    		}
+
+				    		var txt = `
+				    			<p style="font-weight: bold;font-size: 15px">`+ item.title +`</p>
+				    			<p style="font-weight: bold;">`+ item.description +`</p>
+				    			<p style="margin-top: 20px !important; color: #1266f1;">`+moment(item.date_submitted).format('LL')+`</p>
+				    			<p style="font-weight: bold;">Barangay:`+ item.barangay +`</p>
+				    		`
+				    		item.text = txt + file_txt
+
+				    		var action = `
+								<button class="btn btn-sm btn-danger" onclick="email(this,'tbl_brgy_ordi')"><i class="bi bi-envelope"></i></button>
+				    		`
+				    		item.action = action
+				    	})
+			    		return data;
+				    }
+				},
+				columns: [
+					{data: "text"},
+					{data: "action"}
+				],
+		    	"lengthChange": false,
+		    	"ordering": false,
+		    	"info": false,
+		    	"pageLength": 3
+		    });
+
+		    $('#tbl_brgy_reso').DataTable({
+		    	"ajax": {
+					"type": "GET",
+				    "url": '/get_landing_barangay_resolution',
+				    "dataSrc": function(data) {
+				    	data.forEach(function(item) {
+				    		var file_txt = ""
+				    		if(item.file_path == "" || item.file_path == null) {
+				    			file_txt = ""
+				    		}else{
+					    		var files = item.file_name.split("|");
+					    		var files_path = item.file_path.split("|")
+
+					    		file_txt = "<p style='font-weight: bold; margin-top: 10px !important; color: #00913b'>FILES</p>"
+					    		
+					    		files.forEach(function(file,index) {
+					    			var link = "<a traget='_blank' href=/static/uploads/"+files_path[index]+">"+file+"</a><br>"
+					    			file_txt = file_txt + link
+					    		})
+				    		}
+				    		var txt = `
+				    			<p style="font-weight: bold;font-size: 15px">`+ item.title +`</p>
+				    			<p style="font-weight: bold;">`+ item.description +`</p>
+				    			<p style="margin-top: 20px !important; color: #1266f1;">`+moment(item.date_submitted).format('LL')+`</p>
+				    			<p style="font-weight: bold;">Barangay:`+ item.barangay +`</p>
+				    		`
+				    		item.text = txt + file_txt
+
+				    		var action = `
+								<button class="btn btn-sm btn-danger" onclick="email(this,'tbl_brgy_reso')"><i class="bi bi-envelope"></i></button>
+				    		`
+				    		item.action = action
+				    	})
+			    		return data;
+				    }
+				},
+				columns: [
+					{data: "text"},
+					{data: "action"}
+				],
+		    	"lengthChange": false,
+		    	"ordering": false,
+		    	"info": false,
+		    	"pageLength": 3
+		    });
+
+		    $('#tbl_eo').DataTable({
+		    	"ajax": {
+					"type": "GET",
+				    "url": '/get_landing_executive',
+				    "dataSrc": function(data) {
+				    	data.forEach(function(item) {
+				    		var file_txt = ""
+				    		if(item.file_path == "" || item.file_path == null) {
+				    			file_txt = ""
+				    		}else{
+					    		var files = item.file_name.split("|");
+					    		var files_path = item.file_path.split("|")
+
+					    		file_txt = "<p style='font-weight: bold; margin-top: 10px !important; color: #00913b'>FILES</p>"
+					    		
+					    		files.forEach(function(file,index) {
+					    			var link = "<a traget='_blank' href=/static/uploads/"+files_path[index]+">"+file+"</a><br>"
+					    			file_txt = file_txt + link
+					    		})
+				    		}
+
+				    		var txt = `
+				    			<p style="font-weight: bold;font-size: 15px">`+ item.title +`</p>
+				    			<p style="margin-top: 20px !important; color: #1266f1;">`+moment(item.date_submitted).format('LL')+`</p>
+				    		`
+				    		item.text = txt +file_txt
+
+				    		var action = `
+								<button class="btn btn-sm btn-danger" onclick="email(this,'tbl_eo')"><i class="bi bi-envelope"></i></button>
+				    		`
+				    		item.action = action
+				    	})
+			    		return data;
+				    }
+				},
+				columns: [
+					{data: "text"},
+					{data: "action"}
+				],
+		    	"lengthChange": false,
+		    	"ordering": false,
+		    	"info": false,
+		    	"pageLength": 3
+		    });
+
+		    $('#tbl_codes').DataTable({
+		    	"ajax": {
+					"type": "GET",
+				    "url": '/get_landing_code_and_references',
+				    "dataSrc": function(data) {
+				    	data.forEach(function(item) {
+				    		var file_txt = ""
+				    		if(item.file_path == "" || item.file_path == null) {
+				    			file_txt = ""
+				    		}else{
+					    		var files = item.file_name.split("|");
+					    		var files_path = item.file_path.split("|")
+
+					    		file_txt = "<p style='font-weight: bold; margin-top: 10px !important; color: #00913b'>FILES</p>"
+					    		
+					    		files.forEach(function(file,index) {
+					    			var link = "<a traget='_blank' href=/static/uploads/"+files_path[index]+">"+file+"</a><br>"
+					    			file_txt = file_txt + link
+					    		})
+				    		}
+
+				    		var txt = `
+				    			<p style="font-weight: bold;font-size: 15px">`+ item.title +`</p>
+				    			<p style="margin-top: 20px !important; color: #1266f1;">`+moment(item.date_submitted).format('LL')+`</p>
+				    		`
+				    		item.text = txt + file_txt
+
+				    		var action = `
+								<button class="btn btn-sm btn-danger" onclick="email(this,'tbl_codes')"><i class="bi bi-envelope"></i></button>
+				    		`
+				    		item.action = action
+				    	})
+			    		return data;
+				    }
+				},
+				columns: [
+					{data: "text"},
+					{data: "action"}
+				],
+		    	"lengthChange": false,
+		    	"ordering": false,
+		    	"info": false,
+		    	"pageLength": 3
+		    });
+
+		    $('#tbl_memo').DataTable({
+		    	"ajax": {
+					"type": "GET",
+				    "url": '/get_landing_memorandom',
+				    "dataSrc": function(data) {
+				    	data.forEach(function(item) {
+				    		var file_txt = "No file"
+				    		if(item.file_name == null) {
+
+				    		}else{
+					    		var files = item.file_name.split("|");
+					    		var files_path = item.file_path.split("|")
+
+					    		files.forEach(function(file,index) {
+					    			var link = "<br><a traget='_blank' href=/static/uploads/"+files_path[index]+">"+file+"</a><br>"
+					    			file_txt = file_txt + link
+					    		})
+				    		}
+
+				    		var txt = `
+				    			<p style="font-weight: bold;font-size: 15px">`+ item.title +`</p>
+				    			<p style="margin-top: 20px !important; color: #1266f1;">`+moment(item.date_submitted).format('LL')+`</p>
+				    		`
+				    		item.text = txt + file_txt
+
+				    		var action = `
+								<button class="btn btn-sm btn-danger" onclick="email(this,'tbl_memo')"><i class="bi bi-envelope"></i></button>
+				    		`
+				    		item.action = action
+				    	})
+			    		return data;
+				    }
+				},
+				columns: [
+					{data: "text"},
+					{data: "action"}
+				],
+		    	"lengthChange": false,
+		    	"ordering": false,
+		    	"info": false,
+		    	"pageLength": 3
+		    });
+
+		});
+
+		function saveState(elem){
+			localStorage.setItem("saveState", elem.id);
+		}
+
+		function open_cb(elem){
+			var tr = $(elem).closest('tr');
+			var tbl_data = $('#tbl_cb').DataTable().row(tr).data()
+			fetch('/get_OOB', {
+		        method: 'POST',
+		        headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					session_id: tbl_data.session_id
+				}),
+		    })
+		    .then(response => response.json())
+		    .then(res => {
+		        clear_session_data()
+		        if (res) {
+		    		if (res.sess_data.length!=0) {
+			    		$("#order_B").modal('hide')
+
+			    		var x = res.sess_data[0].session_number.replace(/\D/g,'');
+			    		var number = ordinal_suffix_of(x);
+
+			    		var ses_date = moment(res.sess_data[0].session_date).format('LL')
+			    		byId("session_id").innerHTML = x;
+			    		byId("sup").innerHTML = number.replace(/[0-9]/g, '');
+			    		byId("session_oob_id").value = res.sess_data[0].session_id;
+			    		byId("session_date").innerHTML = ses_date;
+			    		byId("session_national_anthem").innerHTML = res.sess_data[0].national_anthem;
+			    		byId("session_opening_prayer").innerHTML = (res.sess_data[0].session_opening_prayer ? res.sess_data[0].session_opening_prayer : "N/A");
+			    		byId("session_creed").innerHTML = (res.sess_data[0].recitation_coun_creed ? res.sess_data[0].recitation_coun_creed : "N/A");
+			    		byId("session_announcement").innerHTML = res.sess_data[0].announcement;
+			    		byId("session_closing_prayer").innerHTML = (res.sess_data[0].closing_prayer ? res.sess_data[0].closing_prayer : "N/A");
+			    		byId("sp_number_h").value = res.sess_data[0].sp_number;
+
+			    		sendDataWithCallback('/get_session_video',{session_id:res.sess_data[0].session_id},(res)=>{
+			    			if(res.length){
+			    				if(res[0]['intro_path']!='None'){
+				    				getbyId('div_intro1').style.display = "inline-block"
+				    				getbyId('intro').href = '/static/' + res[0].intro_path;
+				    			}else{
+				    				getbyId('div_intro1').style.display = "inline-block"
+				    				getbyId('intro').innerHTML = 'N/A';
+				    				getbyId('intro').style.color="black"
+				    			}
+
+				    			if(res[0]['national_anthem_path']!='None'){
+				    				getbyId('div_nat1').style.display = "inline-block"
+				    				getbyId('national_anthem').href = '/static/' + res[0].national_anthem_path;
+				    			}else{
+				    				getbyId('div_nat1').style.display = "inline-block"
+				    				getbyId('national_anthem').innerHTML = 'N/A';
+				    				getbyId('national_anthem').style.color="black"
+				    			}
+			    			}
+				            
+				        })
+
+			    		// attendance
+			    		if (res.sess_roll_call) {
+			    			if (res.sess_roll_call.length!=0) {
+			    				var parent = byId("session_roll_call");
+			    				parent.innerHTML = ""
+			    				res.sess_roll_call.forEach(function(item,index){
+			    					var child = createElem("div"),
+			    						div1 = createElem("div"),
+			    						inp = createElem("select"),
+			    						inp2 = createElem('input'),
+			    						div2 = createElem("div"),
+			    						p = createElem("p"),
+			    						opt1 = createElem('option'),
+			    						opt2 = createElem('option'),
+			    						opt3 = createElem('option'),
+			    						opt4 = createElem('option');
+
+			    					child.style = "width:100%!important; display: table !important;";
+			    					div1.style = "width:40%!important;float:left!important;margin-top:1%";				
+
+			    					inp.className = "form-control";
+			    					inp.name = "attendance["+index+"][roll_call]";
+			    					// inp.disable = true;
+			    					inp.setAttribute('disabled',true)
+			    					
+			    					inp.value = item.status
+			    					if (item.status == 0) {
+			    						opt1.setAttribute("selected",true);
+			    					}else if (item.status == 1) {
+			    						opt2.setAttribute("selected",true);
+			    					}else if (item.status == 2) {
+			    						opt3.setAttribute("selected",true);
+			    					}else if (item.status == 3) {
+			    						opt4.setAttribute("selected",true);
+			    					}
+
+			    					inp.style = "margin:0;width:50%;margin-right:70%";
+			    					inp2.value = item.roll_call_id;
+			    					inp2.name = "attendance["+index+"][roll_call_id]";
+			    					inp2.type = "hidden"
+			    					
+			    					div2.style = "width:60%!important;float:right!important;margin-top:1%";
+			    					p.className = "textStyle";
+			    					p.style = "font-size: 15px;margin-left:10%;";
+			    					p.innerHTML = item.fullname;
+
+			    					opt1.innerHTML = "PRESENT";
+			    					opt2.innerHTML = "ABSENT";
+			    					opt3.innerHTML = "LEAVE";
+			    					opt4.innerHTML = "TRAVEL";
+			    					opt1.value = "0";
+			    					opt2.value = "1";
+			    					opt3.value = "2";
+			    					opt3.value = "3";
+
+
+			    					inp.appendChild(opt1)
+			    					inp.appendChild(opt2)
+			    					inp.appendChild(opt3)
+									inp.appendChild(opt4)
+
+			    					div1.appendChild(p);
+			    					div2.appendChild(inp2)
+			    					div2.appendChild(inp);
+			    					child.appendChild(div1);
+			    					child.appendChild(div2);
+			    					parent.appendChild(child)
+			    				});
+			    			}
+			    		}
+
+			    		// privious minutes
+			    		if (res.sess_priv_min) {
+			    			if (res.sess_priv_min.length!=0) {
+			    				var parent = byId("session_reading_prev");
+			    				res.sess_priv_min.forEach(function(item,index){
+			    					var div = document.createElement('div')
+			    					var p = document.createElement('p')
+			    					p.className = "textGenerated"
+			    					p.innerHTML = `DATED : ${item.dated}`
+			    					div.appendChild(p)
+
+			    					if(item.document_file){
+			    						console.log(item.document_file, "item.document_file")
+			    						var a =document.createElement("a")
+				    					a.style = "text-decoration:underline;"
+				    					a.className = "textGenerated_lower"
+				    					a.innerHTML = "***show document"
+				    					a.href = `../static/uploads/${item.document_file}`
+				    					div.appendChild(a)
+			    					}
+			    					
+			    					parent.appendChild(div)
+			    				})
+			    			}
+			    		}
+
+			    		// question privilge
+			    		if (res.sess_question) {
+			    			var tbody = byId("qh_visitor_id");
+			    			if (res.sess_question.length!=0) {
+			    				tbody.innerHTML = ""
+			    				res.sess_question.forEach(function(item,index){
+			    					var tr = document.createElement('tr')
+
+				    				var td1 = document.createElement('td')
+
+				    				var p1 = document.createElement('p')
+				    				p1.style = "font-weight:bolder"
+				    				var p2 = document.createElement('p')
+
+				    				td1.appendChild(p1)
+				    				td1.appendChild(p2)
+
+				    				var td2 = document.createElement('td')
+				    				var td3 = document.createElement('td')
+
+				    				p1.innerHTML = `${item.fullname}`
+				    				p2.innerHTML = `${item.designation}`
+				    				td2.innerHTML = `${item.subject}`
+
+				    				var a =document.createElement("a")
+			    					a.style = "text-decoration:underline;"
+			    					a.className = "textGenerated_lower"
+			    					a.innerHTML = "***show document"
+			    					a.target = "_blank"
+			    					a.href = `../static/${item.file}`
+
+			    					td3.appendChild(a)
+
+				    				tr.appendChild(td1)
+				    				tr.appendChild(td2)
+				    				tr.appendChild(td3)
+
+				    				tbody.appendChild(tr)
+			    				})
+			    			}else{
+			    				var tr = document.createElement('tr')
+
+			    				var td1 = document.createElement('td')
+			    				td1.innerHTML = 'No data available'
+			    				td1.colSpan = 3
+			    				td1.style = "text-align:center"
+			    				tr.appendChild(td1)
+
+			    				tbody.appendChild(tr)
+			    			}
+			    		}
+
+			    		// privilge hour
+			    		if (res.sess_priv_hour) {
+			    			var tbody = byId("prive_id");
+			    			if (res.sess_priv_hour.length!=0) {
+			    				
+			    				tbody.innerHTML = ""
+
+			    				res.sess_priv_hour.forEach(function(item,index){
+			    					var tr = document.createElement('tr')
+
+				    				var td1 = document.createElement('td')
+				    				var td2 = document.createElement('td')
+
+				    				td1.innerHTML = `${item.councilor}`
+
+				    				var a =document.createElement("a")
+			    					a.style = "text-decoration:underline;"
+			    					a.className = "textGenerated_lower"
+			    					a.innerHTML = "***show document"
+			    					a.target = "_blank"
+			    					a.href = `../static/${item.file}`
+
+			    					td2.appendChild(a)
+
+				    				tr.appendChild(td1)
+				    				tr.appendChild(td2)
+
+				    				tbody.appendChild(tr)
+			    				})
+			    				
+			    			}else{
+			    				var tr = document.createElement('tr')
+
+			    				var td1 = document.createElement('td')
+			    				td1.innerHTML = 'No data available'
+			    				td1.colSpan = 2
+			    				td1.style = "text-align:center"
+			    				tr.appendChild(td1)
+
+			    				tbody.appendChild(tr)
+			    			}
+			    		}
+
+			    		// reading and refferences bussiness ordinance
+			    		if (res.sess_reading_ord) {
+			    			if (res.sess_reading_ord.length!=0) {
+			    				var parent = byId("session_proposed_ordinance");
+			    				parent.innerHTML = ""
+			    				res.sess_reading_ord.forEach(function(item,index){
+			    					var div = document.createElement('div')
+			    					div.style = "padding: 5px"
+
+			    					var p = document.createElement('p')
+			    					p.style = "text-indent: 40px;"
+			    					p.className = "textGenerated";
+			    					p.innerHTML = `A.${index + 1}. ${item.title} <span style="font-weight:bolder;font-style:italic;"><a style="color:#1266f1;cursor: pointer" onclick="pop_(${item.track_gen_id}, 1, 'sess_reading_ord_committee_p')">${item.tracking_no}</a></span>`
+			    					div.appendChild(p)
+
+			    					if(item.committee){
+			    						var p_ref = document.createElement("p")
+			    						p_ref.className = "textGenerated"
+			    						p_ref.id = "sess_reading_ord_committee_p"
+				    					p_ref.innerHTML = `REFFER TO : <span id='sess_reading_ord_committee' style="text-decoration:underline">${item.committee}</span>`
+
+				    					div.appendChild(p_ref)
+			    					}
+
+			    					if(item.doc_status){
+			    						var p_ref = document.createElement("p")
+			    						p_ref.className = "textGenerated"
+			    						p_ref.id = "sess_reading_ord_committee_p"
+				    					p_ref.innerHTML = `DISAPPROVED`
+				    					div.appendChild(p_ref)
+			    					}
+
+			    					if(item.document_file){
+			    						var a =document.createElement("a")
+
+			    						let file = item.document_file.split(",")
+			    						if(file.length==1){
+			    							a.style = "text-decoration:underline;"
+					    					a.className = "textGenerated_lower"
+					    					a.innerHTML = "***show document"
+					    					a.href = `../static/uploads/${item.document_file}`
+			    						}else{
+			    							a.style = "text-decoration:underline;cursor:pointer"
+					    					a.className = "textGenerated_lower"
+					    					a.innerHTML = "***show document"
+					    					a.onclick = function(){
+					    						show_document_downloadable(file)
+					    					}
+			    						}
+				    					
+				    					div.appendChild(a)
+			    					}
+
+			    					parent.appendChild(div)
+			    					
+			    				})
+			    			}
+			    		}
+
+			    		// reading and refferences bussiness resolution
+			    		if (res.sess_reading_res) {
+			    			if (res.sess_reading_res.length!=0) {
+			    				var parent = byId("session_proposed_resolution");
+			    				parent.innerHTML = ""
+			    				res.sess_reading_res.forEach(function(item,index){
+			    					var div = document.createElement('div')
+			    					div.style = "padding: 5px"
+
+			    					var p = document.createElement('p')
+			    					p.style = "text-indent: 40px;"
+			    					p.className = "textGenerated"
+			    					p.innerHTML = `B.${index + 1}. ${item.title} <span style="font-weight:bolder;font-style:italic;">
+			    					<a style="color:#1266f1;cursor: pointer" onclick="pop_(${item.track_gen_id}, 1, 'sess_reading_res_committee_p')">${item.tracking_no} </a>
+			    					</span>`
+			    					div.appendChild(p)
+
+			    					if(item.committee){
+			    						var p_ref = document.createElement("p")
+			    						p_ref.className = "textGenerated"
+			    						p_ref.id = "sess_reading_res_committee_p"
+				    					p_ref.innerHTML = `REFFER TO : <span style="text-decoration:underline">${item.committee}</span>`
+
+				    					div.appendChild(p_ref)
+			    					}
+
+			    					if(item.doc_status){
+			    						var p_ref = document.createElement("p")
+			    						p_ref.className = "textGenerated"
+			    						p_ref.id = "sess_reading_res_committee_p"
+				    					p_ref.innerHTML = `DISAPPROVED`
+				    					div.appendChild(p_ref)
+			    					}
+
+			    					if(item.document_file){
+			    						var a =document.createElement("a")
+				    					a.style = "text-decoration:underline;"
+				    					a.className = "textGenerated_lower"
+				    					a.innerHTML = "***show document"
+				    					a.href = `../static/uploads/${item.document_file}`
+				    					div.appendChild(a)
+			    					}
+
+			    					parent.appendChild(div)
+			    					
+			    				})
+			    			}
+			    		}
+
+			    		// reading and refferences bussiness
+			    		if (res.sess_reading_pet) {
+			    			if (res.sess_reading_pet.length!=0) {
+			    				var parent = byId("session_petition_req_ref");
+			    				parent.innerHTML = ""
+			    				res.sess_reading_pet.forEach(function(item,index){
+			    					var div = document.createElement('div')
+			    					div.style = "padding: 5px"
+
+			    					var p = document.createElement('p')
+			    					p.style = "text-indent: 40px;"
+			    					p.className = "textGenerated"
+			    					p.innerHTML = `C.${index + 1}. ${item.title} <span style="font-weight:bolder;font-style:italic;">${item.tracking_no}</span>`
+			    					div.appendChild(p)
+
+			    					var p_type = document.createElement("p")
+	                                p_type.className = "textGenerated"
+	                                p_type.style= "font-weight:bolder"
+			    					if(item.type=="2"){
+	                                    p_type.innerHTML = "For Information"
+	                                }else{
+	                                	if(item.committee){
+				    						var p_ref = document.createElement("p")
+				    						p_ref.className = "textGenerated"
+					    					p_ref.innerHTML = `REFFER TO : <span style="text-decoration:underline">${item.committee}</span>`
+
+					    					div.appendChild(p_ref)
+				    					}
+	                                }
+
+	                                div.appendChild(p_type)
+	                                
+			    					if(item.document_file){
+			    						var a =document.createElement("a")
+				    					a.style = "text-decoration:underline;"
+				    					a.className = "textGenerated_lower"
+				    					a.innerHTML = "***show document"
+				    					a.href = `../static/uploads/${item.document_file}`
+				    					div.appendChild(a)
+			    					}
+
+	                                
+			    					parent.appendChild(div)
+			    					
+			    				})
+			    			}
+			    		}
+
+			    		// additional refferals
+			    		if (res.sess_reading_additional_ref) {
+			    			if (res.sess_reading_additional_ref.length!=0) {
+			    				var parent = byId("session_additional_ref");
+			    				parent.innerHTML = ""
+			    				res.sess_reading_additional_ref.forEach(function(item,index){
+			    					var div = document.createElement('div')
+			    					div.style = "padding: 5px"
+
+			    					var p = document.createElement('p')
+			    					p.style = "text-indent: 40px;"
+			    					p.className = "textGenerated"
+			    					p.innerHTML = `C II.${index + 1}. ${item.title} <span style="font-weight:bolder;font-style:italic;">${item.tracking_no}</span>`
+			    					div.appendChild(p)
+
+			    					if(item.committee){
+			    						var p_ref = document.createElement("p")
+			    						p_ref.className = "textGenerated"
+				    					p_ref.innerHTML = `REFFER TO : <span style="text-decoration:underline">${item.committee}</span>`
+
+				    					div.appendChild(p_ref)
+			    					}
+
+			    					if(item.document_file){
+			    						var a =document.createElement("a")
+				    					a.style = "text-decoration:underline;"
+				    					a.className = "textGenerated_lower"
+				    					a.innerHTML = "***show document"
+				    					a.href = `../static/uploads/${item.document_file}`
+				    					div.appendChild(a)
+			    					}
+
+			    					parent.appendChild(div)
+			    					
+			    				})
+			    			}
+			    		}
+
+			    		// Veto
+			    		if (res.sess_reading_veto) {
+			    			if (res.sess_reading_veto.length!=0) {
+			    				var parent = byId("session_veto");
+
+			    				parent.innerHTML = ""
+			    				res.sess_reading_veto.forEach(function(item,index){
+			    					var div = document.createElement('div')
+			    					div.style = "padding: 5px"
+
+			    					var p = document.createElement('p')
+			    					p.style = "text-indent: 40px;"
+			    					p.className = "textGenerated"
+			    					p.innerHTML = `D. ${index + 1}. ${item.title} <span style="font-weight:bolder;font-style:italic;">${item.tracking_no}</span>`
+
+			    					div.appendChild(p)
+
+			    					if(item.committee){
+			    						var p_ref = document.createElement("p")
+			    						p_ref.className = "textGenerated"
+				    					p_ref.innerHTML = `REFFER TO : <span style="text-decoration:underline">${item.committee}</span>`
+
+				    					div.appendChild(p_ref)
+			    					}
+
+			    					if(item.document_file){
+			    						var a =document.createElement("a")
+				    					a.style = "text-decoration:underline;"
+				    					a.className = "textGenerated_lower"
+				    					a.innerHTML = "***show document"
+				    					a.href = `../static/uploads/${item.document_file}`
+				    					div.appendChild(a)
+			    					}
+
+			    					parent.appendChild(div)
+			    					
+			    				})
+			    			}
+			    		}
+
+			    		// div_committee_report
+			    		if (res.sess_commitee_report) {
+			    			var tbody = byId("tbody_session_committee_report");
+			    			tbody.innerHTML = ""
+			    			if (res.sess_commitee_report.length!=0) {
+			    				res.sess_commitee_report.forEach(function(item,index){
+			    					var tr = document.createElement('tr')
+
+				    				var td1 = document.createElement('td')
+				    				var td2 = document.createElement('td')
+				    				var td3 = document.createElement('td')
+
+				    				td1.innerHTML = `${item.committee_report_no}`
+				    				td2.innerHTML = `${item.committee}`
+
+				    				var a =document.createElement("a")
+			    					a.style = "text-decoration:underline;"
+			    					a.className = "textGenerated_lower"
+			    					a.innerHTML = "***show document"
+			    					a.target = "_blank"
+			    					a.href = `../static/${item.file}`
+
+			    					td3.appendChild(a)
+
+				    				tr.appendChild(td1)
+				    				tr.appendChild(td2)
+				    				tr.appendChild(td3)
+
+				    				tbody.appendChild(tr)
+			    				})
+			    				
+			    			}else{
+			    				var tr = document.createElement('tr')
+
+			    				var td1 = document.createElement('td')
+			    				td1.colSpan = 3
+			    				td1.style= "text-align:center"
+			    				td1.innerHTML = "No available Data"
+
+			    				tr.appendChild(td1)
+
+			    				tbody.appendChild(tr)
+			    			}
+			    		}
+
+			    		// Committee information
+			    		if (res.sess_commitee_information) {
+			    			var tbody = byId("tbody_session_committee_information");
+			    			tbody.innerHTML = ""
+			    			if (res.sess_commitee_information.length!=0) {
+			    				res.sess_commitee_information.forEach(function(item,index){
+			    					var tr = document.createElement('tr')
+
+				    				var td1 = document.createElement('td')
+				    				var td2 = document.createElement('td')
+				    				var td3 = document.createElement('td')
+
+				    				td1.innerHTML = `${item.committee_information_no}`
+				    				td2.innerHTML = `${item.committee}`
+
+				    				var a =document.createElement("a")
+			    					a.style = "text-decoration:underline;"
+			    					a.className = "textGenerated_lower"
+			    					a.innerHTML = "***show document"
+			    					a.target = "_blank"
+			    					a.href = `../static/${item.file}`
+
+			    					td3.appendChild(a)
+
+				    				tr.appendChild(td1)
+				    				tr.appendChild(td2)
+				    				tr.appendChild(td3)
+
+				    				tbody.appendChild(tr)
+			    				})
+			    				
+			    			}else{
+			    				var tr = document.createElement('tr')
+
+			    				var td1 = document.createElement('td')
+			    				td1.colSpan = 3
+			    				td1.style= "text-align:center"
+			    				td1.innerHTML = "No available Data"
+
+			    				tr.appendChild(td1)
+
+			    				tbody.appendChild(tr)
+			    			}
+			    		}
+
+			    		// unfinish bussiness
+			    		if (res.sess_reading_unfinish) {
+			    			if (res.sess_reading_unfinish.length!=0) {
+			    				var parent = byId("unfinish_bussiness");
+
+			    				parent.innerHTML = ""
+			    				res.sess_reading_unfinish.forEach(function(item,index){
+			    					if(item.track_gen_id){
+			    						var div = document.createElement('div')
+				    					div.style = "padding: 5px"
+
+				    					var p = document.createElement('p')
+				    					p.style = "text-indent: 40px;"
+				    					p.className = "textGenerated"
+
+				    					p.innerHTML = `A.${index + 1}. ${item.title} <span style="font-weight:bolder;font-style:italic;"><a style="color:#1266f1;cursor: pointer" onclick="pop_(${item.track_gen_id}, 1)">${item.tracking_no} </a></span>`
+				    					div.appendChild(p)
+
+				    					if(item.committee){
+				    						var p_ref = document.createElement("p")
+				    						p_ref.className = "textGenerated"
+					    					p_ref.innerHTML = `REFFER TO : <span style="text-decoration:underline">${item.committee}</span>`
+
+					    					div.appendChild(p_ref)
+				    					}
+
+				    					if(item.doc_status){
+				    						var p_ref = document.createElement("p")
+				    						p_ref.className = "textGenerated"
+				    						p_ref.id = "sess_reading_unfinish_committee_p"
+					    					p_ref.innerHTML = `DISAPPROVED`
+					    					div.appendChild(p_ref)
+				    					}
+
+				    					if(item.document_file){
+				    						var a =document.createElement("a")
+					    					a.style = "text-decoration:underline;"
+					    					a.className = "textGenerated_lower"
+					    					a.innerHTML = "***show document"
+					    					a.href = `../static/uploads/${item.document_file}`
+					    					div.appendChild(a)
+				    					}
+
+				    					parent.appendChild(div)
+			    					}
+			    				})
+			    			}
+			    		}
+
+			    		// propose_ord 2nd reading
+			    		if (res.sess_reading_botd) {
+			    			if (res.sess_reading_botd.length!=0) {
+			    				var parent = byId("proposed_2nd");
+
+			    				parent.innerHTML = ""
+			    				res.sess_reading_botd.forEach(function(item,index){
+			    					var div = document.createElement('div')
+			    					div.style = "padding: 5px"
+
+			    					var p = document.createElement('p')
+			    					p.style = "text-indent: 40px;"
+			    					p.className = "textGenerated"
+			    					p.innerHTML = `B. ${index + 1}. ${item.title} <span style="font-weight:bolder;font-style:italic;">${item.tracking_no}</span>`
+
+			    					p.innerHTML = `B.${index + 1}. ${item.title} <span style="font-weight:bolder;font-style:italic;"><a style="color:#1266f1;cursor: pointer" onclick="approved_reffer_back(${item.track_gen_id}, 2)">${item.tracking_no}</a></span>`
+
+			    					div.appendChild(p)
+
+			    					if(item.committee){
+			    						var p_ref = document.createElement("p")
+			    						p_ref.className = "textGenerated"
+				    					p_ref.innerHTML = `REFFER TO : <span style="text-decoration:underline">${item.committee}</span>`
+
+				    					div.appendChild(p_ref)
+			    					}
+
+			    					if(item.document_file){
+			    						var a =document.createElement("a")
+
+			    						let file = item.document_file.split(",")
+			    						if(file.length==1){
+			    							a.style = "text-decoration:underline;"
+					    					a.className = "textGenerated_lower"
+					    					a.innerHTML = "***show document"
+					    					a.href = `../static/uploads/${item.document_file}`
+			    						}else{
+			    							a.style = "text-decoration:underline;cursor:pointer"
+					    					a.className = "textGenerated_lower"
+					    					a.innerHTML = "***show document"
+					    					a.onclick = function(){
+					    						show_document_downloadable(file)
+					    					}
+			    						}
+				    					
+				    					div.appendChild(a)
+			    					}
+
+			    					parent.appendChild(div)
+			    					
+			    				})
+			    			}
+			    		}
+
+			    		// urgent
+			    		if (res.sess_reading_urgent) {
+			    			if (res.sess_reading_urgent.length!=0) {
+			    				var parent = byId("session_urgent");
+
+			    				parent.innerHTML = ""
+			    				res.sess_reading_urgent.forEach(function(item,index){
+			    					var div = document.createElement('div')
+			    					div.style = "padding: 5px"
+
+			    					var p = document.createElement('p')
+			    					p.style = "text-indent: 40px;"
+			    					p.className = "textGenerated"
+			    					p.innerHTML = `B.2.1 ${index + 1}. ${item.title} <span style="font-weight:bolder;font-style:italic;"><a style="color:#1266f1;cursor: pointer" onclick="pop_2(${item.track_gen_id}, 2, 'sess_reading_urgent_committee_p')">${item.tracking_no}</a></span>`
+
+			    					div.appendChild(p)
+
+			    					if(item.committee){
+			    						var p_ref = document.createElement("p")
+			    						p_ref.className = "textGenerated"
+			    						p_ref.id = "sess_reading_urgent_committee_p"
+				    					p_ref.innerHTML = `REFFER TO : <span style="text-decoration:underline">${item.committee}</span>`
+				    					div.appendChild(p_ref)
+			    					}
+
+			    					if(item.doc_status){
+			    						var p_ref = document.createElement("p")
+			    						p_ref.className = "textGenerated"
+			    						p_ref.id = "sess_reading_urgent_committee_p"
+				    					p_ref.innerHTML = `DISAPPROVED`
+				    					div.appendChild(p_ref)
+			    					}
+
+			    					if(item.document_file){
+			    						var a =document.createElement("a")
+
+			    						let file = item.document_file.split(",")
+			    						if(file.length==1){
+			    							a.style = "text-decoration:underline;"
+					    					a.className = "textGenerated_lower"
+					    					a.innerHTML = "***show document"
+					    					a.href = `../static/uploads/${item.document_file}`
+			    						}else{
+			    							a.style = "text-decoration:underline;cursor:pointer"
+					    					a.className = "textGenerated_lower"
+					    					a.innerHTML = "***show document"
+					    					a.onclick = function(){
+					    						show_document_downloadable(file)
+					    					}
+			    						}
+				    					
+				    					div.appendChild(a)
+			    					}
+
+			    					parent.appendChild(div)
+			    					
+			    				})
+			    			}
+			    		}
+
+			    		// just inserted
+			    		if (res.sess_reading_just_inserted) {
+			    			if (res.sess_reading_just_inserted.length!=0) {
+			    				var parent = byId("session_just_inserted");
+
+			    				parent.innerHTML = ""
+			    				res.sess_reading_just_inserted.forEach(function(item,index){
+			    					var div = document.createElement('div')
+			    					div.style = "padding: 5px"
+
+			    					var p = document.createElement('p')
+			    					p.style = "text-indent: 40px;"
+			    					p.className = "textGenerated"
+			    					p.innerHTML = `B.2.2 ${index + 1}. ${item.title} <span style="font-weight:bolder;font-style:italic;"><a style="color:#1266f1;cursor: pointer" onclick="pop_2(${item.track_gen_id}, 2, 'sess_reading_just_inserted_committee_p')">${item.tracking_no}</a></span>`
+
+			    					div.appendChild(p)
+
+			    					if(item.committee){
+			    						var p_ref = document.createElement("p")
+			    						p_ref.className = "textGenerated"
+			    						p_ref.id = "sess_reading_just_inserted_committee_p"
+				    					p_ref.innerHTML = `REFFER TO : <span style="text-decoration:underline">${item.committee}</span>`
+
+				    					div.appendChild(p_ref)
+			    					}
+
+			    					if(item.doc_status){
+			    						var p_ref = document.createElement("p")
+			    						p_ref.className = "textGenerated"
+			    						p_ref.id = "sess_reading_just_inserted_committee_p"
+				    					p_ref.innerHTML = `DISAPPROVED`
+				    					div.appendChild(p_ref)
+			    					}
+
+			    					if(item.document_file){
+			    						var a =document.createElement("a")
+
+			    						let file = item.document_file.split(",")
+			    						if(file.length==1){
+			    							a.style = "text-decoration:underline;"
+					    					a.className = "textGenerated_lower"
+					    					a.innerHTML = "***show document"
+					    					a.href = `../static/uploads/${item.document_file}`
+			    						}else{
+			    							a.style = "text-decoration:underline;cursor:pointer"
+					    					a.className = "textGenerated_lower"
+					    					a.innerHTML = "***show document"
+					    					a.onclick = function(){
+					    						show_document_downloadable(file)
+					    					}
+			    						}
+				    					
+				    					div.appendChild(a)
+			    					}
+
+			    					parent.appendChild(div)
+			    					
+			    				})
+			    			}
+			    		}
+
+			    		// Calendar measure
+			    		if (res.sess_reading_calendar_measure) {
+			    			if (res.sess_reading_calendar_measure.length!=0) {
+			    				var parent = byId("session_calendar_new_measure");
+
+			    				parent.innerHTML = ""
+			    				res.sess_reading_calendar_measure.forEach(function(item,index){
+			    					var div = document.createElement('div')
+			    					div.style = "padding: 5px"
+
+			    					var p = document.createElement('p')
+			    					p.style = "text-indent: 40px;"
+			    					p.className = "textGenerated"
+
+			    					p.innerHTML = `B.3.1 ${index + 1}. ${item.title} <span style="font-weight:bolder;font-style:italic;"><a style="color:#1266f1;cursor: pointer" onclick="approved_reffer_back(${item.track_gen_id}, 3)">${item.tracking_no}</a></span>`
+
+			    					div.appendChild(p)
+
+			    					if(item.committee){
+			    						var p_ref = document.createElement("p")
+			    						p_ref.className = "textGenerated"
+				    					p_ref.innerHTML = `REFFER TO : <span style="text-decoration:underline">${item.committee}</span>`
+
+				    					div.appendChild(p_ref)
+			    					}
+
+			    					if(item.document_file){
+			    						var a =document.createElement("a")
+			    						let file = item.document_file.split(",")
+			    						if(file.length==1){
+			    							a.style = "text-decoration:underline;"
+					    					a.className = "textGenerated_lower"
+					    					a.innerHTML = "***show document"
+					    					a.href = `../static/uploads/${item.document_file}`
+			    						}else{
+			    							a.style = "text-decoration:underline;cursor:pointer"
+					    					a.className = "textGenerated_lower"
+					    					a.innerHTML = "***show document"
+					    					a.onclick = function(){
+					    						show_document_downloadable(file)
+					    					}
+			    						}
+				    					
+				    					div.appendChild(a)
+			    					}
+
+			    					parent.appendChild(div)
+			    					
+			    				})
+			    			}
+			    		}
+
+			    		// new measure
+			    		if (res.sess_reading_new_measure) {
+			    			if (res.sess_reading_new_measure.length!=0) {
+			    				var parent = byId("session_new_measure");
+
+			    				parent.innerHTML = ""
+			    				res.sess_reading_new_measure.forEach(function(item,index){
+			    					var div = document.createElement('div')
+			    					div.style = "padding: 5px"
+
+			    					var p = document.createElement('p')
+			    					p.style = "text-indent: 40px;"
+			    					p.className = "textGenerated"
+			    					p.innerHTML = `B.3.2 ${index + 1}. ${item.title} <span style="font-weight:bolder;font-style:italic;"><a style="color:#1266f1;cursor: pointer" onclick="approved_reffer_back(${item.track_gen_id}, 3)">${item.tracking_no}</a></span>`
+
+			    					div.appendChild(p)
+
+			    					if(item.committee){
+			    						var p_ref = document.createElement("p")
+			    						p_ref.className = "textGenerated"
+				    					p_ref.innerHTML = `REFFER TO : <span style="text-decoration:underline">${item.committee}</span>`
+
+				    					div.appendChild(p_ref)
+			    					}
+
+			    					if(item.document_file){
+			    						var a =document.createElement("a")
+			    						let file = item.document_file.split(",")
+			    						if(file.length==1){
+			    							a.style = "text-decoration:underline;"
+					    					a.className = "textGenerated_lower"
+					    					a.innerHTML = "***show document"
+					    					a.href = `../static/uploads/${item.document_file}`
+			    						}else{
+			    							a.style = "text-decoration:underline;cursor:pointer"
+					    					a.className = "textGenerated_lower"
+					    					a.innerHTML = "***show document"
+					    					a.onclick = function(){
+					    						show_document_downloadable(file)
+					    					}
+			    						}
+				    					
+				    					div.appendChild(a)
+			    					}
+
+			    					parent.appendChild(div)
+			    					
+			    				})
+			    			}
+			    		}
+
+			    		// bussiness third
+			    		if (res.sess_reading_bussiness_third) {
+			    			if (res.sess_reading_bussiness_third.length!=0) {
+			    				var parent = byId("session_bussiness_third");
+
+			    				parent.innerHTML = ""
+			    				res.sess_reading_bussiness_third.forEach(function(item,index){
+			    					var div = document.createElement('div')
+			    					div.style = "padding: 5px"
+
+			    					var p = document.createElement('p')
+			    					p.style = "text-indent: 40px;"
+			    					p.className = "textGenerated"
+			    					p.innerHTML = `B.2.2 ${index + 1}. ${item.title} <span style="font-weight:bolder;font-style:italic;">${item.tracking_no}</span>`
+
+			    					p.innerHTML = `B.3.3 ${index + 1}. ${item.title} <span style="font-weight:bolder;font-style:italic;"><a style="color:#1266f1;cursor: pointer" onclick="voting(${item.track_gen_id}, 3)">${item.tracking_no}</a></span>`
+
+			    					div.appendChild(p)
+
+			    					if(item.committee){
+			    						var p_ref = document.createElement("p")
+			    						p_ref.className = "textGenerated"
+				    					p_ref.innerHTML = `REFFER TO : <span style="text-decoration:underline">${item.committee}</span>`
+				    					div.appendChild(p_ref)
+			    					}
+
+			    					if(item.document_file){
+			    						var a =document.createElement("a")
+				    					a.style = "text-decoration:underline;"
+				    					a.className = "textGenerated_lower"
+				    					a.innerHTML = "***show document"
+				    					a.href = `../static/uploads/${item.document_file}`
+				    					div.appendChild(a)
+			    					}
+
+			    					parent.appendChild(div)
+			    					
+			    				})
+			    			}
+			    		}
+
+			    		// announcement
+			    		if (res.sess_announcement) {
+			    			var tbody = byId("tbody_session_announcement");
+			    			tbody.innerHTML = ""
+			    			if (res.sess_announcement.length!=0) {
+			    				res.sess_announcement.forEach(function(item,index){
+			    					var tr = document.createElement('tr')
+
+				    				var td1 = document.createElement('td')
+				    				var td2 = document.createElement('td')
+				    				var td3 = document.createElement('td')
+
+				    				td1.innerHTML = `${item.fullname}`
+				    				td2.innerHTML = `${item.announcement}`
+
+				    				var a =document.createElement("a")
+			    					a.style = "text-decoration:underline;"
+			    					a.className = "textGenerated_lower"
+			    					a.innerHTML = "***show document"
+			    					a.target = "_blank"
+			    					a.href = `../static/${item.file}`
+
+			    					td3.appendChild(a)
+
+				    				tr.appendChild(td1)
+				    				tr.appendChild(td2)
+				    				tr.appendChild(td3)
+
+				    				tbody.appendChild(tr)
+			    				})
+			    				
+			    			}else{
+			    				var tr = document.createElement('tr')
+
+				    				var td1 = document.createElement('td')
+
+				    				td1.colSpan = 3
+				    				td1.innerHTML = `No available data`
+				    				td1.style = "text-align:center"
+				    				tr.appendChild(td1)
+
+				    				tbody.appendChild(tr)
+			    			}
+			    		}
+			    		
+			    		// code reff
+			    		if (res.sess_code_ref) {
+			    			if(res.sess_code_ref.length){
+			    				res.sess_code_ref.forEach(function(item,index){
+			    					if(item.type==1){
+			    						var ol = byId("div_code");
+			    					}else{
+			    						var ol = byId("div_ref");
+			    					}
+			    					var li = document.createElement('li')
+
+					    			li.innerHTML = `<a target='_blank' href='../static/uploads/${item.path}'>${item.title}</a>`
+					    			ol.appendChild(li)
+			    				})
+			    			}
+			    		}
+
+			    		// summary
+			    		if (res.sess_summary) {
+			    			if(res.sess_summary.length){
+			    				res.sess_summary.forEach(function(item,index){
+			    					if(item['type_document']=="Ordinance"){
+			    						var div = byId("div_correction_ordinance")
+			    					}else if(item['type_document']=="Resolution"){
+			    						var div = byId("div_correction_resolution")
+			    					}else{
+			    						var div = byId("div_correction")
+			    					}
+
+				    				var p = document.createElement('p')
+				    				p.style = "font-weight:bolder"
+				    				p.innerHTML = "OLD TITLE"
+
+				    				var p2 = document.createElement('p')
+				    				p2.style =" text-indent: 40px"
+				    				p2.innerHTML = `${item['old_title']} <span style="font-weight: bolder;font-style: italic">${item['tracking_no']}</span>`
+
+				    				var p3 = document.createElement('p')
+				    				p3.style = "font-weight:bolder"
+				    				p3.innerHTML = "NEW TITLE"
+
+				    				var p4 = document.createElement('p')
+				    				p4.style =" text-indent: 40px"
+				    				p4.innerHTML = `${item['new_title']}`
+
+				    				div.appendChild(p)
+				    				div.appendChild(p2)
+				    				div.appendChild(p3)
+				    				div.appendChild(p4)
+			    				})
+			    			}
+			    		}
+			    		
+			    		$("#cob_modal").modal('show');
+
+		    		}else{
+		    			alert("INVALID SESSION NUMBER")
+		    		}
+		    	}
+		    })
+		    .catch((error) => {
+		        console.error('Error:', error);
+		    });
+		}
+
+
+		function ordinal_suffix_of(i) {
+		    var j = i % 10,
+		        k = i % 100;
+		    if (j == 1 && k != 11) {
+		        return i + 'st';
+		    }
+		    if (j == 2 && k != 12) {
+		        return i + 'nd';
+		    }
+		    if (j == 3 && k != 13) {
+		        return i + 'rd';
+		    }
+		    return i + 'th';
+		}
+
+		function clear_session_data() {
+			getbyId('div_intro1').style.display = "none"
+			getbyId('div_nat1').style.display = "none"
+			byId("prive_id").innerHTML = ""
+			getbyId("qh_visitor_id").innerHTML = ""
+			getbyId("div_code").innerHTML = ""
+			getbyId("div_ref").innerHTML = ""
+			getbyId('session_reading_prev').innerHTML = ""
+			getbyId('session_proposed_ordinance').innerHTML = ""
+			getbyId('session_proposed_resolution').innerHTML=""
+			getbyId("session_petition_req_ref").innerHTML = "";
+			getbyId("session_additional_ref").innerHTML = "";
+			getbyId("session_veto").innerHTML = "";
+			getbyId("session_just_inserted").innerHTML = "";
+			getbyId('session_urgent').innerHTML = "";
+			getbyId("unfinish_bussiness").innerHTML = "";
+			getbyId("proposed_2nd").innerHTML = "";
+			getbyId("session_calendar_new_measure").innerHTML = "";
+			getbyId("session_new_measure").innerHTML = "";
+			getbyId("session_bussiness_third").innerHTML = "";
+			getbyId('session_closing_prayer').innerHTML = ""
+			getbyId('div_correction_ordinance').innerHTML = "";
+			getbyId('div_correction_resolution').innerHTML = "";
+		}
+
+		function print_oob(){
+	        var iframe   = document.createElement('iframe');
+	        iframe.width = "0px";
+	        iframe.height = "0px"
+
+	        document.body.appendChild(iframe)
+
+		    setTimeout(()=>{
+			    // document.body.style = "font-size: 10px !important;"
+			    iframe.contentWindow.document.body.innerHTML = $('#print_oob_id').html();
+			    var script   = document.createElement("script");
+			    script.innerHTML  = "window.print()";
+			    var frmHead = $(iframe).contents().find('head');
+		        if (frmHead != null) {
+		            frmHead.append($('style, link[rel=stylesheet]').clone());
+		        }
+
+			    iframe.contentWindow.document.body.appendChild(script);
+			    setTimeout(function() {
+			    	var iframes = document.querySelectorAll('iframe');
+					for (var i = 0; i < iframes.length; i++) {
+					    iframes[i].parentNode.removeChild(iframes[i]);
+					}
+			    },500)
+		    }, 1000)
+		    
+	    }
+
+	    function email(elem, tbl) {
+	    	var tr = $(elem).closest('tr');
+	    	var table = '#'+tbl
+	    	var tbl_data = $(table).DataTable().row(tr).data()
+	    	for_email_data = tbl_data
+	    	document.getElementById('email_body').value = tbl_data.title
+	    	document.getElementById('email_files').innerHTML = tbl_data.text
+	    	document.getElementById('emial_file_path').value = tbl_data.file_path
+	    	$('#email_modal').modal('show')
+	    }
+
+	</script>
+{% endblock%}

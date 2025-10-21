@@ -1,0 +1,146 @@
+<div class="colfull">
+	<form id="form_deduct_capital_outlay">
+		<div class="colfull">
+			<p id="type_amount">Deduction Amount</p>
+			<input class="form-control" id="co_deduction" type="number" name="amount" required onchange="check_co_deduction()">
+			<p>Add Description</p>
+			<input class="form-control" type="text" name="description">
+			<fieldset class="colfull">
+				<legend>Items</legend>
+				<button type="button" class="btn btn-warning" onclick="add_items_capital_outlay()">Add Item</button>
+				<div class="colfull" style="margin-top: 10px" id="div_add_item_deduction">
+
+				</div>
+			</fieldset>
+		</div>
+		<div class="colfull" align="center">
+			<button type="submit" class="btn btn-success">SAVE</button>
+		</div>
+	</form>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function(res){
+		var form_id='#form_deduct_capital_outlay'
+        $(form_id).submit(function(e){
+            var form_save = $(form_id).serializeObject();
+            e.preventDefault();
+
+            var inp=getbyId('co_deduction').value;
+            var remove_comma =getbyId('capital_outlay_amount').innerHTML.replaceAll(",","")
+			var bal=remove_comma
+
+			if(parseFloat(inp)<=parseFloat(bal)){
+				swal.fire({
+	                title: "Are you sure want to save?",
+	                text: "Click ok to continue",
+	                type: "info",
+	                showCancelButton: true,
+	                showLoaderOnConfirm: true,
+	                preConfirm: () => {
+	                    return fetch(console.log("log"))
+	                    .then(
+	                        sendDataWithCallback('/save_capital_outlay_deduction',form_save,function(res){
+	                            if (res) {
+	                                $('#div_capital_outlay_deduction').modal('toggle');
+	                                getbyId('form_deduct_capital_outlay').reset()
+	                                get_capital_outlay()
+	                                load_tbl_deduction_co()
+	                                getbyId('div_add_item_deduction').innerHTML=""
+	                                saved(res)
+	                            }
+	                        })
+	                    )
+	                    .catch(() => {
+	                        Swal.fire({
+	                          icon: 'error',
+	                          title: 'Error occured'
+	                        })
+	                    })
+	                }
+	            })
+
+			}else{
+				error_in_saving('Not enough capital outlay')
+			}
+
+            if (form_save.length != 0) {
+	        	var new_data = form_save.item.filter(function(items){
+			      return items[0] != "";
+			    });
+
+			    form_save.items = new_data;
+	        }
+            
+        })
+	})
+
+	var arr_co_item=[];
+	var co_item_counter=0;
+	var item_counter=0;
+	function add_items_capital_outlay(){
+		co_item_counter++;
+		item_counter++;
+		var div=getbyId('div_add_item_deduction')
+		var div1=document.createElement('div')
+		div1.id='div_item_deduction'+co_item_counter
+		div1.style = "display: flex;"
+
+		var p = document.createElement('p')
+		p.innerHTML=item_counter+ " ."
+		p.setAttribute("class", "colfull")
+
+		var inputs=document.createElement('input')
+		inputs.id='item_deduction'+co_item_counter;
+		var btn=document.createElement('button')
+
+		inputs.setAttribute("class", "form-control")
+		inputs.setAttribute("style", "height:33px; width:90%!important")
+		inputs.name="item["+co_item_counter+"]";
+		inputs.type="text"
+		inputs.required = true
+		inputs.autocomplete="off"
+		
+		var inp_id='item'+co_item_counter
+		arr_co_item.push(inp_id)
+
+		btn.setAttribute("class", "btn col10")
+		btn.setAttribute("style", "background-color:red;color:white;height:33px;")
+		btn.innerHTML="X"
+		btn.type="button"
+		btn.setAttribute('data-div',co_item_counter)
+		btn.setAttribute('data-inp',inp_id);
+		btn.onclick=function(){
+			item_counter--;
+			var data_id=this.getAttribute('data-div');
+			var div='div_item_deduction'+data_id
+			getbyId(div).remove();
+			var inp=this.getAttribute('data-inp');
+			for(var i=0; i<arr_co_item.length;i++){
+				if(arr_co_item[i]==inp){
+					arr_co_item.splice(i,1);
+				}
+			}
+		}
+
+		div1.appendChild(p)
+		div1.appendChild(inputs)
+		div1.appendChild(btn)
+
+		div.appendChild(div1)
+	}
+
+	function check_co_deduction(){
+		var inp=getbyId('co_deduction').value;
+		var remove_comma =getbyId('capital_outlay_amount').innerHTML.replaceAll(",","")
+		var bal=remove_comma
+
+		if(parseFloat(inp)<=parseFloat(bal)){
+
+		}else{
+			error_in_saving('Not enough capital outlay')
+		}
+	}
+
+	
+</script>

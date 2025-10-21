@@ -1,0 +1,176 @@
+<div class="colfull">
+	<form id="form_barangay_ordinance">
+		<input type="text" hidden id="h_barangay_ordinance" value="0">
+		<div class="colfull">
+			<p>Barangay</p>
+			<select class="form-control" id="sel_barangay_ordinance_barangay"></select>
+			
+			<p>Title</p>
+			<textarea class="form-control" id="inp_barangay_ordinance_title" name="title" required="" autocomplete="off" autofocus style="height: 100px;"></textarea>
+
+			<p>Description</p>
+			<textarea id="barangay_ordinance_desc" class="colfull form-control" style="height: 40px;"></textarea>
+
+			<p>Documents</p>
+
+			<input type="file" id="upload_file_barangay_ordinance" name="upload_file" accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf" multiple>
+
+		</div>
+
+		<div class="panel panel-primary" style="margin-top: 50px;">
+			<div class="panel-heading">Referred Document </div>
+			<div class="panel-body">
+				<div class="colful" >
+					<table id="tbl_barangay_ordinance_path" class="table" border="1" style="width: 100%">
+						<thead>
+							<th>filename</th>
+							<th>Action</th>
+						</thead>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<div class="colfull" align="center">
+			<button type="submit" class="btn btn-success">Save</button>
+			<button type="button" class="btn btn-danger" style="display: none" id="del_barangay_ordinance" onclick="delete_barangay_ordinance()">Delete</button>
+		</div>
+	</form>
+</div>
+<script type="text/javascript">
+	$(document).ready(function(res){
+		var form_id='#form_barangay_ordinance'
+		 $(form_id).submit(function(e){
+		 	var form_save = $(form_id).serializeObject();
+	        e.preventDefault();
+
+	        swal.fire({
+				title: "Are you sure want to save?",
+				text: "Click ok to continue",
+				type: "info",
+				showCancelButton: true,
+				showLoaderOnConfirm: true,
+				preConfirm: () => {
+					return fetch(console.log("log"))
+					.then(
+						upload_files_barangay_ordinance()
+					)
+					.catch(() => {
+					    Swal.fire({
+					      icon: 'error',
+					      title: 'Error occured'
+					    })
+					})
+				}
+			})
+	        
+	    })	
+	})
+
+	function upload_files_barangay_ordinance(){
+    	var mydata = new FormData();
+    	mydata.append('title', getbyId('inp_barangay_ordinance_title').value);
+        mydata.append('barangay_ordinance_id', getbyId('h_barangay_ordinance').value);
+        mydata.append('description', getbyId('barangay_ordinance_desc').value);
+        mydata.append('brgy_id', getbyId('sel_barangay_ordinance_barangay').value);
+
+        jQuery.each($("#upload_file_barangay_ordinance")[0].files, function(i, file) {
+	        mydata.append('file['+i+']', file);
+	    });
+        
+	    $.ajax({
+	        type: 'POST',
+	        url: "/save_barangay_ordinance",
+	        contentType:false,
+	        processData:false,
+	        cache: false,
+	        data:mydata,
+	        beforeSend: function() {
+		       console.log(mydata)
+		    },
+	        success: function(res) {
+				getbyId('form_barangay_ordinance').reset()
+				clear_ref()
+				load_barangay_ordinance()
+				$('#div_barangay_ordinance_modal').modal('toggle');
+				saved(res)
+	        },
+	        error: function() {
+	            error_in_saving("error occured in sending to");
+	        }
+	    });
+	}
+
+	function delete_barangay_ordinance(){
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "You won't be able to revert this!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#d33',
+			cancelButtonColor: '#3085d6',
+			confirmButtonText: 'Yes, delete it!',
+			customClass: 'swal_css',
+		}).then((result) => {
+			if (result.isConfirmed) {
+				Swal.fire(
+				  'Deleted!',
+				  'Your file has been deleted.',
+				  'success'
+				)
+				var data={
+					'barangay_ordinance_id':getbyId('h_barangay_ordinance').value
+				}
+				sendDataWithCallback('/del_barangay_ordinance',data,function(res){
+					getbyId('form_barangay_ordinance').reset();
+					clear_ref()
+					if ($.fn.DataTable.isDataTable('#tbl_barangay_ordinance')) {
+			        	$('#tbl_barangay_ordinance').DataTable().clear().draw();
+			       	}
+					load_barangay_ordinance()
+					$('#div_barangay_ordinance_modal').modal('toggle');
+				})
+			}
+		})
+	}
+
+	function delete_file_barangay_ordinance(elem){
+		var data={
+			barangay_ordinance_path_id:elem.getAttribute('data-barangay_ordinance_path_id'),
+			barangay_ordinance_id:elem.getAttribute('data-id')
+		}
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "You won't be able to revert this!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#d33',
+			cancelButtonColor: '#3085d6',
+			confirmButtonText: 'Yes, delete it!',
+			customClass: 'swal_css',
+		}).then((result) => {
+			if (result.isConfirmed) {
+				Swal.fire(
+				  'Deleted!',
+				  'Your file has been deleted.',
+				  'success'
+				)
+				sendDataWithCallback('/del_barangay_ordinance_file',data,function(res){
+					if(res){
+						if ($.fn.DataTable.isDataTable('#tbl_barangay_ordinance_path')){
+   				        	$('#tbl_barangay_ordinance_path').DataTable().clear().draw();
+   				        }
+   				        var data={
+			     			barangay_ordinance_id:getbyId('h_barangay_ordinance').value
+			     		}
+   				        load_barangay_ordinance_attach(data)
+					}
+				})
+			}
+		})
+	}
+
+	function clear_ref(){
+		getbyId("h_barangay_ordinance").value = "0"
+	}
+</script>

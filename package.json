@@ -1,0 +1,21 @@
+{
+  "name": "sp_project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://radzrencora@bitbucket.org/radzrencora/sp_project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/radzrencora/sp_project#readme",
+  "dependencies": {
+    "nodemon": "^2.0.7"
+  }
+}

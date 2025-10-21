@@ -1,0 +1,111 @@
+<div class="col-sm-12">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+           <div class="header-title">
+                <h4 class="card-title">This Email address is use to send email using the system</h4>
+           </div>
+        </div>
+        <div class="card-body">
+            <form id="form_gmail">
+            	<input type="hidden" name="gmail_id" value="0">
+            	<div class="col-md-4">
+                    <div class="form-group">
+                       <label for="floatingInput" class="form-label">Email address</label>
+                       <input type="text" class="form-control" id="floatingInput" name="email" aria-describedby="username" placeholder="">
+                    </div>
+                 </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                       <label for="password" class="form-label">Password</label>
+                       <input type="password" class="form-control" id="floatingPassword" name="password" aria-describedby="password" placeholder=" ">
+                    </div>
+                </div>
+
+				<div class="col-md-4 d-flex justify-content-between">
+                    <div class="form-check mb-3">
+                       <input type="checkbox" id="show_pass_gmail" class="form-check-input" onchange="toggle_show_password()">
+                       <label class="show_pass_gmail" for="customCheck">Show Password</label>
+                    </div>
+                </div>
+
+				<button class="btn btn-success" style="margin-top: 20px;">Submit</button>
+            </form>
+       </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$( "#config-menu" ).addClass("show");
+		var form_id='#form_gmail'
+		 $(form_id).submit(function(e){
+		 	var form_save = $(form_id).serializeObject();
+	        e.preventDefault();
+	        swal.fire({
+				title: "Are you sure want to save?",
+				text: "Click ok to continue",
+				type: "info",
+				showCancelButton: true,
+				showLoaderOnConfirm: true,
+				preConfirm: () => {
+					return fetch(console.log("log"))
+					.then(
+						sendDataWithCallback('/save_email',form_save,function(res){
+							if(res){
+								load_gmail()
+								saved(res)
+							}
+						})
+					)
+					.catch(() => {
+					    Swal.fire({
+					      icon: 'error',
+					      title: 'Error occured'
+					    })
+					})
+				}
+			})
+	    })
+
+		load_gmail()
+	})
+
+	function toggle_show_password(){
+		var x = document.getElementById("floatingPassword");
+		if (x.type === "password") {
+		    x.type = "text";
+		} else {
+		    x.type = "password";
+		}
+	}
+
+	function load_gmail(){
+		getDataWithCallback('/get_email',function(res){
+		 	var form=getbyId('form_gmail')
+		 	form.gmail_id.value=res[0].email_id
+		 	form.email.value=res[0].email
+		 	form.password.value=res[0].password
+		 })
+	}
+
+
+	// (function () {
+	//   'use strict'
+
+	//   // Fetch all the forms we want to apply custom Bootstrap validation styles to
+	//   var forms = document.querySelectorAll('.needs-validation')
+
+	//   // Loop over them and prevent submission
+	//   Array.prototype.slice.call(forms)
+	//     .forEach(function (form) {
+	//       form.addEventListener('submit', function (event) {
+	//         if (!form.checkValidity()) {
+	//           event.preventDefault()
+	//           event.stopPropagation()
+	//         }
+
+	//         form.classList.add('was-validated')
+	//       }, false)
+	//     })
+	// })()
+</script>

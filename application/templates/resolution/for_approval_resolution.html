@@ -1,0 +1,118 @@
+{% extends 'index.html' %}
+{% block body %}
+<div class="colfull">
+	<h3>FOR MAYOR'S APPROVAL RESOLUTION</h3>
+	<table id="tbl_resolution" class="cell-border" border="1" style="table-layout: fixed;" width="100%">
+		<colgroup>
+			<col style="width: 2px;">
+			<col style="width: 3px;">
+			<col style="width: 20px;">
+			<col style="width: 4px;">
+			<col style="width: 4px;">
+			<col style="width: 3px;">
+			<col style="width: 3px;">
+			<col style="width: 3px;">
+		</colgroup>
+		<thead>
+			<th>Id</th>
+			<th>Reso No.</th>
+			<th>Title</th>
+			<th>Date Enacted</th>
+			<th>Category</th>
+			<th>Status</th>
+			<th>Remarks</th>
+			<th>Action</th>
+		</thead>
+	</table>
+</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$( "#approved_resolution" ).addClass( "active" );
+		$( "#resolution-menu" ).addClass( "show" );
+		load_resolution()
+	})
+
+	function load_resolution(){
+		if ($.fn.DataTable.isDataTable("#tbl_resolution")) {
+            $("#tbl_resolution").DataTable().destroy();
+        }
+
+        var table=$('#tbl_resolution').DataTable({
+            responsive: true,
+            searching: true,
+            bStateSave: true,
+            "ajax": {
+                "type": "POST",
+                "url": '/get_resolution',
+                contentType: 'application/JSON',
+                "data":function(){
+                    return JSON.stringify({
+                        status:5
+                    })
+                },
+                "dataSrc": function(data) {
+                    data.forEach(function(item){
+                        var open_doc = `<button type='button' class='btn btn-sm btn-primary' onclick="open_doc_res(this, '#tbl_resolution')"><i class='fa-solid fa-square-up-right'></i></button>`
+                        item.action =  open_doc;
+                    });
+                    
+                    return data;
+                }
+            },
+            dom: 'Bfrtip',
+            columns: [
+             	{data:"resolution_id"},
+             	{data:"resolution_number"},
+             	{data:"resolution_title"},
+             	{data:"date_enacted"},
+             	{data:"category_title"},
+             	{data:"stats"},
+             	{data:"remarks"},
+             	{data:"action"},
+             ],
+             buttons: [
+             	{
+	                text: 'Add',
+	                action: function ( e, dt, node, config ) {
+	                	getbyId('form_resolution').reset()
+	                	getbyId('btn_resolution_committee').style.display="none"
+	                	if ($.fn.DataTable.isDataTable('#tbl_res_attach_file')) {
+				        	$('#tbl_res_attach_file').DataTable().clear().draw();
+				       	}
+				       	if ($.fn.DataTable.isDataTable('#tbl_add_minutes_file_resolution')) {
+				        	$('#tbl_add_minutes_file_resolution').DataTable().clear().draw();
+				       	}
+
+				       	if ($.fn.DataTable.isDataTable('#tbl_veto_resolution')) {
+				        	$('#tbl_veto_resolution').DataTable().clear().draw();
+				       	}
+
+				       	getbyId('h_resolution_id').value=0
+				       	getbyId('h_legislature_res').value=""
+				       	getbyId('h_committee_id_res').value=""
+				       	getbyId('status_resolution').value=4
+
+				       	getbyId('div_resolution_author').innerHTML=""
+				       	getbyId('div_resolution_co_author').innerHTML=""
+				       	getbyId('div_resolution_sponsor').innerHTML=""
+
+				       	// getbyId('status_resolution').disabled=true
+				       	$('#sel_ordinance_category_res').val('').trigger('chosen:updated')
+	                    $("#div_resolution_modal").modal('toggle');
+	                },
+	                'className': 'btn btn-sm btn-primary'
+	            },{
+		            extend: 'print',
+		            text: 'Print',
+		            filename: 'file',
+		            title: 'Print',
+		            titleAttr: 'Print'
+		            ,'className': 'btn btn-sm btn-warning'
+		        }
+            ],
+            "pagingType": "full_numbers",
+            "pageLength": 5
+        });
+	}
+</script>
+{% endblock %}

@@ -1,0 +1,51 @@
+<div class="colfull" style="padding: 30px;" id="print_general_list_active_referrals">
+	<div class="colfull fl">
+		<div class="col20">
+			<div>
+				<img id="img_general_list_city_logo" src="static/icon/your_logo.png" style="height: 100px;width: 100px;">
+			</div>
+		</div>
+
+		<div class="col60" style="position: relative;top: -100px">
+			<div style="width: 60%;margin: 0 auto;" align="center">
+				<p style="text-align: center;">Republic of the Philippines</p>
+				<p>Province of <span id="general_list_province"></span></p>
+				<p><span id="general_list_state_location"></span> of <span id="general_list_city_name" style="text-transform:capitalize;"></span></p>
+			</div>
+		</div>
+	</div>
+
+	<div style="margin-top: -80px">
+		<div class="colfull" align="center" >
+			<p style="font-size:18px;font-weight: bolder;">
+				General List of Active Referrals
+			</p>
+		</div>
+		<div class="colfull">
+			<table id="tbl_list_active_referrals" class="colfull table_report table" border="1">
+				<thead>
+					<th>Committee</th>
+					<th>Subject/Title</th>
+					<th>Proponent</th>
+					<th>Date of Session</th>
+				</thead>
+			</table>
+		</div>
+		<div class="colfull" style="margin-top: 30px;">
+			<div class="col50">
+				<div class="col30">
+					<p style="font-size: 15px;">Prepared by:</p>
+				</div>
+				<div class="col20">
+					<p style="border-bottom: 1px solid black;width: 250px!important" contenteditable="true"></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		loadfirstdatatable('tbl_list_active_referrals')
+	})
+</script>

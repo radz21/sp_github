@@ -1,0 +1,359 @@
+<div class="colfull">
+	<form id="form_doc_authors">
+		<input type="text" hidden name="track_gen_id" id="document_track_gen_id" value="0">
+		<div class="panel panel-default">
+		    <div class="panel-heading ">
+		    	<p class="ptop">Author/s 
+		    		<span class="btn btn-sm btn-icon text-primary flex-end" onclick="add_doc_author()">
+		    			<svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+		    				<path fill-rule="evenodd" clip-rule="evenodd" d="M9.5 12.5537C12.2546 12.5537 14.4626 10.3171 14.4626 7.52684C14.4626 4.73663 12.2546 2.5 9.5 2.5C6.74543 2.5 4.53737 4.73663 4.53737 7.52684C4.53737 10.3171 6.74543 12.5537 9.5 12.5537ZM9.5 15.0152C5.45422 15.0152 2 15.6621 2 18.2464C2 20.8298 5.4332 21.5 9.5 21.5C13.5448 21.5 17 20.8531 17 18.2687C17 15.6844 13.5668 15.0152 9.5 15.0152ZM19.8979 9.58786H21.101C21.5962 9.58786 22 9.99731 22 10.4995C22 11.0016 21.5962 11.4111 21.101 11.4111H19.8979V12.5884C19.8979 13.0906 19.4952 13.5 18.999 13.5C18.5038 13.5 18.1 13.0906 18.1 12.5884V11.4111H16.899C16.4027 11.4111 16 11.0016 16 10.4995C16 9.99731 16.4027 9.58786 16.899 9.58786H18.1V8.41162C18.1 7.90945 18.5038 7.5 18.999 7.5C19.4952 7.5 19.8979 7.90945 19.8979 8.41162V9.58786Z" fill="currentColor">
+		    				</path>                            
+		    			</svg> 
+		    		</span>
+		    	</p>
+		    </div>
+		    <div class="panel-body">
+		    	<div class="colfull" id="div_doc_author" style="padding:0px 20px 10px 20px"></div>
+		    </div>
+		</div>
+
+		<div class="panel panel-default">
+		    <div class="panel-heading ">
+		    	<p class="ptop">Co Author/s 
+		    		<span class="btn btn-sm btn-icon text-primary flex-end" onclick="add_doc_coauthor()">
+		    			<svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+		    				<path fill-rule="evenodd" clip-rule="evenodd" d="M9.5 12.5537C12.2546 12.5537 14.4626 10.3171 14.4626 7.52684C14.4626 4.73663 12.2546 2.5 9.5 2.5C6.74543 2.5 4.53737 4.73663 4.53737 7.52684C4.53737 10.3171 6.74543 12.5537 9.5 12.5537ZM9.5 15.0152C5.45422 15.0152 2 15.6621 2 18.2464C2 20.8298 5.4332 21.5 9.5 21.5C13.5448 21.5 17 20.8531 17 18.2687C17 15.6844 13.5668 15.0152 9.5 15.0152ZM19.8979 9.58786H21.101C21.5962 9.58786 22 9.99731 22 10.4995C22 11.0016 21.5962 11.4111 21.101 11.4111H19.8979V12.5884C19.8979 13.0906 19.4952 13.5 18.999 13.5C18.5038 13.5 18.1 13.0906 18.1 12.5884V11.4111H16.899C16.4027 11.4111 16 11.0016 16 10.4995C16 9.99731 16.4027 9.58786 16.899 9.58786H18.1V8.41162C18.1 7.90945 18.5038 7.5 18.999 7.5C19.4952 7.5 19.8979 7.90945 19.8979 8.41162V9.58786Z" fill="currentColor">
+		    				</path>                            
+		    			</svg> 
+		    		</span>
+		    	</p>
+		    </div>
+		    <div class="panel-body">
+		    	<div class="colfull" id="div_doc_coauthor" style="padding:0px 20px 0px 20px"></div>
+		    </div>
+		</div>
+
+		<div class="panel panel-default">
+		    <div class="panel-heading ">
+		    	<p class="ptop">Sponsor 
+		    		<span class="btn btn-sm btn-icon text-primary flex-end" onclick="add_doc_sponsor()">
+		    			<svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+		    				<path fill-rule="evenodd" clip-rule="evenodd" d="M9.5 12.5537C12.2546 12.5537 14.4626 10.3171 14.4626 7.52684C14.4626 4.73663 12.2546 2.5 9.5 2.5C6.74543 2.5 4.53737 4.73663 4.53737 7.52684C4.53737 10.3171 6.74543 12.5537 9.5 12.5537ZM9.5 15.0152C5.45422 15.0152 2 15.6621 2 18.2464C2 20.8298 5.4332 21.5 9.5 21.5C13.5448 21.5 17 20.8531 17 18.2687C17 15.6844 13.5668 15.0152 9.5 15.0152ZM19.8979 9.58786H21.101C21.5962 9.58786 22 9.99731 22 10.4995C22 11.0016 21.5962 11.4111 21.101 11.4111H19.8979V12.5884C19.8979 13.0906 19.4952 13.5 18.999 13.5C18.5038 13.5 18.1 13.0906 18.1 12.5884V11.4111H16.899C16.4027 11.4111 16 11.0016 16 10.4995C16 9.99731 16.4027 9.58786 16.899 9.58786H18.1V8.41162C18.1 7.90945 18.5038 7.5 18.999 7.5C19.4952 7.5 19.8979 7.90945 19.8979 8.41162V9.58786Z" fill="currentColor">
+		    				</path>                            
+		    			</svg> 
+		    		</span>
+		    	</p>
+		    </div>
+		    <div class="panel-body">
+		    	<div class="colfull" id="div_doc_sponsor" style="padding:0px 20px 0px 20px"></div>
+		    </div>
+		</div>
+
+		<div class="panel panel-default">
+		    <div class="panel-heading ">
+		    	<p class="ptop">Co Sponsor 
+		    		<span class="btn btn-sm btn-icon text-primary flex-end" onclick="add_doc_cosponsor()">
+		    			<svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+		    				<path fill-rule="evenodd" clip-rule="evenodd" d="M9.5 12.5537C12.2546 12.5537 14.4626 10.3171 14.4626 7.52684C14.4626 4.73663 12.2546 2.5 9.5 2.5C6.74543 2.5 4.53737 4.73663 4.53737 7.52684C4.53737 10.3171 6.74543 12.5537 9.5 12.5537ZM9.5 15.0152C5.45422 15.0152 2 15.6621 2 18.2464C2 20.8298 5.4332 21.5 9.5 21.5C13.5448 21.5 17 20.8531 17 18.2687C17 15.6844 13.5668 15.0152 9.5 15.0152ZM19.8979 9.58786H21.101C21.5962 9.58786 22 9.99731 22 10.4995C22 11.0016 21.5962 11.4111 21.101 11.4111H19.8979V12.5884C19.8979 13.0906 19.4952 13.5 18.999 13.5C18.5038 13.5 18.1 13.0906 18.1 12.5884V11.4111H16.899C16.4027 11.4111 16 11.0016 16 10.4995C16 9.99731 16.4027 9.58786 16.899 9.58786H18.1V8.41162C18.1 7.90945 18.5038 7.5 18.999 7.5C19.4952 7.5 19.8979 7.90945 19.8979 8.41162V9.58786Z" fill="currentColor">
+		    				</path>                            
+		    			</svg> 
+		    		</span>
+		    	</p>
+		    </div>
+		    <div class="panel-body">
+		    	<div class="colfull" id="div_doc_cosponsor" style="padding:0px 20px 0px 20px"></div>
+		    </div>
+		</div>
+
+		<div class="colfull txcenter" style="display: flex; justify-content: center;padding-top: 20px;">
+			<button type="submit" class="btn btn-success">SAVE</button>
+		</div>
+	</form>
+</div>
+
+<script>
+	$(document).ready(function(){
+		var form_id='#form_doc_authors'
+		$(form_id).submit(function(e){
+		    e.preventDefault();
+
+		    var mydata = new FormData();
+
+		    var form = $('#form_doc_authors').serializeObject();
+
+		    if (form.input_authors) {
+		    	var new_data1 = form.input_authors.filter(function(item){
+			      	return item[0] != "";
+			    });
+		    }
+		    
+		    if (form.input_co_authors) {
+		    	var new_data2 = form.input_co_authors.filter(function(item){
+			      	return item[0] != "";
+			    });
+		    }
+		    
+		    if (form.input_sponsor) {
+		    	var new_data3 = form.input_sponsor.filter(function(item){
+			      	return item[0] != "";
+			    });
+		    }
+
+		    mydata.append("Serialized",JSON.stringify(form))
+
+		    swal.fire({
+				title: "Are you sure want to save?",
+				text: "Click ok to continue",
+				type: "info",
+				showCancelButton: true,
+				showLoaderOnConfirm: true,
+				preConfirm: () => {
+					return fetch(console.log("log"))
+					.then(
+						$.ajax({
+					        type: 'POST',
+					        url: "/save_doc_authors",
+					        contentType:false,
+					        processData:false,
+					        cache: false,
+					        data: mydata,
+					        beforeSend: function() {
+						       console.log(mydata)
+						    },
+					        success: function(res) {
+								saved(res)
+					        },
+					        error: function() {
+					            error_in_saving("error occured in sending to");
+					        }
+					    })
+					)
+					.catch(() => {
+					    Swal.fire({
+					      icon: 'error',
+					      title: 'Error occured'
+					    })
+					})
+				}
+
+			})
+		})
+	})
+
+	var count_doc_author=0
+	function add_doc_author(callback){
+		var div =getbyId('div_doc_author')
+
+		var div_gen=document.createElement("div")
+		var div_id='div_doc_authors'+count_doc_author
+		div_gen.id=div_id
+
+		var input=document.createElement('select')
+		input.style="height:33px!important;"
+		var inp_id='input_authors' + count_doc_author;
+		input.id=inp_id
+		input.name="input_authors["+count_doc_author+"]";
+
+		var option_blank = document.createElement("option");
+		option_blank.innerHTML = "--SELECT--"
+		option_blank.value = ""
+		option_blank.disabled = true
+		option_blank.selected = true
+
+		input.appendChild(option_blank);
+		get_info.forEach(function(i){
+			var option = document.createElement("option");
+			option.innerHTML = i['fullname'];
+			option.value = i['info_id'];
+			input.appendChild(option);
+		})
+
+		var btn=document.createElement('button')
+		btn.setAttribute('class', "col5 btn btn-sm btn btn-outline-danger")
+		btn.style="float:right"
+		btn.type="button"
+		btn.innerHTML="X"
+		
+		btn.setAttribute('data-div',div_id)
+		btn.setAttribute('data-inp',inp_id);
+		btn.onclick = function() {
+			var id = this.getAttribute('data-div');
+			document.getElementById(id).remove();
+	    };
+		
+		div_gen.appendChild(input)
+		div_gen.appendChild(btn)
+
+		div.appendChild(div_gen)
+
+		$(input).chosen({width: "93%"})
+
+		count_doc_author++;
+		if(callback) {
+			callback(input)
+		}
+	}
+
+	var count_doc_coauthor=0
+	function add_doc_coauthor(callback){
+		var div =getbyId('div_doc_coauthor')
+
+		var div_gen=document.createElement("div")
+		var div_id='div_doc_coauthors'+count_doc_coauthor
+		div_gen.id=div_id
+
+		var input=document.createElement('select')
+		input.style="height:33px!important;"
+		var inp_id='input_coauthors' + count_doc_coauthor;
+		input.id=inp_id
+		input.name="input_coauthors["+count_doc_coauthor+"]";
+
+		var option_blank = document.createElement("option");
+		option_blank.innerHTML = "--SELECT--"
+		option_blank.value = ""
+		option_blank.disabled = true
+		option_blank.selected = true
+
+		input.appendChild(option_blank);
+		get_info.forEach(function(i){
+			var option = document.createElement("option");
+			option.innerHTML = i['fullname'];
+			option.value = i['info_id'];
+			input.appendChild(option);
+		})
+
+		var btn=document.createElement('button')
+		btn.setAttribute('class', "col5 btn btn-sm btn btn-outline-danger")
+		btn.style="float:right"
+		btn.type="button"
+		btn.innerHTML="X"
+		
+		btn.setAttribute('data-div',div_id)
+		btn.setAttribute('data-inp',inp_id);
+		btn.onclick = function() {
+			var id = this.getAttribute('data-div');
+			document.getElementById(id).remove();
+	    };
+		
+		div_gen.appendChild(input)
+		div_gen.appendChild(btn)
+
+		div.appendChild(div_gen)
+
+		$(input).chosen({width: "93%"})
+
+		count_doc_coauthor++;
+		if(callback) {
+			callback(input)
+		}
+	}
+
+	var count_doc_sponsor=0
+	function add_doc_sponsor(callback){
+		var div =getbyId('div_doc_sponsor')
+
+		var div_gen=document.createElement("div")
+		var div_id='div_doc_sponsor'+count_doc_sponsor
+		div_gen.id=div_id
+
+		var input=document.createElement('select')
+		input.style="height:33px!important;"
+		var inp_id='input_sponsors' + count_doc_sponsor;
+		input.id=inp_id
+		input.name="input_sponsors["+count_doc_sponsor+"]";
+
+		var option_blank = document.createElement("option");
+		option_blank.innerHTML = "--SELECT--"
+		option_blank.value = ""
+		option_blank.disabled = true
+		option_blank.selected = true
+
+		input.appendChild(option_blank);
+		get_info.forEach(function(i){
+			var option = document.createElement("option");
+			option.innerHTML = i['fullname'];
+			option.value = i['info_id'];
+			input.appendChild(option);
+		})
+
+		var btn=document.createElement('button')
+		btn.setAttribute('class', "col5 btn btn-sm btn btn-outline-danger")
+		btn.style="float:right"
+		btn.type="button"
+		btn.innerHTML="X"
+		
+		btn.setAttribute('data-div',div_id)
+		btn.setAttribute('data-inp',inp_id);
+		btn.onclick = function() {
+			var id = this.getAttribute('data-div');
+			document.getElementById(id).remove();
+	    };
+		
+		div_gen.appendChild(input)
+		div_gen.appendChild(btn)
+
+		div.appendChild(div_gen)
+
+		$(input).chosen({width: "93%"})
+
+		count_doc_sponsor++;
+		if(callback) {
+			callback(input)
+		}
+	}
+
+
+	var count_doc_cosponsor=0
+	function add_doc_cosponsor(callback){
+		var div =getbyId('div_doc_cosponsor')
+
+		var div_gen=document.createElement("div")
+		var div_id='div_doc_sponsor'+count_doc_cosponsor
+		div_gen.id=div_id
+
+		var input=document.createElement('select')
+		input.style="height:33px!important;"
+		var inp_id='input_cosponsors' + count_doc_cosponsor;
+		input.id=inp_id
+		input.name="input_cosponsors["+count_doc_cosponsor+"]";
+
+		var option_blank = document.createElement("option");
+		option_blank.innerHTML = "--SELECT--"
+		option_blank.value = ""
+		option_blank.disabled = true
+		option_blank.selected = true
+
+		input.appendChild(option_blank);
+		get_info.forEach(function(i){
+			var option = document.createElement("option");
+			option.innerHTML = i['fullname'];
+			option.value = i['info_id'];
+			input.appendChild(option);
+		})
+
+		var btn=document.createElement('button')
+		btn.setAttribute('class', "col5 btn btn-sm btn btn-outline-danger")
+		btn.style="float:right"
+		btn.type="button"
+		btn.innerHTML="X"
+		
+		btn.setAttribute('data-div',div_id)
+		btn.setAttribute('data-inp',inp_id);
+		btn.onclick = function() {
+			var id = this.getAttribute('data-div');
+			document.getElementById(id).remove();
+	    };
+		
+		div_gen.appendChild(input)
+		div_gen.appendChild(btn)
+
+		div.appendChild(div_gen)
+
+		$(input).chosen({width: "93%"})
+
+		count_doc_cosponsor++;
+		if(callback) {
+			callback(input)
+		}
+	}
+</script>

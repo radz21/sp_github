@@ -1,0 +1,281 @@
+<div class="colfull">
+    <h3>SP BUDGET EXPENSES/DEDUCTIONS</h3>
+    <div class="colfull">
+        <div class="col20">
+            <p>SELECT SANGUNIAN</p>
+        </div>
+        <div class="col30">
+            <select class="form-control chosen-select" name="inp_sp_id_deduction" id="inp_sp_id_deduction"></select>
+            <!-- <input type="search"  class="form-control" placeholder="--SELECT--" list="datalist_sp_mem_deduction" autocomplete="off"> -->
+            <!-- <datalist id="datalist_sp_mem_deduction"></datalist> -->
+        </div>
+    </div>
+    <div class="colfull" style="margin-top: 40px;">
+        <table id="tbl_sp_budget_member_deduction" class="table" style="width:100%;border-collapse: collapse;" border="1">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Allocated</th>
+                    <th>Deduction</th>
+                    <th>Remaining</th>
+                </tr>
+            </thead>
+            <tbody id="tbody_sp_budget_deduction" style="background-color: white">
+               <tr>
+                    <td colspan="5" align="center">No data available</td>
+               </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function(res){
+
+        getDataWithCallback('/get_sp',function(res){
+            $('#inp_sp_id_deduction').chosen({width:"100%"})
+            $('#inp_sp_id_deduction').append(`<option value="" disabled selected> ${'--SELECT--'} </option>`);
+            for(var x=0; x<res.length; x++){
+                $('#inp_sp_id_deduction').append(`<option value="${res[x].sp_id}"> ${res[x].sp_title} </option>`);
+            }
+
+            $('#inp_sp_id_deduction').trigger("chosen:updated")
+        })
+
+        $("#inp_sp_id_deduction").chosen().change(function(){
+            var id = $(this).val();
+            get_data_mem_deduction(id)
+        });
+
+        loadfirstdatatable('tbl_sp_budget_balance')
+
+        $('#tbl_sp_budget_balance tbody').on('dblclick', 'tr', function (){
+            var dataArr = $('#tbl_sp_budget_balance').DataTable().row( this ).data();
+            if(dataArr){
+                // getbyId('mode_deduction').innerHTML="Edit Deduction";
+                getbyId('balance_expenses_id').value=dataArr.balance_expenses_id;
+                getbyId('deduction_sp_mem').value=dataArr.deduction;
+                getbyId('deduc_desc_details_expenses').value=dataArr.description;
+                $("#div_add_deduction_sp_budget_modal").modal('toggle');
+            }
+        });
+    })
+
+    // populate deduction table
+    function get_data_mem_deduction(id){
+        var data={
+            sp_id:id
+        }
+        getbyId('tbody_sp_budget_deduction').innerHTML=""
+        sendDataWithCallback('/get_sp_member_deduction',data,function(res){
+            var tbody=getbyId('tbody_sp_budget_deduction')
+
+            for(var y=0; y<res.length;y++){
+                var tr1=document.createElement('tr')
+
+                var td_0=document.createElement('td')
+                var td_1=document.createElement('td')
+                var td_2=document.createElement('td')
+                var td_3=document.createElement('td')
+                var td_4=document.createElement('td')
+
+                td_0.innerHTML=res[y].balance_id;
+                td_1.innerHTML=res[y].fullname;
+                td_2.innerHTML=res[y].allocation;
+                td_3.innerHTML=res[y].total_deduction;
+                td_4.innerHTML=res[y].remaining;
+
+                tr1.appendChild(td_0)
+                tr1.appendChild(td_1)
+                tr1.appendChild(td_2)
+                tr1.appendChild(td_3)
+                tr1.appendChild(td_4)
+
+                tbody.appendChild(tr1)
+            }
+
+            $('#tbl_sp_budget_member_deduction td').dblclick(function () {
+                var tr = $(this).closest("tr");
+                var td = tr.find("td");
+
+                if(td[2].innerHTML!=0){
+                   if(td[3].innerHTML!=0){
+                        var data={balance_id:td[0].innerHTML}
+                        load_add_deduction(data)
+                        getbyId('h_balance_id').value=td[0].innerHTML
+
+                        sendDataWithCallback('/get_sp_mem_remaining_bal',data,function(res){
+                            getbyId('remaining_bal_deduction_details').value=parseFloat(res[0].remaining_balance)-parseFloat(res[0].deduction)
+                        })
+
+                        $('#div_sp_budget_deduction_expenses').modal('toggle');
+                   }else{
+                        getbyId('deduction_sp_mem').value=""
+                        getbyId('deduc_desc_details_expenses').value=""
+
+                        getbyId('h_balance_id').value=td[0].innerHTML
+                        getbyId('remaining_bal_deduction_details').value=td[4].innerHTML
+
+                        var inp_sp_id_deduction=getbyId('inp_sp_id_deduction');
+                        // datalist_sp_mem_deduction=getbyId('datalist_sp_mem_deduction');
+                        val=inp_sp_id_deduction.value;
+
+                        if (val != "") {
+
+                            // for(var t=0; t<datalist_sp_mem_deduction.options.length; t++){
+                            //     if (val == datalist_sp_mem_deduction.options[t].value) {
+                            //         var data=datalist_sp_mem_deduction.options[t].getAttribute('data-id')
+
+                            //         getbyId('tbody_sp_budget_deduction').innerHTML=""
+                            //         get_data_mem_deduction(data)
+                            //     }
+                            // }
+
+                            var data=val
+
+                            get_data_mem_deduction(data)
+                        }
+
+                        $("#div_add_deduction_sp_budget_modal").modal('toggle');
+                   }
+                }else{
+                   inform("No Allocated Budget")
+                }
+            });
+        })
+    }
+
+    function load_add_deduction(data){
+        sendDataWithCallback('/get_sp_budget_balance',data,function(res){
+            if(res[0]){
+                if(res[0].description!=""){
+                    res.forEach(function(file) {
+                        var del_btn = "<button type='button' class='btn btn-danger' data-id=" + file.balance_expenses_id+ " onclick=delete_budget_councilor_deduction(this)> DELETE </button>"
+                        file.action = del_btn ;
+                    })
+
+                    if ($.fn.DataTable.isDataTable('#tbl_sp_budget_balance')) {
+                        $('#tbl_sp_budget_balance').DataTable().destroy();
+                    }
+                    var table=$('#tbl_sp_budget_balance').DataTable({
+                        dom: 'Bfrtip',
+                        data:res,
+                        columns: [
+                            {data:"balance_expenses_id"},
+                            {data:"description"},
+                            {data:"allocations"},
+                            {data:"deduction"},
+                            {data:"action"}
+                         ],
+                        //  "columnDefs": [
+                        //     {
+                        //         "targets": [ 0 ],
+                        //         "visible": false,
+                        //         "searchable": false
+                        //     }
+                        // ],
+                        responsive: true,
+                        "footerCallback": function ( row, res, start, end, display ) {
+                            var api = this.api(), res;
+                
+                            // Remove the formatting to get integer data for summation
+                            var intVal = function ( i ) {
+                                return typeof i === 'string' ?
+                                    i.replace(/[\$,]/g, '')*1 :
+                                    typeof i === 'number' ?
+                                        i : 0;
+                            };
+                
+                            // Total over all pages
+                            total_alo = api
+                                .column( 2 )
+                                .data()
+                                .reduce( function (a, b) {
+                                    return intVal(a) + intVal(b);
+                                }, 0 );
+
+                            total_deduc = api
+                                .column( 3 )
+                                .data()
+                                .reduce( function (a, b) {
+                                    return intVal(a) + intVal(b);
+                                }, 0 );
+                
+                            
+
+                            $( api.column( 2 ).footer() ).html(
+                                "TOTAL:" + total_alo
+                            );
+                            $( api.column( 3 ).footer() ).html(
+                                "TOTAL:" + total_deduc
+                            );
+                
+                        },
+                        dom: 'Bfrtip',
+                         buttons: [
+                            {
+                                text: 'Add New',
+                                action: function ( e, dt, node, config ) {
+                                    // getbyId('form_deduction_sp_member').reset()
+                                    // getbyId('mode_deduction').innerHTML="Add Deduction"
+                                    getbyId('deduction_sp_mem').value="";
+                                    getbyId('deduc_desc_details_expenses').value=""
+                                    getbyId('balance_expenses_id').value=0;
+                                    $("#div_add_deduction_sp_budget_modal").modal('toggle');
+                                },
+                                'className': 'btn btn-success'
+                            },
+                        ],
+                        "pagingType": "full_numbers"
+                    });
+                }else{
+                    $("#div_sp_budget_deduction_expenses").modal('hide');
+                }
+            }  
+        })
+    }
+
+    function delete_budget_councilor_deduction(elem){
+        var data={
+            balance_expenses_id:elem.getAttribute('data-id')
+        }
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Yes, delete it!',
+          customClass: 'swal_css',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                sendDataWithCallback("/del_budget_councilor_deduction",data,function(res){
+                    var data={balance_id:getbyId('h_balance_id').value}
+                    load_add_deduction(data)
+                    sendDataWithCallback('/get_sp_mem_remaining_bal',data,function(res){
+                        getbyId('remaining_bal_deduction_details').value=parseFloat(res[0].remaining_balance)-parseFloat(res[0].deduction)
+                        var inp_sp_id_deduction=getbyId('inp_sp_id_deduction');
+                        datalist_sp_mem_deduction=getbyId('datalist_sp_mem_deduction');
+                        val=inp_sp_id_deduction.value;
+                        if (val != "") {
+                            for(var t=0; t<datalist_sp_mem_deduction.options.length; t++){
+                                if (val == datalist_sp_mem_deduction.options[t].value) {
+                                    var data=datalist_sp_mem_deduction.options[t].getAttribute('data-id')
+                                    getbyId('tbody_sp_budget_deduction').innerHTML=""
+                                    get_data_mem_deduction(data)
+                                    saved(res)
+                                }
+                            }
+                        }
+                         Swal.fire(
+                          'Deleted!',
+                          'Your file has been deleted.',
+                          'success'
+                        )
+                    })
+                })
+            }
+        })
+    }
+</script>

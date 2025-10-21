@@ -1,0 +1,134 @@
+{% extends 'index.html' %}
+{% block body %}
+<div class="col-sm-12">
+	<div class="card">
+		<div class="card-header d-flex justify-content-between">
+           <div class="header-title">
+              	<h4 class="card-title">Codification Report</h4>
+           </div>
+        </div>
+        <div class="card-body">
+        	<ul class="nav nav-pills mb-3" role="tablist">
+				<li class="nav-item" role="presentation" onclick="status=1;load_codification_table(1)">
+					<button class="nav-link active" data-bs-toggle="tab" data-bs-target="#codification-tab1" type="button" role="tab" aria-controls="home" aria-selected="true">All Ordinances</button>
+				</li>
+				<li class="nav-item" role="presentation" onclick="status=2;load_codification_table(2)">
+					<button class="nav-link" data-bs-toggle="tab" data-bs-target="#codification-tab2" type="button" role="tab" aria-controls="2" aria-selected="false">Active Ordinances</button>
+				</li>
+				<li class="nav-item" role="presentation" onclick="status=3;load_codification_table(3)">
+					<button class="nav-link" data-bs-toggle="tab" data-bs-target="#codification-tab3" type="button" role="tab" aria-controls="3" aria-selected="false">Repealed or Obsolete Ordinances</button>
+				</li>
+			</ul>
+
+			<div class="tab-content">
+			  	<div class="tab-pane fade show active" id="codification-tab1" role="tabpanel" aria-labelledby="codification-tab1">
+			  		<div class="row">
+					    <div class="col-12 col-md-6 col-lg-6">
+					        <label for="sel_classification_category">Classification Category</label>
+					        <select class="form-control" data-placeholder="HAHAHA" id="sel_classification_category" onchange="load_codification_table(status)"></select>
+					    </div>
+					</div>
+
+			  		<div class="table-responsive">
+					    <table id="tbl_codification_reports" class="table table-striped" style="table-layout:fixed;">
+					    	<colgroup>
+					    		<col style="width:5px">
+					    		<col style="width:4px">
+					    		<col style="width:10px">
+					    		<col style="width:6px">
+					    		<col style="width:6px">
+					    		<!-- <col style="width:3px"> -->
+					    	</colgroup>
+							<thead>
+								<th>Ord. No.</th>
+								<th>Date Enacted</th>
+								<th>Title</th>
+								<th>status</th>
+								<th>Remarks</th>
+								<!-- <th>Action</th> -->
+							</thead>
+						</table>
+					</div>
+			  	</div>
+			</div>
+        </div>
+	</div>
+</div>
+
+<script>
+	$(document).ready(function(){
+		
+		load_codification_table(status)	
+	})
+
+	function load_codification_table(stat){
+		if ($.fn.DataTable.isDataTable("#tbl_codification_reports")) {
+            $("#tbl_codification_reports").DataTable().destroy();
+        }
+
+        $('#tbl_codification_reports').DataTable({
+            responsive: true,
+            searching: true,
+            bStateSave: true,
+            "ajax": {
+                "type": "POST",
+                "url": '/get_codification_ordinance',
+                contentType: 'application/JSON',
+                "data":function(){
+                    return JSON.stringify({
+                        status:stat,
+                        category: $("#sel_classification_category option:selected").val()
+                    })
+                },
+                "dataSrc": function(data) {
+                	// data.forEach(function(item){
+                    //     var open_doc = `<button type='button' class="btn btn-sm btn-icon text-primary flex-end" data-bs-toggle="tooltip" title="Edit" onclick=''>
+	                //         <span class="btn-inner">
+		            //             <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" >
+		            //                 <path d="M11.4925 2.78906H7.75349C4.67849 2.78906 2.75049 4.96606 2.75049 8.04806V16.3621C2.75049 19.4441 4.66949 21.6211 7.75349 21.6211H16.5775C19.6625 21.6211 21.5815 19.4441 21.5815 16.3621V12.3341" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+		            //                 <path fill-rule="evenodd" clip-rule="evenodd" d="M8.82812 10.921L16.3011 3.44799C17.2321 2.51799 18.7411 2.51799 19.6721 3.44799L20.8891 4.66499C21.8201 5.59599 21.8201 7.10599 20.8891 8.03599L13.3801 15.545C12.9731 15.952 12.4211 16.181 11.8451 16.181H8.09912L8.19312 12.401C8.20712 11.845 8.43412 11.315 8.82812 10.921Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+		            //                 <path d="M15.1655 4.60254L19.7315 9.16854" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+		            //             </svg>
+		            //         </span>
+                    //     </button>`
+                    //     item.action =  open_doc;
+                    // });
+                    
+                    return data;
+                }
+            },
+            dom: 'rtip',
+            columns: [
+                {data:"ordinance_number"},
+                {data:"date_enacted"},
+                {data:"ordinance_title"},
+                {data:"status"},
+                {data:"remarks"},
+                // {data:"action"}
+             ],
+            buttons: [
+                {
+                    text: "Add",
+                    action: function ( e, dt, node, config ) {
+                        
+                    },
+                    'className': 'btn btn-sm btn-primary'
+                },{
+                    extend: 'print',
+                    text: 'Print',
+                    filename: 'file',
+                    title: 'Print',
+                    titleAttr: 'Print'
+                    ,'className': 'btn btn-sm btn-warning'
+                }
+            ],
+            "pagingType": "full_numbers",
+            "pageLength": 10,
+            "ordering": false,
+        	"binfo": false,
+
+        });
+	}
+</script>
+
+{% endblock %}

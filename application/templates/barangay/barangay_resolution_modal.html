@@ -1,0 +1,169 @@
+<div class="colfull">
+	<form id="form_barangay_resolution">
+		<input type="hidden" id="h_barangay_resolution" value="0">
+		<div class="colfull">
+			<p>Barangay</p>
+			<select id="sel_barangay_resolution_barangay" class="form-control"></select>
+			<p>Title</p>
+			<textarea class="form-control" id="inp_barangay_resolution_title" name="title" required="" autocomplete="off" autofocus style="height: 100px;"></textarea>
+			<p>Description</p>
+			<textarea id="barangay_resolution_desc" class="colfull form-control" style="height: 40px;"></textarea>
+			<p>Documents</p>
+			<input type="file" id="upload_file_barangay_resolution" name="upload_file" accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf" multiple>
+
+		</div>
+
+		<div class="colfull" style="margin-top: 50px;">
+			<p>Referred Document</p>
+			<table id="tbl_barangay_resolution_path" class="table" border="1" style="width: 100%">
+				<thead>
+					<th>filename</th>
+					<th>Action</th>
+				</thead>
+			</table>
+		</div>
+
+		<div class="colfull" align="center">
+			<button type="submit" class="btn btn-success">Save</button>
+			<button type="button" class="btn btn-danger" style="display: none" id="del_barangay_resolution" onclick="delete_barangay_resolution()">Delete</button>
+		</div>
+	</form>
+</div>
+<script type="text/javascript">
+	$(document).ready(function(res){
+		var form_id='#form_barangay_resolution'
+		 $(form_id).submit(function(e){
+		 	var form_save = $(form_id).serializeObject();
+	        e.preventDefault();
+
+	        swal.fire({
+				title: "Are you sure want to save?",
+				text: "Click ok to continue",
+				type: "info",
+				showCancelButton: true,
+				showLoaderOnConfirm: true,
+				preConfirm: () => {
+					return fetch(console.log("log"))
+					.then(
+						upload_files_barangay_resolution()
+					)
+					.catch(() => {
+					    Swal.fire({
+					      icon: 'error',
+					      title: 'Error occured'
+					    })
+					})
+				}
+			})
+	        
+	    })	
+	})
+
+	function upload_files_barangay_resolution(){
+    	var mydata = new FormData();
+    	mydata.append('title', getbyId('inp_barangay_resolution_title').value);
+        mydata.append('barangay_resolution_id', getbyId('h_barangay_resolution').value);
+        mydata.append('description', getbyId('barangay_resolution_desc').value);
+        mydata.append('brgy_id', getbyId('sel_barangay_resolution_barangay').value);
+        
+
+        jQuery.each($("#upload_file_barangay_resolution")[0].files, function(i, file) {
+	        mydata.append('file['+i+']', file);
+	    });
+        
+	    $.ajax({
+	        type: 'POST',
+	        url: "/save_barangay_resolution",
+	        contentType:false,
+	        processData:false,
+	        cache: false,
+	        data:mydata,
+	        beforeSend: function() {
+		       console.log(mydata)
+		    },
+	        success: function(res) {
+				getbyId('form_barangay_resolution').reset()
+				clear_ref()
+				load_barangay_resolution()
+				$('#div_barangay_resolution_modal').modal('toggle');
+				saved(res)
+	        },
+	        error: function() {
+	            error_in_saving("error occured in sending to");
+	        }
+	    });
+	}
+
+	function delete_barangay_resolution(){
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "You won't be able to revert this!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#d33',
+			cancelButtonColor: '#3085d6',
+			confirmButtonText: 'Yes, delete it!',
+			customClass: 'swal_css',
+		}).then((result) => {
+			if (result.isConfirmed) {
+				Swal.fire(
+				  'Deleted!',
+				  'Your file has been deleted.',
+				  'success'
+				)
+				var data={
+					'barangay_resolution_id':getbyId('h_barangay_resolution').value
+				}
+				sendDataWithCallback('/del_barangay_resolution',data,function(res){
+					getbyId('form_barangay_resolution').reset();
+					clear_ref()
+					if ($.fn.DataTable.isDataTable('#tbl_barangay_resolution')) {
+			        	$('#tbl_barangay_resolution').DataTable().clear().draw();
+			       	}
+					load_barangay_resolution()
+					$('#div_barangay_resolution_modal').modal('toggle');
+				})
+			}
+		})
+	}
+
+	function delete_file_barangay_resolution(elem){
+		var data={
+			barangay_resolution_path_id:elem.getAttribute('data-barangay_resolution_path_id'),
+			barangay_resolution_id:elem.getAttribute('data-id')
+		}
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "You won't be able to revert this!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#d33',
+			cancelButtonColor: '#3085d6',
+			confirmButtonText: 'Yes, delete it!',
+			customClass: 'swal_css',
+		}).then((result) => {
+			if (result.isConfirmed) {
+				Swal.fire(
+				  'Deleted!',
+				  'Your file has been deleted.',
+				  'success'
+				)
+				sendDataWithCallback('/del_barangay_resolution_file',data,function(res){
+					if(res){
+						if ($.fn.DataTable.isDataTable('#tbl_barangay_resolution_path')){
+   				        	$('#tbl_barangay_resolution_path').DataTable().clear().draw();
+   				        }
+   				        var data={
+			     			barangay_resolution_id:getbyId('h_barangay_resolution').value
+			     		}
+   				        load_barangay_resolution_attach(data)
+					}
+				})
+			}
+		})
+	}
+
+	function clear_ref(){
+		getbyId("h_barangay_resolution").value = "0"
+	}
+</script>

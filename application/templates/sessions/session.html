@@ -1,0 +1,1439 @@
+<div class="col-sm-12">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+           <div class="header-title">
+                <h4 class="card-title">Sessions</h4>
+           </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="tbl_session" class="table table-striped" style="table-layout:fixed;" data-toggle="data-table" width="99.8%">
+                    <colgroup>
+                        <col style="width:6px">
+                        <col style="width:10px">
+                        <col style="width:5px">
+                        <col style="width:10px">
+                        <col style="width:5px">
+                        <col style="width:5px">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>Session</th>
+                            <th>Type</th>
+                            <th>Date</th>
+                            <th id="type_tbl"></th>
+                            <th>FROM-TO</th>
+                            <th>ACTION</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+       </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    function open_session(elem){
+        var tr = $(elem).closest('tr');
+        let dataArr = $('#tbl_session').DataTable().row( tr ).data();
+        if(dataArr){
+            byId('sp_type').value = dataArr.session_type;
+            clear_session_data(function(){     
+                sendDataWithCallback("/get_session_data",{session_id:dataArr.session_id}, function(res){
+                    if (res) {
+                        session_id = dataArr.session_id;
+                        populateSession(res)
+                        getbyId('btn_del_session').style.display = "inline-block";
+
+                        $("#div_session_add").modal("toggle");
+                    }
+                });
+            })
+        }
+    }
+
+    function order_of_business(elem){
+        var tr = $(elem).closest('tr');
+        let dataArr = $('#tbl_session').DataTable().row( tr ).data();
+
+        fetch('/get_OOB', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                session_id: dataArr.session_id
+            }),
+        })
+        .then(response => response.json())
+        .then(res => {
+            clear_session_data_2();
+            if (res) {
+                if (res.sess_data.length!=0) {
+
+                    var x = res.sess_data[0].session_number.replace(/\D/g,'');
+                    var number = ordinal_suffix_of(x);
+
+                    var ses_date = moment(res.sess_data[0].session_date).format('LL')
+                    byId("session_id").innerHTML = x;
+                    byId("sup").innerHTML = number.replace(/[0-9]/g, '');
+                    byId("session_oob_id").value = res.sess_data[0].session_id;
+                    byId("session_date").innerHTML = ses_date;
+                    byId("session_national_anthem").innerHTML = res.sess_data[0].national_anthem;
+                    byId("session_opening_prayer").innerHTML = res.sess_data[0].session_opening_prayer;
+                    byId("session_creed").innerHTML = res.sess_data[0].recitation_coun_creed;
+                    byId("session_announcement").innerHTML = res.sess_data[0].announcement;
+                    byId("session_closing_prayer").innerHTML = res.sess_data[0].closing_prayer;
+                    byId("sp_number_h").value = res.sess_data[0].sp_number;
+
+                    sendDataWithCallback('/get_session_video',{session_id:res.sess_data[0].session_id},(res)=>{
+                        if(res.length){
+                            if(res[0]['intro_path']!='None'){
+                                getbyId('div_intro1').style.display = "inline-block"
+                                getbyId('intro').href = '/static/' + res[0].intro_path;
+                            }else{
+                                getbyId('div_intro1').style.display = "none"
+                            }
+
+                            if(res[0]['national_anthem_path']!='None'){
+                                getbyId('div_nat1').style.display = "inline-block"
+                                console.log('/static/' + res[0].national_anthem_path)
+                                getbyId('national_anthems').href = '/static/' + res[0].national_anthem_path;
+                            }else{
+                                getbyId('div_nat1').style.display = "none"
+                            }
+
+                            if(res[0]['prayer_path']!='None'){
+                                getbyId('div_prayer').style.display = "inline-block"
+                                getbyId('prayer').href = '/static/' + res[0].prayer_path;
+                            }else{
+                                getbyId('div_prayer').style.display = "none"
+                            }
+                        }
+                        
+                    })
+
+                    // attendance
+                    if (res.sess_roll_call) {
+                        if (res.sess_roll_call.length!=0) {
+                            var parent = byId("session_roll_call");
+                            parent.innerHTML = ""
+                            res.sess_roll_call.forEach(function(item,index){
+                                var child = createElem("div"),
+                                    div1 = createElem("div"),
+                                    inp = createElem("select"),
+                                    inp2 = createElem('input'),
+                                    div2 = createElem("div"),
+                                    p = createElem("p"),
+                                    opt1 = createElem('option'),
+                                    opt2 = createElem('option'),
+                                    opt3 = createElem('option'),
+                                    opt4 = createElem('option');
+
+                                child.style = "width:100%!important; display: table !important;";
+                                div1.style = "width:40%!important;float:left!important;margin-top:1%";              
+
+                                inp.className = "form-control";
+                                inp.name = "attendance["+index+"][roll_call]";
+                                // inp.disable = true;
+                                inp.setAttribute('disabled',true)
+                                
+                                inp.value = item.status
+                                if (item.status == 0) {
+                                    opt1.setAttribute("selected",true);
+                                }else if (item.status == 1) {
+                                    opt2.setAttribute("selected",true);
+                                }else if (item.status == 2) {
+                                    opt3.setAttribute("selected",true);
+                                }else if (item.status == 3) {
+                                    opt4.setAttribute("selected",true);
+                                }
+
+                                inp.style = "margin:0;width:50%;margin-right:70%";
+                                inp2.value = item.roll_call_id;
+                                inp2.name = "attendance["+index+"][roll_call_id]";
+                                inp2.type = "hidden"
+                                
+                                div2.style = "width:60%!important;float:right!important;margin-top:1%";
+                                p.className = "textStyle";
+                                p.style = "font-size: 15px;margin-left:10%;";
+                                p.innerHTML = item.fullname;
+
+                                opt1.innerHTML = "PRESENT";
+                                opt2.innerHTML = "ABSENT";
+                                opt3.innerHTML = "LEAVE";
+                                opt4.innerHTML = "TRAVEL";
+                                opt1.value = "0";
+                                opt2.value = "1";
+                                opt3.value = "2";
+                                opt3.value = "3";
+
+
+                                inp.appendChild(opt1)
+                                inp.appendChild(opt2)
+                                inp.appendChild(opt3)
+                                inp.appendChild(opt4)
+
+                                div1.appendChild(p);
+                                div2.appendChild(inp2)
+                                div2.appendChild(inp);
+                                child.appendChild(div1);
+                                child.appendChild(div2);
+                                parent.appendChild(child)
+                            });
+                        }
+                    }
+
+                    // privious minutes
+                    if (res.sess_priv_min) {
+                        if (res.sess_priv_min.length!=0) {
+                            var parent = byId("session_reading_prev");
+                            res.sess_priv_min.forEach(function(item,index){
+                                var div = document.createElement('div')
+                                var p = document.createElement('p')
+                                p.className = "textGenerated"
+                                p.innerHTML = `DATED : ${item.dated}`
+                                div.appendChild(p)
+
+                                if(item.document_file){
+                                    var a =document.createElement("a")
+                                    a.style = "text-decoration:underline;"
+                                    a.className = "textGenerated_lower"
+                                    a.innerHTML = "***show document"
+                                    a.target = "_blank"
+                                    a.href = `../static/uploads/${item.document_file}`
+                                    div.appendChild(a)
+                                }
+                                
+                                parent.appendChild(div)
+                            })
+                        }
+                    }
+
+                    // question privilge
+                    if (res.sess_question) {
+                        if (res.sess_question.length!=0) {
+                            var tbody = byId("qh_visitor_id");
+                            tbody.innerHTML = ""
+
+                            res.sess_question.forEach(function(item,index){
+                                var tr = document.createElement('tr')
+
+                                var td1 = document.createElement('td')
+
+                                var p1 = document.createElement('p')
+                                p1.style = "font-weight:bolder"
+                                var p2 = document.createElement('p')
+
+                                td1.appendChild(p1)
+                                td1.appendChild(p2)
+
+                                var td2 = document.createElement('td')
+                                var td3 = document.createElement('td')
+
+                                p1.innerHTML = `${item.fullname}`
+                                p2.innerHTML = `${item.designation}`
+                                td2.innerHTML = `${item.subject}`
+
+                                var a =document.createElement("a")
+                                a.style = "text-decoration:underline;"
+                                a.className = "textGenerated_lower"
+                                a.innerHTML = "***show document"
+                                a.target = "_blank"
+                                a.href = `../static/${item.file}`
+
+                                td3.appendChild(a)
+
+                                tr.appendChild(td1)
+                                tr.appendChild(td2)
+                                tr.appendChild(td3)
+
+                                tbody.appendChild(tr)
+                            })
+                            
+                        }
+                    }
+
+                    // privilge hour
+                    if (res.sess_priv_hour) {
+                        if (res.sess_priv_hour.length!=0) {
+                            var tbody = byId("prive_id");
+                            tbody.innerHTML = ""
+
+                            res.sess_priv_hour.forEach(function(item,index){
+                                var tr = document.createElement('tr')
+
+                                var td1 = document.createElement('td')
+                                var td2 = document.createElement('td')
+
+                                td1.innerHTML = `${item.councilor}`
+
+                                var a =document.createElement("a")
+                                a.style = "text-decoration:underline;"
+                                a.className = "textGenerated_lower"
+                                a.innerHTML = "***show document"
+                                a.target = "_blank"
+                                let split = String(`../static/${item.file}`).split(",")
+                                a.href = split[0]
+
+                                td2.appendChild(a)
+
+                                tr.appendChild(td1)
+                                tr.appendChild(td2)
+
+                                tbody.appendChild(tr)
+                            })
+                            
+                        }
+                    }
+
+                    // reading and refferences bussiness ordinance
+                    if (res.sess_reading_ord) {
+                        if (res.sess_reading_ord.length!=0) {
+                            var parent = byId("session_proposed_ordinance");
+                            parent.innerHTML = ""
+                            res.sess_reading_ord.forEach(function(item,index){
+                                var div = document.createElement('div')
+                                div.style = "padding: 5px"
+
+                                var p = document.createElement('p')
+                                p.style = "text-indent: 40px;"
+                                p.className = "textGenerated"
+                                p.innerHTML = `A.${index + 1}. ${item.title} <span style="font-weight:bolder;font-style:italic;">${item.tracking_no}</span>`
+                                div.appendChild(p)
+
+                                if(item.committee){
+                                    var p_ref = document.createElement("p")
+                                    p_ref.className = "textGenerated"
+                                    p_ref.innerHTML = `REFFER TO : <span style="text-decoration:underline">${item.committee}</span>`
+
+                                    div.appendChild(p_ref)
+                                }
+
+                                if(item.document_file){
+                                    var a =document.createElement("a")
+                                    a.style = "text-decoration:underline;"
+                                    a.className = "textGenerated_lower"
+                                    a.innerHTML = "***show document"
+                                    a.target = "_blank"
+                                    const fileIsDocx = `../static/uploads/${item.document_file}`.toLowerCase().endsWith('.docx');
+
+                                    if (fileIsDocx) {
+                                        a.onclick = function() {
+                                            openWordFile(`../static/uploads/${item.document_file}`);
+                                            return false;
+                                        };
+                                    } else {
+                                        a.href = `../static/uploads/${item.document_file}`;
+                                    }
+                                    div.appendChild(a)
+                                }
+
+                                parent.appendChild(div)
+                                
+                            })
+                        }
+                    }
+
+                    // reading and refferences bussiness resolution
+                    if (res.sess_reading_res) {
+                        if (res.sess_reading_res.length!=0) {
+                            var parent = byId("session_proposed_resolution");
+                            parent.innerHTML = ""
+                            res.sess_reading_res.forEach(function(item,index){
+                                var div = document.createElement('div')
+                                div.style = "padding: 5px"
+
+                                var p = document.createElement('p')
+                                p.style = "text-indent: 40px;"
+                                p.className = "textGenerated"
+                                p.innerHTML = `B.${index + 1}. ${item.title} <span style="font-weight:bolder;font-style:italic;">${item.tracking_no}</span>`
+                                div.appendChild(p)
+
+                                if(item.committee){
+                                    var p_ref = document.createElement("p")
+                                    p_ref.className = "textGenerated"
+                                    p_ref.innerHTML = `REFFER TO : <span style="text-decoration:underline">${item.committee}</span>`
+
+                                    div.appendChild(p_ref)
+                                }
+
+                                if(item.document_file){
+                                    var a =document.createElement("a")
+                                    a.style = "text-decoration:underline;"
+                                    a.className = "textGenerated_lower"
+                                    a.innerHTML = "***show document"
+                                    a.target = "_blank"
+                                    // a.href = `../static/uploads/${item.document_file}`
+                                    const fileIsDocx = `../static/uploads/${item.document_file}`.toLowerCase().endsWith('.docx');
+
+                                    if (fileIsDocx) {
+                                        a.onclick = function() {
+                                            openWordFile(`../static/uploads/${item.document_file}`);
+                                            return false;
+                                        };
+                                    } else {
+                                        a.href = `../static/uploads/${item.document_file}`;
+                                    }
+                                    div.appendChild(a)
+                                }
+
+                                parent.appendChild(div)
+                                
+                            })
+                        }
+                    }
+
+                    // reading and refferences bussiness
+                    if (res.sess_reading_pet) {
+                        if (res.sess_reading_pet.length!=0) {
+                            var parent = byId("session_petition_req_ref");
+                            parent.innerHTML = ""
+                            res.sess_reading_pet.forEach(function(item,index){
+                                var div = document.createElement('div')
+                                div.style = "padding: 5px"
+
+                                var p = document.createElement('p')
+                                p.style = "text-indent: 40px;"
+                                p.className = "textGenerated"
+                                p.innerHTML = `C.${index + 1}. ${item.title} <span style="font-weight:bolder;font-style:italic;">${item.tracking_no}</span>`
+                                div.appendChild(p)
+
+                                if(item.committee){
+                                    var p_ref = document.createElement("p")
+                                    p_ref.className = "textGenerated"
+                                    p_ref.innerHTML = `REFFER TO : <span style="text-decoration:underline">${item.committee}</span>`
+
+                                    div.appendChild(p_ref)
+                                }
+
+                                if(item.document_file){
+                                    var a =document.createElement("a")
+                                    a.style = "text-decoration:underline;"
+                                    a.className = "textGenerated_lower"
+                                    a.innerHTML = "***show document"
+                                    a.target = "_blank"
+                                    // a.href = `../static/uploads/${item.document_file}`
+                                    const fileIsDocx = `../static/uploads/${item.document_file}`.toLowerCase().endsWith('.docx');
+
+                                    if (fileIsDocx) {
+                                        a.onclick = function() {
+                                            openWordFile(`../static/uploads/${item.document_file}`);
+                                            return false;
+                                        };
+                                    } else {
+                                        a.href = `../static/uploads/${item.document_file}`;
+                                    }
+                                    div.appendChild(a)
+                                }
+
+                                parent.appendChild(div)
+                                
+                            })
+                        }
+                    }
+
+                    // additional refferals
+                    if (res.sess_reading_additional_ref) {
+                        if (res.sess_reading_additional_ref.length!=0) {
+                            var parent = byId("session_additional_ref");
+                            parent.innerHTML = ""
+                            res.sess_reading_additional_ref.forEach(function(item,index){
+                                var div = document.createElement('div')
+                                div.style = "padding: 5px"
+
+                                var p = document.createElement('p')
+                                p.style = "text-indent: 40px;"
+                                p.className = "textGenerated"
+                                p.innerHTML = `C II.${index + 1}. ${item.title} <span style="font-weight:bolder;font-style:italic;">${item.tracking_no}</span>`
+                                div.appendChild(p)
+
+                                if(item.committee){
+                                    var p_ref = document.createElement("p")
+                                    p_ref.className = "textGenerated"
+                                    p_ref.innerHTML = `REFFER TO : <span style="text-decoration:underline">${item.committee}</span>`
+
+                                    div.appendChild(p_ref)
+                                }
+
+                                if(item.document_file){
+                                    var a =document.createElement("a")
+                                    a.style = "text-decoration:underline;"
+                                    a.className = "textGenerated_lower"
+                                    a.innerHTML = "***show document"
+                                    a.target = "_blank"
+                                    // a.href = `../static/uploads/${item.document_file}`
+                                    const fileIsDocx = `../static/uploads/${item.document_file}`.toLowerCase().endsWith('.docx');
+
+                                    if (fileIsDocx) {
+                                        a.onclick = function() {
+                                            openWordFile(`../static/uploads/${item.document_file}`);
+                                            return false;
+                                        };
+                                    } else {
+                                        a.href = `../static/uploads/${item.document_file}`;
+                                    }
+                                    div.appendChild(a)
+                                }
+
+                                parent.appendChild(div)
+                                
+                            })
+                        }
+                    }
+
+                    // Veto
+                    if (res.sess_reading_veto) {
+                        if (res.sess_reading_veto.length!=0) {
+                            var parent = byId("session_veto");
+
+                            parent.innerHTML = ""
+                            res.sess_reading_veto.forEach(function(item,index){
+                                var div = document.createElement('div')
+                                div.style = "padding: 5px"
+
+                                var p = document.createElement('p')
+                                p.style = "text-indent: 40px;"
+                                p.className = "textGenerated"
+                                p.innerHTML = `D. ${index + 1}. ${item.title} <span style="font-weight:bolder;font-style:italic;">${item.tracking_no}</span>`
+
+                                div.appendChild(p)
+
+                                if(item.committee){
+                                    var p_ref = document.createElement("p")
+                                    p_ref.className = "textGenerated"
+                                    p_ref.innerHTML = `REFFER TO : <span style="text-decoration:underline">${item.committee}</span>`
+
+                                    div.appendChild(p_ref)
+                                }
+
+                                if(item.document_file){
+                                    var a =document.createElement("a")
+                                    a.style = "text-decoration:underline;"
+                                    a.className = "textGenerated_lower"
+                                    a.innerHTML = "***show document"
+                                    a.target = "_blank"
+                                    // a.href = `../static/uploads/${item.document_file}`
+                                    const fileIsDocx = `../static/uploads/${item.document_file}`.toLowerCase().endsWith('.docx');
+
+                                    if (fileIsDocx) {
+                                        a.onclick = function() {
+                                            openWordFile(`../static/uploads/${item.document_file}`);
+                                            return false;
+                                        };
+                                    } else {
+                                        a.href = `../static/uploads/${item.document_file}`;
+                                    }
+                                    div.appendChild(a)
+                                }
+
+                                parent.appendChild(div)
+                                
+                            })
+                        }
+                    }
+
+                    // div_committee_report
+                    if (res.sess_commitee_report) {
+                        if (res.sess_commitee_report.length!=0) {
+                            var tbody = byId("tbody_session_committee_report");
+                            tbody.innerHTML = ""
+
+                            res.sess_commitee_report.forEach(function(item,index){
+                                var tr = document.createElement('tr')
+
+                                var td1 = document.createElement('td')
+                                var td2 = document.createElement('td')
+                                var td3 = document.createElement('td')
+
+                                td1.innerHTML = `${item.committee_report_no}`
+                                td2.innerHTML = `${item.committee}`
+
+                                var a =document.createElement("a")
+                                a.style = "text-decoration:underline;"
+                                a.className = "textGenerated_lower"
+                                a.innerHTML = "***show document"
+                                a.target = "_blank"
+                                // a.href = `../static/${item.file}`
+                                const fileIsDocx = `../static/${item.file}`.toLowerCase().endsWith('.docx');
+
+                                    if (fileIsDocx) {
+                                        a.onclick = function() {
+                                            openWordFile(`../static/${item.file}`);
+                                            return false;
+                                        };
+                                    } else {
+                                        a.href = `../static/${item.file}`;
+                                    }
+
+                                td3.appendChild(a)
+
+                                tr.appendChild(td1)
+                                tr.appendChild(td2)
+                                tr.appendChild(td3)
+
+                                tbody.appendChild(tr)
+                            })
+                            
+                        }
+                    }
+
+                    // Committee information
+                    if (res.sess_commitee_information) {
+                        if (res.sess_commitee_information.length!=0) {
+                            var tbody = byId("tbody_session_committee_information");
+                            tbody.innerHTML = ""
+
+                            res.sess_commitee_information.forEach(function(item,index){
+                                var tr = document.createElement('tr')
+
+                                var td1 = document.createElement('td')
+                                var td2 = document.createElement('td')
+                                var td3 = document.createElement('td')
+
+                                td1.innerHTML = `${item.committee_information_no}`
+                                td2.innerHTML = `${item.committee}`
+
+                                var a =document.createElement("a")
+                                a.style = "text-decoration:underline;"
+                                a.className = "textGenerated_lower"
+                                a.innerHTML = "***show document"
+                                a.target = "_blank"
+                                // a.href = `../static/${item.file}`
+                                const fileIsDocx = `../static/${item.file}`.toLowerCase().endsWith('.docx');
+
+                                    if (fileIsDocx) {
+                                        a.onclick = function() {
+                                            openWordFile(`../static/${item.file}`);
+                                            return false;
+                                        };
+                                    } else {
+                                        a.href = `../static/${item.file}`;
+                                    }
+
+                                td3.appendChild(a)
+
+                                tr.appendChild(td1)
+                                tr.appendChild(td2)
+                                tr.appendChild(td3)
+
+                                tbody.appendChild(tr)
+                            })
+                            
+                        }
+                    }
+
+                    // unfinish bussiness
+                    if (res.sess_reading_unfinish) {
+                        if (res.sess_reading_unfinish.length!=0) {
+                            var parent = byId("unfinish_bussiness");
+
+                            parent.innerHTML = ""
+                            res.sess_reading_unfinish.forEach(function(item,index){
+                                var div = document.createElement('div')
+                                div.style = "padding: 5px"
+
+                                var p = document.createElement('p')
+                                p.style = "text-indent: 40px;"
+                                p.className = "textGenerated"
+                                p.innerHTML = `A. ${index + 1}. ${item.title} <span style="font-weight:bolder;font-style:italic;">${item.tracking_no}</span>`
+
+                                div.appendChild(p)
+
+                                if(item.committee){
+                                    var p_ref = document.createElement("p")
+                                    p_ref.className = "textGenerated"
+                                    p_ref.innerHTML = `REFFER TO : <span style="text-decoration:underline">${item.committee}</span>`
+
+                                    div.appendChild(p_ref)
+                                }
+
+                                if(item.document_file){
+                                    var a =document.createElement("a")
+                                    a.style = "text-decoration:underline;"
+                                    a.className = "textGenerated_lower"
+                                    a.innerHTML = "***show document"
+                                    a.target = "_blank"
+                                    // a.href = `../static/uploads/${item.document_file}`
+                                    const fileIsDocx = `../static/uploads/${item.document_file}`.toLowerCase().endsWith('.docx');
+
+                                    if (fileIsDocx) {
+                                        a.onclick = function() {
+                                            openWordFile(`../static/uploads/${item.document_file}`);
+                                            return false;
+                                        };
+                                    } else {
+                                        a.href = `../static/uploads/${item.document_file}`;
+                                    }
+                                    div.appendChild(a)
+                                }
+
+                                parent.appendChild(div)
+                                
+                            })
+                        }
+                    }
+
+                    // propose_ord 2nd reading
+                    if (res.sess_reading_botd) {
+                        if (res.sess_reading_botd.length!=0) {
+                            var parent = byId("proposed_2nd");
+
+                            parent.innerHTML = ""
+                            res.sess_reading_botd.forEach(function(item,index){
+                                var div = document.createElement('div')
+                                div.style = "padding: 5px"
+
+                                var p = document.createElement('p')
+                                p.style = "text-indent: 40px;"
+                                p.className = "textGenerated"
+                                p.innerHTML = `B. ${index + 1}. ${item.title} <span style="font-weight:bolder;font-style:italic;">${item.tracking_no}</span>`
+
+                                div.appendChild(p)
+
+                                if(item.committee){
+                                    var p_ref = document.createElement("p")
+                                    p_ref.className = "textGenerated"
+                                    p_ref.innerHTML = `REFFER TO : <span style="text-decoration:underline">${item.committee}</span>`
+
+                                    div.appendChild(p_ref)
+                                }
+
+                                if(item.document_file){
+                                    var a =document.createElement("a")
+                                    a.style = "text-decoration:underline;"
+                                    a.className = "textGenerated_lower"
+                                    a.innerHTML = "***show document"
+                                    a.target = "_blank"
+                                    // a.href = `../static/uploads/${item.document_file}`
+                                    // a.href = `../static/uploads/${item.document_file}`
+                                    const fileIsDocx = `../static/uploads/${item.document_file}`.toLowerCase().endsWith('.docx');
+
+                                    if (fileIsDocx) {
+                                        a.onclick = function() {
+                                            openWordFile(`../static/uploads/${item.document_file}`);
+                                            return false;
+                                        };
+                                    } else {
+                                        a.href = `../static/uploads/${item.document_file}`;
+                                    }
+                                    div.appendChild(a)
+                                }
+
+                                parent.appendChild(div)
+                                
+                            })
+                        }
+                    }
+
+                    // urgent
+                    if (res.sess_reading_urgent) {
+                        if (res.sess_reading_urgent.length!=0) {
+                            var parent = byId("session_urgent");
+
+                            parent.innerHTML = ""
+                            res.sess_reading_urgent.forEach(function(item,index){
+                                var div = document.createElement('div')
+                                div.style = "padding: 5px"
+
+                                var p = document.createElement('p')
+                                p.style = "text-indent: 40px;"
+                                p.className = "textGenerated"
+                                p.innerHTML = `B.2.1 ${index + 1}. ${item.title} <span style="font-weight:bolder;font-style:italic;">${item.tracking_no}</span>`
+
+                                div.appendChild(p)
+
+                                if(item.committee){
+                                    var p_ref = document.createElement("p")
+                                    p_ref.className = "textGenerated"
+                                    p_ref.innerHTML = `REFFER TO : <span style="text-decoration:underline">${item.committee}</span>`
+
+                                    div.appendChild(p_ref)
+                                }
+
+                                if(item.document_file){
+                                    var a =document.createElement("a")
+                                    a.style = "text-decoration:underline;"
+                                    a.className = "textGenerated_lower"
+                                    a.innerHTML = "***show document"
+                                    a.target = "_blank"
+                                
+                                    // a.href = `../static/uploads/${item.document_file}`
+                                    const fileIsDocx = `../static/uploads/${item.document_file}`.toLowerCase().endsWith('.docx');
+
+                                    if (fileIsDocx) {
+                                        a.onclick = function() {
+                                            openWordFile(`../static/uploads/${item.document_file}`);
+                                            return false;
+                                        };
+                                    } else {
+                                        a.href = `../static/uploads/${item.document_file}`;
+                                    }
+                                    div.appendChild(a)
+                                }
+
+                                parent.appendChild(div)
+                                
+                            })
+                        }
+                    }
+
+                    // just inserted
+                    if (res.sess_reading_just_inserted) {
+                        if (res.sess_reading_just_inserted.length!=0) {
+                            var parent = byId("session_just_inserted");
+
+                            parent.innerHTML = ""
+                            res.sess_reading_just_inserted.forEach(function(item,index){
+                                var div = document.createElement('div')
+                                div.style = "padding: 5px"
+
+                                var p = document.createElement('p')
+                                p.style = "text-indent: 40px;"
+                                p.className = "textGenerated"
+                                p.innerHTML = `B.2.2 ${index + 1}. ${item.title} <span style="font-weight:bolder;font-style:italic;">${item.tracking_no}</span>`
+
+                                div.appendChild(p)
+
+                                if(item.committee){
+                                    var p_ref = document.createElement("p")
+                                    p_ref.className = "textGenerated"
+                                    p_ref.innerHTML = `REFFER TO : <span style="text-decoration:underline">${item.committee}</span>`
+
+                                    div.appendChild(p_ref)
+                                }
+
+                                if(item.document_file){
+                                    var a =document.createElement("a")
+                                    a.style = "text-decoration:underline;"
+                                    a.className = "textGenerated_lower"
+                                    a.innerHTML = "***show document"
+                                    a.target = "_blank"
+                                    // a.href = `../static/uploads/${item.document_file}`
+                                    const fileIsDocx = `../static/uploads/${item.document_file}`.toLowerCase().endsWith('.docx');
+
+                                    if (fileIsDocx) {
+                                        a.onclick = function() {
+                                            openWordFile(`../static/uploads/${item.document_file}`);
+                                            return false;
+                                        };
+                                    } else {
+                                        a.href = `../static/uploads/${item.document_file}`;
+                                    }
+                                    div.appendChild(a)
+                                }
+
+                                parent.appendChild(div)
+                                
+                            })
+                        }
+                    }
+
+                    // Calendar measure
+                    if (res.sess_reading_calendar_measure) {
+                        if (res.sess_reading_calendar_measure.length!=0) {
+                            var parent = byId("session_calendar_new_measure");
+
+                            parent.innerHTML = ""
+                            res.sess_reading_calendar_measure.forEach(function(item,index){
+                                var div = document.createElement('div')
+                                div.style = "padding: 5px"
+
+                                var p = document.createElement('p')
+                                p.style = "text-indent: 40px;"
+                                p.className = "textGenerated"
+                                p.innerHTML = `B.3.1 ${index + 1}. ${item.title} <span style="font-weight:bolder;font-style:italic;">${item.tracking_no}</span>`
+
+                                div.appendChild(p)
+
+                                if(item.committee){
+                                    var p_ref = document.createElement("p")
+                                    p_ref.className = "textGenerated"
+                                    p_ref.innerHTML = `REFFER TO : <span style="text-decoration:underline">${item.committee}</span>`
+
+                                    div.appendChild(p_ref)
+                                }
+
+                                if(item.document_file){
+                                    var a =document.createElement("a")
+                                    a.style = "text-decoration:underline;"
+                                    a.className = "textGenerated_lower"
+                                    a.innerHTML = "***show document"
+                                    a.target = "_blank"
+                                    // a.href = `../static/uploads/${item.document_file}`
+                                    const fileIsDocx = `../static/uploads/${item.document_file}`.toLowerCase().endsWith('.docx');
+
+                                    if (fileIsDocx) {
+                                        a.onclick = function() {
+                                            openWordFile(`../static/uploads/${item.document_file}`);
+                                            return false;
+                                        };
+                                    } else {
+                                        a.href = `../static/uploads/${item.document_file}`;
+                                    }
+                                    div.appendChild(a)
+                                }
+
+                                parent.appendChild(div)
+                                
+                            })
+                        }
+                    }
+
+                    // new measure
+                    if (res.sess_reading_new_measure) {
+                        if (res.sess_reading_new_measure.length!=0) {
+                            var parent = byId("session_new_measure");
+
+                            parent.innerHTML = ""
+                            res.sess_reading_new_measure.forEach(function(item,index){
+                                var div = document.createElement('div')
+                                div.style = "padding: 5px"
+
+                                var p = document.createElement('p')
+                                p.style = "text-indent: 40px;"
+                                p.className = "textGenerated"
+                                p.innerHTML = `B.3.2 ${index + 1}. ${item.title} <span style="font-weight:bolder;font-style:italic;">${item.tracking_no}</span>`
+
+                                div.appendChild(p)
+
+                                if(item.committee){
+                                    var p_ref = document.createElement("p")
+                                    p_ref.className = "textGenerated"
+                                    p_ref.innerHTML = `REFFER TO : <span style="text-decoration:underline">${item.committee}</span>`
+
+                                    div.appendChild(p_ref)
+                                }
+
+                                if(item.document_file){
+                                    var a =document.createElement("a")
+                                    a.style = "text-decoration:underline;"
+                                    a.className = "textGenerated_lower"
+                                    a.innerHTML = "***show document"
+                                    a.target = "_blank"
+                                    // a.href = `../static/uploads/${item.document_file}`
+                                    const fileIsDocx = `../static/uploads/${item.document_file}`.toLowerCase().endsWith('.docx');
+
+                                    if (fileIsDocx) {
+                                        a.onclick = function() {
+                                            openWordFile(`../static/uploads/${item.document_file}`);
+                                            return false;
+                                        };
+                                    } else {
+                                        a.href = `../static/uploads/${item.document_file}`;
+                                    }
+                                    div.appendChild(a)
+                                }
+
+                                parent.appendChild(div)
+                                
+                            })
+                        }
+                    }
+
+                    // bussiness third
+                    if (res.sess_reading_bussiness_third) {
+                        if (res.sess_reading_bussiness_third.length!=0) {
+                            var parent = byId("session_bussiness_third");
+
+                            parent.innerHTML = ""
+                            res.sess_reading_bussiness_third.forEach(function(item,index){
+                                var div = document.createElement('div')
+                                div.style = "padding: 5px"
+
+                                var p = document.createElement('p')
+                                p.style = "text-indent: 40px;"
+                                p.className = "textGenerated"
+                                p.innerHTML = `B.2.2 ${index + 1}. ${item.title} <span style="font-weight:bolder;font-style:italic;">${item.tracking_no}</span>`
+
+                                div.appendChild(p)
+
+                                if(item.committee){
+                                    var p_ref = document.createElement("p")
+                                    p_ref.className = "textGenerated"
+                                    p_ref.innerHTML = `REFFER TO : <span style="text-decoration:underline">${item.committee}</span>`
+
+                                    div.appendChild(p_ref)
+                                }
+
+                                if(item.document_file){
+                                    var a =document.createElement("a")
+                                    a.style = "text-decoration:underline;"
+                                    a.className = "textGenerated_lower"
+                                    a.innerHTML = "***show document"
+                                    a.target = "_blank"
+                                    // a.href = `../static/uploads/${item.document_file}`
+                                    const fileIsDocx = `../static/uploads/${item.document_file}`.toLowerCase().endsWith('.docx');
+
+                                    if (fileIsDocx) {
+                                        a.onclick = function() {
+                                            openWordFile(`../static/uploads/${item.document_file}`);
+                                            return false;
+                                        };
+                                    } else {
+                                        a.href = `../static/uploads/${item.document_file}`;
+                                    }
+                                    div.appendChild(a)
+                                }
+
+                                parent.appendChild(div)
+                                
+                            })
+                        }
+                    }
+
+                    // announcement
+                    if (res.sess_announcement) {
+                        if (res.sess_announcement.length!=0) {
+                            var tbody = byId("tbody_session_announcement");
+                            tbody.innerHTML = ""
+
+                            res.sess_announcement.forEach(function(item,index){
+                                var tr = document.createElement('tr')
+
+                                var td1 = document.createElement('td')
+                                var td2 = document.createElement('td')
+                                var td3 = document.createElement('td')
+
+                                td1.innerHTML = `${item.fullname}`
+                                td2.innerHTML = `${item.announcement}`
+
+                                var a =document.createElement("a")
+                                a.style = "text-decoration:underline;"
+                                a.className = "textGenerated_lower"
+                                a.innerHTML = "***show document"
+                                a.target = "_blank"
+                                // a.href = `../static/${item.file}`
+                                    const fileIsDocx = `../static/${item.file}`.toLowerCase().endsWith('.docx');
+
+                                    if (fileIsDocx) {
+                                        a.onclick = function() {
+                                            openWordFile(`../static/${item.file}`);
+                                            return false;
+                                        };
+                                    } else {
+                                        a.href = `../static/${item.file}`;
+                                    }
+
+                                td3.appendChild(a)
+
+                                tr.appendChild(td1)
+                                tr.appendChild(td2)
+                                tr.appendChild(td3)
+
+                                tbody.appendChild(tr)
+                            })
+                            
+                        }
+                    }
+                    
+                    // code reff
+                    if (res.sess_code_ref) {
+                        if(res.sess_code_ref.length){
+                            res.sess_code_ref.forEach(function(item,index){
+                                if(item.type==1){
+                                    var ol = byId("div_code");
+                                }else{
+                                    var ol = byId("div_ref");
+                                }
+                                var li = document.createElement('li')
+
+                                li.innerHTML = `<a target='_blank' href='../static/uploads/${item.path}'>${item.title}</a>`
+                                ol.appendChild(li)
+                            })
+                        }
+                    }
+
+                    // summary
+                    if (res.sess_summary) {
+                        if(res.sess_summary.length){
+                            res.sess_summary.forEach(function(item,index){
+                                if(item['type_document']=="Ordinance"){
+                                    var div = byId("div_correction_ordinance")
+                                }else if(item['type_document']=="Resolution"){
+                                    var div = byId("div_correction_resolution")
+                                }else{
+                                    var div = byId("div_correction")
+                                }
+
+                                var p = document.createElement('p')
+                                p.style = "font-weight:bolder"
+                                p.innerHTML = "OLD TITLE"
+
+                                var p2 = document.createElement('p')
+                                p2.style =" text-indent: 40px"
+                                p2.innerHTML = `${item['old_title']} <span style="font-weight: bolder;font-style: italic">${item['tracking_no']}</span>`
+
+                                var p3 = document.createElement('p')
+                                p3.style = "font-weight:bolder"
+                                p3.innerHTML = "NEW TITLE"
+
+                                var p4 = document.createElement('p')
+                                p4.style =" text-indent: 40px"
+                                p4.innerHTML = `${item['new_title']}`
+
+                                div.appendChild(p)
+                                div.appendChild(p2)
+                                div.appendChild(p3)
+                                div.appendChild(p4)
+                            })
+                        }
+                    }
+                    
+                    $("#cob_modal").modal('show');
+
+                }else{
+                    alert("INVALID SESSION NUMBER")
+                }
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+
+    function ordinal_suffix_of(i) {
+        var j = i % 10,
+            k = i % 100;
+        if (j == 1 && k != 11) {
+            return i + 'st';
+        }
+        if (j == 2 && k != 12) {
+            return i + 'nd';
+        }
+        if (j == 3 && k != 13) {
+            return i + 'rd';
+        }
+        return i + 'th';
+    }
+
+    function populateSession(data){
+        if (data) {
+            var form  = byId("form_session");
+            getbyId('ul_recitation').innerHTML=""
+
+            $('.video-list ul').empty();
+            $('.video-list1 ul').empty();
+
+            sendDataWithCallback('/get_recitation_file',{session_id:data.sess_data[0].session_id},(res)=>{
+                var ul = getbyId('ul_recitation')
+                for(var x=0; x<res.length;x++){
+                    
+                    var li = document.createElement('li')
+                    var a = document.createElement('a')
+                    a.href = "/static/" + res[x].path
+
+                    li.className = 'list-group-item'
+                    li.style="cursor:pointer"
+                    a.innerHTML = res[x].filename
+
+                    li.appendChild(a)
+                    ul.appendChild(li)
+                }
+            })
+
+            // new code
+            sendDataWithCallback('/get_session_video',{session_id:data.sess_data[0].session_id},(res)=>{
+                if(res.length){
+                    const url_intro = '/static/' + res[0].intro_path
+                    const li = ` <li> <video controls="controls type="video/mp4" width="400px" height="200px">
+                    <source src="${url_intro}" type="video/mp4">
+                    </video><span><i class="fa fa-trash"></i></span></li>`
+                    $('.video-list ul').append(li);
+
+                    const url_anthem = '/static/' + res[0].national_anthem_path
+                     const li1 = ` <li> <video controls="controls type="video/mp4" width="400px" height="200px">
+                    <source src="${url_anthem}" type="video/mp4">
+                    </video><span><i class="fa fa-trash"></i></span></li>`
+                    $('.video-list1 ul').append(li1);
+
+                    const url_prayer = '/static/' + res[0].prayer_path
+                     const li2 = ` <li> <video controls="controls type="video/mp4" width="400px" height="200px">
+                    <source src="${url_prayer}" type="video/mp4">
+                    </video><span><i class="fa fa-trash"></i></span></li>`
+                    $('.video-list2 ul').append(li2);
+                }
+            })
+
+            // session data
+            if (data.sess_data.length!=0) {
+                form.session_id.value =data.sess_data[0].session_id;
+                form.sp_number.value =data.sess_data[0].sp_number;
+                form.sp_type.value =data.sess_data[0].session_type;
+                form.closing_prayer_lead.value = data.sess_data[0].closing_prayer
+
+                byId("session_number").value = data.sess_data[0].session_number;
+                byId("session_date").value = data.sess_data[0].session_date;
+                byId("national_anthem").value = data.sess_data[0].national_anthem;
+                byId("opening_prayer").value = data.sess_data[0].session_opening_prayer;
+                byId("couns_creed").value = data.sess_data[0].recitation_coun_creed;
+            }
+
+
+            // roll call
+            if (data.sess_roll_call) {
+                if (data.sess_roll_call.length!=0) {
+                    data.sess_roll_call.forEach(function(item, index){
+                        populateRollcall();
+                        var name = "attendance["+index+"][names]";
+                        form[name].value = item['fullname'];
+                        var stat = "attendance["+index+"][status]";
+                        form[stat].value = item.status;
+                    })
+                }
+            }
+
+            // Quesition Hour
+            sendDataWithCallback('/get_session_question_hour', {session_id:data.sess_data[0].session_id}, (res)=>{
+                res.forEach(function(item, index){
+                    add_question_hour();
+                    var fullname = "question_hour["+index+"][fullname]";
+                    form[fullname].value = item['fullname'];
+                    var designation = "question_hour["+index+"][designation]";
+                    form[designation].value = item['designation'];
+                    var subject = "question_hour["+index+"][subject]";
+                    form[subject].value = item['subject'];
+                })
+            })
+
+            // privilege hour
+            sendDataWithCallback('/get_session_previlege_hour', {session_id:data.sess_data[0].session_id}, (res)=>{
+                res.forEach(function(item, index){
+                    add_privilege_hour();
+                    $("#privilege_hour_tracking_no" + index).val(item['info_id']).trigger("chosen:updated");
+                })
+            })
+
+            // privious minutes
+            sendDataWithCallback('/get_session_privous_minutes', {session_id:data.sess_data[0].session_id}, (res)=>{
+                res.forEach(function(item, index){
+                    add_reading_consid();
+                    $("#reading_consid_minutes_id" + index).val(item['minutes_id']).trigger("chosen:updated");
+                })
+            })
+
+            // proposed_ordi
+            sendDataWithCallback('/get_session_proposed_ordi', {session_id:data.sess_data[0].session_id}, (res)=>{
+                res.forEach(function(item, index){
+                    add_propose_ord();
+                    $("#propose_ord_tracking_no" + index).val(item['tracking_no']).trigger("chosen:updated");
+                })
+            })
+
+            // proposed_reso
+            sendDataWithCallback('/get_session_proposed_reso', {session_id:data.sess_data[0].session_id}, (res)=>{
+                res.forEach(function(item, index){
+                    add_propose_reso();
+                    $("#propose_res_tracking_no" + index).val(item['tracking_no']).trigger("chosen:updated");
+                })
+            })
+
+            // petition_for_refferal
+            getbyId('div_petitions_for_refferals').innerHTML=  ""
+            sendDataWithCallback('/get_session_petition_for_refferal', {session_id:data.sess_data[0].session_id}, (res)=>{
+                res.forEach(function(item, index){
+                    add_petitions_for_refferals();
+                    $("#petitions_for_refferals_tracking_no" + index).val(item['tracking_no']).trigger("chosen:updated");
+                    var petitions_for_refferals = "petitions_for_refferals["+index+"][type]";
+                    form[petitions_for_refferals].value = item['type'];
+                    form[petitions_for_refferals].dispatchEvent(new Event('change'));
+                    
+                    var arr_ = item['committtee'].replaceAll(" ","").replaceAll("'","").split(",")
+                    setTimeout(()=>{$("#petitions_for_refferals_committee" + (index)).val(arr_).trigger("chosen:updated");},500)
+                })
+            })
+
+            // additional_refferal
+            getbyId('div_additional_refferals').innerHTML=  ""
+            sendDataWithCallback('/get_session_additional_refferal', {session_id:data.sess_data[0].session_id}, (res)=>{
+                res.forEach(function(item, index){
+                    add_additional_refferals();
+                    $("#additional_refferals_tracking_no" + index).val(item['tracking_no']).trigger("chosen:updated");
+                    var additional_refferals = "additional_refferals["+index+"][type]";
+                    form[additional_refferals].value = item['type'];
+                    form[additional_refferals].dispatchEvent(new Event('change'));
+                    
+                    var arr_ = item['committtee'].replaceAll(" ","").replaceAll("'","").split(",")
+                    setTimeout(()=>{$("#additional_refferals_committee" + (index)).val(arr_).trigger("chosen:updated");},500)
+                })
+            })
+
+            // veto_reading
+            sendDataWithCallback('/get_session_veto_reading', {session_id:data.sess_data[0].session_id}, (res)=>{
+                res.forEach(function(item, index){
+                    add_veto_message();
+                    $("#veto_message_tracking_no" + index).val(item['tracking_no']).trigger("chosen:updated");
+                })
+            })
+
+            // committee report
+            sendDataWithCallback('/get_session_committee_report', {session_id:data.sess_data[0].session_id}, (res)=>{
+                res.forEach(function(item, index){
+                    add_committee_report_();
+                    $("#committee_report_tracking_no" + index).val(item['committee_id']).trigger("chosen:updated");
+                    var committee_report_no = "committee_report["+index+"][committee_report_no]";
+                    form[committee_report_no].value = item['committee_report_no'];
+                })
+            })
+
+            // committee information
+            sendDataWithCallback('/get_session_committee_information', {session_id:data.sess_data[0].session_id}, (res)=>{
+                res.forEach(function(item, index){
+                    add_committee_information_();
+                    $("#committee_information_tracking_no" + index).val(item['committee_id']).trigger("chosen:updated");
+                    var committee_information_no = "committee_information["+index+"][committee_information_no]";
+                    form[committee_information_no].value = item['committee_information_no'];
+                })
+            })
+
+            // unfinished_bussiness
+            sendDataWithCallback('/get_session_unfinished_bussiness', {session_id:data.sess_data[0].session_id}, (res)=>{
+                res.forEach(function(item, index){
+                    add_unfinished();
+                    $("#unfinished_bussiness_tracking_no" + index).val(item['tracking_no']).trigger("chosen:updated");
+                })
+            })
+
+            // bussiness1
+            sendDataWithCallback('/get_session_botd', {session_id:data.sess_data[0].session_id}, (res)=>{
+                res.forEach(function(item, index){
+                    add_bussiness1();
+                    $("#bussiness_of_the_day_tracking_no" + index).val(item['tracking_no']).trigger("chosen:updated");
+                })
+            })
+
+            // urgent
+            sendDataWithCallback('/get_session_urgent', {session_id:data.sess_data[0].session_id}, (res)=>{
+                res.forEach(function(item, index){
+                    add_urgent();
+                    $("#urgent_tracking_no" + index).val(item['tracking_no']).trigger("chosen:updated");
+                })
+            })
+
+            // just inserted
+            sendDataWithCallback('/get_session_just_inserted', {session_id:data.sess_data[0].session_id}, (res)=>{
+                res.forEach(function(item, index){
+                    add_just_inserted();
+                    $("#just_inserted_tracking_no" + index).val(item['tracking_no']).trigger("chosen:updated");
+                })
+            })
+
+            // calendar measure
+            sendDataWithCallback('/get_session_calendar_measure', {session_id:data.sess_data[0].session_id}, (res)=>{
+                res.forEach(function(item, index){
+                    add_calendar_measure();
+                    $("#calendar_measure_tracking_no" + index).val(item['tracking_no']).trigger("chosen:updated");
+                })
+            })
+
+            // new measure
+            sendDataWithCallback('/get_session_new_measure', {session_id:data.sess_data[0].session_id}, (res)=>{
+                res.forEach(function(item, index){
+                    add_new_measure();
+                    $("#new_measure_tracking_no" + index).val(item['tracking_no']).trigger("chosen:updated");
+                })
+            })
+
+            // bussiness third
+            sendDataWithCallback('/get_session_bussiness_third', {session_id:data.sess_data[0].session_id}, (res)=>{
+                res.forEach(function(item, index){
+                    add_bussiness_third();
+                    $("#bussiness_third_tracking_no" + index).val(item['tracking_no']).trigger("chosen:updated");
+                })
+            })
+
+            // summary correction
+            sendDataWithCallback('/get_session_summary_correction', {session_id:data.sess_data[0].session_id}, (res)=>{
+                res.forEach(function(item, index){
+                    add_summary_correction();
+                    $("#summary_tracking_no" + index).val(item['tracking_no']).trigger("chosen:updated");
+                    var old_title = "summary["+index+"][old_title]";
+                    form[old_title].value = item['old_title'];
+                    var new_title = "summary["+index+"][new_title]";
+                    form[new_title].value = item['new_title'];
+                })
+            })
+
+            // Announcement
+            sendDataWithCallback('/get_session_announcement', {session_id:data.sess_data[0].session_id}, (res)=>{
+                res.forEach(function(item, index){
+                    add_announcement();
+                    $("#announcement_councilor" + index).val(item['councilor']).trigger("chosen:updated");
+                    var announcement = "announcement_["+index+"][announcement]";
+                    form[announcement].value = item['announcement'];
+                })
+            })
+        }
+    }
+    
+    function populate_active_councilor(){
+         getDataWithCallback('/get_all_active_councilor', function(res){
+            if (res) {
+                if (res.length!=0) {
+                    var form = getbyId("form_session");
+                    res.forEach(function(item,index){
+                        populateRollcall();
+                        var name = "attendance["+index+"][names]"
+                        form[name].value = item['fullname'];
+                    });
+                }
+            }
+        });
+    }
+
+    function get_sp_number_active(){
+        getDataWithCallback('/get_sp_active', function(res){
+            for(var x=0; x<res.length; x++){
+                if(res[x].status=='ACTIVE'){
+                    $('#sp_number').append(`<option selected value="${res[x].sp_id}"> ${res[x].sp_title} </option>`);
+                }else{
+                    $('#sp_number').append(`<option value="${res[x].sp_id}"> ${res[x].sp_title} </option>`);
+                }
+            }
+        });
+    }
+
+    function populate_code_references(){    
+        getDataWithCallback('/get_code_and_references', function(res){
+            if (res) {
+                if (res.length!=0) {
+                    var form = getbyId("form_session");
+                    res.forEach(function(item,index){
+                        add_code_ref();
+                        var name = "code_ref["+index+"][title]"
+                        form[name].value = item.title;
+                    });
+                }
+            }
+        });
+    }
+
+    function add_new_clear(){
+        getbyId('btn_del_session').style.display = "none";
+    }
+
+    function clear_session_data_2() {
+        getbyId('div_intro1').style.display = "none"
+        getbyId('div_nat1').style.display = "none"
+        byId("prive_id").innerHTML = ""
+        getbyId("qh_visitor_id").innerHTML = ""
+        getbyId("div_code").innerHTML = ""
+        getbyId("div_ref").innerHTML = ""
+        getbyId('session_reading_prev').innerHTML = ""
+        getbyId('session_proposed_ordinance').innerHTML = ""
+        getbyId('session_proposed_resolution').innerHTML=""
+        getbyId("session_petition_req_ref").innerHTML = "";
+        getbyId("session_additional_ref").innerHTML = "";
+        getbyId("session_veto").innerHTML = "";
+        getbyId("session_just_inserted").innerHTML = "";
+        getbyId('session_urgent').innerHTML = "";
+        getbyId("unfinish_bussiness").innerHTML = "";
+        getbyId("proposed_2nd").innerHTML = "";
+        getbyId("session_calendar_new_measure").innerHTML = "";
+        getbyId("session_new_measure").innerHTML = "";
+        getbyId("session_bussiness_third").innerHTML = "";
+        getbyId('session_closing_prayer').innerHTML = ""
+    }
+
+</script>

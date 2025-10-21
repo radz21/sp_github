@@ -1,0 +1,179 @@
+<div class="col-sm-12">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+           <div class="header-title">
+                <h4 class="card-title">Active Legislature</h4>
+           </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="tbl_sp" class="table table-striped" data-toggle="data-table" width="99.8%">
+                    <thead>
+                        <th></th>
+                        <th>Title</th>
+                        <th>Year</th>
+                        <th>Status(Active/Inactive)</th>
+                        <th>Action</th>
+                    </thead>
+                </table>
+            </div>
+       </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $( "#sangunian" ).addClass( "active" );
+        $( "#config-menu" ).addClass( "show" );
+        load_sp()
+    })
+
+    function update_spstatus(el,data){
+        var tr = $(data).closest('tr')
+        var dataArr = $('#tbl_sp').DataTable().row(tr).data();
+
+        sendDataWithCallback('/update_activeSp',dataArr,function(res){
+            load_sp()
+            getDataWithCallback('/get_city_name', function(res){
+                getbyId('active_sp').innerHTML=res[0]['sp_title']
+                getbyId('active_sp_id').value=res[0]['sp_id']
+            })
+        })
+    }
+
+    function load_sp(){
+        if ($.fn.DataTable.isDataTable("#tbl_sp")) {
+            $("#tbl_sp").DataTable().destroy();
+        }
+
+        var table=$('#tbl_sp').DataTable({
+            responsive: true,
+            searching: true,
+            bStateSave: true,
+            "ajax": {
+                "type": "POST",
+                "url": '/get_sp',
+                contentType: 'application/JSON',
+                "dataSrc": function(data) {
+                    data.forEach(function(item){
+                        if(item.status=='ACTIVE'){
+                            var toggle = `
+                            <div class="form-check form-switch form-check-inline">
+                                <input class="form-check-input" onchange=update_spstatus($(this),this) type="checkbox" id="switch2" checked />
+                                <label class="form-check-label pl-2" for="switch2">Status</label>
+                            </div>`
+                        }else{
+                            var toggle = `<div class="bd-example">
+                            <div class="form-check form-switch form-check-inline">
+                                <input class="form-check-input" onchange=update_spstatus($(this),this) type="checkbox" id="switch1" />
+                                <label class="form-check-label pl-2" for="switch1">Status</label>
+                            </div>`
+                        }
+
+                        item.action =  toggle;
+
+                        var open_doc = `<button type='button' class="btn btn-sm btn-icon text-primary flex-end" title='OPEN' onclick='open_sp_doc(this)'>
+                        <span class="btn-inner">
+                            <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" >
+                                <path d="M11.4925 2.78906H7.75349C4.67849 2.78906 2.75049 4.96606 2.75049 8.04806V16.3621C2.75049 19.4441 4.66949 21.6211 7.75349 21.6211H16.5775C19.6625 21.6211 21.5815 19.4441 21.5815 16.3621V12.3341" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.82812 10.921L16.3011 3.44799C17.2321 2.51799 18.7411 2.51799 19.6721 3.44799L20.8891 4.66499C21.8201 5.59599 21.8201 7.10599 20.8891 8.03599L13.3801 15.545C12.9731 15.952 12.4211 16.181 11.8451 16.181H8.09912L8.19312 12.401C8.20712 11.845 8.43412 11.315 8.82812 10.921Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M15.1655 4.60254L19.7315 9.16854" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                        </span>
+                        </button>`
+                        item.action2 = open_doc;
+                    });
+
+                    return data;
+                }
+            },
+            dom: 'Bfrtip',
+            columns: [
+                {data:"action"},
+                {data:"sp_title"},
+                {data:"sp_year"},
+                {data:"status"},
+                {data: "action2"}
+            ],
+            buttons: [
+                {
+                    text: "Add",
+                    action: function ( e, dt, node, config ) {
+                        getbyId('form_sp').reset()
+                        getbyId('sp_id').value=0
+                        getbyId('sp_logo').src="static/images/upload.png"
+                        getbyId('city_logo').src="static/images/upload.png"
+                        $('#inpt_vmayor').val('').trigger("chosen:updated")
+                        $('#inpt_sec').val('').trigger("chosen:updated")
+
+                        getbyId('councilor_id').innerHTML=""
+
+                        $("#div_sp").modal('toggle');
+                    },
+                    'className': 'btn btn-sm btn-primary'
+                },
+                 {
+                        extend: 'print',
+                        text: "Print",
+                        filename: 'file',
+                        title: 'Print',
+                        titleAttr: 'Print',
+                        'className': 'btn btn-sm btn-warning'
+                    } 
+            ],
+            "pagingType": "full_numbers",
+            "pageLength": 7
+        });
+    }
+
+    function open_sp_doc(elem){
+         var tr = $(elem).closest('tr')
+        var dataArr = $('#tbl_sp').DataTable().row(tr).data();
+
+        if(dataArr){
+            document.getElementById('councilor_id').innerHTML=""
+
+            var form=getbyId('form_sp');
+
+            var split_yr = dataArr.sp_year.split("-")
+            form.sp_year.value=split_yr[0]
+            form.sp_year2.value=split_yr[1]
+            form.sp_id.value=dataArr.sp_id
+
+            var data={
+                'sp_id':dataArr.sp_id
+            }
+            sendDataWithCallback('/get_sp_member',data,function(res){
+                getbyId('inpt_vmayor').value=res[0].sp_vice_mayor
+                $('#inpt_vmayor').trigger('chosen:updated');
+
+                getbyId('inpt_sec').value=res[0].sp_secretary
+                $('#inpt_sec').trigger('chosen:updated');
+
+                form.title.value=res[0].sp_title
+
+                if(res[0].sp_logo=="" || res[0].sp_logo==null){
+                    getbyId('sp_logo').src='../static/icon/photo_blank.png'
+                }else{
+                    getbyId('sp_logo').src='../static/uploads/'+res[0].sp_logo
+                }
+                
+                if(res[0].city_logo=="" || res[0].city_logo==null){
+                    getbyId('city_logo').src='../static/icon/photo_blank.png'
+                }else{
+                    getbyId('city_logo').src='../static/uploads/'+res[0].city_logo
+                }
+
+                res[0].councilors.forEach(function(i,index){
+                    populateCouncil(function(sel) {
+                        sel.value = i['info_id']
+                        $(sel).trigger('chosen:updated');
+                    });
+                })
+
+                $("#div_sp").modal('toggle');
+
+            })
+        }
+    }
+</script>

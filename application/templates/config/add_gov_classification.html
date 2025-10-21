@@ -1,0 +1,41 @@
+<form id="form_gov_classification">
+	<input type="hidden" name="h_gov_classification" id="h_gov_classification" value="0">
+	<div class="colfull" style ="padding:10px;">
+		<p >Governance Classification</p>
+		<input  type="text" class="form-control" name="title" required>
+	</div>
+	<div class="colfull" align="center">
+		<button type="submit" class="btn btn-success">SAVE</button>
+		<button type="button" class="btn btn-danger" onclick="del_classification()">DELETE</button>
+	</div>
+</form>
+<script type="text/javascript">
+	function del_classification(){
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "You won't be able to revert this!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, delete it!',
+			customClass: 'swal_css',
+		}).then((result) => {
+			if (result.isConfirmed) {
+				var data={
+					classification_id:getbyId('h_gov_classification').value
+				}
+				sendDataWithCallback('/del_classification',data,function(res){
+					getbyId('h_gov_classification').value=0
+					load_gov_classification()
+					Swal.fire(
+					  'Deleted!',
+					  'Your file has been deleted.',
+					  'success'
+					)
+					$('#div_gov_classification').modal('toggle');
+				})
+			}
+		})
+	}
+</script>

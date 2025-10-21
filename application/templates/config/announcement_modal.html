@@ -1,0 +1,85 @@
+<div class="colfull">
+	<form id="form_annoucement">
+		<input type="hidden" name="h_announce_id" id="h_announce_id" value="0">
+		<p>Announcement Title</p>
+		<input type="text" class="form-control" name="title" required>
+		<p>Announcement</p>
+		<textarea class="form-control" name="announcement" required="" style="height: 120px"></textarea>
+		<p>Status</p>
+		<select name="status_annoucement" class="form-control" required>
+			<option value="" selected disabled>--SELECT--</option>
+			<option>Active</option>
+			<option>Inactive</option>
+		</select>
+		<div class="colfull" style="margin-top: 40px;" align="center">
+			<button type="submit" class="btn btn-success">Save</button>
+			<button type="button" class="btn btn-danger" onclick="del_announcement()">Delete</button>
+		</div>
+	</form>
+</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var form_id='#form_annoucement'
+		$(form_id).submit(function(e){
+		    var form_save = $(form_id).serializeObject();
+		    e.preventDefault();
+
+		    swal.fire({
+                title: "Are you sure want to save?",
+                text: "Click ok to continue",
+                type: "info",
+                showCancelButton: true,
+                showLoaderOnConfirm: true,
+                preConfirm: () => {
+                    return fetch(console.log("log"))
+                    .then(
+                        sendDataWithCallback('/save_announcement',form_save,function(res){
+                            if (res) {
+                            	get_announcement()
+                            	saved(res)
+                                $('#div_announcement_modal').modal('toggle');
+                            }
+                        })
+                    )
+                    .catch(() => {
+                        Swal.fire({
+                          icon: 'error',
+                          title: 'Error occured'
+                        })
+                    })
+                }
+            })
+
+		})
+	})
+
+	function del_announcement(){
+		var data={
+			announcement_id:getbyId('h_announce_id').value
+		}
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "You won't be able to revert this!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#d33',
+			cancelButtonColor: '#3085d6',
+			confirmButtonText: 'Yes, delete it!',
+			customClass: 'swal_css',
+		}).then((result) => {
+			if (result.isConfirmed) {
+				sendDataWithCallback('/delete_announcement',data,function(res){
+					if(res){
+						get_announcement()
+						Swal.fire(
+						  'Deleted!',
+						  'Your file has been deleted.',
+						  'success'
+						)
+                        $('#div_announcement_modal').modal('toggle');
+					}
+				})
+			}
+		})
+	}
+</script>

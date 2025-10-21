@@ -1,0 +1,221 @@
+{% extends 'index.html' %}
+{% block body %}
+<div class="col-sm-12">
+	<div class="card">
+		<div class="card-header d-flex justify-content-between">
+           <div class="header-title">
+              	<h4 class="card-title">PETITION/LETTER FOR REFERRAL</h4>
+           </div>
+        </div>
+        <div class="card-body">
+       		<div class="table-responsive">
+			    <table id="tbl_petition" class="table table-striped" data-toggle="data-table" width="99.8%">
+					<thead>
+						<th>Id</th>
+						<th>Title</th>
+						<th>Reffered Committee</th>
+						<th>Action</th>
+					</thead>
+				</table>
+			</div>
+       </div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function(res){
+		$( "#li_petition" ).addClass( "active" );
+		
+        loadfirstdatatable('tbl_petition_path')
+        load_petition()
+	})
+
+	function open_pet_tbl(elem){
+		var tr = $(elem).closest('tr')
+		var dataArr = $('#tbl_petition').DataTable().row(tr).data();
+     	if(dataArr){
+     		getbyId('btn_petition_committee').style.display="block";
+     		getbyId('h_petition_id').value=dataArr.petition_id
+     		getbyId('h_petition_id_main').value=dataArr.petition_id
+     		getbyId('del_petition').style.display='inline-block'
+     		getbyId('inp_petition_title').value=dataArr.title
+     		getbyId('inp_petition_committee_id').value=dataArr.committee
+     		getbyId('upload_file').filename=dataArr.path
+     		getbyId('h_committee_id_petition').value=dataArr.committee_id
+     		getbyId('inp_petition_track').value=dataArr.tracking_no
+     		$('#inp_petition_committee_id').val(dataArr.committee_ids).trigger("chosen:updated")
+
+     		var text = ""
+     		if(dataArr.description == null || dataArr.description == "") {
+     			text="NO DESCRIPTION"
+     		}else{
+     			text = dataArr.description
+     		}
+     		tinymce.get("pet_desc").setContent(text);
+
+     		var data={
+     			petition_id:dataArr.petition_id
+     		}
+
+     		sendDataWithCallback('/get_petition_committee',data,function(res){
+     			getbyId('petition_source_of_doc').value=res[0].source_of_document
+     			getbyId('inp_petition_action_taken').value=res[0].action_taken
+
+     			load_file_petition(data)
+     			$('#div_petition_modal').modal('toggle');
+     		})
+     	}
+	}
+
+	function load_petition(callback){
+        if ($.fn.DataTable.isDataTable("#tbl_petition")) {
+            $("#tbl_petition").DataTable().destroy();
+        }
+
+        var table=$('#tbl_petition').DataTable({
+            responsive: true,
+            searching: true,
+            bStateSave: true,
+            "ajax": {
+                "type": "GET",
+                "url": '/get_petition',
+                contentType: 'application/JSON',
+                "dataSrc": function(data) {
+                    data.forEach(function(item){
+                        var open_doc = `<button type='button' class="btn btn-sm btn-icon text-primary flex-end" onclick='open_pet_tbl(this)'>
+                        	<span class="btn-inner">
+		                        <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" >
+		                            <path d="M11.4925 2.78906H7.75349C4.67849 2.78906 2.75049 4.96606 2.75049 8.04806V16.3621C2.75049 19.4441 4.66949 21.6211 7.75349 21.6211H16.5775C19.6625 21.6211 21.5815 19.4441 21.5815 16.3621V12.3341" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+		                            <path fill-rule="evenodd" clip-rule="evenodd" d="M8.82812 10.921L16.3011 3.44799C17.2321 2.51799 18.7411 2.51799 19.6721 3.44799L20.8891 4.66499C21.8201 5.59599 21.8201 7.10599 20.8891 8.03599L13.3801 15.545C12.9731 15.952 12.4211 16.181 11.8451 16.181H8.09912L8.19312 12.401C8.20712 11.845 8.43412 11.315 8.82812 10.921Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+		                            <path d="M15.1655 4.60254L19.7315 9.16854" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+		                        </svg>
+		                    </span>
+                        </button>`
+                        item.action =  open_doc;
+                    });
+                    return data;
+                }
+            },
+            dom: 'Bfrtip',
+            columns: [
+             	{data:"petition_id"},
+             	{data:"title"},
+             	{data:"committee"},
+             	{data:"action"}
+            ],
+            buttons: [
+             	{
+	                text: "Add",
+	                action: function ( e, dt, node, config ) {
+	                	clear_petition();
+	                	getbyId('btn_petition_committee').style.display="none";
+	                	getbyId('form_petition').reset();
+
+	                	$('#inp_petition_committee_id').val('').trigger("chosen:updated")
+
+	                	if ($.fn.DataTable.isDataTable('#tbl_petition_path')) {
+				        	$('#tbl_petition_path').DataTable().clear().draw();
+				       	}
+
+				       	$("#div_petition_modal").modal("toggle");
+	                },
+	                'className': 'btn btn-sm btn-primary'
+	            },{
+		            extend: 'print',
+		            text: 'Print',
+		            filename: 'file',
+		            title: 'Print',
+		            titleAttr: 'Print'
+		            ,'className': 'btn btn-sm btn-warning'
+		        }
+            ],
+            "pagingType": "full_numbers",
+            "pageLength": 7
+        });
+	}
+
+
+	function delete_file_petition(elem){
+		var data={
+			petition_path_id:elem.getAttribute('data-petition_id'),
+			petition_id:elem.getAttribute('data-id')
+		}
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "You won't be able to revert this!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#d33',
+			cancelButtonColor: '#3085d6',
+			confirmButtonText: 'Yes, delete it!',
+			customClass: 'swal_css',
+		}).then((result) => {
+			if (result.isConfirmed) {
+				Swal.fire(
+				  'Deleted!',
+				  'Your file has been deleted.',
+				  'success'
+				)
+				sendDataWithCallback('/delete_petition_file',data,function(res){
+					if(res){
+				       	sendDataWithCallback('/get_petition_path2',data,function(res){
+				       		res.forEach(function(file) {
+								var del_btn = "<button type='button' data-petition_id="+ file.petition_path_id+ " data-id=" + file.petition_id+ " onclick=delete_file_petition(this)> DELETE </button>"
+								var dl_btn = "<a data-path=" +file.path+ " href=" + '/static/uploads/'+file.path+ "><button type='button'> DOWNLOAD </button></a>"
+								file.action = dl_btn + del_btn ;
+							})
+				       		
+				       		if ($.fn.DataTable.isDataTable('#tbl_petition_path')) {
+					        	$('#tbl_petition_path').DataTable().destroy();
+					       	}
+					       	var table=$('#tbl_petition_path').DataTable({
+				                data:res,
+				                 columns: [
+				                 	{data:"filename"},
+				                 	{data: "action"}
+				                 ],
+				                responsive: true,
+				                searching: false, paging: false, info: false
+				            });
+				       	})
+					}
+				})
+			}
+		})
+	}
+	
+	function load_file_petition(data){
+		sendDataWithCallback('/get_petition_doc',data,function(res){
+ 			if(res){
+ 				res.forEach(function(file) {
+					var del_btn = "<button type='button' data-petition_id="+ file.petition_path_id+ " data-id=" + file.petition_id+ " onclick=delete_file_petition(this)> DELETE </button>"
+					var dl_btn = "<a data-path=" +file.path+ " href=" + '/static/uploads/'+file.path+ "><button type='button'> DOWNLOAD </button></a>"
+					file.action = dl_btn + del_btn ;
+				})
+
+ 				if ($.fn.DataTable.isDataTable('#tbl_petition_path')) {
+		        	$('#tbl_petition_path').DataTable().destroy();
+		       	}
+				
+				var table=$('#tbl_petition_path').DataTable({
+	                data:res,
+	                 columns: [
+	                 	{data:"filename"},
+	                 	{data: "action"}
+	                 ],
+	                responsive: true,
+	                searching: false, paging: false, info: false
+	            });
+ 			}
+ 		})
+	}
+
+	function clear_petition(){
+		getbyId('h_petition_id').value = "0";
+		getbyId('h_petition_id_main').value = "";
+		getbyId('h_committee_id_petition').value = "";
+
+	}
+	
+</script>
+{% endblock %}

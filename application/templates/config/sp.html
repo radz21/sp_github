@@ -1,0 +1,340 @@
+<div class="col-md-12" style="padding: 10px;">
+	<form id="form_sp" class="row g-3 needs-validation" novalidate>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6">
+					<img id="sp_logo" src="static/icon/photo_blank.png" style="height: 200px;width: 200px;" onerror="this.src='../static/images/blank_photo.png'">
+				</div>
+				<div class="col-md-6">
+					<img id="city_logo" src="static/icon/photo_blank.png" style="height: 200px;width: 200px;" onerror="this.src='../static/images/blank_photo.png'">
+				</div>
+			</div>
+
+		</div>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6">
+					<p>Upload Sp Logo</p>
+					<input type="file" onchange="readURL(this,'sp_logo');"  id="file_sp_logo" name="file_sp_logo"  accept="image/x-png,image/gif,image/jpeg,image/jpg" />
+				</div>
+				<div class="col-md-6">
+					<p>Upload City Logo</p>
+					<input type="file" onchange="readURL(this,'city_logo');"  id="file_city_logo" name="file_city_logo"  accept="image/x-png,image/gif,image/jpeg,image/jpg" />
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="row">
+				<input type="hidden" id="sp_id" name="sp_id" value="0">
+				<div class="col-md-12">
+					<label for="sp_title" class="form-label">Title</label>
+					<input type="text" class="form-control" id="sp_title" name="title" placeholder="Enter Title" required>
+					<div class="valid-feedback">
+						Looks good!
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="row">
+						<div class="col-md-6">
+							<label for="sp_year" class="form-label">SP YEAR FROM</label>
+							<input type="text" class="form-control spyear" id="sp_year" name="sp_year" placeholder="Click to select year" required autocomplete="off">
+							<div class="valid-feedback">
+								Looks good!
+							</div>
+						</div>
+						<div class="col-md-6">
+							<label for="sp_year" class="form-label">SP YEAR TO</label>
+							<input type="text" class="form-control spyear" id="sp_year2" name="sp_year2" placeholder="Click to select year" required autocomplete="off">
+							<div class="valid-feedback">
+								Looks good!
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-12">
+					<label for="inpt_vmayor" class="form-label">VICE MAYOR</label>
+					<select class="form-control chosen-select" id="inpt_vmayor" name="vmayor" required></select>
+					<div class="valid-feedback">
+						Looks good!
+					</div>
+				</div>
+
+				<div class="col-md-12">
+					<label for="inpt_sec" class="form-label">Secretary SP</label>
+					<select class="form-control chosen-select" id="inpt_sec" name="secretary" required></select>
+					<div class="valid-feedback">
+						Looks good!
+					</div>
+
+					<p>Councilors</p>
+					<button type="button" class="dt-button btn btn-sm btn-primary" onclick="populateCouncil()">Add Councilors</button>
+
+					<div class="colfull" id="councilor_id" style="padding: 1%;"></div>
+
+				</div>
+
+				<div align="center" class="col-md-12" style="margin-top: 40px">
+					<button class="btn btn-primary" type="submit">Submit form</button>
+		    		<button type="button" class="btn btn-danger" onclick="del_sp_tbl()">DELETE</button>
+				</div>
+
+			</div>
+		</div>
+	</form>
+
+</div>
+<style type="text/css">
+	.chzn-results {
+   height: 150px;
+}
+</style>
+<script type="text/javascript">
+	var councilors = [];
+	$(document).ready(function(){
+
+		$(".spyear").datepicker({
+			format: "yyyy",
+			viewMode: "years",
+			updateViewDate: false,
+			minViewMode: "years",
+			autoclose: true,
+			startView: 2,
+			defaultViewDate: {
+				year: '2000'
+			},
+			startDate: '-10y', //2021 -1950
+			endDate: '+7y' //2021-2011
+        }).on('changeDate', function(ev){
+            // load_tbl_form2()
+        });
+
+
+		$(".chosen-select").chosen({width: "100%" })
+		
+        getDataWithCallback('/sel_personal_info', function(res) {
+
+            $('#inpt_vmayor').append(`<option value="" disabled selected> ${'--SELECT--'} </option>`); 
+            for(var x=0; x<res.length; x++){
+                $('#inpt_vmayor').append(`<option value="${res[x]['info_id']}"> ${res[x]['fullname']} </option>`); 
+            }
+            $('#inpt_vmayor').trigger("chosen:updated")
+
+            $('#inpt_sec').append(`<option value="" disabled selected> ${'--SELECT--'} </option>`); 
+            for(var x=0; x<res.length; x++){
+                $('#inpt_sec').append(`<option value="${res[x]['info_id']}"> ${res[x]['fullname']} </option>`); 
+            }
+            $('#inpt_sec').trigger("chosen:updated")
+
+            councilors = res
+        });
+        
+
+        (function () {
+        	'use strict'
+        	var forms = document.querySelectorAll('.needs-validation')
+        	Array.prototype.slice.call(forms)
+        	.forEach(function (form) {
+        		form.addEventListener('submit', function (event) {
+        			if (!form.checkValidity()) {
+        				event.preventDefault()
+        				event.stopPropagation()
+
+        				error_in_saving("Please fill up properly")
+        			}else{
+        				event.preventDefault()
+        				event.stopPropagation()
+        				save_sp()
+        			}
+
+        			form.classList.add('was-validated')
+
+        		}, false)
+		    })
+		})()
+	})
+
+
+	function save_sp(){
+		var form_save = $("#form_sp").serializeObject();
+	        	
+	    var new_data3 = form_save.council_name.filter(function(item){
+    		return item[0] != "";
+	    });
+
+	    form_save.council_name = new_data3;
+
+		var mydata = new FormData();
+
+		mydata.append("Serialized",JSON.stringify(form_save))
+
+        jQuery.each($("#file_sp_logo")[0].files, function(i, file) {
+	    	mydata.append("logo["+i+"]", file)
+	    })
+
+	    jQuery.each($("#file_city_logo")[0].files, function(i, file) {
+	    	mydata.append("citylogo["+i+"]", file)
+	    })
+
+		mydata.append("sp_id", getbyId('sp_id').value)
+		mydata.append("title", getbyId('sp_title').value)
+		mydata.append("council",  JSON.stringify(form_save))
+
+        swal.fire({
+			title: "Are you sure want to save?",
+			text: "Click ok to continue",
+			type: "info",
+			showCancelButton: true,
+			showLoaderOnConfirm: true,
+			preConfirm: () => {
+				return fetch(console.log("log"))
+				.then(
+					$.ajax({
+				        type: 'POST',
+				        url: "/save_sp",
+				        contentType:false,
+				        processData:false,
+				        cache: false,
+				        data:mydata,
+				        beforeSend: function() {
+					       console.log(mydata)
+					    },
+				        success: function(res) {
+							getbyId('form_sp').reset()
+					        $('#div_sp').modal('toggle');
+					        // $("#tbl_sp").dataTable().fnDestroy();
+					        load_sp()
+							saved(res)
+				        },
+				        error: function() {
+				            error_in_saving("error occured");
+				        }
+				    })
+				)
+				.catch(() => {
+				    Swal.fire({
+				      icon: 'error',
+				      title: 'Error occured'
+				    })
+				})
+			}
+		})
+	}
+
+
+	function del_sp_tbl(){
+		var data={
+			'sp_id':getbyId('sp_id').value
+		}
+		Swal.fire({
+			  title: 'Are you sure?',
+			  text: "You won't be able to revert this!",
+			  icon: 'warning',
+			  showCancelButton: true,
+			  confirmButtonColor: '#d33',
+			  cancelButtonColor: '#3085d6',
+			  confirmButtonText: 'Yes, delete it!',
+			  customClass: 'swal_css',
+			}).then((result) => {
+				if (result.isConfirmed) {
+					Swal.fire(
+					  'Deleted!',
+					  'Your file has been deleted.',
+					  'success'
+					)
+					sendDataWithCallback('/del_sp',data,function(res){
+						saved(res)
+						getbyId('form_sp').reset()
+						$('#div_sp').modal('toggle');
+						// $("#tbl_sp").dataTable().fnDestroy();
+						load_sp()
+					})
+				}
+			})
+		
+	}
+
+	var councilCouter = 0;
+
+	function populateCouncil(callback){
+
+		var parent = document.getElementById('councilor_id');
+		var child = document.createElement('div');
+		var div1 = document.createElement('div');
+		var p = document.createElement('p');
+		var div2_container = document.createElement('div');
+		var div2_row = document.createElement('div');
+
+		var div2 = document.createElement('div');
+		var div2a = document.createElement('div');
+
+		var sel = document.createElement('select');
+		var btn = document.createElement('button');
+
+		div2_container.className="container"
+		div2_row.className="row"
+
+		child.className = "col-md-12";
+		child.style = "float: left;margin-top1%;";
+		child.id = "council"+councilCouter;
+		div1.className = "col-md-12";
+		p.innerHTML = "Councilor";
+
+		div2.className = "col-md-10";
+		div2a.className = "col-md-2";
+
+		sel.setAttribute("class",'form-control chosen-select');
+		sel.required = true;
+		sel.name = "council_name["+councilCouter+"][council_name]"
+		sel.id = "council_name["+councilCouter+"][council_name]"
+		
+		var option_blank = document.createElement("option");
+		option_blank.innerHTML = "--SELECT--"
+		option_blank.value = ""
+		option_blank.disabled = true
+		option_blank.selected = true
+
+		sel.appendChild(option_blank);
+		councilors.forEach(function(i){
+			var option = document.createElement("option");
+			option.innerHTML = i['fullname'];
+			option.value = i['info_id'];
+			sel.appendChild(option);
+			
+		})
+
+		btn.className = "col-xs-2 btn btn-sm btn btn-outline-danger";
+		btn.type = "button";
+		btn.innerHTML = "x"
+		// btn.style = "margin-top:5px"
+		btn.setAttribute('data-id',"council"+councilCouter);
+
+		btn.onclick = function(){
+			var id = this.getAttribute('data-id');
+			document.getElementById(id).remove();
+		}
+
+		div1.appendChild(p);
+		div2.appendChild(sel);
+		div2a.appendChild(btn);
+
+		$(sel).chosen({width: "100%"})
+
+		child.appendChild(div1)
+		div2_row.appendChild(div2)
+		div2_row.appendChild(div2a)
+
+		div2_container.appendChild(div2_row)
+		child.appendChild(div2_container)
+
+		parent.insertBefore(child,parent.firstChild);
+		councilCouter++;
+		if(callback) {
+			callback(sel)
+		}
+	}
+
+
+</script>

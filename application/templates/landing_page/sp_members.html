@@ -1,0 +1,310 @@
+{% extends 'landing_page/index.html'%}
+
+{% block body %}
+	<div class="container my-5 animate__animated animate_to_view_specific_councilor" id="animate_to_view_specific_councilor">
+		<p class="lead" style="text-align:center; font-weight: bold;" id="sb_sp_members"></p>
+		<hr>
+        
+        <div class="row">
+            <div>
+                <div class="input-group" style="float: right; width: 300px;">
+                    <select class="form-select" aria-label="Default select example" id="sel_sp_councilors">
+                        {% if data %}
+                            {% for item in data %}
+                                <option value="{{ item.sp_member_id }}">{{ item.sp_title }}</option>
+                            {% endfor %}
+                        {% else %}
+                            <option value="">Please Add SP in config</option>
+                        {% endif %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px">
+            {% if data %}
+                {% set index = 0 %}
+                {% for item in data %}
+                    {% set index = loop.index %}
+                    {% if index == 1 %}
+                    <div class="row sp_councilors_cards" id="sp_council{{ item.sp_member_id }}">
+                        {% for councilor in item.councilors %}
+
+                        <div class="col-md-6 d-flex justify-content-center">
+                            <div class="card mb-3" style="max-width: 540px;">
+                                <div class="row g-0 animate__animated card-report">
+                                    <div class="col-md-4">
+                                        <img src="../static/uploads/{{ councilor.img }}" onerror="this.src='../static/icon/user.png'" alt="COUNCILOR" class="img-fluid rounded-start" style="height: 95%;width: 100%;" />
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title" style="max-width: 200px;overflow: hidden;">{{ councilor.fullname }}</h5>
+
+                                            {% if councilor.sp_assign %}
+                                                <p class="card-text">
+                                                    <small class="text-muted">{{ councilor.sp_assign}}</small>
+                                                </p>
+                                            {% endif %}
+
+                                            <p class="card-text">
+                                                {{ councilor.about }}
+                                            </p>
+
+                                            
+                                        </div>
+                                        {% if config[0].show_council_data=='1' %}
+                                            {% set path = councilor.img %}
+
+                                            {% if councilor.sp_assign %}
+                                                <div class="card-footer">
+                                                    <p><a style="cursor:pointer;" class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover" onclick="get_info_spec_concilor('{{councilor.sp_councilor}}', '{{councilor.fullname}}', '{{ councilor.sp_assign}}')">Show Info</a></p>
+                                                </div>
+                                            {% else %}
+                                                <div class="card-footer">
+                                                    <p><a style="cursor:pointer;" class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover" onclick="get_info_spec_concilor('{{councilor.sp_councilor}}', '{{councilor.fullname}}', '')">Show Info</a></p>
+                                                </div>
+                                            {% endif %}
+
+                                            
+                                        {% endif %}
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                       <div class="row sp_councilors_cards" id="sp_council{{ item.sp_member_id }}" style="display: none">
+                            {% for councilor in item.councilors %}
+                            <div class="col-md-6 d-flex justify-content-center">
+                                <div class="card mb-3" style="max-width: 540px;">
+                                    <div class="row g-0">
+                                        <div class="col-md-4">
+                                            <img src="../static/uploads/{{ councilor.img }}" onerror="this.src='../static/icon/user.png'" alt="COUNCILOR" class="img-fluid rounded-start" style="height: 95%;width: 100%;" />
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ councilor.fullname }}</h5>
+                                                <p class="card-text">
+                                                    {{ councilor.about }}
+                                                </p>
+                                                <p class="card-text">
+
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <option value="">Please Add Vice Mayor</option>
+            {% endif %}
+        </div>
+
+	</div>
+
+    <div id="div_specific_councilor_info" style="display: none;" class="col-12">
+        <div class="container">
+            <div class="row">
+                <div class="d-flex justify-content-center mt-5">
+                    <button type="button" onclick="go_back()" class="btn btn-default btn-circle btn-lg"><i class="icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M4.25 12.2744L19.25 12.2744" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M10.2998 18.2988L4.2498 12.2748L10.2998 6.24976" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                        </i> BACK
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="container my-5 animate__animated animate_spec" style="background-color:#6A6A6A;">
+            <div class="row">
+                <div class="col-md-12 d-flex justify-content-center mt-3">
+                    <div class="card mb-3" style="max-width: 300px;">
+                        <div class="row g-0">
+                            <div class="col-md-12">
+                                <img id="spec_img" onerror="this.src='../static/icon/user.png'" alt="COUNCILOR" class="img-fluid rounded-start" style="height: 100%;width: 100%;" />
+                            </div>
+                            <div class="col-md-12">
+                                <div class="card-body">
+                                    <h5 class="card-title" id="spec_fullname"></h5>
+                                    <p class="card-text" id="spec_assign"></p>
+                                    <p class="card-text" id="spec_about"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="container py-4 px-10">
+
+                    <h2 class="font-weight-light text-center text-info py-3">Ordinance</h2>
+
+                        <div id="Authored_timeline">
+                            
+                        </div>
+
+                        <!-- <div class="row animate__animated spec_councilor">
+
+                            <div class="col-auto text-center flex-column d-none d-sm-flex">
+                                <div class="row h-50">
+                                    <div class="col">&nbsp;</div>
+                                    <div class="col">&nbsp;</div>
+                                </div>
+
+                                <h5 class="m-2">
+                                    <span class="badge rounded-pill bg-success">&nbsp;</span>
+                                </h5>
+
+                                <div class="row h-50">
+                                    <div class="col border-end order">&nbsp;</div>
+                                    <div class="col">&nbsp;</div>
+                                </div>
+                            </div>
+
+                            <div class="col py-2">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="float-end text-muted">Mon, Jan 9th 2021 7:00 AM</div>
+                                        <h4 class="card-title text-muted">Ordinance #12345</h4>
+                                        <p class="card-text">AN ORDINANCE STRENGTHENING  THE IMPLEMENTATION AND MONITORING OF THE ADOLESCENT AND YOUTH HEALTH PROGRAM, ITS MECHANISMS AND PROVIDING FUNDS THERETO, IN THE CITY OF BISLIG</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<script type="text/javascript">
+        $(".card-report").hover(
+            function () {
+                $(this).addClass("animate__pulse");
+            },
+            function () {
+                $(this).removeClass("animate__pulse");
+            }
+        );
+
+        $(".spec_councilor").hover(
+            function () {
+                $(this).addClass("animate__headShake");
+            },
+            function () {
+                $(this).removeClass("animate__headShake");
+            }
+        );
+        
+		document.getElementById('menu_about').style.color = "black";
+        document.querySelectorAll('.form-outline').forEach((formOutline) => {
+          new mdb.Input(formOutline).init();
+        });
+
+        document.getElementById('sel_sp_councilors').addEventListener('change', function() {
+            var cls = document.getElementsByClassName('sp_councilors_cards');
+            for(var x of cls) {
+                x.style.display = 'none'
+            }
+
+            document.getElementById("sp_council"+this.value).style.display = 'flex';
+        });
+
+        getDataWithCallback('/get_city_name', function(res){
+            if(res[0].type==null || res[0].type==""){
+                var type = 'SANGUNIANG BAYAN';
+                document.getElementById('act_members_sp_sb').innerHTML="SB MEMBERS";
+                getbyId('footer_text').innerHTML = type
+            }else{
+                var type = 'SANGUNIANG PANLUNGSOD';
+                document.getElementById('act_members_sp_sb').innerHTML="SP MEMBERS";
+                getbyId('footer_text').innerHTML = type
+            }
+
+            // document.getElementById('lan_cityname').innerHTML=res[0]['city_name'];
+        })
+
+        function get_info_spec_concilor(councilor, fullname, assign){
+            $('.animate_to_view_specific_councilor').addClass("animate__fadeOutLeft");
+            $('.animate_spec').removeClass("animate__zoomOut");
+            setTimeout(()=>{
+                getbyId('div_specific_councilor_info').style.display="inline-block"
+                getbyId('animate_to_view_specific_councilor').style.display="none"
+                
+                $('.animate_spec').addClass("animate__zoomIn");
+
+            }, 900)
+
+            getbyId('spec_assign').innerHTML = assign
+            getbyId('spec_fullname').innerHTML = fullname
+
+            sendDataWithCallback('/get_specific_data_councilor',{sp_councilor:councilor}, (res)=>{
+                getbyId('spec_img').src = "../static/uploads/" + res[0]['img']
+                getbyId('spec_about').innerHTML = res[0]['about']
+
+                sendDataWithCallback('/get_councilor_info_documents',{info_id:res[0].info_id},(res)=>{
+                    getbyId('Authored_timeline').innerHTML=""
+
+                    for(var x=0; x<res.length;x++){
+
+                        var div_parent = getbyId('Authored_timeline')
+
+                        var div1 = document.createElement('div')
+                        div1.setAttribute('class', "row animate__animated spec_councilor")
+
+                        var div2 = document.createElement('div')
+                        div1.setAttribute('class', "col py-2")
+
+                        var div3 = document.createElement('div')
+                        div3.setAttribute('class', "card")
+
+                        var div4 = document.createElement('div')
+                        div4.setAttribute('class', "card-body")
+
+                        var div5 = document.createElement('div')
+                        div5.setAttribute('class', "float-end text-muted")
+                        div5.innerHTML = moment(res[x].date_enacted).format('ll')
+
+                        var h4 = document.createElement('h4')
+                        h4.setAttribute('class', "card-title text-muted")
+                        h4.innerHTML = res[x].ordinance_number + " " + `<span style="font-size:18px;font-style:italic">${res[x].type}</span>`
+
+                        var p = document.createElement('p')
+                        p.setAttribute('class', "card-text")
+                        p.innerHTML = res[x].title
+                        
+                        div4.appendChild(div5)
+                        div4.appendChild(h4)
+                        div4.appendChild(p)
+
+                        div3.appendChild(div4)
+                        div2.appendChild(div3)
+                        div1.appendChild(div2)
+                        div_parent.appendChild(div1)
+
+                    }
+                })
+            })
+        }
+
+        function go_back(){
+            $('.animate_spec').addClass("animate__zoomOut");
+            $('.animate_to_view_specific_councilor').removeClass("animate__fadeOutLeft");
+            $('.animate_spec').removeClass("animate__zoomIn");
+            setTimeout(()=>{
+                getbyId('animate_to_view_specific_councilor').style.display="block"
+                $('.animate_to_view_specific_councilor').addClass("animate__fadeInLeft");
+                getbyId('div_specific_councilor_info').style.display="none"
+            }, 500)
+        }
+	</script>
+{% endblock %}

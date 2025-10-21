@@ -1,0 +1,85 @@
+{% extends 'landing_page/index.html'%}
+
+{% block body%}
+	<div class="container my-5">
+		 <div class="row">
+            <div class="col-lg-12 text-center my-2">
+                   <h3 class="py-3"><a href="https://spreeowl.com/">Gallery</a></h3>
+            </div>
+         </div>
+         <div class="portfolio-menu mt-2 mb-4">
+            <ul>
+               <li id="all_pic" class="btn btn-outline-dark active" data-filter="*">All</li>
+               {% if data %}
+                  
+                  {% for item in data %}
+                     <li class="btn btn-outline-dark active" data-filter=".{{ item.gallery_id }}">{{ item.album_name }}</li>
+                  {% endfor %}
+               {% else %}
+                  <p>Please add album in system configuration</p>
+               {% endif %}
+            </ul>
+         </div>
+         <div class="portfolio-item row">
+            {% if data %}
+                  
+               {% for item in data %}
+                  {% for photo in item.gallery %}
+                     <div class="item {{ item.gallery_id }} col-lg-3 col-md-4 col-6 col-sm">
+                        <a href="/static/uploads/{{ photo.path }}" class="fancylight popup-btn" data-fancybox-group="light"> 
+                        <img class="img-fluid" src="/static/uploads/{{ photo.path }}" alt="">
+                        </a>
+                     </div>
+                  {% endfor %}
+               {% endfor %}
+            {% else %}
+               <p>Please add album photos in system configuration</p>
+            {% endif %}
+
+            
+         </div>
+	</div>
+
+	<script type="text/javascript">
+		document.getElementById('menu_about').style.color = "black";
+		 $('.portfolio-menu ul li').click(function(){
+         	$('.portfolio-menu ul li').removeClass('active');
+         	$(this).addClass('active');
+         	
+         	var selector = $(this).attr('data-filter');
+         	$('.portfolio-item').isotope({
+         		filter:selector
+         	});
+         	return  false;
+         });
+         $(document).ready(function() {
+            var popup_btn = $('.popup-btn');
+            popup_btn.magnificPopup({
+               type : 'image',
+               gallery : {
+               	enabled : true
+               }
+            });
+
+            document.getElementById('all_pic').dispatchEvent(new Event('click'));
+         });
+
+         document.getElementById('menu_committees').style.color = "black";
+         getDataWithCallback('/get_city_name', function(res){
+                if(res[0].type==null || res[0].type==""){
+                    var type = 'SANGUNIANG BAYAN';
+                    getbyId('act_members_sp_sb').innerHTML="SB MEMBERS";
+                    getbyId('footer_text').innerHTML = type
+                }else{
+                    var type = 'SANGUNIANG PANLUNGSOD';
+                    getbyId('act_members_sp_sb').innerHTML="SP MEMBERS";
+                    getbyId('footer_text').innerHTML = type
+                }
+
+                getbyId('lan_cityname').innerHTML=res[0]['city_name'];
+         })
+	</script>
+
+
+  
+{% endblock%}

@@ -1,0 +1,146 @@
+<div class="colfull">
+	<form id="form_deduction_sp_member">
+		<input type="hidden" id="balance_expenses_id" name="balance_expenses_id" value="0">
+		<input type="hidden" name="balance_id" id="h_balance_id">
+		<div class="colfull">
+			<p>Remaining Balance</p>
+			<input type="text" name="history_allocation" id="remaining_bal_deduction_details" class="disabledbutton form-control" readonly>
+			<p>Deduction Amount</p>
+			<input type="text" class="form-control" id="deduction_sp_mem" name="deduction" required="" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+			<p>Description</p>
+			<textarea class="colfull form-control" name="description" id="deduc_desc_details_expenses"></textarea>
+		</div>
+		<div class="colfull" align="center" style="margin-top: 20px;">
+			<button class="btn btn-success">Save</button>
+		</div>
+	</form>
+</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var form_id='#form_deduction_sp_member'
+		 $(form_id).submit(function(e){
+		 	e.preventDefault();
+
+		 	var remain=getbyId('remaining_bal_deduction_details').value;
+		 	var deduction_sp_mem=getbyId('deduction_sp_mem').value;
+
+		 	// if(String(getbyId('mode_deduction').innerHTML)!='Edit Deduction'){
+		 	// 	if(parseFloat(deduction_sp_mem)<=parseFloat(remain)){
+		 	// 	 	var form_save = $(form_id).serializeObject();
+				//  	var his_allocation=getbyId('remaining_bal_deduction_details').value
+				//  	var deduction=getbyId('deduction_sp_mem').value
+			 //        e.preventDefault();
+
+			 //        swal.fire({
+				// 		title: "Are you sure want to save?",
+				// 		text: "Click ok to continue",
+				// 		type: "info",
+				// 		showCancelButton: true,
+				// 		showLoaderOnConfirm: true,
+				// 		preConfirm: () => {
+				// 			return fetch(console.log("log"))
+				// 			.then(
+				// 				sendDataWithCallback('/save_deduction_sp_member',form_save,function(res){
+				// 			        if (res) {
+				// 						getbyId('form_deduction_sp_member').reset()
+
+				// 						if ($.fn.DataTable.isDataTable('#tbl_sp_budget_balance')) {
+				// 			                $('#tbl_sp_budget_balance').DataTable().destroy();
+				// 			            }
+										
+				// 						var data={balance_id:getbyId('h_balance_id').value}
+				// 						load_add_deduction(data)
+				// 	                    sendDataWithCallback('/get_sp_mem_remaining_bal',data,function(res){
+				// 	                        getbyId('remaining_bal_deduction_details').value=parseFloat(res[0].remaining_balance)-parseFloat(res[0].deduction)
+				// 	                    })
+				// 			          	$('#div_add_deduction_sp_budget_modal').modal('toggle');
+
+
+				// 			          	var inp_sp_id_deduction=getbyId('inp_sp_id_deduction');
+				// 			            datalist_sp_mem_deduction=getbyId('datalist_sp_mem_deduction');
+				// 			            val=inp_sp_id_deduction.value;
+				// 			            if (val != "") {
+				// 			                for(var t=0; t<datalist_sp_mem_deduction.options.length; t++){
+				// 			                    if (val == datalist_sp_mem_deduction.options[t].value) {
+				// 			                        var data=datalist_sp_mem_deduction.options[t].getAttribute('data-id')
+				// 			                        getbyId('tbody_sp_budget_deduction').innerHTML=""
+				// 			                        get_data_mem_deduction(data)
+				// 			                        saved(res)
+				// 			                    }
+				// 			                }
+				// 			            }
+				// 			        }
+				// 			    })
+				// 			)
+				// 			.catch(() => {
+				// 			    Swal.fire({
+				// 			      icon: 'error',
+				// 			      title: 'Error occured'
+				// 			    })
+				// 			})
+				// 		}
+				// 	})
+			 // 	}else{
+			 // 		error_in_saving("Insuffiecient balance")
+			 // 	}
+		 	// }else{
+		 		
+		 	// }
+		 	var form_save = $(form_id).serializeObject();
+		 	var his_allocation=getbyId('remaining_bal_deduction_details').value
+		 	var deduction=getbyId('deduction_sp_mem').value
+	        e.preventDefault();
+
+	        swal.fire({
+				title: "Are you sure want to save?",
+				text: "Click ok to continue",
+				type: "info",
+				showCancelButton: true,
+				showLoaderOnConfirm: true,
+				preConfirm: () => {
+					return fetch(console.log("log"))
+					.then(
+						sendDataWithCallback('/save_deduction_sp_member',form_save,function(res){
+					        if (res) {
+								getbyId('form_deduction_sp_member').reset()
+
+								if ($.fn.DataTable.isDataTable('#tbl_sp_budget_balance')) {
+					                $('#tbl_sp_budget_balance').DataTable().destroy();
+					            }
+								
+								var data={balance_id:getbyId('h_balance_id').value}
+								load_add_deduction(data)
+			                    sendDataWithCallback('/get_sp_mem_remaining_bal',data,function(res){
+			                        getbyId('remaining_bal_deduction_details').value=parseFloat(res[0].remaining_balance)-parseFloat(res[0].deduction)
+			                    })
+					          	var inp_sp_id_deduction=getbyId('inp_sp_id_deduction');
+					            // datalist_sp_mem_deduction=getbyId('datalist_sp_mem_deduction');
+					            val=inp_sp_id_deduction.value;
+					            if (val != "") {
+					                // for(var t=0; t<datalist_sp_mem_deduction.options.length; t++){
+					                //     if (val == datalist_sp_mem_deduction.options[t].value) {
+					                //         var data=datalist_sp_mem_deduction.options[t].getAttribute('data-id')
+					                //         getbyId('tbody_sp_budget_deduction').innerHTML=""
+					                //         get_data_mem_deduction(data)
+					                //         saved(res)
+					                //     }
+					                // }
+
+					                var data=val
+					                get_data_mem_deduction(data)
+					            }
+					          	$('#div_add_deduction_sp_budget_modal').modal('toggle');
+					        }
+					    })
+					)
+					.catch(() => {
+					    Swal.fire({
+					      icon: 'error',
+					      title: 'Error occured'
+					    })
+					})
+				}
+			})
+	    })
+	})
+</script>

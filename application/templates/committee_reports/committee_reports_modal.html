@@ -1,0 +1,134 @@
+<div class="colfull">
+	<form id="form_committee_reports">
+		<input type="text" hidden name="h_committee_report_id" id="h_committee_report_id" value="0">
+
+		<div class="colfull">
+			<p>Tracking number</p>
+			<input type="text" name="tracking_number" class="form-control" required>
+		</div>
+
+		<div class="colfull">
+			<p>Committee number</p>
+			<input type="text" name="committee_number" class="form-control" required>
+		</div>
+
+		<div class="colfull">
+			<p>Subject
+			<textarea rows="8" style="white-space: pre-wrap;" class="form-control" name="subject" autofocus></textarea>
+		</div>
+
+		<div class="colfull">
+			<p>Committee</p>
+			<select class="form-control colfull" name="committee_id" id="list_committee_reports"></select>
+		</div>
+		
+		<div class="colfull">
+			<p>Date of Referal</p>
+			<input type="date" class="form-control" name="date_reffered">
+		</div>
+
+		<div class="colfull">
+			<p>Scanned File</p>
+			<input type="file" id="upload_file_committee_reports" name="upload_file" accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf" multiple>
+		</div>
+		
+		<div class="colfull" id="div_committee_reports_path">
+			<p>Documents</p>
+			<table id="tbl_committee_reports_path" class="table" style="width: 100%;border-collapse: collapse;" border="1">
+				<thead>
+					<th>filename</th>
+					<th>Action</th>
+				</thead>
+			</table>
+		</div>
+
+		<div class="colfull">
+			<p>Raw File</p>
+			<input type="file" id="upload_file_committee_reports2" name="upload_file2" accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf" multiple>
+		</div>
+		
+		<div class="colfull" id="div_committee_reports_path2">
+			<p>Documents</p>
+			<table id="tbl_committee_reports_path2" class="table" style="width: 100%;border-collapse: collapse;" border="1">
+				<thead>
+					<th>filename</th>
+					<th>Action</th>
+				</thead>
+			</table>
+		</div>
+		<div class="colfull text-center">
+			<button class="btn btn-success">SAVE</button>
+		</div>
+	</form>
+</div>
+
+
+<script type="text/javascript">
+	$(document).ready(function(res){
+		getDataWithCallback('/get_sp_active_only', (res)=>{
+			if(res){
+				getCommitteeBysp(res[0].sp_id,'list_committee_reports')
+			}
+		})
+
+		var form_id='#form_committee_reports'
+		 $(form_id).submit(function(e){
+		 	var form_save = $(form_id).serializeObject();
+
+		 	form_save.sp_id = getbyId('active_sp_id').value
+	        e.preventDefault();
+
+	        swal.fire({
+				title: "Are you sure want to save?",
+				text: "Click ok to continue",
+				type: "info",
+				showCancelButton: true,
+				showLoaderOnConfirm: true,
+				preConfirm: () => {
+					return fetch(console.log("log"))
+					.then(
+						upload_files_committee_reports(form_save)
+					)
+					.catch(() => {
+					    Swal.fire({
+					      icon: 'error',
+					      title: 'Error occured'
+					    })
+					})
+				}
+			})
+	    })
+	})
+
+	
+    function upload_files_committee_reports(form){
+    	var mydata = new FormData();
+
+    	mydata.append("Serialized",JSON.stringify(form))
+
+        jQuery.each($("#upload_file_committee_reports")[0].files, function(i, file) {
+	        mydata.append('file['+i+']', file);
+	    });
+        
+	    $.ajax({
+	        type: 'POST',
+	        url: "/save_committee_reports",
+	        contentType:false,
+	        processData:false,
+	        cache: false,
+	        data:mydata,
+	        beforeSend: function() {
+		       console.log(mydata)
+		    },
+	        success: function(res) {
+				getbyId('form_committee_reports').reset()
+				get_all_committee_reports()
+				$('#div_committee_reports_modal').modal('toggle');
+				saved(res)
+	        },
+	        error: function() {
+	            error_in_saving("error occured in sending to");
+	        }
+	    });
+	}
+</script>

@@ -1,0 +1,261 @@
+<div class="col-sm-12">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+           <div class="header-title">
+                <h4 class="card-title">SP CAPITAL OUTLAY</h4>
+
+           </div>
+        </div>
+        <div class="card-body">
+           <div style="margin-top:30px;">
+				<nav>
+				  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+				    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">CAPITAL OUTLAY</button>
+				    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">CAPITAL OUTLAY ADD DETAILS</button>
+				    <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">CAPITAL OUTLAY EXPENSES DETAILS</button>
+				  </div>
+				</nav>
+				<div class="tab-content" id="nav-tabContent">
+				  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+				  	<div class="colfull" style="padding: 20px;">
+							<div class="colfull">
+								<p style="font-weight: bolder;">CAPITAL OUTLAY BALANCE</p>
+								<h3>TOTAL AMOUNT: PHP <span style="text-decoration: unset;" id="capital_outlay_amount">0</span><span></span></h3>
+							</div>
+							<div class="col15" style="padding-top: 20px;">
+								<button class="btn btn-success" onclick="$('#div_capital_outlay_add').modal('toggle');">Add Amount</button>
+							</div>
+							<div class="col15" style="padding-top: 20px;">
+								<button class="btn btn-danger" onclick="$('#div_capital_outlay_deduction').modal('toggle')">Add Expenses</button>
+							</div>
+						</div>
+				  </div>
+				  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+				  	<div class="colfull" style="padding: 20px;">
+						<!-- <p>CAPITAL OUTLAY ADD DETAILS</p> -->
+						<div class="colfull">
+							<table id="tbl_add_capital_details" class="table" border="1" style="width: 100%">
+								<thead>
+									<th>Id</th>
+									<th>Amount</th>
+									<th>Description</th>
+									<th>Date</th>
+									<th>Action</th>
+								</thead>
+							</table>
+						</div>
+					</div>
+				  </div>
+				  <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+				  	<div class="colfull" style="padding: 20px;">
+						<!-- <p>CAPITAL OUTLAY DEDUCTION DETAILS</p> -->
+						<div class="colfull">
+							<table id="tbl_deduction_details" border="1" class="table" style="width: 100%">
+								<thead>
+									<th>Id</th>
+									<th>Amount</th>
+									<th>Description</th>
+									<th>Date</th>
+									<th>Action</th>
+								</thead>
+							</table>
+						</div>
+					</div>
+				  </div>
+				</div>
+			</div>
+       </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+	$(document).ready(function(res){
+		loadfirstdatatable('tbl_add_capital_details')
+        loadfirstdatatable('tbl_deduction_details')
+
+		$( "#budget3" ).addClass( "selected_page_color" );
+
+		var form_id='#form_add_capital_outlay'
+        $(form_id).submit(function(e){
+            var form_save = $(form_id).serializeObject();
+            e.preventDefault();
+
+            swal.fire({
+                title: "Are you sure want to save?",
+                text: "Click ok to continue",
+                type: "info",
+                showCancelButton: true,
+                showLoaderOnConfirm: true,
+                preConfirm: () => {
+                    return fetch(console.log("log"))
+                    .then(
+                        sendDataWithCallback('/save_capital_outlay',form_save,function(res){
+                            if (res) {
+                                get_capital_outlay()
+                                load_tbl_added_co()
+                                getbyId('form_add_capital_outlay').reset()
+                                saved(res)
+                                $('#div_capital_outlay_add').modal('toggle');
+                            }
+                        })
+                    )
+                    .catch(() => {
+                        Swal.fire({
+                          icon: 'error',
+                          title: 'Error occured'
+                        })
+                    })
+                }
+            })
+        })
+
+        $('#tbl_deduction_details tbody').on('dblclick', 'tr', function (){
+	     	var dataArr = $('#tbl_deduction_details').DataTable().row( this ).data();
+	         	if(dataArr){
+	         		var data={co_deduction_id:dataArr.co_deduction_id}
+	         		getbyId('ul_deduction_item').innerHTML=""
+	         		sendDataWithCallback('/get_deduction_items',data,function(res){
+	         			var ul=getbyId('ul_deduction_item')
+	         			for(var x=0; x<res.length;x++){
+			         		var li=document.createElement('li')
+			         		li.setAttribute('class','list-group-item')
+			         		li.innerHTML=res[x].item
+
+			         		ul.appendChild(li)
+	         			}
+	         		})
+	         		$('#div_capital_deduction_details_modal').modal('toggle');
+	         	}
+        });
+
+        get_capital_outlay()
+        load_tbl_added_co()
+        load_tbl_deduction_co()
+	})
+
+	function get_capital_outlay(){
+		getDataWithCallback('/get_capital_outlay', function(res){
+        	if(res){
+        		getbyId('capital_outlay_amount').innerHTML=numberWithCommas(res[0].balance)
+        	}
+        })
+	}
+
+	function load_tbl_added_co(){
+		getDataWithCallback('/get_added_co_details',function(res){ 
+
+			res.forEach(function(file) {
+				var del_btn = "<button type='button' class='btn btn-danger' data-amount="+ file.amount_added+" data-id=" + file.co_added_id+ " onclick=del_added_capital_outlay(this)> DELETE </button>"
+				file.action = del_btn ;
+			})
+
+			if ($.fn.DataTable.isDataTable("#tbl_add_capital_details")) {
+				$("#tbl_add_capital_details").DataTable().destroy();
+			}
+
+            var table=$('#tbl_add_capital_details').DataTable({
+                data:res,
+                 columns: [
+                 	{data:"co_added_id"},
+                 	{data:"amount_added"},
+                 	{data:"description"},
+                 	{data:"added_date"},
+                 	{data: "action"}
+                 ],
+                responsive: true,
+                 dom: 'ftipr',
+                "info": false,
+                "pagingType": "full_numbers"
+            });   
+        })
+	}
+
+	function load_tbl_deduction_co(){
+		getDataWithCallback('/get_deduction_co_details',function(res){ 
+			res.forEach(function(file) {
+				var del_btn = "<button type='button' class='btn btn-danger' data-amount="+ file.amount_deduction+" data-id=" + file.co_deduction_id+ " onclick=del_deduction_capital_outlay(this)> DELETE </button>"
+				file.action = del_btn ;
+			})
+
+			if ($.fn.DataTable.isDataTable("#tbl_deduction_details")) {
+				$("#tbl_deduction_details").DataTable().destroy();
+			}
+            var table=$('#tbl_deduction_details').DataTable({
+                data:res,
+                 columns: [
+                 	{data:"co_deduction_id"},
+                 	{data:"amount_deduction"},
+                 	{data:'description'},
+                 	{data:"deduction_date"},
+                 	{data: "action"}
+                 ],
+                responsive: true,
+                "info": false,
+                 dom: 'ftipr',
+                "pagingType": "full_numbers"
+            });   
+        })
+	}
+
+	function del_added_capital_outlay(elem){
+		var data={
+			co_added_id:elem.getAttribute('data-id'),
+			amount_added:elem.getAttribute('data-amount')
+		}
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "You won't be able to revert this!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#d33',
+			cancelButtonColor: '#3085d6',
+			confirmButtonText: 'Yes, delete it!',
+			customClass: 'swal_css',
+		}).then((result) => {
+			if (result.isConfirmed) {
+				Swal.fire(
+				  'Deleted!',
+				  'Your file has been deleted.',
+				  'success'
+				)
+				sendDataWithCallback('/del_added_capital_outlay',data,function(res){
+					load_tbl_added_co()
+					get_capital_outlay()
+				})
+				
+			}
+		})
+	}
+
+	function del_deduction_capital_outlay(elem){
+		var data={
+			co_deduction_id:elem.getAttribute('data-id'),
+			amount_deduction:elem.getAttribute('data-amount')
+		}
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "You won't be able to revert this!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#d33',
+			cancelButtonColor: '#3085d6',
+			confirmButtonText: 'Yes, delete it!',
+			customClass: 'swal_css',
+		}).then((result) => {
+			if (result.isConfirmed) {
+				Swal.fire(
+				  'Deleted!',
+				  'Your file has been deleted.',
+				  'success'
+				)
+				
+			}
+			sendDataWithCallback('/del_deduction_capital_outlay',data,function(res){
+				load_tbl_deduction_co() 
+				get_capital_outlay()
+			})
+		})
+	}
+	
+</script>
